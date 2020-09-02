@@ -1,6 +1,6 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
-    import Nav from "../components/Nav.svelte";
+    import Nav from "../components/Navigation/Nav.svelte";
 </script>
 
 <style>
@@ -14,7 +14,7 @@
 
 <svelte:head>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/fontisto-master/css/fontisto/fontisto.min.css">
+    <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css">
 </svelte:head>
 
 <div class="font w-full">

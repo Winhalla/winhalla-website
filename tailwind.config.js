@@ -100,20 +100,21 @@ module.exports = {
 
             fontSize: {
                 logo: '1.6rem'
-            }
+            },
+            colors: {
+                background: "#17171a",
+                variant: "#1a1a21",
+
+                primary: "#3d72e4",
+                accent: "#ff8f0f",
+
+                font: "#fdfdfd",
+                light: "#afafb4",
+                disabled: "#79797f",
+            },
         },
 
-        colors: {
-            background: "#17171a",
-            variant: "#1a1a21",
-
-            primary: "#3d72e4",
-            accent: "#ff8f0f",
-
-            font: "#fdfdfd",
-            light: "#afafb4",
-            disabled: "#79797f",
-        },
+        
     },
     variants: {},
     plugins: [require("tailwindcss-textshadow")],

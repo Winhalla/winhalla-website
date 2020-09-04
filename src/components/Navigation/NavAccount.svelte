@@ -1,4 +1,6 @@
 <script>
+    import { clickOutside } from "../../utils/clickOutside";
+
     export let username;
     export let avatar;
 
@@ -21,6 +23,8 @@
     <div class="flex items-center h-full">
         <button
             class="focus:outline-none lg:hover:bg-primary lg:px-2 py-1 rounded"
+            use:clickOutside
+            on:click_outside={() => (isDropdownOpen = false)}
             on:click={() => (isDropdownOpen = !isDropdownOpen)}>
             <div class="flex items-center">
                 <img class="w-10 h-10 rounded-full" src={avatar} alt="Avatar" />
@@ -39,7 +43,7 @@
         class="pt-3 lg:pt-2 lg:p-2 rounded lg:bg-variant lg:absolute dropdown">
         <a
             class="block text-red-500 text-lg border-l border-red-600 p-2
-                hover:bg-red-500 hover:text-font lg:px-3 rounded-sm
+                lg:hover:bg-red-500 lg:hover:text-font lg:px-3 rounded-sm
                 lg:border-none"
             href="/logout">Logout</a>
     </div>

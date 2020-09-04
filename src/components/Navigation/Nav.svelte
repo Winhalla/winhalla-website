@@ -31,6 +31,7 @@
         </div>
         <div class="pr-6 lg:hidden">
             <button
+                class="focus:"
                 on:click={() => {
                     isNavbarOpen = !isNavbarOpen;
                 }}>
@@ -57,7 +58,7 @@
         <div class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
             <div class="ml-7 links text-xl lg:flex">
                 <a
-                    class="nav-link-container hover:text-shadow-link-hover
+                    class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
                     href="/profile">
                     <svg
@@ -68,7 +69,7 @@
                     PROFILE
                 </a>
                 <a
-                    class="nav-link-container hover:text-shadow-link-hover
+                    class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
                     href="/play">
                     <svg
@@ -79,7 +80,7 @@
                     PLAY
                 </a>
                 <a
-                    class="nav-link-container hover:text-shadow-link-hover
+                    class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
                     href="/shop">
                     <svg

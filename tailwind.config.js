@@ -86,6 +86,7 @@ module.exports = {
                 93: "23.25rem",
                 94: "23.5rem",
                 95: "23.75rem",
+                "screen-60": "60vh"
             },
             boxShadow: {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",
@@ -96,10 +97,16 @@ module.exports = {
             },
             textShadow: {
                 "link-hover": "0px 0px 10px rgba(255, 255, 255, 0.5)",
+                "base": "0px 0px 8px rgba(0, 0, 0, 0.160)"
             },
 
             fontSize: {
-                logo: '1.6rem'
+                '7xl': '5rem',
+                '8xl': '6rem',
+                '9xl': '9rem',
+                logo: '1.6rem',
+                default: '1.4rem',
+
             },
             colors: {
                 background: "#17171a",
@@ -112,6 +119,13 @@ module.exports = {
                 light: "#afafb4",
                 disabled: "#79797f",
             },
+
+            inset: {
+                "7": "1.75rem",
+                "10": "2.5rem",
+                "20": "5rem",
+                "24": "6rem"
+            }
         },
 
         

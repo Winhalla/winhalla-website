@@ -5,6 +5,9 @@
     export let avatar;
 
     let isDropdownOpen;
+    const handleClick = () => {
+        isDropdownOpen = !isDropdownOpen;
+    };
 </script>
 
 <style>
@@ -25,7 +28,7 @@
             class="focus:outline-none lg:hover:bg-primary lg:px-2 py-1 rounded"
             use:clickOutside
             on:click_outside={() => (isDropdownOpen = false)}
-            on:click={() => (isDropdownOpen = !isDropdownOpen)}>
+            on:click={() => handleClick()}>
             <div class="flex items-center">
                 <img class="w-10 h-10 rounded-full" src={avatar} alt="Avatar" />
                 <p class="text-xl mr-2 username">{username}</p>
@@ -40,7 +43,8 @@
 
     <div
         class:lg:hidden={!isDropdownOpen}
-        class="pt-3 lg:pt-2 lg:p-2 rounded lg:bg-variant lg:absolute dropdown">
+        class="pt-3 lg:pt-2 lg:p-2 rounded lg:bg-variant lg:absolute
+            lg:shadow-card dropdown z-50">
         <a
             class="block text-red-500 text-lg border-l border-red-600 p-2
                 lg:hover:bg-red-500 lg:hover:text-font lg:px-3 rounded-sm

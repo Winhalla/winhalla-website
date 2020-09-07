@@ -9,7 +9,6 @@
         border-radius: 0.125rem;
         font-size: 1.25rem;
         background-color: #3d72e4;
-    
     }
 
     .button-brand:hover {
@@ -27,5 +26,12 @@
     .button-brand-alternative:hover {
         -webkit-box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);
         box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);
+    }
+
+    .card {
+        -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
+        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
+
+        @apply bg-variant rounded m-px;
     }
 </style>

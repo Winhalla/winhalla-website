@@ -1,3 +1,7 @@
+<script>
+    import { binding_callbacks } from "svelte/internal";
+</script>
+
 <style>
     .video-container::after {
         position: absolute;
@@ -27,6 +31,10 @@
 
     .arrow-svg {
         animation: arrow 0.8s infinite alternate ease-in-out;
+    }
+
+    .cards {
+        height: calc(100% + 5rem);
     }
 </style>
 
@@ -69,37 +77,60 @@
         </svg>
     </div>
 </div>
-<div class="container">
-    <div class="cards">
-        <div class="card">
-            <h2>1</h2>
-            <div>
-                <p><b class="text-primary">Choose</b> a game mode</p>
-                <p>FFA, solo, 2vs2...</p>
+<div class="mt-10">
+    <div
+        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+            items-center lg:justify-around">
+        <div class="pb-10 lg:pb-0">
+            <div
+                class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    border-transparent hover:border-primary">
+                <p class="text-9xl">1</p>
+                <div class="">
+                    <p class="text-3xl leading-9">
+                        <b class="text-primary font-normal">Choose</b> a game mode
+                    </p>
+                    <p class="text-light text-xl pt-1">FFA, solo, 2vs2...</p>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <h2>2</h2>
-            <div>
-                <p>
-                    <b class="text-primary">Complete</b> the goal of the game mode
-                </p>
-                <p>Quests, win goals...</p>
+        <div class="pb-10 lg:pb-0">
+            <div
+                class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    border-transparent hover:border-primary">
+                <p class="text-9xl">2</p>
+                <div class="">
+                    <p class="text-3xl leading-9">
+                        <b class="text-primary font-normal">Complete</b> the goal
+                        of the game mode
+                    </p>
+                    <p class="text-light text-xl pt-1">Quests, win goals...</p>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <h2>3</h2>
-            <div>
-                <p><b class="text-primary">Earn</b> rewards</p>
-                <p>
-                    Earn coins that you will be able to spend in the <a>shop</a>!
-                </p>
+        <div>
+            <div
+                class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    border-transparent hover:border-primary">
+                <p class="text-9xl">3</p>
+                <div class="">
+                    <p class="text-3xl leading-9">
+                        <b class="text-primary font-normal">Earn</b> rewards
+                    </p>
+                    <p class="text-light text-xl pt-1">
+                        Earn coins that you will be able to spend in the <a
+                            class="underline"
+                            href="#">shop</a>!
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="join-us">
-        <h2>Ready? Start now!</h2>
-        <div><a class="button button-brand" href="#"> Create Account </a></div>
-        <div><a href="#"> Already a member? Login </a></div>
+    <div class="join-us w-full text-center mt-15 lg:mt-20 pb-10">
+        <h2 class="text-5xl lg:text-7xl">Ready? Start now!</h2>
+        <a class="button button-brand mt-4" href="#"> Create Account </a>
+        <div class="pt-1 text-light">
+            <a class="text-base" href="#"> Already a member? Login </a>
+        </div>
     </div>
 </div>

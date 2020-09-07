@@ -7,6 +7,10 @@
     .font {
         font-family: "Bebas Neue", sans-serif;
     }
+
+    main {
+        padding-top: calc(4rem - 3px);
+    }
 </style>
 
 <Tailwindcss />
@@ -23,7 +27,7 @@
 <div class="font w-full">
     <Nav />
 
-    <main class="bg-background text-font text-default">
+    <main class="bg-background text-font text-default pt-16">
         <slot />
     </main>
 </div>

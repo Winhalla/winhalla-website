@@ -24,7 +24,7 @@
     }
 </style>
 
-<nav class="lg:flex items-center bg-background text-font w-full">
+<nav class="fixed z-50 lg:flex items-center bg-background text-font w-full">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="logo-container pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/" alt="Artemis"> WINHALLA </a>

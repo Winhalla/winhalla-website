@@ -103,7 +103,7 @@ module.exports = {
             fontSize: {
                 '7xl': '5rem',
                 '8xl': '6rem',
-                '9xl': '9rem',
+                '9xl': '7rem',
                 logo: '1.6rem',
                 default: '1.4rem',
 

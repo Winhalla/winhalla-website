@@ -32,6 +32,6 @@
         -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
         box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
 
-        @apply bg-variant rounded m-px;
+        @apply bg-variant rounded;
     }
 </style>

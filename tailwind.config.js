@@ -90,7 +90,7 @@ module.exports = {
             },
             boxShadow: {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",
-                "card-hover": "0px 0px 6px rgba(255, 255, 255, 0.125)",
+                "card-hover": "0px 0px 10px rgba(255, 255, 255, 0.225)",
                 "button-hover": "0px 0px 10px rgba(255, 255, 255, 0.2)",
                 "button-alternative-hover":
                     "0px 0px 8px rgba(255, 255, 255, 0.125)",
@@ -114,17 +114,26 @@ module.exports = {
 
                 primary: "#3d72e4",
                 accent: "#ff8f0f",
-
+                green: "#3de488",
+                
                 font: "#fdfdfd",
                 light: "#afafb4",
                 disabled: "#79797f",
             },
 
             inset: {
-                "7": "1.75rem",
-                "10": "2.5rem",
-                "20": "5rem",
-                "24": "6rem"
+                1: "0.25rem",
+                2: "0.50rem",
+                3: "0.75rem",
+                4: "1rem",
+                5: "1.25rem",
+                6: "1.5rem",
+                7: "1.75rem",
+                8: "2rem",
+                9: "2.25rem",
+                10: "2.5rem",
+                20: "5rem",
+                24: "6rem"
             }
         },
 

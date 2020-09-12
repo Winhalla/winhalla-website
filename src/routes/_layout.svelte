@@ -10,6 +10,7 @@
 
     main {
         margin-top: calc(4rem - 2px);
+        min-height: calc(100vh - calc(4rem - 2px));
     }
 </style>
 
@@ -24,10 +25,10 @@
         href="../../fontisto-master/css/fontisto/fontisto.min.css" />
 </svelte:head>
 
-<div class="font w-full h-screen flex flex-col">
+<div class="font w-full min-h-screen h-full flex flex-col">
     <Nav />
 
-    <main class="bg-background text-font text-default h-full">
+    <main class="bg-background text-font text-default min-h-screen h-full">
         <slot class="flex-grow bg-background" />
     </main>
 </div>

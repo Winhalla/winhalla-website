@@ -115,6 +115,8 @@ module.exports = {
                 primary: "#3d72e4",
                 accent: "#ff8f0f",
                 green: "#3de488",
+                epic: "#ee38ff",
+                legendary: "#fc1870",
                 
                 font: "#fdfdfd",
                 light: "#afafb4",

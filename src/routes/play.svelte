@@ -24,20 +24,32 @@
                 goal: "Do 10 KOs",
                 progressValue: 6,
                 endValue: 10,
-                reward: "500",
+                reward: 500,
                 isFinished: false,
             },
             {
                 goal: "Do 1000 damage",
                 progressValue: 268,
                 endValue: 1000,
-                reward: "1000",
+                reward: 2500,
+                isFinished: false,
+            },
+            {
+                goal: "Do 2 spear KOs",
+                progressValue: 4,
+                endValue: 10,
+                reward: 3500,
                 isFinished: false,
             },
             {
                 goal: "Do 2 axe KOs",
-                reward: "3000",
+                reward: 1900,
                 isFinished: true,
+            },
+            {
+                goal: "Do 2 orb KOs",
+                reward: 3000,
+                isCollected: true,
             },
         ],
         weeklyQuests: [
@@ -45,19 +57,19 @@
                 goal: "Do 50 KOs",
                 progressValue: 19,
                 endValue: 50,
-                reward: "2500",
+                reward: 2500,
                 isFinished: false,
             },
             {
                 goal: "Do 5000 spear damage",
                 progressValue: 2642,
                 endValue: 5000,
-                reward: "4000",
+                reward: 4000,
                 isFinished: false,
             },
             {
                 goal: "Do 15 axe KOs",
-                reward: "1500",
+                reward: 1500,
                 isFinished: true,
             },
         ],
@@ -120,17 +132,24 @@
     }
 </style>
 
-<div class="ml-24 h-full pt-10">
-    <div class="page-title">
+<svelte:head>
+    <title>Play</title>
+</svelte:head>
+<div class="lg:block lg:pl-24 pt-5 lg:pt-10 h-full w-full">
+    <div class="page-title text-center lg:text-left">
         <h1 class="text-6xl">Choose a game mode</h1>
     </div>
-    <div class="page-container flex">
-        <div class="game-mode-card-container text-center flex mt-10">
+    <div
+        class="flex flex-col items-center lg:items-start lg:flex-wrap
+            lg:flex-row">
+        <div
+            class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
+                flex flex-col items-center lg:flex-row lg:items-start">
             {#each gameModes as gameMode}
                 <a
                     class="game-mode-card block relative shadow-card border
                         border-transparent hover:border-primary
-                        hover:shadow-card-hover mr-15"
+                        hover:shadow-card-hover mb-10 lg:mb-0 lg:mr-15"
                     href={gameMode.name}>
                     <img
                         src="../assets/ModeBanners/{gameMode.name}.jpg"

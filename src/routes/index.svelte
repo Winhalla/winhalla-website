@@ -41,7 +41,7 @@
 <svelte:head>
     <title>Winhalla</title>
 </svelte:head>
-<div class="bg-background">
+<div class="">
     <div class="relative">
         <div class="absolute top-7 left-7 lg:left-24 lg:top-10 z-10">
             <h1 class="text-6xl lg:text-8xl text-shadow-base">

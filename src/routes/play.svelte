@@ -18,63 +18,6 @@
         },
     ];
 
-    const questsOld = {
-        dailyQuests: [
-            {
-                goal: "Do 10 KOs",
-                progressValue: 6,
-                endValue: 10,
-                reward: 500,
-                isFinished: false,
-            },
-            {
-                goal: "Do 1000 damage",
-                progressValue: 268,
-                endValue: 1000,
-                reward: 2500,
-                isFinished: false,
-            },
-            {
-                goal: "Do 2 spear KOs",
-                progressValue: 4,
-                endValue: 10,
-                reward: 3500,
-                isFinished: false,
-            },
-            {
-                goal: "Do 2 axe KOs",
-                reward: 1900,
-                isFinished: true,
-            },
-            {
-                goal: "Do 2 orb KOs",
-                reward: 3000,
-                isCollected: true,
-            },
-        ],
-        weeklyQuests: [
-            {
-                goal: "Do 50 KOs",
-                progressValue: 19,
-                endValue: 50,
-                reward: 2500,
-                isFinished: false,
-            },
-            {
-                goal: "Do 5000 spear damage",
-                progressValue: 2642,
-                endValue: 5000,
-                reward: 4000,
-                isFinished: false,
-            },
-            {
-                goal: "Do 15 axe KOs",
-                reward: 1500,
-                isFinished: true,
-            },
-        ],
-    };
-
     const quests = {
         dailyQuests: [
             {
@@ -262,6 +205,8 @@
                 </a>
             {/each}
         </div>
-        <Quests data={quests} />
+        <div>
+            <Quests data={quests} />
+        </div>
     </div>
 </div>

@@ -1,8 +1,41 @@
 <script>
     import NavAccount from "./NavAccount.svelte";
+    import Notifications from "./Notifications.svelte";
 
     let isNavbarOpen;
     let isUserLoggedIn = true;
+
+    let data = {
+        notifications: [
+            {
+                id: 1,
+                message: "Collect your quest",
+                tip: "Click to collect",
+                type: "advice/regular",
+            },
+            {
+                id: 0,
+                message: "Your match ended",
+                tip: "Click to view rewards",
+                type: "advice/regular",
+            },
+        ],
+        inGame: [
+            {
+                id: "ID DE LA GAME",
+                type: "FFA",
+                isFinished: true,
+                Date: Date,
+            },
+            {
+                id: "ID DE LA GAME",
+                type: "2vs2",
+                isFinished: false,
+                progress: "1/10",
+                Date: Date,
+            },
+        ],
+    };
 </script>
 
 <style>
@@ -26,7 +59,7 @@
 
 <nav class="fixed z-50 lg:flex items-center bg-background text-font w-full">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
-        <div class="logo-container pl-7 lg:pl-24 lg:pr-34 text-logo">
+        <div class="lo o-container pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/" alt="Artemis"> WINHALLA </a>
         </div>
         <div class="pr-6 lg:hidden">
@@ -93,9 +126,13 @@
             </div>
             <div class="ml-7 mt-5 md:m-0 md:mr-7">
                 {#if isUserLoggedIn}
-                    <NavAccount
-                        username={'Philtrom'}
-                        avatar={'https://cdn.discordapp.com/avatars/389858822082002944/81dcf48d2af60f994383e6a92a2175a1.png?size=4096'} />
+                    <div class="flex">
+                        <NavAccount
+                            username={'Philtrom'}
+                            avatar={'https://cdn.discordapp.com/avatars/389858822082002944/81dcf48d2af60f994383e6a92a2175a1.png?size=4096'} />
+
+                        <Notifications {data} />
+                    </div>
                 {:else}
                     <a class="button-brand button mr-3" href="/signup">
                         CREATE ACCOUNT

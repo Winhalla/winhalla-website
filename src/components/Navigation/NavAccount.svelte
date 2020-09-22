@@ -44,10 +44,10 @@
     <div
         class:lg:hidden={!isDropdownOpen}
         class="pt-3 lg:pt-0 rounded lg:bg-variant lg:absolute lg:shadow-card
-            dropdown z-50 border border-primary">
+            dropdown z-50 lg:border lg:border-primary">
         <a
             class="block text-red-500 text-lg border-l border-red-600 py-3
-                lg:hover:bg-red-500 lg:hover:text-font lg:px-3 rounded-sm
+                lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm
                 lg:border-none"
             href="/logout">Logout</a>
     </div>

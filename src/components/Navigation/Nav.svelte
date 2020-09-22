@@ -62,9 +62,12 @@
         <div class="lo o-container pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/" alt="Artemis"> WINHALLA </a>
         </div>
-        <div class="pr-6 lg:hidden">
+        <div class="pr-6 lg:hidden flex -mt-2">
+            <div class="block lg:hidden">
+                <Notifications {data} />
+            </div>
             <button
-                class="focus:"
+                class="focus:outline-none"
                 on:click={() => {
                     isNavbarOpen = !isNavbarOpen;
                 }}>
@@ -126,12 +129,14 @@
             </div>
             <div class="ml-7 mt-5 md:m-0 md:mr-7">
                 {#if isUserLoggedIn}
-                    <div class="flex">
+                    <div class="lg:flex">
                         <NavAccount
                             username={'Philtrom'}
                             avatar={'https://cdn.discordapp.com/avatars/389858822082002944/81dcf48d2af60f994383e6a92a2175a1.png?size=4096'} />
 
-                        <Notifications {data} />
+                        <div class="hidden lg:flex items-center">
+                            <Notifications {data} />
+                        </div>
                     </div>
                 {:else}
                     <a class="button-brand button mr-3" href="/signup">

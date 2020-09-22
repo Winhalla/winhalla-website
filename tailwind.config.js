@@ -124,6 +124,7 @@ module.exports = {
             },
 
             inset: {
+                "minus-10": "-2.5rem",
                 1: "0.25rem",
                 2: "0.50rem",
                 3: "0.75rem",

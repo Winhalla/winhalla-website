@@ -1,5 +1,5 @@
 <script>
-    import Quests from "../components/Quests.svelte";
+    import Quests from "../../components/Quests.svelte";
 
     const gameModes = [
         {
@@ -177,7 +177,7 @@
                     class="game-mode-card block relative shadow-card border
                         border-transparent hover:border-primary
                         hover:shadow-card-hover mb-10 lg:mb-0 lg:mr-15"
-                    href={gameMode.name}>
+                    href="/play/{gameMode.name}">
                     <img
                         src="../assets/ModeBanners/{gameMode.name}.jpg"
                         alt={gameMode.name}

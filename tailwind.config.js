@@ -86,6 +86,11 @@ module.exports = {
                 93: "23.25rem",
                 94: "23.5rem",
                 95: "23.75rem",
+                96: "24rem",
+                97: "24.25rem",
+                98: "24.50rem",
+                99: "24.75rem",
+                100: "25rem",
                 "screen-60": "60vh"
             },
             boxShadow: {
@@ -119,6 +124,7 @@ module.exports = {
                 legendary: "#fc1870",
                 
                 font: "#fdfdfd",
+                "ultra-light": "rgba(253, 253, 253, 0.9)",
                 light: "#afafb4",
                 disabled: "#79797f",
             },
@@ -135,6 +141,7 @@ module.exports = {
                 8: "2rem",
                 9: "2.25rem",
                 10: "2.5rem",
+                16:"4rem",
                 20: "5rem",
                 24: "6rem"
             }

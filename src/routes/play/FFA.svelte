@@ -157,20 +157,23 @@
     <div class="flex items-center flex-col lg:flex-row lg:items-start h-full">
         <!--Main Player-->
         <!--TODO: Fix bug with user card-->
-        <div class="mt-4 lg:mt-25 ffa-player card user">
-            <img
-                    src="/assets/CharactersBanners/{user.legends}.png"
-                    alt={user.legends}
-                    class="block"/>
+        <div>
+            <div class="mt-4 lg:mt-25 ffa-player card user">
+                <img
+                        src="/assets/CharactersBanners/{user.legends}.png"
+                        alt={user.legends}
+                        class="block"/>
 
-            <p class="player-name text-3xl">{user.username}</p>
-            <div class="stats text-xl bottom-5 text-ultra-light">
-                <p>Games played: <b>{user.gamesPlayed}</b>/10</p>
-                <p>
-                    Games won: <b>{user.wins}</b>/{user.gamesPlayed}
-                </p>
+                <p class="player-name text-3xl">{user.username}</p>
+                <div class="stats text-xl bottom-5 text-ultra-light">
+                    <p>Games played: <b>{user.gamesPlayed}</b>/10</p>
+                    <p>
+                        Games won: <b>{user.wins}</b>/{user.gamesPlayed}
+                    </p>
+                </div>
             </div>
         </div>
+
 
         <!--Other Players-->
         <div

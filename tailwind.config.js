@@ -124,6 +124,7 @@ module.exports = {
                 legendary: "#fc1870",
                 
                 font: "#fdfdfd",
+                "extra-light": "rgba(253, 253, 253, 0.95)",
                 "ultra-light": "rgba(253, 253, 253, 0.9)",
                 light: "#afafb4",
                 disabled: "#79797f",

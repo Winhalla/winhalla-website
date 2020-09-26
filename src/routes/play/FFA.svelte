@@ -6,7 +6,7 @@
             username: "WeAreNoobs65",
             wins: 0,
             gamesPlayed: 0,
-            legends: "artemis",
+            legends: "artemis"
         },
         {
             steamId: 16438487,
@@ -14,7 +14,7 @@
             username: "Ghom",
             wins: 0,
             gamesPlayed: 0,
-            legends: "wu-shang",
+            legends: "wu-shang"
         },
         {
             steamId: 16438497,
@@ -22,7 +22,7 @@
             username: "Felons",
             wins: 0,
             gamesPlayed: 0,
-            legends: "mordex",
+            legends: "petra"
         },
         {
             steamId: 16438467,
@@ -30,7 +30,7 @@
             username: "Ayfri",
             wins: 0,
             gamesPlayed: 0,
-            legends: "jhala",
+            legends: "jhala"
         },
         {
             steamId: 16438457,
@@ -38,7 +38,7 @@
             username: "Reddo Shi",
             wins: 0,
             gamesPlayed: 0,
-            legends: "rayman",
+            legends: "rayman"
         },
         {
             steamId: 16438457,
@@ -46,7 +46,7 @@
             username: "Drakium",
             wins: 0,
             gamesPlayed: 0,
-            legends: "asuri",
+            legends: "asuri"
         },
         {
             steamId: 16438457,
@@ -54,7 +54,7 @@
             username: "Persan",
             wins: 0,
             gamesPlayed: 0,
-            legends: "azoth",
+            legends: "azoth"
         },
         {
             steamId: 16438457,
@@ -62,7 +62,7 @@
             username: "Philtrom",
             wins: 0,
             gamesPlayed: 0,
-            legends: "dusk",
+            legends: "dusk"
         },
         {
             steamId: 16438457,
@@ -70,7 +70,7 @@
             username: "Ludmix",
             wins: 0,
             gamesPlayed: 0,
-            legends: "diana",
+            legends: "diana"
         },
         {
             steamId: 16438457,
@@ -78,12 +78,12 @@
             username: "Swooz",
             wins: 0,
             gamesPlayed: 0,
-            legends: "orion",
-        },
+            legends: "orion"
+        }
     ];
 
     //Find user object
-    const primaryPlayer = players.find((p) => p.steamId === 16438497);
+    const user = players.find((p) => p.steamId === 16438497);
 
     //Delete primaryPlayer object from array.
     players.splice(
@@ -109,11 +109,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.68) 0%,
-            rgba(23, 23, 26, 0.88),
-            rgba(23, 23, 26, 0.95) 75%,
-            rgba(23, 23, 26, 0.98) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
         );
     }
 
@@ -123,19 +123,20 @@
     }
 
     .stats {
-        @apply absolute left-0 right-0 z-10 text-ultra-light;
+        @apply absolute left-0 right-0 z-10;
     }
 
     .user {
         @apply w-60 h-100;
     }
+
     .user::after {
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.55) 0%,
-            rgba(23, 23, 26, 0.76),
-            rgba(23, 23, 26, 0.87) 75%,
-            rgba(23, 23, 26, 0.95) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
         );
     }
 
@@ -147,42 +148,43 @@
 <svelte:head>
     <title>FFA</title>
 </svelte:head>
-<div class="h-full lg:ml-24">
-    <div class="mode-timer flex items-end lg:mt-12 border-primary w-60">
+<div class="h-full flex items-center flex-col lg:block lg:ml-24">
+    <div class="mode-timer flex justify-center lg:justify-start items-end lg:mt-12 border-primary w-60 mt-7 lg:mt-0">
         <h1 class="text-6xl">FFA</h1>
-        <p class="timer text-primary ml-5 text-3xl">2:45:23</p>
+        <p class="timer text-primary  ml-5 text-3xl">2:45:23</p>
     </div>
 
-    <div class="flex xl:ites-center h-full">
+    <div class="flex items-center flex-col lg:flex-row lg:items-start h-full">
         <!--Main Player-->
-        <div>
-            <div class="mt-25 ffa-player card user">
-                <img
-                    src="../assets/CharactersBanners/{primaryPlayer.legends}.png"
-                    alt={primaryPlayer.legends}
-                    class="block" />
+        <!--TODO: Fix bug with user card-->
+        <div class="mt-4 lg:mt-25 ffa-player card user">
+            <img
+                    src="/assets/CharactersBanners/{user.legends}.png"
+                    alt={user.legends}
+                    class="block"/>
 
-                <p class="player-name text-4xl">{primaryPlayer.username}</p>
-                <div class="stats bottom-6">
-                    <p>Games played: <b>{primaryPlayer.gamesPlayed}</b>/10</p>
-                    <p>
-                        Games won: <b>{primaryPlayer.wins}</b>/{primaryPlayer.gamesPlayed}
-                    </p>
-                </div>
+            <p class="player-name text-3xl">{user.username}</p>
+            <div class="stats text-xl bottom-5 text-ultra-light">
+                <p>Games played: <b>{user.gamesPlayed}</b>/10</p>
+                <p>
+                    Games won: <b>{user.wins}</b>/{user.gamesPlayed}
+                </p>
             </div>
         </div>
 
         <!--Other Players-->
-        <div class="flex flex-wrap lg:ml-33">
+        <div
+                class="flex flex-col justify-center lg:justify-start lg:flex-row
+                lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
             {#each players as player}
-                <div class="ffa-player card mr-12 mb-8">
+                <div class="ffa-player card lg:mr-12 mb-8">
                     <img
-                        src="../assets/CharactersBanners/{player.legends}.png"
-                        alt={player.legends}
-                        class="block" />
+                            src="/assets/CharactersBanners/{player.legends}.png"
+                            alt={player.legends}
+                            class="block"/>
 
                     <p class="player-name text-3xl">{player.username}</p>
-                    <div class="stats text-xl bottom-5">
+                    <div class="stats text-xl bottom-5 text-ultra-light">
                         <p>Games played: <b>{player.gamesPlayed}</b>/10</p>
                         <p>
                             Games won: <b>{player.wins}</b>/{player.gamesPlayed}

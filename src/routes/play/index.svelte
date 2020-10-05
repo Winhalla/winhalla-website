@@ -162,7 +162,7 @@
 <svelte:head>
     <title>Play</title>
 </svelte:head>
-<div class="lg:block lg:pl-24 pt-8 lg:pt-10 h-full w-full">
+<div class="lg:block lg:pl-24 pt-8 lg:pt-12 h-full w-full">
     <div class="page-title text-center lg:text-left">
         <h1 class="text-6xl">Choose a game mode</h1>
     </div>

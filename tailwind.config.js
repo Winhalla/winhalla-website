@@ -98,7 +98,7 @@ module.exports = {
                 "card-hover": "0px 0px 10px rgba(255, 255, 255, 0.225)",
                 "button-hover": "0px 0px 10px rgba(255, 255, 255, 0.2)",
                 "button-alternative-hover":
-                    "0px 0px 8px rgba(255, 255, 255, 0.125)",
+                    "0px 0px 8px rgba(255, 255, 255, 0.125)"
             },
             textShadow: {
                 "link-hover": "0px 0px 10px rgba(255, 255, 255, 0.5)",
@@ -106,11 +106,11 @@ module.exports = {
             },
 
             fontSize: {
-                '7xl': '5rem',
-                '8xl': '6rem',
-                '9xl': '7rem',
-                logo: '1.6rem',
-                default: '1.4rem',
+                "7xl": "5rem",
+                "8xl": "6rem",
+                "9xl": "7rem",
+                logo: "1.6rem",
+                default: "1.4rem"
 
             },
             colors: {
@@ -122,16 +122,26 @@ module.exports = {
                 green: "#3de488",
                 epic: "#ee38ff",
                 legendary: "#fc1870",
-                
+
                 font: "#fdfdfd",
                 "extra-light": "rgba(253, 253, 253, 0.95)",
                 "ultra-light": "rgba(253, 253, 253, 0.9)",
+                "mid-light": "rgba(253, 253, 253, 0.8)",
                 light: "#afafb4",
-                disabled: "#79797f",
+                disabled: "#79797f"
             },
 
             inset: {
-                "minus-10": "-2.5rem",
+                "-10": "-2.5rem",
+                "-9": "2.25rem",
+                "-8": "-2rem",
+                "-7": "-1.75rem",
+                "-6": "-1.5rem",
+                "-5": "-1.25rem",
+                "-4": "-1rem",
+                "-3": "-0.75rem",
+                "-2": "-0.50rem",
+                "-1": "-0.25rem",
                 1: "0.25rem",
                 2: "0.50rem",
                 3: "0.75rem",
@@ -142,14 +152,14 @@ module.exports = {
                 8: "2rem",
                 9: "2.25rem",
                 10: "2.5rem",
-                16:"4rem",
+                16: "4rem",
                 20: "5rem",
                 24: "6rem"
             }
-        },
+        }
 
-        
+
     },
     variants: {},
-    plugins: [require("tailwindcss-textshadow")],
+    plugins: [require("tailwindcss-textshadow")]
 };

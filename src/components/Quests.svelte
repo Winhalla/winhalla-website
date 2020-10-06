@@ -92,10 +92,6 @@
         @apply absolute h-full top-0 bg-background flex items-center justify-center text-center;
     }
 
-    .reward {
-        color: #d321e4;
-    }
-
     .tip-text {
         padding-top: 0.15rem;
     }

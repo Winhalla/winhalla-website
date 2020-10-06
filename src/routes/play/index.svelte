@@ -3,7 +3,7 @@
 
     const gameModes = [
         {
-            name: "FFA",
+            name: "ffa",
             description: "Fight against <b>9</b> players!",
             goal:
                 "Be the one who has the <b>most wins</b> out of <b>10 games</b> to win!",

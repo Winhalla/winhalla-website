@@ -1,7 +1,7 @@
 <script>
     import FfaEnd from "../../components/FfaEnd.svelte";
 
-    let matchEnded = true;
+    let matchEnded = false;
 
     const data = {
         players: [
@@ -113,7 +113,7 @@
     }
 
     .timer {
-        margin-bottom: 0.32rem;
+        margin-bottom: 0.35rem;
     }
 </style>
 

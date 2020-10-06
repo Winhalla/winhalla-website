@@ -81,7 +81,6 @@
     </div>
 
     <div class="flex flex-col lg:items-center mt-8 lg:mt-0 relative lg:ml-24">
-        <!--TODO:le mettre au dessus des bannières + fix alignement de p -->
 
         <div class="flex flex-col items-center lg:flex-row">
 

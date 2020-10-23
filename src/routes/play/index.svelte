@@ -160,7 +160,7 @@
 </style>
 
 <svelte:head>
-    <title>Play</title>
+    <title>Play | Winhalla</title>
 </svelte:head>
 <div class="lg:block lg:pl-24 pt-8 lg:pt-12 h-full w-full">
     <div class="page-title text-center lg:text-left">

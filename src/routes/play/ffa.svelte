@@ -1,7 +1,7 @@
 <script>
     import FfaEnd from "../../components/FfaEnd.svelte";
 
-    let matchEnded = false;
+    let matchEnded = true;
 
     const data = {
         players: [

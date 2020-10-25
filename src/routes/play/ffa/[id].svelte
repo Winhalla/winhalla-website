@@ -12,6 +12,7 @@
     import { callApi, getUser } from "../../../utils/api";
 
     import FfaEnd from "../../../components/FfaEnd.svelte";
+    import Loading from "../../../components/Loading.svelte";
 
     export let id;
 
@@ -76,7 +77,7 @@
         user = await getUser();
         user = user.steam;
 
-        console.log(user.id)
+        console.log(user.id);
         match = await callApi("get", `/getMatch/${id}`);
         isMatchEnded = match.finished;
 
@@ -97,7 +98,7 @@
 
     function startTimer(duration) {
         let timer = duration, hours, minutes, seconds;
-        setInterval(function () {
+        setInterval(function() {
             seconds = Math.floor((timer) % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor((timer / (60 * 60)));
@@ -170,69 +171,73 @@
 <svelte:head>
     <title>FFA</title>
 </svelte:head>
-{#if match}
-    {#if isMatchEnded}
-        <FfaEnd players={match.players} winners={match.winners}/>
-    {:else}
-        <div class="h-full flex items-center flex-col lg:block lg:ml-24">
-            <div class="mode-timer flex justify-center lg:justify-start items-end lg:mt-12 w-60 mt-7 lg:mt-0">
-                <h1 class="text-6xl">FFA</h1>
-                <p class="timer text-primary ml-5 text-3xl">{countDown}</p>
-            </div>
 
-            <div class="flex items-center flex-col lg:flex-row lg:items-start h-full">
+<div class="h-full">
+    {#if match}
+        {#if isMatchEnded}
+            <FfaEnd players={match.players} winners={match.winners}/>
+        {:else}
+            <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="mode-timer flex justify-center lg:justify-start items-end lg:mt-12 w-60 mt-7 lg:mt-0">
+                    <h1 class="text-6xl">FFA</h1>
+                    <p class="timer text-primary ml-5 text-3xl">{countDown}</p>
+                </div>
 
-                <!--Main Player-->
-                {#if userPlayer}
-                    <div>
-                        <div class="mt-4 lg:mt-25 ffa-player card user">
-                            <img
-                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                    alt={userPlayer.legends}
-                                    class="block"/>
+                <div class="flex items-center flex-col lg:flex-row lg:items-start h-full">
 
-                            <p class="player-name text-4xl">{userPlayer.username}</p>
-                            <div class="stats text-2xl bottom-5 text-ultra-light">
-                                <p>Games played: <b>{userPlayer.gamesPlayed}</b>/10</p>
-                                <p>
-                                    Games won: <b>{userPlayer.wins}</b>/{userPlayer.gamesPlayed}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                {/if}
-
-
-
-                <!--Other Players-->
-                {#if players}
-                    <div
-                            class="flex flex-col justify-center lg:justify-start lg:flex-row
-                    lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
-                        {#each players as player}
-                            <div class="ffa-player card lg:mr-12 mb-8">
+                    <!--Main Player-->
+                    {#if userPlayer}
+                        <div>
+                            <div class="mt-4 lg:mt-25 ffa-player card user">
                                 <img
-                                        src="/assets/CharactersBanners/{player.legends}.png"
-                                        alt={player.legends}
+                                        src="/assets/CharactersBanners/{userPlayer.legends}.png"
+                                        alt={userPlayer.legends}
                                         class="block"/>
 
-                                <p class="player-name text-3xl">{player.username}</p>
-                                <div class="stats text-xl bottom-5 text-ultra-light">
-                                    <p>Games played: <b>{player.gamesPlayed}</b>/10</p>
+                                <p class="player-name text-4xl">{userPlayer.username}</p>
+                                <div class="stats text-2xl bottom-5 text-ultra-light">
+                                    <p>Games played: <b>{userPlayer.gamesPlayed}</b>/10</p>
                                     <p>
-                                        Games won: <b>{player.wins}</b>/{player.gamesPlayed}
+                                        Games won: <b>{userPlayer.wins}</b>/{userPlayer.gamesPlayed}
                                     </p>
                                 </div>
                             </div>
-                        {/each}
-                    </div>
-                {/if}
+                        </div>
+                    {/if}
 
+
+
+                    <!--Other Players-->
+                    {#if players}
+                        <div
+                                class="flex flex-col justify-center lg:justify-start lg:flex-row
+                    lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
+                            {#each players as player}
+                                <div class="ffa-player card lg:mr-12 mb-8">
+                                    <img
+                                            src="/assets/CharactersBanners/{player.legends}.png"
+                                            alt={player.legends}
+                                            class="block"/>
+
+                                    <p class="player-name text-3xl">{player.username}</p>
+                                    <div class="stats text-xl bottom-5 text-ultra-light">
+                                        <p>Games played: <b>{player.gamesPlayed}</b>/10</p>
+                                        <p>
+                                            Games won: <b>{player.wins}</b>/{player.gamesPlayed}
+                                        </p>
+                                    </div>
+                                </div>
+                            {/each}
+                        </div>
+                    {/if}
+
+                </div>
             </div>
-        </div>
 
+        {/if}
+    {:else}
+        <Loading/>
     {/if}
-{:else}
-    <p>Loading...</p>
-{/if}
+</div>
+
 

@@ -3,6 +3,7 @@
     import { callApi } from "../../../utils/api";
     import { goto } from "@sapper/app";
     import { apiUrl } from "../../../utils/config";
+    import Loading from "../../../components/Loading.svelte";
 
     onMount(async () => {
 
@@ -15,3 +16,5 @@
         goto(`/play/ffa/${id}`);
     });
 </script>
+
+<Loading />

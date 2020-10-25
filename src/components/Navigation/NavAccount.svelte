@@ -1,5 +1,6 @@
 <script>
     import { clickOutside } from "../../utils/clickOutside";
+    import { apiUrl } from "../../utils/config";
 
     export let username;
     export let avatar;
@@ -49,6 +50,6 @@
             class="block text-red-500 text-lg border-l border-red-600 py-3
                 lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm
                 lg:border-none"
-            href="/logout">Logout</a>
+            href="{apiUrl}/auth/logout">Logout</a>
     </div>
 </div>

@@ -1,5 +1,7 @@
 <script>
     import Quests from "../../components/Quests.svelte";
+    import { onMount } from "svelte";
+    import { callApi } from "../../utils/api";
 
     const gameModes = [
         {
@@ -18,7 +20,7 @@
         },
     ];
 
-    const quests = {
+    /*const quests = {
         dailyQuests: [
             {
                 questName: "Do 10 Orb KOs",
@@ -100,7 +102,17 @@
                 },
             ],
         },
-    };
+    };*/
+    let quests;
+    onMount(async () => {
+        quests = await callApi("get", "/getSolo");
+        quests = quests.solo;
+
+        if(!quests.lastDaily || !quests.lastWeekly) {
+            quests = await callApi("get", "/solo");
+        }
+        console.log(quests)
+    });
 </script>
 
 <style>
@@ -206,7 +218,9 @@
             {/each}
         </div>
         <div>
-            <Quests data={quests} />
+            {#if quests}
+                <Quests data={quests} />
+            {/if}
         </div>
     </div>
 </div>

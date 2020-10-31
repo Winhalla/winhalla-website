@@ -1,6 +1,8 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
+
+    export let segment;
 </script>
 
 <style>
@@ -25,6 +27,7 @@
         href="../../fontisto-master/css/fontisto/fontisto.min.css" />
 </svelte:head>
 
+{#if segment}{/if}
 <div class="font w-full min-h-screen h-full flex flex-col">
     <Nav />
 

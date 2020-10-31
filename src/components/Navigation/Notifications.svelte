@@ -14,6 +14,7 @@
     const idToType = (id) => {
         if (id === 0) return "match finished";
         if (id === 1) return "quest finished";
+        if (id === 2) return "match";
     };
 </script>
 
@@ -79,7 +80,7 @@
             class:hidden={!isDropdownOpen}
             class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
             shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92
-            border border-primary">
+            border border-primary overflow-y-scroll h-screen-80">
         <div>
             {#if data.notifications}
                 <div>
@@ -93,11 +94,14 @@
                                     <p class="ml-2 mr-6 lg:mr-12 text-2xl">
                                         {notification.message}
                                     </p>
-                                    <p
-                                            class="ml-2 mr-6 lg:mr-12 text-light
+                                    {#if notification.tip}
+                                        <p
+                                                class="ml-2 mr-6 lg:mr-12 text-light
                                             text-lg">
-                                        {notification.tip}
-                                    </p>
+                                            {notification.tip}
+                                        </p>
+                                    {/if}
+
                                 </div>
                                 <span
                                         class="quest-goal text-sm text-font px-2
@@ -128,7 +132,8 @@
                                     </p>
                                 </div>
                                 <p class="quest-goal text-xl text-primary">
-                                    {!match.isFinished ? match.progress : 'Waiting for others to finish'}
+                                    <!--{#if match.hasStarted}{/if}-->
+                                    {!match.isFinished ? match.progress + "/10" : 'Waiting for others to finish'}
                                 </p>
                             </a>
                         {/each}

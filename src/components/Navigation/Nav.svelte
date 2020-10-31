@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
     import Notifications from "./Notifications.svelte";
@@ -7,6 +8,7 @@
 
     import { apiUrl } from "../../utils/config";
     import { callApi, getUser } from "../../utils/api";
+    import { goto } from "@sapper/app";
 
 
     let isNavbarOpen;
@@ -14,6 +16,7 @@
 
     let user;
     let informations;
+    let notificationsObj = {};
 
     let data = {
         notifications: [
@@ -48,15 +51,24 @@
     };
 
     onMount(async () => {
-        informations = await callApi("get", "/informations");
 
-        user = await getUser();
+
+        try {
+            informations = await callApi("get", "/informations");
+            user = await getUser();
+
+        } catch (e) {
+            goto("/status");
+        }
+
+        console.log("USER", user == undefined)
+
+        notificationsObj.notifications = user.user.notifications;
+        notificationsObj.inGame = user.user.inGame;
+
         user = user.steam;
 
         isUserLoggedIn = !!user;
-
-
-        console.log(user, "INFOS", informations);
     });
 
 
@@ -98,6 +110,8 @@
             </div>
             <button
                     class="focus:outline-none"
+                    use:clickOutside
+                    on:click_outside={() => (isNavbarOpen = false)}
                     on:click={() => {
                     isNavbarOpen = !isNavbarOpen;
                 }}>
@@ -177,10 +191,12 @@
                         <NavAccount
                                 username={user.displayName}
                                 avatar={user.photos[1].value}/>
+                        {#if notificationsObj}
+                            <div class="hidden lg:flex items-center">
+                                <Notifications data={notificationsObj}/>
+                            </div>
+                        {/if}
 
-                        <div class="hidden lg:flex items-center">
-                            <Notifications {data}/>
-                        </div>
                     </div>
                 {:else}
                     <a class="button-brand button mr-3" href="{apiUrl}/auth/login">

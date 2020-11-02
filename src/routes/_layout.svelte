@@ -25,21 +25,6 @@
     <link
             rel="stylesheet"
             href="../../fontisto-master/css/fontisto/fontisto.min.css"/>
-
-    <!--Google Analytics-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ7J8EE2E5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            window.dataLayer.push(arguments);
-        }
-
-        gtag("js", new Date());
-
-        gtag("config", "G-MQ7J8EE2E5");
-    </script>
-
     <!--Adsense-->
     <script data-ad-client="ca-pub-6149483070204658" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </svelte:head>

@@ -2,7 +2,7 @@
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
 
-    export let segment;
+    //export let segment;
 </script>
 
 <style>
@@ -16,22 +16,38 @@
     }
 </style>
 
-<Tailwindcss />
+<Tailwindcss/>
 
 <svelte:head>
     <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-        rel="stylesheet" />
+            href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+            rel="stylesheet"/>
     <link
-        rel="stylesheet"
-        href="../../fontisto-master/css/fontisto/fontisto.min.css" />
+            rel="stylesheet"
+            href="../../fontisto-master/css/fontisto/fontisto.min.css"/>
+
+    <!--Google Analytics-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ7J8EE2E5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            window.dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+
+        gtag("config", "G-MQ7J8EE2E5");
+    </script>
+
+    <!--Adsense-->
+    <script data-ad-client="ca-pub-6149483070204658" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </svelte:head>
 
-{#if segment}{/if}
 <div class="font w-full min-h-screen h-full flex flex-col">
-    <Nav />
+    <Nav/>
 
     <main class="bg-background text-font text-default min-h-screen h-full">
-        <slot class="flex-grow bg-background" />
+        <slot class="flex-grow bg-background"/>
     </main>
 </div>

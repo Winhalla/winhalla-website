@@ -3,7 +3,7 @@
     import { getUser } from "../utils/api";
     import { goto } from "@sapper/app";
 
-    export let segment;
+    //export let segment;
 
     let isApiDown = false;
 

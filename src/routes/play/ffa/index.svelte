@@ -7,13 +7,14 @@
 
     onMount(async () => {
 
-        const id = await callApi("get", "/lobby");
+        /*const id = await callApi("get", "/lobby");
         console.log("id", id);
         if (!id) {
             goto(`${apiUrl}/auth/login`);
-        }
+        }*/
 
-        goto(`/play/ffa/${id}`);
+        //goto(`/play/ffa/${id}`);
+        goto(`/play/ffa/daezffefaz1`);
     });
 </script>
 

@@ -121,7 +121,7 @@
                     <div class="pb-1">
                         {#each data.finished.daily as quest}
                             <button
-                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm quest-infos">
                                 <span>Click to collect</span>
                                 <div class="progress-container">
                                     <svg
@@ -177,7 +177,7 @@
                 {#if data.collected && data.collected.daily}
                     <div class="pt-5">
                         {#each data.collected.daily as quest}
-                            <div class="card quest text-disabled italic max-w-sm">
+                            <div class="card quest text-disabled italic max-w-sm quest-infos">
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-lg">
                                         Collected
@@ -202,7 +202,7 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest}
                             <button
-                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm quest-infos">
                                 <span>Click to collect</span>
                                 <div class="progress-container">
                                     <svg
@@ -255,7 +255,7 @@
                 {#if data.collected && data.collected.weekly}
                     <div class="pt-5">
                         {#each data.collected.weekly as quest}
-                            <div class="card quest text-disabled italic max-w-sm">
+                            <div class="card quest text-disabled italic max-w-sm quest-infos">
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-lg">
                                         Collected

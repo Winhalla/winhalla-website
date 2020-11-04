@@ -80,7 +80,7 @@
             class:hidden={!isDropdownOpen}
             class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
             shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92
-            border border-primary overflow-y-scroll h-screen-80">
+            border border-primary overflow-y-scroll max-h-screen-80">
         <div>
             {#if data.notifications}
                 <div>

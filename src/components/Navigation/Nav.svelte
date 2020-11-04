@@ -53,18 +53,69 @@
     onMount(async () => {
 
 
-        try {
+        /*try {
             informations = await callApi("get", "/informations");
             user = await getUser();
 
         } catch (e) {
             goto("/status");
-        }
-
-        console.log("USER", user == undefined)
-
-        notificationsObj.notifications = user.user.notifications;
-        notificationsObj.inGame = user.user.inGame;
+        }*/
+        user = {
+            "steam": {
+                "provider": "steam",
+                "_json": {
+                    "steamid": "76561198860469699",
+                    "communityvisibilitystate": 3,
+                    "profilestate": 1,
+                    "personaname": "23Felons23",
+                    "profileurl": "https://steamcommunity.com/profiles/76561198860469699/",
+                    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f.jpg",
+                    "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_medium.jpg",
+                    "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg",
+                    "avatarhash": "ef5ba04474789d724a8f24fc4599f38ff435b05f",
+                    "lastlogoff": 1603627962,
+                    "personastate": 1,
+                    "realname": "Slavik Zhyhota",
+                    "primaryclanid": "103582791429521408",
+                    "timecreated": 1537111124,
+                    "personastateflags": 0,
+                    "loccountrycode": "FR"
+                },
+                "id": "76561198860469699",
+                "displayName": "23Felons23",
+                "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg" }],
+                "identifier": "https://steamcommunity.com/openid/id/76561198860469699"
+            },
+            "user": {
+                "solo": {
+                    "finished": { "daily": [], "weekly": [] },
+                    "collected": { "daily": [], "weekly": [] },
+                    "logs": [],
+                    "dailyQuests": [],
+                    "weeklyQuests": []
+                },
+                "lastQuests": { "daily": [], "weekly": [] },
+                "stats": {
+                    "ffa": { "wins": 0, "gamesPlayed": 0 },
+                    "2v2": { "wins": 0, "gamesPlayed": 0 },
+                    "solo": { "wins": 0, "gamesPlayed": 0 }
+                },
+                "isSucpicious": { "ffa": false, "solo": false },
+                "inGame": [],
+                "notifications": [],
+                "boost": 0,
+                "_id": "5fa2f9d3246a514644bf0187",
+                "steamId": 76561198860469700,
+                "brawlhallaId": 29829885,
+                "brawlhallaName": "23Felons23",
+                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg",
+                "coins": 0,
+                "lastGames": []
+            }
+        };
+        /*notificationsObj.notifications = user.user.notifications;
+        notificationsObj.inGame = user.user.inGame;*/
+        notificationsObj = data;
 
         user = user.steam;
 
@@ -102,9 +153,10 @@
         <div class="pr-6 lg:hidden flex -mt-2">
 
             <div class="flex lg:hidden items-center">
+                <!--
                 {#if informations}
                     <NavAlert data={informations}/>
-                {/if}
+                {/if}-->
 
                 <Notifications {data}/>
             </div>
@@ -137,6 +189,7 @@
     <div class:hidden={!isNavbarOpen} class="lg:block w-full">
         <div class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
             <div class="ml-7 links text-xl lg:flex">
+                <!--
                 <a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
@@ -149,7 +202,7 @@
                                 d="m10 12v8h-4v-8zm6-8v16h-4v-16zm16 18v2h-32v-24h2v22zm-10-14v12h-4v-12zm6-6v18h-4v-18z"/>
                     </svg>
                     PROFILE
-                </a>
+                </a>-->
                 <a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"

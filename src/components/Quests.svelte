@@ -1,10 +1,16 @@
 <script>
     export let data;
 
-    const calculateRarity = (reward) => {
-        if (reward < 2000) return "primary";
-        if (reward < 3000) return "epic";
-        if (reward <= 4000) return "legendary";
+    const calculateRarity = (reward, daily) => {
+        if(daily) {
+            if (reward == 100) return "primary";
+            if (reward == 200) return "epic";
+            if (reward == 400) return "legendary";
+        } else {
+            if (reward == 300) return "primary";
+            if (reward == 500) return "epic";
+            if (reward == 1000) return "legendary";
+        }
     };
 
     const calculateProgressBarWidth = (progress, goal) => {
@@ -121,12 +127,12 @@
                     <div class="pb-1">
                         {#each data.finished.daily as quest}
                             <button
-                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm">
                                 <span>Click to collect</span>
                                 <div class="progress-container">
                                     <svg
                                             class="fill-current checkbox-active
-                                            text-{calculateRarity(quest.reward)}"
+                                            text-{calculateRarity(quest.reward, true)}"
                                             viewBox="0 0 27 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -149,7 +155,7 @@
                     <div>
                         {#each data.dailyQuests as quest}
 
-                            <div class="relative card quest progress-{calculateRarity(quest.reward)} max-w-sm">
+                            <div class="relative card quest progress-{calculateRarity(quest.reward, true)} max-w-sm">
                                 <div class="quest-infos">
                                     <span>{quest.reward}$</span>
                                     <div class="progress-container">
@@ -166,7 +172,7 @@
                                     </div>
                                     <p class="quest-goal">{quest.name}</p>
                                 </div>
-                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward)}" style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
+                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}" style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
                                 </div>
                             </div>
 
@@ -202,12 +208,12 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest}
                             <button
-                                    class="card quest finished border-2 border-{calculateRarity(quest.reward)} max-w-sm">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm">
                                 <span>Click to collect</span>
                                 <div class="progress-container">
                                     <svg
                                             class="fill-current checkbox-active
-                                            text-{calculateRarity(quest.reward)}"
+                                            text-{calculateRarity(quest.reward, false)}"
                                             viewBox="0 0 27 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -229,7 +235,7 @@
                 {#if data.weeklyQuests}
                     <div>
                         {#each data.weeklyQuests as quest}
-                            <div class="relative card quest progress-{calculateRarity(quest.reward)} max-w-sm">
+                            <div class="relative card quest progress-{calculateRarity(quest.reward, false)} max-w-sm">
                                 <div class="quest-infos">
                                     <span>{quest.reward}$</span>
                                     <div class="progress-container">
@@ -246,7 +252,7 @@
                                     </div>
                                     <p class="quest-goal">{quest.name}</p>
                                 </div>
-                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward)}" style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
+                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}" style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
                                 </div>
                             </div>
                         {/each}

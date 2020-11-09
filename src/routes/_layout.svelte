@@ -26,7 +26,6 @@
             rel="stylesheet"
             href="../../fontisto-master/css/fontisto/fontisto.min.css"/>
     <!--Adsense-->
-    <script data-ad-client="ca-pub-6149483070204658" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </svelte:head>
 
 <div class="font w-full min-h-screen h-full flex flex-col">

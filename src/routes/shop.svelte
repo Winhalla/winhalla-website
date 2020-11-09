@@ -1,4 +1,5 @@
-<script>
+
+<script context=module>
     import { onMount } from "svelte";
     import { callApi } from "../utils/api";
 
@@ -6,20 +7,27 @@
     let featuredItem;
     let seasonPacks;
     let packs;
+    let player;
 
-    onMount(async () => {
+    export async function preload() {
         items = await callApi("get", "/shop");
-        items.forEach(item => {
+        player = await callApi("get", "/account")
+        if(player.user){
+            player = player.user.coins
+        }else{
+            player = 0
+        }
+        items.forEach((item,i) => {
+            items[i].unBuyable = false
             item.name = item.name.toLowerCase().replace(/\s/g, "-");
+            if(item.cost >= player) items[i].unBuyable = true
         });
         featuredItem = await items.find(i => i.state === 0);
         seasonPacks = await items.filter(i => i.state === 1);
         packs = await items.filter(i => i.state === 2);
 
-
         //featuredItem = featuredItem.name
-        console.log(packs);
-    });
+    }
 </script>
 
 <style>
@@ -41,6 +49,10 @@
                 rgba(23, 23, 26, 0.83) 75%,
                 rgba(23, 23, 26, 0.92) 100%
         );
+    }
+    button:disabled{
+        background-color: brown;
+        cursor: default
     }
 </style>
 
@@ -86,9 +98,9 @@
                 <div class="absolute bottom-0 z-10 px-10 pb-3 w-full">
                     <div class="flex justify-between w-full items-center">
                             <p class="text-accent text-6xl">{featuredItem.name.toLowerCase().replace(/\-/g, " ")}</p>
-                        <div class="px-4 py-1 bg-primary rounded">
+                        <button disabled={featuredItem.unBuyable} on:click={()=>callApi("post",`/buy/${featuredItem.id}`)} class="px-4 py-1 bg-primary rounded">
                             <p class="text-2xl"><b class="mr-1 font-normal">{featuredItem.cost}</b>$</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -98,7 +110,7 @@
                 Season packs
             </h2>
             <div class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
-                {#each seasonPacks as seasonPack}
+                {#each seasonPacks as seasonPack,i}
                     <div class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
                         <img class="w-full h-full block " src="assets/ShopItems/{seasonPack.name}.jpg"
                              alt="{seasonPack.name}">
@@ -113,9 +125,9 @@
                                     </div>
 
                                 </div>
-                                <div class="px-4 py-1 bg-primary rounded">
+                                <button disabled={seasonPack.unBuyable}  on:click={()=>callApi("post",`/buy/${seasonPack.id}`)} class="px-4 py-1 bg-primary rounded">
                                     <p class="text-2xl"><b class="mr-1 font-normal">{seasonPack.cost}</b>$</p>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -138,9 +150,9 @@
                                     <p class="text-accent text-5xl">{pack.name.toLowerCase().replace(/\-/g, " ")}</p>
                                     <p class="-mt-2">{pack.description}</p>
                                 </div>
-                                <div class="px-4 py-1 bg-primary rounded">
+                                <button disabled={pack.unBuyable} on:click={()=>callApi("post",`/buy/${pack.id}`)} class="px-4 py-1 bg-primary rounded">
                                     <p class="text-2xl"><b class="mr-1 font-normal">{pack.cost}</b>$</p>
-                                </div>
+                                </button>
                             </div>
                         </div>
 

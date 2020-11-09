@@ -166,7 +166,7 @@
                 <a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
-                        href="/shop">
+                        href="/shop" rel=prefetch>
                     <svg
                             class="fill-current play"
                             viewBox="0 0 22 24"

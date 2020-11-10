@@ -97,7 +97,7 @@
 <nav class="fixed z-50 lg:flex items-center bg-background text-font w-full">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="lo o-container pl-7 lg:pl-24 lg:pr-34 text-logo">
-            <a class="logo" href="/"> WINHALLA </a>
+            <a class="logo" href="/" rel=prefetch> WINHALLA </a>
         </div>
         <div class="pr-6 lg:hidden flex -mt-2">
 
@@ -153,7 +153,7 @@
                 <a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
-                        href="/play">
+                        href="/play" rel=prefetch>
                     <svg
                             class="fill-current play"
                             viewBox="0 0 24 24"

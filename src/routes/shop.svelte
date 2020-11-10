@@ -1,4 +1,3 @@
-
 <script context=module>
     import { onMount } from "svelte";
     import { callApi } from "../utils/api";

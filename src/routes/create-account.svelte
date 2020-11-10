@@ -7,11 +7,10 @@
     let link;
     let linkId;
     let valid;
-    function onKeyPress(e) {
+    function onKeyPress() {
         setTimeout(async () => {
             try {
                 linkId = new URL(link);
-                console.log(linkId.pathname);
                 linkId = linkId.pathname.split("/")[2];
                 if (linkId.length == 24) {
                     const testLink = await callApi("get", `/getLink/${linkId}`);
@@ -22,7 +21,7 @@
             } catch (err) {
                 valid = false;
             }
-        },100);
+        }, 100);
     }
     onMount(async () => {
         account = await callApi("get", "/account");
@@ -32,11 +31,11 @@
         try {
             linkId = new URL(link);
             linkId = linkId.pathname.split("/")[2];
-            await callApi("post",`/auth/createAccount?email=${email}&linkId=${linkId}`);
-            goto("/");
         } catch (err) {
             console.log(err);
         }
+        await callApi("post",`/auth/createAccount?email=${email}&linkId=${linkId}`);
+        goto("/");
     }
 </script>
 

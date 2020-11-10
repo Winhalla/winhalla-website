@@ -1,4 +1,4 @@
-<script>
+<script context module>
     import Quests from "../../components/Quests.svelte";
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
@@ -106,27 +106,33 @@
         },
     };*/
     let quests;
-    onMount(async () => {
-        //Check wich game mode is enabled in config, and then adapt the property available of gameModes object.
-        let gameModesStatus = await callApi("get", "/status");
-        if (gameModesStatus) {
-            gameModesStatus = gameModesStatus.find(s => s.name === "GAMEMODES STATUS");
-            gameModesStatus = gameModesStatus.value;
+    export async function preload() {
+        try {
+            //Check wich game mode is enabled in config, and then adapt the property available of gameModes object.
+            let gameModesStatus = await callApi("get", "/status");
+            if (gameModesStatus) {
+                gameModesStatus = gameModesStatus.find(
+                    s => s.name === "GAMEMODES STATUS"
+                );
+                gameModesStatus = gameModesStatus.value;
 
-            Object.keys(gameModesStatus).forEach(gameModeName => {
-                const gameMode = gameModes.find(g => g.name === gameModeName.toLowerCase());
-                gameMode.available = gameModesStatus[gameModeName];
-            });
-        }
+                Object.keys(gameModesStatus).forEach(gameModeName => {
+                    const gameMode = gameModes.find(
+                        g => g.name === gameModeName.toLowerCase()
+                    );
+                    gameMode.available = gameModesStatus[gameModeName];
+                });
+            }
 
-        //Load quests for user
-        quests = await callApi("get", "/getSolo");
-        quests = quests.solo;
+            //Load quests for user
+            quests = await callApi("get", "/getSolo");
+            quests = quests.solo;
 
-        if (!quests.lastDaily || !quests.lastWeekly) {
-            quests = await callApi("get", "/solo");
-        }
-    });
+            if (!quests.lastDaily || !quests.lastWeekly) {
+                quests = await callApi("get", "/solo");
+            }
+        } catch (err) {}
+    }
 </script>
 
 <style>
@@ -153,11 +159,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.65) 0%,
-                rgba(23, 23, 26, 0.83),
-                rgba(23, 23, 26, 0.92) 75%,
-                rgba(23, 23, 26, 0.97) 100%
+            to bottom,
+            rgba(23, 23, 26, 0.65) 0%,
+            rgba(23, 23, 26, 0.83),
+            rgba(23, 23, 26, 0.92) 75%,
+            rgba(23, 23, 26, 0.97) 100%
         );
     }
 
@@ -169,11 +175,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.65) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.4) 75%,
-                rgba(23, 23, 26, 0.4) 100%
+            to bottom,
+            rgba(23, 23, 26, 0.65) 0%,
+            rgba(23, 23, 26, 0.75),
+            rgba(23, 23, 26, 0.4) 75%,
+            rgba(23, 23, 26, 0.4) 100%
         );
         @apply z-30;
     }
@@ -220,27 +226,28 @@
         <h1 class="text-6xl">Choose a game mode</h1>
     </div>
     <div
-            class="flex flex-col items-center lg:items-start lg:flex-wrap
-            lg:flex-row">
+        class="flex flex-col items-center lg:items-start lg:flex-wrap
+        lg:flex-row">
         <div
-                class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
-                flex flex-col items-center lg:flex-row lg:items-start">
+            class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
+            flex flex-col items-center lg:flex-row lg:items-start">
             {#each gameModes as gameMode}
-                <a      class:locked={!gameMode.available}
-                        class="game-mode-card block relative shadow-card border
-                        border-transparent hover:border-primary
-                        hover:shadow-card-hover mb-10 lg:mb-0 lg:mr-15 relative"
-                        href="/play/{gameMode.name}">
+                <a
+                    class:locked={!gameMode.available}
+                    class="game-mode-card block relative shadow-card border
+                    border-transparent hover:border-primary
+                    hover:shadow-card-hover mb-10 lg:mb-0 lg:mr-15 relative"
+                    href="/play/{gameMode.name}">
                     <div class="locked-gradient">
                         <img
-                                src="../assets/ModeBanners/{gameMode.name}.jpg"
-                                alt={gameMode.name}
-                                class="game-mode-image object-cover block"/>
+                            src="../assets/ModeBanners/{gameMode.name}.jpg"
+                            alt={gameMode.name}
+                            class="game-mode-image object-cover block" />
                         <div
-                                class="game-mode-text-container absolute z-10 top-0
+                            class="game-mode-text-container absolute z-10 top-0
                             bottom-0 left-0 right-0">
                             <h3
-                                    class="absolute text-6xl top-24 left-0 right-0
+                                class="absolute text-6xl top-24 left-0 right-0
                                 text-shadow-link-hover">
                                 {gameMode.name}
                             </h3>
@@ -260,8 +267,20 @@
 
                     {#if gameMode.available}
                         <!--Locked icon-->
-                        <svg class="fill-current text-light w-12 absolute lock" viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m3.5 6.5v3.5h-1.5c-1.105 0-2 .895-2 2v10c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-10c0-1.105-.895-2-2-2h-1.5v-3.5c0-3.59-2.91-6.5-6.5-6.5s-6.5 2.91-6.5 6.5zm2.5 3.5v-3.5c0-2.209 1.791-4 4-4s4 1.791 4 4v3.5zm2 5.5c0-1.105.895-2 2-2s2 .895 2 2c0 .701-.361 1.319-.908 1.676l-.008.005s.195 1.18.415 2.57v.001c0 .414-.335.749-.749.749-.001 0-.001 0-.002 0h-1.499-.001c-.414 0-.749-.335-.749-.749v-.001l.415-2.57c-.554-.361-.916-.979-.916-1.68z"/>
+                        <svg
+                            class="fill-current text-light w-12 absolute lock"
+                            viewBox="0 0 20 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="m3.5 6.5v3.5h-1.5c-1.105 0-2 .895-2 2v10c0
+                                1.105.895 2 2 2h16c1.105 0 2-.895
+                                2-2v-10c0-1.105-.895-2-2-2h-1.5v-3.5c0-3.59-2.91-6.5-6.5-6.5s-6.5
+                                2.91-6.5 6.5zm2.5 3.5v-3.5c0-2.209 1.791-4 4-4s4
+                                1.791 4 4v3.5zm2 5.5c0-1.105.895-2 2-2s2 .895 2
+                                2c0 .701-.361 1.319-.908 1.676l-.008.005s.195
+                                1.18.415 2.57v.001c0 .414-.335.749-.749.749-.001
+                                0-.001 0-.002 0h-1.499-.001c-.414
+                                0-.749-.335-.749-.749v-.001l.415-2.57c-.554-.361-.916-.979-.916-1.68z" />
                         </svg>
                     {/if}
                 </a>
@@ -269,7 +288,7 @@
         </div>
         <div>
             {#if quests}
-                <Quests data={quests}/>
+                <Quests data={quests} />
             {/if}
         </div>
     </div>

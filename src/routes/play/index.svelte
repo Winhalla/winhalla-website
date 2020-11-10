@@ -1,4 +1,4 @@
-<script context module>
+<script context=module>
     import Quests from "../../components/Quests.svelte";
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";

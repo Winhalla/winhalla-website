@@ -137,7 +137,7 @@
     <div class:hidden={!isNavbarOpen} class="lg:block w-full">
         <div class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
             <div class="ml-7 links text-xl lg:flex">
-                <a
+                <!--<a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"
                         href="/profile">
@@ -149,7 +149,7 @@
                                 d="m10 12v8h-4v-8zm6-8v16h-4v-16zm16 18v2h-32v-24h2v22zm-10-14v12h-4v-12zm6-6v18h-4v-18z"/>
                     </svg>
                     PROFILE
-                </a>
+                </a>-->
                 <a
                         class="nav-link-container lg:hover:text-shadow-link-hover
                         border-l border-primary lg:border-none pl-3"

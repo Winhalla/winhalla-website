@@ -1,7 +1,7 @@
 <script context=module>
     import Quests from "../../components/Quests.svelte";
     import { callApi } from "../../utils/api";
-    import GameModeCard from "../../components/GameModeCard.svelte";
+    import GameModeCard from "../../components/GameModeCards.svelte";
 
     let gameModes = [
         {

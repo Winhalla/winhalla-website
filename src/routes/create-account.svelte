@@ -60,7 +60,7 @@
 </style>
 
 <svelte:head>
-    <title>Change email | Winhalla</title>
+    <title>Create account | Winhalla</title>
 </svelte:head>
 <div class="p-8">
     <h2>Email</h2>

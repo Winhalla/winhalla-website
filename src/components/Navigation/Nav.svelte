@@ -19,20 +19,6 @@
     let notificationsObj = {};
 
     let data = {
-        notifications: [
-            {
-                id: 1,
-                message: "Collect your quest",
-                tip: "Click to collect",
-                type: "advice/regular"
-            },
-            {
-                id: 0,
-                message: "Your match ended",
-                tip: "Click to view rewards",
-                type: "advice/regular"
-            }
-        ],
         inGame: [
             {
                 id: "ID DE LA GAME",

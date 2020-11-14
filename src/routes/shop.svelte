@@ -50,8 +50,8 @@
         );
     }
     button:disabled{
-        background-color: brown;
-        cursor: default
+   @apply bg-disabled;
+   cursor: not-allowed;
     }
 </style>
 

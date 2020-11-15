@@ -19,7 +19,7 @@
 
 
 {#if isApiDown}
-    <div class="flex items-center justify-center h-screen-60 w-full mt-24 lg:mt-0 mx-7">
+    <div class="flex items-center justify-center h-screen-60 w-full mt-24 lg:mt-0 mx-7 lg:mr-0">
         <div class="text-center">
             <p class="text-8xl">Our services are down</p>
             <p class="text-4xl text-mid-light">We will be back as soon as possible !</p>

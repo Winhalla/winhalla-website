@@ -30,8 +30,7 @@
     <link
             rel="stylesheet"
             href="../../fontisto-master/css/fontisto/fontisto.min.css"/>
-
-
+    <!--Adsense-->
 </svelte:head>
 
 <div class="font w-full min-h-screen h-full flex flex-col">

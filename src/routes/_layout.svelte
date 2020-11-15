@@ -19,11 +19,6 @@
 <Tailwindcss/>
 
 <svelte:head>
-    <!--Adsense-->
-    <script data-ad-client="ca-pub-6149483070204658" async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
     <link
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
             rel="stylesheet"/>

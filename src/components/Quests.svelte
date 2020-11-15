@@ -166,7 +166,8 @@
                 {#if data.collected && data.collected.daily}
                     <div class="pt-5">
                         {#each data.collected.daily as quest}
-                            <div class="card quest text-disabled italic max-w-sm quest-infos">
+                            <div
+                                class="card quest text-disabled italic max-w-sm mx-auto">
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-lg">
                                         Collected

@@ -22,22 +22,22 @@
         },
     ];
 
-    const quests = {
+    /*const quests = {
         dailyQuests: [
             {
-                name: "Do 10 Orb KOs",
+                questName: "Do 10 Orb KOs",
                 progress: 6,
                 goal: 10,
                 reward: 500,
             },
             {
-                name: "Do 20 KOs",
+                questName: "Do 20 KOs",
                 progress: 12,
                 goal: 20,
                 reward: 3500,
             },
             {
-                name: "Do 10 KOs",
+                questName: "Do 10 KOs",
                 progress: 6,
                 goal: 10,
                 reward: 2500,
@@ -46,19 +46,19 @@
 
         weeklyQuests: [
             {
-                name: "Do 10 Orb KOs",
+                questName: "Do 10 Orb KOs",
                 progress: 6,
                 goal: 10,
                 reward: 500,
             },
             {
-                name: "Do 20 KOs",
+                questName: "Do 20 KOs",
                 progress: 12,
                 goal: 20,
                 reward: 3500,
             },
             {
-                name: "Do 10 KOs",
+                questName: "Do 10 KOs",
                 progress: 6,
                 goal: 10,
                 reward: 2500,
@@ -67,21 +67,21 @@
         finished: {
             daily: [
                 {
-                    name: "Do 5 Orbs KOs",
+                    questName: "Do 5 Orbs KOs",
                     reward: 500,
                 },
                 {
-                    name: "Do 5 Axe KOs",
+                    questName: "Do 5 Axe KOs",
                     reward: 500,
                 },
             ],
             weekly: [
                 {
-                    name: "Do 5 Orbs KOs",
+                    questName: "Do 5 Orbs KOs",
                     reward: 500,
                 },
                 {
-                    name: "Do 5 Axe KOs",
+                    questName: "Do 5 Axe KOs",
                     reward: 500,
                 },
             ],
@@ -89,22 +89,22 @@
         collected: {
             daily: [
                 {
-                    name: "Do 5 Orbs KOs",
+                    questName: "Do 5 Orbs KOs",
                 },
                 {
-                    name: "Do 5 Axe KOs",
+                    questName: "Do 5 Axe KOs",
                 },
             ],
             weekly: [
                 {
-                    name: "Do 5 Orbs KOs",
+                    questName: "Do 5 Orbs KOs",
                 },
                 {
-                    name: "Do 5 Axe KOs",
+                    questName: "Do 5 Axe KOs",
                 },
             ],
         },
-    };
+    };*/
 
     export async function preload() {
         try {

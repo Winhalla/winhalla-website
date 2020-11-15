@@ -16,22 +16,22 @@
 
     export let id;
 
-    let user = {};
+    let user;
     let match;
-    let isMatchEnded = false;
-    let countDown = "01:23:06";
+    let isMatchEnded;
+    let countDown;
 
     let userPlayer;
     let players;
 
-    match = {
+    /*const data = {
         players: [
             {
                 steamId: "76561198860469702",
                 brawlhallaId: 13465463,
                 username: "WeAreNoobs65",
-                wins: 5,
-                gamesPlayed: 5,
+                wins: 0,
+                gamesPlayed: 0,
                 legends: "artemis",
                 "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
             },
@@ -39,8 +39,8 @@
                 steamId: "76561198860469701",
                 brawlhallaId: 13465463,
                 username: "Ghom",
-                wins: 1,
-                gamesPlayed: 4,
+                wins: 0,
+                gamesPlayed: 0,
                 legends: "wu-shang",
                 "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
             },
@@ -48,36 +48,9 @@
                 steamId: "76561198860469700",
                 brawlhallaId: 13465463,
                 username: "Felons",
-                wins: 2,
-                gamesPlayed: 3,
-                legends: "petra",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-            {
-                steamId: "76561198860469702",
-                brawlhallaId: 13465463,
-                username: "Philtrom",
                 wins: 0,
-                gamesPlayed: 2,
-                legends: "azoth",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-            {
-                steamId: "76561198860469701",
-                brawlhallaId: 13465463,
-                username: "Persan",
-                wins: 4,
-                gamesPlayed: 6,
-                legends: "wu-shang",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-            {
-                steamId: "76561198860469702",
-                brawlhallaId: 13465463,
-                username: "PoroBolo",
-                wins: 2,
-                gamesPlayed: 2,
-                legends: "val",
+                gamesPlayed: 0,
+                legends: "petra",
                 "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
             },
         ],
@@ -98,10 +71,9 @@
                 multiplier: "x10"
             },
         ]
-    };
+    };*/
 
     onMount(async () => {
-        /*
         user = await getUser();
         user = user.steam;
 
@@ -116,21 +88,18 @@
             1000
         );
         startTimer(endsIn);
-        */
-
-        user.id = "76561198860469700";
 
         filterUsers();
     });
 
     const filterUsers = () => {
         //Find user's object
-        userPlayer = match.players.find((p) => p.steamId === user.id);//remettre le parseInt
-        console.log(userPlayer)
+        userPlayer = match.players.find((p) => p.steamId === parseInt(user.id));
+
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex((p) => p.steamId === user.id),//remettre le parseInt
+            match.players.findIndex((p) => p.steamId === parseInt(user.id)),
             1
         );
     };
@@ -159,18 +128,19 @@
     }
 
     //Funtion that handles the refresh button on click event
-
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
 
-        //match = await callApi("get", `/getMatch/${id}`);
+        match = await callApi("get", `/getMatch/${id}`);
         filterUsers();
+        console.log(userPlayer);
         isRefreshingStats = false;
     };
 
     const handleQuit = async () => {
-        //await callApi("post", `/exitMatch`);
+        console.log("quit");
+        await callApi("post", `/exitMatch`);
         goto(`/play`);
     };
 </script>
@@ -294,7 +264,6 @@
                             </div>
                         </div>
                     {/if}
-                    <!--TODO: FIX LE RESPONSIVE DE LA CARD POUR TOUTES LES TAILLES D ECRAN-->
 
                     <!--Other Players-->
                     {#if players}

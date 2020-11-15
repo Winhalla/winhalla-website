@@ -1,6 +1,8 @@
-<script context="module">
+<script context=module>
+    let id;
+
     export async function preload({ params }) {
-        let id = params.id;
+        id = params.id;
         return { id };
     }
 </script>
@@ -10,9 +12,10 @@
     import { callApi, getUser } from "../../../utils/api";
     import { goto } from "@sapper/app";
 
-    import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
+    import { apiUrl } from "../../../utils/config";
+
 
     export let id;
 
@@ -82,11 +85,7 @@
 
         //Start the countdown
         let d = new Date(match.Date);
-        const endsIn = -(
-            (new Date().getTime() -
-                new Date(d.setHours(d.getHours() + 3)).getTime()) /
-            1000
-        );
+        const endsIn = -((new Date().getTime() - new Date(d.setHours(d.getHours() + 3)).getTime()) / 1000);
         startTimer(endsIn);
 
         filterUsers();
@@ -107,14 +106,11 @@
     //Function that starts a timer with a date, and refreshes it every second
 
     function startTimer(duration) {
-        let timer = duration,
-            hours,
-            minutes,
-            seconds;
-        setInterval(function () {
-            seconds = Math.floor(timer % 60);
+        let timer = duration, hours, minutes, seconds;
+        setInterval(function() {
+            seconds = Math.floor((timer) % 60);
             minutes = Math.floor((timer / 60) % 60);
-            hours = Math.floor(timer / (60 * 60));
+            hours = Math.floor((timer / (60 * 60)));
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -162,11 +158,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.68) 0%,
-            rgba(23, 23, 26, 0.88),
-            rgba(23, 23, 26, 0.95) 75%,
-            rgba(23, 23, 26, 0.98) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
         );
     }
 
@@ -185,11 +181,11 @@
 
     .user::after {
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.55) 0%,
-            rgba(23, 23, 26, 0.75),
-            rgba(23, 23, 26, 0.85) 75%,
-            rgba(23, 23, 26, 0.93) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
         );
     }
 
@@ -214,32 +210,40 @@
             <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                 <div
                     class="flex flex-col justify-center lg:flex-row lg:justify-between items-center lg:mt-12 lg:mt-0 mt-7">
-                    <div
-                        class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
+                    <div class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
                         <h1 class="text-6xl">FFA</h1>
-                        <p class="timer text-primary ml-5 text-3xl">
-                            {countDown}
-                        </p>
+                        <p class="timer text-primary ml-5 text-3xl">{countDown}</p>
                     </div>
 
                     <div class="lg:mr-7">
                         {#if match.started}
-                            <RefreshButton
-                                on:click={() => handleRefresh()}
-                                isRefreshing={isRefreshingStats}
-                                refreshMessage={'Refresh data'} />
+
+                            <button class="button button-brand refresh-button focus:outline-none"
+                                    on:click={() => handleRefresh()}>
+                                <div class:hidden={!isRefreshingStats} class="block">
+                                    <svg viewBox="0 0 21 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z" />
+                                    </svg>
+                                </div>
+                                <p class:pl-3={isRefreshingStats}
+                                   class="pl-3">{isRefreshingStats ? "Refreshing" : "Refresh stats"}</p>
+                            </button>
+
                         {:else}
-                            <button
-                                class="button button-brand quit"
-                                on:click={() => handleQuit()}>
+
+                            <button class="button button-brand quit" on:click={() => handleQuit()}>
                                 Quit lobby
                             </button>
+
                         {/if}
                     </div>
                 </div>
 
-                <div
-                    class="flex items-center flex-col lg:flex-row lg:items-start h-full">
+
+                <div class="flex items-center flex-col lg:flex-row lg:items-start h-full">
+
                     <!--Main Player-->
                     {#if userPlayer}
                         <div class="mt-8 lg:mt-25 ffa-player card user">
@@ -248,22 +252,16 @@
                                 alt={userPlayer.legends}
                                 class="block" />
 
-                            <p class="player-name text-4xl">
-                                {userPlayer.username}
-                            </p>
-                            <div
-                                class="stats text-2xl bottom-5 text-ultra-light">
+                            <p class="player-name text-4xl">{userPlayer.username}</p>
+                            <div class="stats text-2xl bottom-5 text-ultra-light">
+                                <p>Games played: <b>{userPlayer.gamesPlayed}</b>/10</p>
                                 <p>
-                                    Games played:
-                                    <b>{userPlayer.gamesPlayed}</b>/10
-                                </p>
-                                <p>
-                                    Games won:
-                                    <b>{userPlayer.wins}</b>/{userPlayer.gamesPlayed}
+                                    Games won: <b>{userPlayer.wins}</b>/{userPlayer.gamesPlayed}
                                 </p>
                             </div>
                         </div>
                     {/if}
+
 
                     <!--Other Players-->
                     {#if players}
@@ -277,28 +275,25 @@
                                         alt={player.legends}
                                         class="block" />
 
-                                    <p class="player-name text-3xl">
-                                        {player.username}
-                                    </p>
-                                    <div
-                                        class="stats text-xl bottom-5 text-ultra-light">
+                                    <p class="player-name text-3xl">{player.username}</p>
+                                    <div class="stats text-xl bottom-5 text-ultra-light">
+                                        <p>Games played: <b>{player.gamesPlayed}</b>/10</p>
                                         <p>
-                                            Games played:
-                                            <b>{player.gamesPlayed}</b>/10
-                                        </p>
-                                        <p>
-                                            Games won:
-                                            <b>{player.wins}</b>/{player.gamesPlayed}
+                                            Games won: <b>{player.wins}</b>/{player.gamesPlayed}
                                         </p>
                                     </div>
                                 </div>
                             {/each}
                         </div>
                     {/if}
+
                 </div>
             </div>
+
         {/if}
     {:else}
         <Loading />
     {/if}
 </div>
+
+

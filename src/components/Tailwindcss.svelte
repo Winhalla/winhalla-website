@@ -28,6 +28,17 @@
         box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);
     }
 
+    .refresh-button {
+        @apply flex px-7 items-center;
+    }
+
+    .refresh-button div {
+        margin-top: -0.185rem;
+    }
+    .refresh-button svg {
+        @apply fill-current text-font w-5 animate-spin left-4;
+    }
+
     .card {
         -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
         box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;

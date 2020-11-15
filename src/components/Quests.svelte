@@ -1,6 +1,5 @@
 <script>
     import { callApi } from "../utils/api";
-    import RefreshButton from "./RefreshButton.svelte";
 
     export let data;
 
@@ -45,15 +44,16 @@
         });
     }
 
-    let isRefreshingQuests = false;
+    let isRefreshingStats = false;
     const handleRefresh = async () => {
-        isRefreshingQuests = true;
+        isRefreshingStats = true;
 
         const refreshedData = await callApi("get", "solo");
         data = refreshedData.solo;
 
-        isRefreshingQuests = false;
+        isRefreshingStats = false;
     };
+
 </script>
 
 <style>
@@ -97,12 +97,12 @@
         color: #e2e2ea;
     }
 </style>
-
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
+
     <div class="container lg:flex mt-7 w-auto">
-        <div
-            class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
+        <div class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
+
             <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
 
             <div class="quests-container">
@@ -110,24 +110,26 @@
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest}
                             <button
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current checkbox-active
+                                                class="fill-current checkbox-active
                                             text-{calculateRarity(quest.reward, true)}"
-                                            viewBox="0 0 27 24"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                                viewBox="0 0 27 24"
+                                                xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z"/>
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             Click to collect
                                         </p>
                                     </div>
 
-                                    <p class="line-through">{quest.name}</p>
+                                    <p class="line-through">
+                                        {quest.name}
+                                    </p>
                                 </div>
                             </button>
                         {/each}
@@ -137,17 +139,17 @@
                 {#if data.dailyQuests}
                     <div>
                         {#each data.dailyQuests as quest}
-                            <div
-                                class="relative card quest progress-{calculateRarity(quest.reward, true)} max-w-sm mx-auto">
+
+                            <div class="relative card quest progress-{calculateRarity(quest.reward, true)} max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>{quest.reward}$</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current w-4"
-                                            viewBox="0 0 25 24"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                                class="fill-current w-4"
+                                                viewBox="0 0 25 24"
+                                                xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
+                                                    d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"/>
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             {quest.progress}/{quest.goal}
@@ -155,10 +157,11 @@
                                     </div>
                                     <p class="">{quest.name}</p>
                                 </div>
-                                <div
-                                    class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}"
-                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}"
+                                     style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
+                                </div>
                             </div>
+
                         {/each}
                     </div>
                 {/if}
@@ -166,8 +169,7 @@
                 {#if data.collected && data.collected.daily}
                     <div class="pt-5">
                         {#each data.collected.daily as quest}
-                            <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                            <div class="card quest text-disabled italic max-w-sm mx-auto">
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-lg">
                                         Collected
@@ -184,7 +186,7 @@
             </div>
         </div>
         <div
-            class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
+                class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
                 lg:mt-0">
             <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
             <div class="quests-container">
@@ -192,17 +194,17 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest}
                             <button
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
+                                    class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current checkbox-active
+                                                class="fill-current checkbox-active
                                             text-{calculateRarity(quest.reward, false)}"
-                                            viewBox="0 0 27 24"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                                viewBox="0 0 27 24"
+                                                xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z"/>
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             Click to collect
@@ -221,17 +223,16 @@
                 {#if data.weeklyQuests}
                     <div>
                         {#each data.weeklyQuests as quest}
-                            <div
-                                class="relative card quest progress-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
+                            <div class="relative card quest progress-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>{quest.reward}$</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current w-4"
-                                            viewBox="0 0 25 24"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                                class="fill-current w-4"
+                                                viewBox="0 0 25 24"
+                                                xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
+                                                    d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"/>
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             {quest.progress}/{quest.goal}
@@ -239,9 +240,9 @@
                                     </div>
                                     <p class="quest-goal">{quest.name}</p>
                                 </div>
-                                <div
-                                    class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}"
-                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                <div class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}"
+                                     style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%">
+                                </div>
                             </div>
                         {/each}
                     </div>
@@ -249,8 +250,7 @@
                 {#if data.collected && data.collected.weekly}
                     <div class="pt-5">
                         {#each data.collected.weekly as quest}
-                            <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                            <div class="card quest text-disabled italic max-w-sm mx-auto">
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-lg">
                                         Collected
@@ -268,11 +268,22 @@
         </div>
     </div>
     <div class="lg:flex pb-3 pt-4 ml-5 lg:ml-0">
-        <RefreshButton
-            on:click={() => handleRefresh()}
-            isRefreshing={isRefreshingQuests}
-            refreshMessage={'Refresh quests data'} />
+        <div>
+            <button class="button button-brand refresh-button focus:outline-none mx-auto block"
+                    on:click={() => handleRefresh()}>
+                <div class:hidden={!isRefreshingStats} class="block">
+                    <svg viewBox="0 0 21 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z" />
+                    </svg>
+                </div>
+                <p class:pl-3={isRefreshingStats}
+                   class="pl-3">{isRefreshingStats ? "Refreshing" : "Refresh quests data"}</p>
+            </button>
+        </div>
         <div class="flex lg:ml-8 items-center mt-4 lg:mt-0">
+
             <!--<div class="flex items-center ">
                 <div class="py-2 px-2 rounded-full bg-primary">
                     <svg
@@ -284,18 +295,15 @@
                     </svg>
                 </div>
             </div>-->
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-9 text-primary"
-                viewBox="0 0 576 512">
-                <path
-                    fill="currentColor"
-                    d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-9 text-primary"
+                 viewBox="0 0 576 512">
+                <path fill="currentColor"
+                      d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/>
             </svg>
             <p class="text-lg ml-3 lg:ml-2 tip-text text-light">
-                Daily and Weekly quests data may take up to 30 minutes to
-                refresh
+                Daily and Weekly quests data may take up to 30 minutes to refresh
             </p>
         </div>
     </div>
+
 </div>

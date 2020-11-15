@@ -1,4 +1,4 @@
-<script context="module">
+<script context=module>
     import Quests from "../../components/Quests.svelte";
     import { callApi } from "../../utils/api";
     import GameModeCard from "../../components/GameModeCards.svelte";
@@ -10,7 +10,7 @@
             goal:
                 "Be the one who has the <b>most wins</b> out of <b>10 games</b> to win!",
             duration: "<b>30</b> - <b>50</b> minutes",
-            available: false,
+            available: false
         },
         {
             name: "2vs2",
@@ -18,8 +18,8 @@
             goal:
                 "Be the team that has the <b>most wins</b> out of <b>5 games</b> to win!",
             duration: "<b>20</b> - <b>30</b> minutes",
-            available: false,
-        },
+            available: false
+        }
     ];
 
     /*const quests = {
@@ -106,40 +106,37 @@
         },
     };*/
 
+    let quests;
+
     export async function preload() {
         try {
             //Check wich game mode is enabled in config, and then adapt the property available of gameModes object.
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus) {
                 gameModesStatus = gameModesStatus.find(
-                    (s) => s.name === "GAMEMODES STATUS"
+                    s => s.name === "GAMEMODES STATUS"
                 );
                 gameModesStatus = gameModesStatus.value;
 
-                Object.keys(gameModesStatus).forEach((gameModeName) => {
-                    const gameMode = gameModes.find(
-                        (g) => g.name === gameModeName.toLowerCase()
-                    );
+                Object.keys(gameModesStatus).forEach(gameModeName => {
+                    const gameMode = gameModes.find(g => g.name === gameModeName.toLowerCase());
                     gameMode.available = gameModesStatus[gameModeName];
                     gameModes = gameModes;
                 });
             }
 
             //Load quests for user
-            let quests = await callApi("get", "/getSolo");
+            quests = await callApi("get", "/getSolo");
             quests = quests.solo;
+
 
             if (!quests.lastDaily || !quests.lastWeekly) {
                 quests = await callApi("get", "/solo");
                 quests = quests.solo;
             }
-            return { quests };
+
         } catch (err) {}
     }
-</script>
-
-<script>
-    export let quests;
 </script>
 
 <svelte:head>
@@ -156,7 +153,9 @@
         <div
             class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
                 flex flex-col items-center lg:flex-row lg:items-start">
-            <GameModeCard {gameModes} />
+
+            <GameModeCard gameModes={gameModes} />
+
         </div>
         <div>
             {#if quests}

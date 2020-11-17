@@ -30,7 +30,7 @@ button:disabled{
 }
 </style>
 <svelte:head>
-    <title>Create account | Winhalla</title>
+    <title>Change email | Winhalla</title>
 </svelte:head>
 <div class="p-8">
     <h2>Email</h2>

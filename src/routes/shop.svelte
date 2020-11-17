@@ -58,9 +58,9 @@
             rgba(23, 23, 26, 0.92) 100%
         );
     }
-    button:disabled {
-        cursor: default;
-        @apply bg-disabled;
+    button:disabled{
+   @apply bg-disabled;
+   cursor: not-allowed;
     }
 
     .test {

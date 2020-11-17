@@ -82,7 +82,7 @@
 </style>
 
 <svelte:head>
-    <title>Change email | Winhalla</title>
+    <title>Create account | Winhalla</title>
 </svelte:head>
 <div class="flex items-center justify-center h-screen-70">
     <div class="flex flex-col items-center">

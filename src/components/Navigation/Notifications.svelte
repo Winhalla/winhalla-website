@@ -58,8 +58,7 @@
     <div class="flex items-center h-full mr-4 lg:m-0">
         <button
             class="focus:outline-none lg:ml-3 rounded bell-button"
-            use:clickOutside
-            on:click_outside={() => (isDropdownOpen = false)}
+            
             
             on:click={() => handleClick()}
             on:click={()=>{document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax"});newNotifications=false}}
@@ -99,7 +98,10 @@
         class:hidden={!isDropdownOpen}
         class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
-        border-primary overflow-y-scroll h-screen-80">
+        border-primary overflow-y-scroll h-screen-80"
+        use:clickOutside
+            on:click_outside={() => (isDropdownOpen = false)}
+            >
         <div>
             {#if data.notifications}
                 <div on:click={()=>{setTimeout(()=>{if(opened==true){document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax"});newNotifications=false}},10)}}>

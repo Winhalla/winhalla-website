@@ -6,7 +6,6 @@
     import Loading from "../../../components/Loading.svelte";
 
     onMount(async () => {
-
         const id = await callApi("get", "/lobby");
         console.log("id", id);
         if (!id) {

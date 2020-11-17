@@ -6,10 +6,11 @@
     export let data;
     let newNotifications = false;
     let opened = false
-    let isDropdownOpen;
-    const handleClick = () => {
-        opened = true
+    let isDropdownOpen = false
+    function handleClick(){
+        console.log(isDropdownOpen,!isDropdownOpen)
         isDropdownOpen = !isDropdownOpen;
+        opened = true
     };
     onMount(()=>{
         if(!data.notifications) return
@@ -56,12 +57,10 @@
 
 <div class="relative">
     <div class="flex items-center h-full mr-4 lg:m-0">
-        <button
-            class="focus:outline-none lg:ml-3 rounded bell-button"
-            
-            
-            on:click={() => handleClick()}
+        <div
+            class="focus:outline-none lg:ml-3 rounded bell-button cursor-pointer"
             on:click={()=>{document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax"});newNotifications=false}}
+            on:click={handleClick}
             >
             <div class="flex items-center relative">
                 {#if isDropdownOpen}
@@ -91,7 +90,7 @@
                         bg-legendary" />
                 {/if}
             </div>
-        </button>
+        </div>
     </div>
 
     <div

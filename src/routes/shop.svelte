@@ -62,6 +62,10 @@
    @apply bg-disabled;
    cursor: not-allowed;
     }
+
+    .test {
+        width: calc(30% - 1.5rem);
+    }
 </style>
 
 <svelte:head>
@@ -130,26 +134,27 @@
                 class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                 {#each seasonPacks as seasonPack, i}
                     <div
-                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
+                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item">
                         <img
                             class="w-full h-full block "
                             src="assets/ShopItems/{seasonPack.name}.jpg"
                             alt={seasonPack.name} />
-                        <div class="absolute bottom-0 z-10 px-5 pb-3 w-full">
+                        <div class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                            <p
+                                class="text-accent text-5xl leading-tight md:text-primary lg:text-red-600">
+                                {seasonPack.name
+                                    .toLowerCase()
+                                    .replace(/\-/g, ' ')}
+                            </p>
+                            <p
+                                class:hidden={!seasonPack.isDescriptionToggled}
+                                class="-mt-2">
+                                {seasonPack.description}
+                            </p>
                             <div
-                                class="flex justify-between w-full items-center">
+                                class="flex justify-between w-full items-end pr-5">
                                 <div>
-                                    <p class="text-accent text-5xl">
-                                        {seasonPack.name
-                                            .toLowerCase()
-                                            .replace(/\-/g, ' ')}
-                                    </p>
                                     <div>
-                                        <p
-                                            class:hidden={!seasonPack.isDescriptionToggled}
-                                            class="-mt-2">
-                                            {seasonPack.description}
-                                        </p>
                                         <button
                                             class="focus:outline-none"
                                             on:click={() => handleDescriptionToggle(seasonPack)}>

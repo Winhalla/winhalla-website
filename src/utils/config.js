@@ -1,1 +1,1 @@
-export const apiUrl = "https://winhalla-api.azurewebsites.net/";
+export const apiUrl = "https://api-dot-winhalla.appspot.com/";

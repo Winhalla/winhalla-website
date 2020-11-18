@@ -289,11 +289,7 @@
                                         <p>
                                             Games played:
                                             <b>{player.gamesPlayed}</b>/10
-                                        </p>
-                                        <p>
-                                            Games won:
-                                            <b>{player.wins}</b>/{player.gamesPlayed}
-                                        </p>
+                                        </p>                                        
                                     </div>
                                 </div>
                             {/each}

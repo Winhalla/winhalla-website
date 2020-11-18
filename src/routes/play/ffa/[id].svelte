@@ -203,7 +203,7 @@
 </style>
 
 <svelte:head>
-    <title>FFA</title>
+    <title>Winhalla | FFA match</title>
 </svelte:head>
 
 <div class="h-full">

@@ -59,7 +59,7 @@
     <div class="flex items-center h-full mr-4 lg:m-0">
         <div
             class="focus:outline-none lg:ml-3 rounded bell-button cursor-pointer"
-            on:click={()=>{document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax"});newNotifications=false}}
+            on:click={()=>{document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax",path:"/"});newNotifications=false}}
             on:click={handleClick}
             >
             <div class="flex items-center relative">
@@ -103,7 +103,7 @@
             >
         <div>
             {#if data.notifications}
-                <div on:click={()=>{setTimeout(()=>{if(opened==true){document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax"});newNotifications=false}},10)}}>
+                <div on:click={()=>{setTimeout(()=>{if(opened==true){document.cookie = cookie.serialize("notificationNb",data.notifications.length,{maxAge:15552000,sameSite:"lax",path:"/"});newNotifications=false}},10)}}>
                     <p class="ml-1" >Notifications</p>
                     <div>
                         {#each data.notifications as notification, i}

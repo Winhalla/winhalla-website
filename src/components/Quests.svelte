@@ -17,7 +17,12 @@
     };
 
     const calculateProgressBarWidth = (progress, goal) => {
-        return (progress / goal) * 100;
+        const calculatedProgress = (progress / goal) * 100;
+        if (calculatedProgress < 0) {
+            return 2;
+        } else {
+            return calculatedProgress;
+        }
     };
 
     //Reorder quests by rarety
@@ -142,13 +147,13 @@
                 {#if data.dailyQuests}
                     <div>
                         {#each data.dailyQuests as quest}
-                            <div
-                                class="relative card quest progress-{calculateRarity(quest.reward, true)} max-w-sm mx-auto">
+                            <div class="relative card quest max-w-sm mx-auto">
                                 <div class="quest-infos">
-                                    <span>{quest.reward}$</span>
+                                    <span
+                                        class="text-{calculateRarity(quest.reward, true)}">{quest.reward}$</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current w-4"
+                                            class="fill-current w-4 text-{calculateRarity(quest.reward, true)}"
                                             viewBox="0 0 25 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -226,13 +231,13 @@
                 {#if data.weeklyQuests}
                     <div>
                         {#each data.weeklyQuests as quest}
-                            <div
-                                class="relative card quest progress-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
+                            <div class="relative card quest max-w-sm mx-auto">
                                 <div class="quest-infos">
-                                    <span>{quest.reward}$</span>
+                                    <span
+                                        class="text-{calculateRarity(quest.reward, false)}">{quest.reward}$</span>
                                     <div class="progress-container">
                                         <svg
-                                            class="fill-current w-4"
+                                            class="fill-current w-4 text-{calculateRarity(quest.reward, false)}"
                                             viewBox="0 0 25 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path

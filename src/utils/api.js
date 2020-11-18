@@ -2,10 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:4000",
-    headers: {
-        "Sec-Fetch-Site":"same-site"
-      }
+    baseURL: "http://localhost:4000"
 });
 
 const callApi = async (method, url, data) => {

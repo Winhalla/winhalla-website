@@ -3,9 +3,6 @@ import axios from "axios";
 const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: "https://api-dot-winhalla.appspot.com",
-    headers: {
-        "Sec-Fetch-Site":"same-site"
-      }
 });
 
 const callApi = async (method, url, data) => {

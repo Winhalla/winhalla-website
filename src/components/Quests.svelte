@@ -59,6 +59,11 @@
 
         isRefreshingQuests = false;
     };
+    function collect(type,index){
+        callApi("post",`solo/collect?type=${type}&index=${index}`)
+        data.collected[type].push(data.finished[type].splice(index,1))
+        data=data
+    }
 </script>
 
 <style>
@@ -113,8 +118,8 @@
             <div class="quests-container">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
-                        {#each data.finished.daily as quest}
-                            <button
+                        {#each data.finished.daily as quest,i}
+                            <button on:click={()=>collect("daily",i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
@@ -195,8 +200,8 @@
             <div class="quests-container">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
-                        {#each data.finished.weekly as quest}
-                            <button
+                        {#each data.finished.weekly as quest,i}
+                            <button on:click={()=>collect("weekly",i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>

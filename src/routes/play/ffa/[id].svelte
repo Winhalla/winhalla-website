@@ -218,7 +218,11 @@
                         class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
                         <h1 class="text-6xl">FFA</h1>
                         <p class="timer text-primary ml-5 text-3xl">
+                        {#if countDown}
                             {countDown}
+                            {:else}
+                            Loading...
+                        {/if}
                         </p>
                     </div>
 

@@ -177,7 +177,7 @@
                                 </div>
                                 <p class="quest-goal text-xl text-primary">
                                     <!--{#if match.hasStarted}{/if}-->
-                                    {!match.isFinished ? match.progress + '/10' : 'Waiting for others to finish'}
+                                    {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}
                                 </p>
                             </a>
                         {/each}

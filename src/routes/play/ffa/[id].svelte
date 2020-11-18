@@ -227,12 +227,12 @@
                     </div>
 
                     <div class="lg:mr-7">
-                        {#if match.started}
+                        
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
                                 refreshMessage={'Refresh data'} />
-                        {:else}
+                        {#if userPlayer.gamesPlayed == 0 }
                             <button
                                 class="button button-brand quit"
                                 on:click={() => handleQuit()}>
@@ -259,11 +259,11 @@
                                 class="stats text-2xl bottom-5 text-ultra-light">
                                 <p>
                                     Games played:
-                                    <b>{userPlayer.gamesPlayed}</b>/10
+                                    <b>{userPlayer.gamesPlayed}</b>/8
                                 </p>
                                 <p>
                                     Games won:
-                                    <b>{userPlayer.wins}</b>/{userPlayer.gamesPlayed}
+                                    <b>{userPlayer.wins}</b>/8
                                 </p>
                             </div>
                         </div>

@@ -8,15 +8,15 @@
             name: "ffa",
             description: "Fight against <b>9</b> players!",
             goal:
-                "Be the one who has the <b>most wins</b> out of <b>10 games</b> to win!",
+                "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
             duration: "<b>30</b> - <b>50</b> minutes",
             available: false,
         },
         {
             name: "2vs2",
-            description: "Fight agains't an other <b>team</b>!",
+            description: "Fight against an other <b>team</b>!",
             goal:
-                "Be the team that has the <b>most wins</b> out of <b>5 games</b> to win!",
+                "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
             duration: "<b>20</b> - <b>30</b> minutes",
             available: false,
         },

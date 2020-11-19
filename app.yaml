@@ -1,3 +1,8 @@
 runtime: nodejs12
 env: standard
-secure: always
+default_expiration: 1d
+handlers:
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto

@@ -64,10 +64,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
         rel="stylesheet" />
-    <link
-        rel="stylesheet"
-        href="../../fontisto-master/css/fontisto/fontisto.min.css" />
+    <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
+
 </svelte:head>
 
 <div class="font w-full min-h-screen h-full flex flex-col">

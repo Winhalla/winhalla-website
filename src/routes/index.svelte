@@ -39,7 +39,8 @@
 </style>
 
 <svelte:head>
-    <title>Winhalla</title>
+    <title>Play brawlhalla. Earn rewards | Winhalla</title>
+    <meta name="description" content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass, Mammoth Coins, Season Packs and more! | Winnhalla home page">
 </svelte:head>
 <div class="">
     <div class="relative">

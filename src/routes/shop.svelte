@@ -70,6 +70,7 @@
 
 <svelte:head>
     <title>Shop | Winhalla</title>
+    <meta name="description" content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects! | Exchange here your coins into rewards | Winhalla Shop page ">
 </svelte:head>
 <!--
 {#if bottomItems}

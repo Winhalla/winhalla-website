@@ -288,7 +288,7 @@
                                         class="stats text-xl bottom-5 text-ultra-light">
                                         <p>
                                             Games played:
-                                            <b>{player.gamesPlayed}</b>/10
+                                            <b>{player.gamesPlayed}</b>/8
                                         </p>                                        
                                     </div>
                                 </div>

@@ -1,14 +1,21 @@
+<script context=module>
+    export async function preload({ params, query }) {
+        let firstLink = query.link;
+        return { firstLink };
+    }
+</script>
+
 <script>
+    export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     let account;
     let email;
-    let link;
+    let link = firstLink;
     let linkId;
     let validLink = null;
     let validEmail = null;
-
     const onKeyPressLink = () => {
         setTimeout(async () => {
             if (link.length > 0) {
@@ -21,8 +28,10 @@
                             `/getLink/${linkId}`
                         );
                         if (testLink) validLink = true;
+                        else validLink = false
+                        console.log(validLink)
                     } else {
-                        validLink = null;
+                        validLink = false;
                     }
                 } catch (err) {
                     validLink = false;
@@ -45,7 +54,7 @@
             }
         }, 1);
     };
-
+    if (link && link != "") onKeyPressLink();
     onMount(async () => {
         account = await callApi("get", "/account");
         //if (account.user) goto("/");
@@ -99,7 +108,8 @@
         <div class="flex flex-col items-center px-5 pt-8">
             <div class="text-center lg:text-left">
                 <h1
-                    class="text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal lg:">
+                    class="text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal
+                    lg:">
                     Create your account
                 </h1>
             </div>
@@ -112,15 +122,19 @@
                         type="email"
                         bind:value={email}
                         class:border-legendary={validEmail == false}
-                        class="input-style focus:outline-none focus:border-primary w-full md:w-96" />
+                        class="input-style focus:outline-none
+                        focus:border-primary w-full md:w-96" />
 
                     {#if validEmail}
                         <div class="flex items-center">
                             <svg
                                 class="fill-current text-green w-4 check"
                                 viewBox="0 0 33 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m0 10.909 4.364-4.364 8.727 8.727
+                                    15.273-15.273 4.364 4.364-19.636 19.636z" />
+                            </svg>
                             <p class="text-green info">VALID EMAIL</p>
                         </div>
                     {:else if validEmail == false}
@@ -134,18 +148,22 @@
                         on:keydown={onKeyPressLink}
                         bind:value={link}
                         class:border-legendary={validLink == false}
-                        class="input-style focus:outline-none focus:border-primary w-full md:w-96" />
+                        class="input-style focus:outline-none
+                        focus:border-primary w-full md:w-96" />
                     {#if validLink}
                         <div class="flex items-center">
                             <svg
                                 class="fill-current text-green w-4 check"
                                 viewBox="0 0 33 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
-                            <p class="text-green info">VALID INPUT</p>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m0 10.909 4.364-4.364 8.727 8.727
+                                    15.273-15.273 4.364 4.364-19.636 19.636z" />
+                            </svg>
+                            <p class="text-green info">VALID LINK</p>
                         </div>
                     {:else if validLink == false}
-                        <p class="text-legendary info">INVALID INPUT</p>
+                        <p class="text-legendary info">INVALID LINK</p>
                     {/if}
                 </div>
             </div>

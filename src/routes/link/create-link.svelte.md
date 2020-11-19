@@ -1,3 +1,4 @@
+```html
 <script>
     import { callApi } from "../../utils/api.js";
     let error;
@@ -41,3 +42,4 @@ Click here to create an invite link for your friends
         Create friend invite link | Winhalla, Play Brawlhalla. Earn rewards.
     </title>
 </svelte:head>
+```

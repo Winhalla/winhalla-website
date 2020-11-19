@@ -1,7 +1,70 @@
 <script context="module">
+    //Start the countdown
+
+    //Function that starts a timer with a date, and refreshes it every second
+    /*let countDown;
+    function startTimer(duration) {
+        let timer = duration,
+            hours,
+            minutes,
+            seconds;
+        setInterval(function () {
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            countDown = hours + ":" + minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }*/
     export async function preload({ params }) {
         let id = params.id;
-        return { id };
+        /*let user = await getUser();
+        user = user.steam;
+
+        let match = await callApi("get", `/getMatch/${id}`);
+        let isMatchEnded = match.finished;
+        let d = new Date(match.Date);
+        const endsIn = -(
+            (new Date().getTime() -
+                new Date(d.setHours(d.getHours() + 3)).getTime()) /
+            1000
+        );
+
+        startTimer(endsIn);
+
+        let userPlayer;
+        let players;
+        const filterUsers = () => {
+            //Find user's object
+            userPlayer = match.players.find(
+                (p) => p.steamId === parseInt(user.id)
+            );
+
+            //Delete user's object from array.
+            players = [...match.players];
+            players.splice(
+                match.players.findIndex((p) => p.steamId === parseInt(user.id)),
+                1
+            );
+        };
+        filterUsers();
+        console.log(id, match);*/
+        return {
+            id,
+            /*user,
+            match,
+            isMatchEnded,
+            countDown,
+            userPlayer,
+            players,*/
+        };
     }
 </script>
 
@@ -16,6 +79,14 @@
 
     export let id;
 
+    /*export let user;
+    export let match;
+    export let isMatchEnded;
+    export let countDown;
+
+    export let userPlayer;
+    export let players;*/
+
     let user;
     let match;
     let isMatchEnded;
@@ -23,7 +94,6 @@
 
     let userPlayer;
     let players;
-
     /*const data = {
         players: [
             {
@@ -79,7 +149,7 @@
 
         match = await callApi("get", `/getMatch/${id}`);
         isMatchEnded = match.finished;
-
+        console.log("noobz");
         //Start the countdown
         let d = new Date(match.Date);
         const endsIn = -(
@@ -218,21 +288,16 @@
                         class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
                         <h1 class="text-6xl">FFA</h1>
                         <p class="timer text-primary ml-5 text-3xl">
-                        {#if countDown}
-                            {countDown}
-                            {:else}
-                            Loading...
-                        {/if}
+                            {#if countDown}{countDown}{:else}Loading...{/if}
                         </p>
                     </div>
 
                     <div class="lg:mr-7">
-                        
-                            <RefreshButton
-                                on:click={() => handleRefresh()}
-                                isRefreshing={isRefreshingStats}
-                                refreshMessage={'Refresh data'} />
-                        {#if userPlayer.gamesPlayed == 0 }
+                        <RefreshButton
+                            on:click={() => handleRefresh()}
+                            isRefreshing={isRefreshingStats}
+                            refreshMessage={'Refresh data'} />
+                        {#if userPlayer.gamesPlayed == 0}
                             <button
                                 class="button button-brand quit"
                                 on:click={() => handleQuit()}>
@@ -261,10 +326,7 @@
                                     Games played:
                                     <b>{userPlayer.gamesPlayed}</b>/8
                                 </p>
-                                <p>
-                                    Games won:
-                                    <b>{userPlayer.wins}</b>/8
-                                </p>
+                                <p>Games won: <b>{userPlayer.wins}</b>/8</p>
                             </div>
                         </div>
                     {/if}
@@ -289,7 +351,7 @@
                                         <p>
                                             Games played:
                                             <b>{player.gamesPlayed}</b>/8
-                                        </p>                                        
+                                        </p>
                                     </div>
                                 </div>
                             {/each}

@@ -14,6 +14,7 @@
         margin-top: calc(4rem - 2px);
         min-height: calc(100vh - calc(4rem - 2px));
     }
+
     body {
         margin: 0;
         font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
@@ -66,7 +67,6 @@
         rel="stylesheet" />
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
-
 </svelte:head>
 
 <div class="font w-full min-h-screen h-full flex flex-col">

@@ -286,20 +286,22 @@
                     class="flex flex-col justify-center lg:flex-row lg:justify-between items-center lg:mt-12 mt-7">
                     <div
                         class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
-                        <h1 class="text-6xl">FFA</h1>
-                        <p class="timer text-primary ml-5 text-3xl">
+                        <h1 class="text-6xl leading-none">FFA</h1>
+                        <p
+                            class="timer text-primary ml-5 text-3xl leading-none">
                             {#if countDown}{countDown}{:else}Loading...{/if}
                         </p>
                     </div>
 
-                    <div class="lg:mr-7 lg:flex">
+                    <div
+                        class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row items-center">
                         <RefreshButton
                             on:click={() => handleRefresh()}
                             isRefreshing={isRefreshingStats}
                             refreshMessage={'Refresh data'} />
                         {#if userPlayer.gamesPlayed == 0}
                             <button
-                                class="button button-brand quit ml-4"
+                                class="button button-brand quit lg:ml-4 mt-2 lg:mt-0"
                                 on:click={() => handleQuit()}>
                                 Quit lobby
                             </button>

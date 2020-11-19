@@ -3,7 +3,7 @@
     import RefreshButton from "./RefreshButton.svelte";
 
     export let data;
-
+    console.log(data);
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";
@@ -55,14 +55,16 @@
         isRefreshingQuests = true;
 
         const refreshedData = await callApi("get", "solo");
+        console.log(refreshedData);
         data = refreshedData.solo;
 
         isRefreshingQuests = false;
     };
-    function collect(type,index){
-        callApi("post",`solo/collect?type=${type}&index=${index}`)
-        data.collected[type].push(data.finished[type].splice(index,1))
-        data=data
+    function collect(type, index) {
+        callApi("post", `solo/collect?type=${type}&index=${index}`);
+
+        data.collected[type].push(...data.finished[type].splice(index, 1));
+        data = data;
     }
 </script>
 
@@ -118,8 +120,9 @@
             <div class="quests-container">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
-                        {#each data.finished.daily as quest,i}
-                            <button on:click={()=>collect("daily",i)}
+                        {#each data.finished.daily as quest, i}
+                            <button
+                                on:click={() => collect('daily', i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
@@ -178,15 +181,17 @@
                         {#each data.collected.daily as quest}
                             <div
                                 class="card quest text-disabled italic max-w-sm mx-auto">
-                                <div class="progress-container">
-                                    <p class="mr-6 lg:mr-12 text-lg">
-                                        Collected
+                                <div class="quest-infos">
+                                    <div class="progress-container">
+                                        <p class="mr-6 lg:mr-12 text-lg">
+                                            Collected
+                                        </p>
+                                    </div>
+
+                                    <p class="quest-goal line-through">
+                                        {quest.name}
                                     </p>
                                 </div>
-
-                                <p class="quest-goal line-through">
-                                    {quest.name}
-                                </p>
                             </div>
                         {/each}
                     </div>
@@ -200,8 +205,9 @@
             <div class="quests-container">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
-                        {#each data.finished.weekly as quest,i}
-                            <button on:click={()=>collect("weekly",i)}
+                        {#each data.finished.weekly as quest, i}
+                            <button
+                                on:click={() => collect('weekly', i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
@@ -261,15 +267,17 @@
                         {#each data.collected.weekly as quest}
                             <div
                                 class="card quest text-disabled italic max-w-sm mx-auto">
-                                <div class="progress-container">
-                                    <p class="mr-6 lg:mr-12 text-lg">
-                                        Collected
+                                <div class="quest-infos">
+                                    <div class="progress-container">
+                                        <p class="mr-6 lg:mr-12 text-lg">
+                                            Collected
+                                        </p>
+                                    </div>
+
+                                    <p class="quest-goal line-through">
+                                        {quest.name}
                                     </p>
                                 </div>
-
-                                <p class="quest-goal line-through">
-                                    {quest.name}
-                                </p>
                             </div>
                         {/each}
                     </div>

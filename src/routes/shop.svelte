@@ -58,19 +58,21 @@
             rgba(23, 23, 26, 0.92) 100%
         );
     }
-    button:disabled{
-   @apply bg-disabled;
-   cursor: not-allowed;
+    button:disabled {
+        @apply bg-disabled;
+        cursor: not-allowed;
     }
 
-    .test {
+    /*.test {
         width: calc(30% - 1.5rem);
-    }
+    }*/
 </style>
 
 <svelte:head>
     <title>Shop | Winhalla</title>
-    <meta name="description" content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects! | Exchange here your coins into rewards | Winhalla Shop page ">
+    <meta
+        name="description"
+        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects! | Exchange here your coins into rewards | Winhalla Shop page " />
 </svelte:head>
 <!--
 {#if bottomItems}
@@ -104,7 +106,7 @@
         <div>
             <h1 class="text-6xl text-center lg:text-left">Battle pass</h1>
             <div
-                class="card xl:w-60% xl:h-80% mt-2 mx-7 mb-7 lg:ml-0 lg:mb-0 shop-item">
+                class="card xl:w-70% xl:h-85% mt-2 mx-7 mb-7 lg:ml-0 lg:mb-0 shop-item">
                 <img
                     class="w-full h-full block object-cover"
                     src="assets/ShopItems/{featuredItem.name}.jpg"
@@ -135,29 +137,29 @@
                 class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                 {#each seasonPacks as seasonPack, i}
                     <div
-                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item">
+                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItem">
                         <img
                             class="w-full h-full block "
                             src="assets/ShopItems/{seasonPack.name}.jpg"
                             alt={seasonPack.name} />
                         <div class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
-                            <p
-                                class="text-accent text-5xl leading-tight md:text-primary lg:text-red-600">
+                            <p class="text-accent text-5xl leading-tight ">
                                 {seasonPack.name
                                     .toLowerCase()
                                     .replace(/\-/g, ' ')}
                             </p>
                             <p
                                 class:hidden={!seasonPack.isDescriptionToggled}
-                                class="-mt-2">
+                                class="-mt-2 xl:block xl:mt-0">
                                 {seasonPack.description}
                             </p>
+
                             <div
                                 class="flex justify-between w-full items-end pr-5">
                                 <div>
                                     <div>
                                         <button
-                                            class="focus:outline-none"
+                                            class="focus:outline-none xl:hidden"
                                             on:click={() => handleDescriptionToggle(seasonPack)}>
                                             <p
                                                 class="-mt-2 text-light text-lg underline">

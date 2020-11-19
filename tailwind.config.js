@@ -98,8 +98,12 @@ module.exports = {
                 "screen-90": "90vh",
                 "28%": "28%",
                 "60%": "60%",
+                "70%": "70%",
+                "75%": "75%",
                 "80%": "80%",
-                "shopItem": "calc(30% - 1.5rem)"
+                "85%": "85%",
+                "90%": "90%",
+                "shopItem": "calc(35% - 1.5rem)"
             },
             boxShadow: {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",

@@ -68,7 +68,7 @@
 
 <style>
     input {
-        @apply text-background pl-2 text-lg py-1 bg-font w-96 rounded border-2;
+        @apply text-background pl-2 text-lg py-1 bg-font rounded border-2;
     }
 
     button:disabled {
@@ -94,59 +94,67 @@
 <svelte:head>
     <title>Create account | Winhalla</title>
 </svelte:head>
-<div class="flex items-center justify-center h-screen-70">
-    <div class="flex flex-col items-center">
-        <h1 class="text-6xl mb-8">Create your account</h1>
-        <div class="mx-auto card pt-8 pb-11 px-10">
-            <p class="input-header">Email</p>
-            <div>
-                <input
-                    on:keydown={onKeyPressEmail}
-                    type="email"
-                    bind:value={email}
-                    class:border-legendary={validEmail == false}
-                    class="input-style focus:outline-none focus:border-primary" />
-
-                {#if validEmail}
-                    <div class="flex items-center">
-                        <svg
-                            class="fill-current text-green w-4 check"
-                            viewBox="0 0 33 24"
-                            xmlns="http://www.w3.org/2000/svg"><path
-                                d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
-                        <p class="text-green info">VALID EMAIL</p>
-                    </div>
-                {:else if validEmail == false}
-                    <p class="text-legendary info ">INVALID EMAIL</p>
-                {/if}
+<div>
+    <div class="flex items-center justify-center md:h-screen-70">
+        <div class="flex flex-col items-center px-5 pt-8">
+            <div class="text-center lg:text-left">
+                <h1
+                    class="text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal lg:">
+                    Create your account
+                </h1>
             </div>
 
-            <p class="pt-6 text-3xl input-header">Friend link</p>
-            <div>
-                <input
-                    on:keydown={onKeyPressLink}
-                    bind:value={link}
-                    class:border-legendary={validLink == false}
-                    class="input-style focus:outline-none focus:border-primary" />
-                {#if validLink}
-                    <div class="flex items-center">
-                        <svg
-                            class="fill-current text-green w-4 check"
-                            viewBox="0 0 33 24"
-                            xmlns="http://www.w3.org/2000/svg"><path
-                                d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
-                        <p class="text-green info">VALID INPUT</p>
-                    </div>
-                {:else if validLink == false}
-                    <p class="text-legendary info">INVALID INPUT</p>
-                {/if}
+            <div class="card pt-8 pb-11 px-10 w-100% mx-5 w-full">
+                <p class="input-header">Email</p>
+                <div>
+                    <input
+                        on:keydown={onKeyPressEmail}
+                        type="email"
+                        bind:value={email}
+                        class:border-legendary={validEmail == false}
+                        class="input-style focus:outline-none focus:border-primary w-full md:w-96" />
+
+                    {#if validEmail}
+                        <div class="flex items-center">
+                            <svg
+                                class="fill-current text-green w-4 check"
+                                viewBox="0 0 33 24"
+                                xmlns="http://www.w3.org/2000/svg"><path
+                                    d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
+                            <p class="text-green info">VALID EMAIL</p>
+                        </div>
+                    {:else if validEmail == false}
+                        <p class="text-legendary info ">INVALID EMAIL</p>
+                    {/if}
+                </div>
+
+                <p class="pt-6 text-3xl input-header">Friend link</p>
+                <div>
+                    <input
+                        on:keydown={onKeyPressLink}
+                        bind:value={link}
+                        class:border-legendary={validLink == false}
+                        class="input-style focus:outline-none focus:border-primary w-full md:w-96" />
+                    {#if validLink}
+                        <div class="flex items-center">
+                            <svg
+                                class="fill-current text-green w-4 check"
+                                viewBox="0 0 33 24"
+                                xmlns="http://www.w3.org/2000/svg"><path
+                                    d="m0 10.909 4.364-4.364 8.727 8.727 15.273-15.273 4.364 4.364-19.636 19.636z" /></svg>
+                            <p class="text-green info">VALID INPUT</p>
+                        </div>
+                    {:else if validLink == false}
+                        <p class="text-legendary info">INVALID INPUT</p>
+                    {/if}
+                </div>
             </div>
+            <button
+                disabled={!validEmail}
+                on:click={onClick}
+                class="button button-brand mt-6">
+                Create account
+            </button>
         </div>
-        <button
-            disabled={!validEmail}
-            on:click={onClick}
-            class="button button-brand mt-6">
-            Create account
-        </button>
     </div>
 </div>

@@ -283,7 +283,7 @@
         {:else}
             <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                 <div
-                    class="flex flex-col justify-center lg:flex-row lg:justify-between items-center lg:mt-12 lg:mt-0 mt-7">
+                    class="flex flex-col justify-center lg:flex-row lg:justify-between items-center lg:mt-12 mt-7">
                     <div
                         class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
                         <h1 class="text-6xl">FFA</h1>
@@ -292,14 +292,14 @@
                         </p>
                     </div>
 
-                    <div class="lg:mr-7">
+                    <div class="lg:mr-7 lg:flex">
                         <RefreshButton
                             on:click={() => handleRefresh()}
                             isRefreshing={isRefreshingStats}
                             refreshMessage={'Refresh data'} />
                         {#if userPlayer.gamesPlayed == 0}
                             <button
-                                class="button button-brand quit"
+                                class="button button-brand quit ml-4"
                                 on:click={() => handleQuit()}>
                                 Quit lobby
                             </button>

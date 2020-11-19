@@ -29,7 +29,6 @@
                         );
                         if (testLink) validLink = true;
                         else validLink = false
-                        console.log(validLink)
                     } else {
                         validLink = false;
                     }
@@ -101,7 +100,8 @@
 </style>
 
 <svelte:head>
-    <title>Create account | Winhalla</title>
+    <title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>
+    <meta name="description" content="This is where all starts | Create Winhalla account now and get Battle Pass and Mammoth Coins FOR FREE">
 </svelte:head>
 <div>
     <div class="flex items-center justify-center md:h-screen-70">

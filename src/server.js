@@ -1,12 +1,16 @@
 import sirv from 'sirv';
-import polka from 'polka';
 import compression from 'compression';
+import express from 'express'
 import * as sapper from '@sapper/server';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
-polka() // You can also use Express
+express() // You can also use Express
+	.use((req, res, next) => {
+		if (req.hostname.includes("www") || req.hostname.includes(".ew.") || req.hostname.includes(".r.")) return res.redirect(301, "https://winhalla.appspot.com"+req.path)
+		next();
+	})
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),

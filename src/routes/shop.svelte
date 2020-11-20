@@ -106,27 +106,29 @@
         <div>
             <h1 class="text-6xl text-center lg:text-left">Battle pass</h1>
             <div
-                class="card xl:w-70% xl:h-85% mt-2 mx-7 mb-7 lg:ml-0 lg:mb-0 shop-item">
+                class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                 <img
                     class="w-full h-full block object-cover"
                     src="assets/ShopItems/{featuredItem.name}.jpg"
                     alt={featuredItem.name} />
-                <div class="absolute bottom-0 z-10 px-10 pb-3 w-full">
-                    <div class="flex justify-between w-full items-center">
+                <div class="absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full">
+                    <div class="md:flex justify-between w-full md:items-center">
                         <p class="text-accent text-6xl">
                             {featuredItem.name
                                 .toLowerCase()
                                 .replace(/\-/g, ' ')}
                         </p>
-                        <button
-                            disabled={featuredItem.unBuyable}
-                            on:click={() => callApi('post', `/buy/${featuredItem.id}`)}
-                            class="px-4 py-1 bg-primary rounded">
-                            <p class="text-2xl">
-                                <b
-                                    class="mr-1 font-normal">{featuredItem.cost}</b>$
-                            </p>
-                        </button>
+                        <div class="flex justify-end md:block pb-1">
+                            <button
+                                disabled={featuredItem.unBuyable}
+                                on:click={() => callApi('post', `/buy/${featuredItem.id}`)}
+                                class="px-4 py-1 bg-primary rounded">
+                                <p class="text-2xl">
+                                    <b
+                                        class="mr-1 font-normal">{featuredItem.cost}</b>$
+                                </p>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,32 +139,38 @@
                 class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                 {#each seasonPacks as seasonPack, i}
                     <div
-                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItem">
+                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
                         <img
                             class="w-full h-full block "
                             src="assets/ShopItems/{seasonPack.name}.jpg"
                             alt={seasonPack.name} />
                         <div class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
-                            <p class="text-accent text-5xl leading-tight ">
+                            <p
+                                class:hidden={seasonPack.isDescriptionToggled}
+                                class:-mb-3={!seasonPack.isDescriptionToggled}
+                                class="text-accent text-5xl md:mb-0 md:block">
                                 {seasonPack.name
                                     .toLowerCase()
                                     .replace(/\-/g, ' ')}
                             </p>
                             <p
                                 class:hidden={!seasonPack.isDescriptionToggled}
-                                class="-mt-2 xl:block xl:mt-0">
+                                class="block xl:mt-0">
                                 {seasonPack.description}
                             </p>
 
                             <div
-                                class="flex justify-between w-full items-end pr-5">
-                                <div>
+                                class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                <div class="-mb-2 md:mb-0">
                                     <div>
+                                        <p class="hidden xl:block mr-1 -mb-2">
+                                            {seasonPack.description}
+                                        </p>
                                         <button
-                                            class="focus:outline-none xl:hidden"
+                                            class="focus:outline-none xl:hidden -mb-10"
                                             on:click={() => handleDescriptionToggle(seasonPack)}>
                                             <p
-                                                class="-mt-2 text-light text-lg underline">
+                                                class=" text-light text-lg underline leading-none">
                                                 {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
                                             </p>
                                         </button>
@@ -189,21 +197,24 @@
                 class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                 {#each packs as pack}
                     <div
-                        class="mx-7 mb-7 lg:ml-0 lg:mb-0 lg:mr-12  xl:w-shopItem shop-item">
+                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
                         <img
                             class="w-full h-full block object-cover"
                             src="assets/ShopItems/{pack.name}.jpg"
                             alt={pack.name} />
                         <div class="absolute bottom-0 z-10 px-5 pb-3 w-full">
+                            <p class="text-accent text-5xl">
+                                {pack.name.toLowerCase().replace(/\-/g, ' ')}
+                            </p>
+
                             <div
-                                class="flex justify-between w-full items-center">
+                                class="flex justify-between w-full items-end pb-1">
                                 <div>
-                                    <p class="text-accent text-5xl">
-                                        {pack.name
-                                            .toLowerCase()
-                                            .replace(/\-/g, ' ')}
-                                    </p>
-                                    <p class="-mt-2">{pack.description}</p>
+                                    <div>
+                                        <p class="block mr-1 -mb-2">
+                                            {pack.description}
+                                        </p>
+                                    </div>
                                 </div>
                                 <button
                                     disabled={pack.unBuyable}

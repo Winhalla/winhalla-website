@@ -16,6 +16,7 @@ express() // You can also use Express
 		sirv('static', { dev }),
 		sapper.middleware()
 	)
+	.set("x-powered-by",false)
 	.listen(PORT, err => {
 		if (err) console.log('error', err);
 	});

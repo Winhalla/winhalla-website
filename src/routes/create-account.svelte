@@ -1,4 +1,4 @@
-<script context=module>
+<script context="module">
     export async function preload({ params, query }) {
         let firstLink = query.link;
         return { firstLink };
@@ -10,6 +10,7 @@
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
+    import { apiUrl } from "../utils/config.js";
     let account;
     let email;
     let link = firstLink;
@@ -28,7 +29,7 @@
                             `/getLink/${linkId}`
                         );
                         if (testLink) validLink = true;
-                        else validLink = false
+                        else validLink = false;
                     } else {
                         validLink = false;
                     }
@@ -56,7 +57,7 @@
     if (link && link != "") onKeyPressLink();
     onMount(async () => {
         account = await callApi("get", "/account");
-        //if (account.user) goto("/");
+        if (account.user) goto("/");
     });
 
     const onClick = async () => {
@@ -70,7 +71,7 @@
             "post",
             `/auth/createAccount?email=${email}&linkId=${linkId}`
         );
-        goto("/");
+        goto(apiUrl + "/auth/redirect-after-account");
     };
 </script>
 
@@ -101,7 +102,10 @@
 
 <svelte:head>
     <title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>
-    <meta name="description" content="This is where all starts | Create Winhalla account now and get Battle Pass and Mammoth Coins FOR FREE">
+    <meta
+        name="description"
+        content="This is where all starts | Create Winhalla account now and get
+        Battle Pass and Mammoth Coins FOR FREE" />
 </svelte:head>
 <div>
     <div class="flex items-center justify-center md:h-screen-70">

@@ -103,7 +103,8 @@ module.exports = {
                 "80%": "80%",
                 "85%": "85%",
                 "90%": "90%",
-                "shopItem": "calc(35% - 1.5rem)"
+                "shopItemLarge": "calc(35% - 1.5rem)",
+                "shopItem": "calc(30% - 1.5rem)",
             },
             boxShadow: {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",

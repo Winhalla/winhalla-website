@@ -24,7 +24,6 @@ express() // You can also use Express
 			throttler.push({ ip: req.ip, requests: 1, timestamp: Date.now() })
 			next()
 		}
-		console.log(throttler)
 	})
 	.use(
 		compression({ threshold: 0 }),

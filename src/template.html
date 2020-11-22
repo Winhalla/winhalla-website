@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ7J8EE2E5"></script>
@@ -13,6 +14,23 @@
         gtag("js", new Date());
 
         gtag("config", "G-MQ7J8EE2E5");
+    </script>-->
+    <!--<script>
+        function check() {
+            console.log(document.location.pathname);
+            setTimeout(() => {
+                //if (document.location.pathname != "/") return
+                const url = new URLSearchParams(document.location.search.substring(1))
+
+                console.log("reached")
+                if (url.get("reload") == "true") {
+                    url.delete("reload")
+                    document.location.search = url
+                }
+            }, 4000)
+        }
+
+
     </script>-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -37,9 +55,11 @@
          the current page has one -->
     %sapper.head%
 </head>
+
 <body>
-<!-- The application will be rendered inside this element,
+    <!-- The application will be rendered inside this element,
      because `src/client.js` references it -->
-<div id="sapper">%sapper.html%</div>
+    <div id="sapper">%sapper.html%</div>
 </body>
+
 </html>

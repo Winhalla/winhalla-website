@@ -1,3 +1,4 @@
+
 <script>
     import { onMount } from "svelte";
     import { clickOutside } from "../../utils/clickOutside";
@@ -18,24 +19,6 @@
     let informations;
     let notificationsObj = {};
 
-    let data = {
-        inGame: [
-            {
-                id: "ID DE LA GAME",
-                type: "FFA",
-                isFinished: true,
-                Date: Date
-            },
-            {
-                id: "ID DE LA GAME",
-                type: "2vs2",
-                isFinished: false,
-                progress: "1/10",
-                Date: Date
-            }
-        ]
-    };
-
     onMount(async () => {
 
 
@@ -47,14 +30,17 @@
             goto("/status");
         }
 
-        console.log("USER", user == undefined)
-
+        
+        if(user.user){
         notificationsObj.notifications = user.user.notifications;
         notificationsObj.inGame = user.user.inGame;
+        }
 
-        user = user.steam;
+        //user = user.steam;
 
-        isUserLoggedIn = !!user;
+        isUserLoggedIn = user.user?true:user.steam?"steam":false;
+        user = user.steam        
+        console.log("USER", isUserLoggedIn)
     });
 
 
@@ -92,7 +78,7 @@
                     <NavAlert data={informations}/>
                 {/if}
 
-                <Notifications {data}/>
+                <Notifications data={notificationsObj}/>
             </div>
             <button
                     class="focus:outline-none"
@@ -166,7 +152,7 @@
 
             <div class="ml-7 mt-5 md:m-0 md:mr-7">
 
-                {#if isUserLoggedIn}
+                {#if isUserLoggedIn === true}
                     <div class="lg:flex lg:items-center">
                         {#if informations}
                             <div class="hidden lg:flex items-center">
@@ -184,6 +170,10 @@
                         {/if}
 
                     </div>
+                {:else if isUserLoggedIn == "steam"}
+                <a class="button-brand button mr-3" href="/create-account">
+                        CREATE ACCOUNT
+                </a>
                 {:else}
                     <a class="button-brand button mr-3" href="{apiUrl}/auth/login">
                         CREATE ACCOUNT

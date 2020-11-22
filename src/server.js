@@ -8,6 +8,10 @@ const dev = NODE_ENV === 'development';
 let throttler = []
 express() // You can also use Express
 	.use((req, res, next) => {
+		if (req.hostname.includes("www") || req.hostname.includes(".ew.") || req.hostname.includes(".r.")) return res.redirect(301, "https://winhalla.appspot.com" + req.path)
+		next();
+	})
+	.use((req, res, next) => {
 		let i = throttler.findIndex(e => e.ip == req.ip)
 		let user1 = throttler[i]
 		if (user1) {
@@ -24,14 +28,13 @@ express() // You can also use Express
 			throttler.push({ ip: req.ip, requests: 1, timestamp: Date.now() })
 			next()
 		}
-		console.log(throttler)
 	})
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
 		sapper.middleware()
 	)
-	.set("x-powered-by",false)
+	.set("x-powered-by", false)
 	.listen(PORT, err => {
 		if (err) console.log('error', err);
 	});

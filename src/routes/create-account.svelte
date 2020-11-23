@@ -11,7 +11,7 @@
     import { onMount } from "svelte";
     import { apiUrl } from "../utils/config";
     import { goto } from "@sapper/app";
-    import { apiUrl } from "../utils/config.js";
+
     let account;
     let email;
     let link = firstLink;
@@ -89,10 +89,6 @@
 
     .accent {
         @apply text-accent;
-    }
-
-    .max {
-        max-width: 72%;
     }
 
     input {

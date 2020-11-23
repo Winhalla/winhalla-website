@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:4000"
+    baseURL: "https://api-dot-winhalla.appspot.com"
 });
 
 const callApi = async (method, url, data) => {
@@ -20,4 +20,4 @@ const getUser = async () => {
 };
 
 
-export { callApi, getUser};
+export { callApi, getUser };

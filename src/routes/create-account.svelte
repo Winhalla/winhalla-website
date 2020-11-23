@@ -11,6 +11,7 @@
     import { onMount } from "svelte";
     import { apiUrl } from "../utils/config";
     import { goto } from "@sapper/app";
+    import { apiUrl } from "../utils/config.js";
     let account;
     let email;
     let link = firstLink;
@@ -61,7 +62,7 @@
     if (link && link != "") onKeyPressLink();
     onMount(async () => {
         account = await callApi("get", "/account");
-        //if (account.user) goto("/");
+        if (account.user) goto("/");
     });
 
     const handleClick = async () => {

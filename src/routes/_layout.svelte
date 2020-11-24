@@ -71,7 +71,7 @@
 
     <main class="bg-background text-font text-default min-h-screen h-full">
         <slot class="flex-grow bg-background block-grow" />
-        <div class="w-full flex justify-between text-footer shadow-footer pt-4">
+        <div class="w-full flex justify-between text-footer shadow-footer p-8">
             <div class="ml-16">
                 <h3 class="text-footer-h3">Legal</h3>
                 <a href="/privacy" class="block text-base">Privacy</a>
@@ -85,7 +85,7 @@
             <div class="mr-16">
                 <h3 class="text-footer-h3">Contact</h3>
                 <a href="/contact" class="block text-base">Contact us</a>
-                <a href="/about" class="block text-base">About us</a>
+                <a href="/about" class="block text-base">About</a>
             </div>
 
         </div>

@@ -39,10 +39,13 @@
 </style>
 
 <svelte:head>
-    <title>Play Brawlhalla. Earn rewards | Winhalla</title>
+    <title>Play Brawlhalla. Earn rewards. - Winhalla</title>
     <meta
         name="description"
-        content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass, Mammoth Coins, Season Packs and more! | Winnhalla home page" />
+        content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,
+        Mammoth Coins, Season Packs and more! | Winnhalla home page" />
+
+    <link rel="canonical" href="https://winhalla.appspot.com" />
 </svelte:head>
 <div class="">
     <div class="relative">
@@ -57,7 +60,7 @@
         </div>
         <div
             class="video-container relative z-0 overflow-hidden w-full
-                h-screen-60 lg:h-screen">
+            h-screen-60 lg:h-screen">
             <video
                 class="w-full h-full object-cover"
                 preload="true"
@@ -73,25 +76,26 @@
 
         <div
             class="tip absolute left-0 right-0 bottom-20 text-center hidden
-                lg:block">
+            lg:block">
             <p class="text-2xl">Learn more</p>
             <svg
                 class="fill-current w-7 h-7 mt-1 mb-3 mx-auto arrow-svg"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20">
                 <path
-                    d="M9 16.172l-6.071-6.071-1.414 1.414L10 20l.707-.707 7.778-7.778-1.414-1.414L11 16.172V0H9z" />
+                    d="M9 16.172l-6.071-6.071-1.414 1.414L10 20l.707-.707
+                    7.778-7.778-1.414-1.414L11 16.172V0H9z" />
             </svg>
         </div>
     </div>
     <div class="pt-10">
         <div
             class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
-                items-center lg:justify-around">
+            items-center lg:justify-around">
             <div class="pb-10 lg:pb-0">
                 <div
                     class="card p-4 w-64 h-84 hover:shadow-card-hover border
-                        border-transparent hover:border-primary">
+                    border-transparent hover:border-primary">
                     <p class="text-9xl">1</p>
                     <div class="">
                         <p class="text-3xl leading-9">
@@ -107,7 +111,7 @@
             <div class="pb-10 lg:pb-0">
                 <div
                     class="card p-4 w-64 h-84 hover:shadow-card-hover border
-                        border-transparent hover:border-primary">
+                    border-transparent hover:border-primary">
                     <p class="text-9xl">2</p>
                     <div class="">
                         <p class="text-3xl leading-9">
@@ -123,7 +127,7 @@
             <div>
                 <div
                     class="card p-4 w-64 h-84 hover:shadow-card-hover border
-                        border-transparent hover:border-primary">
+                    border-transparent hover:border-primary">
                     <p class="text-9xl">3</p>
                     <div class="">
                         <p class="text-3xl leading-9">
@@ -132,7 +136,8 @@
                         </p>
                         <p class="text-light text-xl pt-1">
                             Earn coins that you will be able to spend in the
-                            <a class="underline" href="/shop">shop</a>!
+                            <a class="underline" href="/shop">shop</a>
+                            !
                         </p>
                     </div>
                 </div>

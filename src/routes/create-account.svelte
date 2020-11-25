@@ -19,7 +19,7 @@
     let validLink = null;
     let validEmail = null;
 
-    let accountCreationStep = 0;
+    let accountCreationStep = 1;
     let generatedLink;
 
     const onKeyPressLink = () => {
@@ -65,7 +65,7 @@
         if (account.user) goto("/");
     });
 
-    const handleClick = async () => {
+    async function handleClick() {
         if (accountCreationStep == 0) {
             try {
                 linkId = new URL(link);
@@ -79,7 +79,42 @@
             );
             accountCreationStep++;
         }
-    };
+    }
+    import { tick } from "svelte";
+
+    let valueCopy = null;
+    export let value = null;
+    let areaDom;
+    async function copy() {
+        valueCopy = value;
+        console.log(areaDom);
+        await tick();
+        areaDom.focus();
+        areaDom.select();
+        let message = "Copying text was successful";
+        try {
+            const successful = document.execCommand("copy");
+            if (!successful) {
+                message = "Copying text was unsuccessful";
+            }
+        } catch (err) {
+            message = "Oops, unable to copy";
+        }
+
+        // we can notifi by event or storage about copy status
+        console.log(message);
+        valueCopy = null;
+    }
+    async function handleShare() {
+        if (window.navigator.share) {
+            await window.navigator.share({
+                title: "Share your affiliate link",
+                url: generatedLink,
+            });
+        } else {
+            copy();
+        }
+    }
 </script>
 
 <style>
@@ -329,7 +364,10 @@
                     </div>
                 </div>
                 <div class="lg:flex justify-center">
-                    <div
+                    <textarea bind:this={areaDom}>{valueCopy}</textarea>
+
+                    <button
+                        on:click={handleShare()}
                         class="text-background bg-font py-4 px-4 mt-14 flex items-center rounded">
                         <p class="leading-none">{generatedLink}</p>
                         <svg
@@ -341,7 +379,7 @@
                                 d="m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z" />
                             <path
                                 d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" /></svg>
-                    </div>
+                    </button>
                 </div>
 
                 <p class="pt-4 text-lg text-center">

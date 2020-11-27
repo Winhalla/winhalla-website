@@ -58,13 +58,16 @@
             rgba(23, 23, 26, 0.92) 100%
         );
     }
+
     button:disabled {
         @apply bg-disabled;
         cursor: not-allowed;
     }
 
-    /*.test {
-        width: calc(30% - 1.5rem);
+    /*@media (min-width: 450px) {
+        .receive {
+            @apply mt-7 -mb-14;
+        }
     }*/
 </style>
 
@@ -247,7 +250,7 @@
         {/if}
     </div>
     <div
-        class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-auto 2xl:mr-8">
+        class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
         <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
             How does it works ?
         </h3>
@@ -272,7 +275,7 @@
                 <p class="text-4xl leading-none text-accent">3.</p>
                 <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
                 <p
-                    class="-mb-14 mt-8 md:mt-0 md:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:mb-0">
+                    class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
                     You will receive the item you purchased within 1 week to 1
                     month
                 </p>

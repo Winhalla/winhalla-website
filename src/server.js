@@ -16,7 +16,7 @@ express() // You can also use Express
 				user1.timestamp = Date.now()
 				console.log("test")
 			}
-			else if (user1.requests == 75) return res.sendStatus(429)
+			//else if (user1.requests == 75) return res.sendStatus(429)
 			else user1.requests += 1
 			throttler[i] = user1
 			next()

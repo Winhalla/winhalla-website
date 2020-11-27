@@ -19,7 +19,7 @@
     let validLink = null;
     let validEmail = null;
 
-    let accountCreationStep = 1;
+    let accountCreationStep = 0;
     let generatedLink;
 
     const onKeyPressLink = () => {
@@ -82,7 +82,7 @@
     }
     import { tick } from "svelte";
 
-    let valueCopy = null;
+    /*let valueCopy = null;
     export let value = null;
     let areaDom;
     async function copy() {
@@ -114,7 +114,7 @@
         } else {
             copy();
         }
-    }
+    }*/
 </script>
 
 <style>
@@ -364,10 +364,9 @@
                     </div>
                 </div>
                 <div class="lg:flex justify-center">
-                    <textarea bind:this={areaDom}>{valueCopy}</textarea>
+                    <!--<textarea bind:this={areaDom}>{valueCopy}</textarea>-->
 
                     <button
-                        on:click={handleShare()}
                         class="text-background bg-font py-4 px-4 mt-14 flex items-center rounded">
                         <p class="leading-none">{generatedLink}</p>
                         <svg

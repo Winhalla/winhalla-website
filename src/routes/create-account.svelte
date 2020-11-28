@@ -121,7 +121,7 @@
         name="description"
         content="This is where all starts | Create a Winhalla account now and get a Battle Pass and Mammoth Coins FOR FREE" />
 </svelte:head>
-<div>
+<div class="mb-60">
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}
             <div class="flex flex-col justify-center px-5 md:p-0">

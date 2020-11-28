@@ -15,7 +15,7 @@
 <svelte:head>
     <title>How to contact us | Winhalla, Play Brawlhalla. Earn rewards.</title>
 </svelte:head>
-<div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full mb-7">
+<div class="lg:block lg:pl-24 lg:mt-12 h-full mb-7">
     <h1 class="text-6xl">How to contact us</h1>
     <br />
     <div class="flex w-full h-auto pr-24 justify-between">

@@ -191,7 +191,7 @@
                                     disabled={seasonPack.unBuyable}
                                     on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
                                     class="px-4 py-1 bg-primary rounded">
-                                    <p class="text-2xl">
+                                    <p class="text-2xl flex">
                                         <b class="mr-1 font-normal">
                                             {seasonPack.cost}
                                         </b>

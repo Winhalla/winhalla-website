@@ -62,17 +62,38 @@
 <Tailwindcss />
 
 <svelte:head>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-        rel="stylesheet" />
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
 </svelte:head>
 
-<div class="font w-full min-h-screen h-full flex flex-col">
+<div class="font w-full bg-background min-h-screen h-full flex flex-col">
     <Nav />
 
-    <main class="bg-background text-font text-default min-h-screen h-full">
-        <slot class="flex-grow bg-background" />
+    <main class="text-font text-default min-h-screen h-full">
+        <!--Main-->
+        <slot class="flex-grow bg-background block-grow" />
+
     </main>
+    <!--Footer-->
+    <div
+        class="w-full flex justify-between text-footer shadow-footer p-8
+            pb-6 bg-variant">
+        <div class="ml-16">
+            <h3 class="text-footer-h3">Legal</h3>
+            <a href="/privacy" class="block text-base">Privacy</a>
+            <a href="/legal" class="block text-base">Legal notice</a>
+        </div>
+        <div>
+            <h3 class="text-footer-h3">Info</h3>
+            <a href="/help" class="block text-base">How it works</a>
+            <a href="/terms" class="block text-base">Terms of use</a>
+        </div>
+        <div class="mr-16">
+            <h3 class="text-footer-h3">Contact</h3>
+            <a href="/contact" class="block text-base">Contact us</a>
+            <a href="/about" class="block text-base">About</a>
+        </div>
+
+    </div>
+
 </div>

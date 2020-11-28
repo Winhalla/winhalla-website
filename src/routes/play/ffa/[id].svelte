@@ -57,7 +57,7 @@
         filterUsers();
         console.log(id, match);*/
         return {
-            id,
+            id
             /*user,
             match,
             isMatchEnded,
@@ -151,25 +151,26 @@
         isMatchEnded = match.finished;
         console.log("noobz");
         //Start the countdown
-        let d = new Date(match.Date);
+
+        filterUsers();
+
+        let d = new Date(userPlayer.joinDate);
         const endsIn = -(
             (new Date().getTime() -
                 new Date(d.setHours(d.getHours() + 3)).getTime()) /
             1000
         );
         startTimer(endsIn);
-
-        filterUsers();
     });
 
     const filterUsers = () => {
         //Find user's object
-        userPlayer = match.players.find((p) => p.steamId === parseInt(user.id));
+        userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
 
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex((p) => p.steamId === parseInt(user.id)),
+            match.players.findIndex(p => p.steamId === parseInt(user.id)),
             1
         );
     };
@@ -181,7 +182,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function () {
+        setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -283,9 +284,11 @@
         {:else}
             <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                 <div
-                    class="flex flex-col justify-center lg:flex-row lg:justify-between items-center lg:mt-12 mt-7">
+                    class="flex flex-col justify-center lg:flex-row
+                    lg:justify-between items-center lg:mt-12 mt-7">
                     <div
-                        class="mode-timer flex justify-center lg:justify-start items-end w-60 ">
+                        class="mode-timer flex justify-center lg:justify-start
+                        items-end w-60 ">
                         <h1 class="text-6xl leading-none">FFA</h1>
                         <p
                             class="timer text-primary ml-5 text-3xl leading-none">
@@ -294,14 +297,16 @@
                     </div>
 
                     <div
-                        class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row items-center">
+                        class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                        items-center">
                         <RefreshButton
                             on:click={() => handleRefresh()}
                             isRefreshing={isRefreshingStats}
                             refreshMessage={'Refresh data'} />
                         {#if userPlayer.gamesPlayed == 0}
                             <button
-                                class="button button-brand quit lg:ml-4 mt-2 lg:mt-0"
+                                class="button button-brand quit lg:ml-4 mt-2
+                                lg:mt-0"
                                 on:click={() => handleQuit()}>
                                 Quit lobby
                             </button>
@@ -310,7 +315,8 @@
                 </div>
 
                 <div
-                    class="flex items-center flex-col lg:flex-row lg:items-start h-full">
+                    class="flex items-center flex-col lg:flex-row lg:items-start
+                    h-full">
                     <!--Main Player-->
                     {#if userPlayer}
                         <div class="mt-8 lg:mt-25 ffa-player card user">
@@ -326,9 +332,14 @@
                                 class="stats text-2xl bottom-5 text-ultra-light">
                                 <p>
                                     Games played:
-                                    <b>{userPlayer.gamesPlayed}</b>/8
+                                    <b>{userPlayer.gamesPlayed}</b>
+                                    /8
                                 </p>
-                                <p>Games won: <b>{userPlayer.wins}</b>/8</p>
+                                <p>
+                                    Games won:
+                                    <b>{userPlayer.wins}</b>
+                                    /8
+                                </p>
                             </div>
                         </div>
                     {/if}
@@ -336,8 +347,8 @@
                     <!--Other Players-->
                     {#if players}
                         <div
-                            class="flex flex-col justify-center lg:justify-start lg:flex-row
-                    lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
+                            class="flex flex-col justify-center lg:justify-start
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
                             {#each players as player}
                                 <div class="ffa-player card lg:mr-12 mb-8">
                                     <img
@@ -349,10 +360,12 @@
                                         {player.username}
                                     </p>
                                     <div
-                                        class="stats text-xl bottom-5 text-ultra-light">
+                                        class="stats text-xl bottom-5
+                                        text-ultra-light">
                                         <p>
                                             Games played:
-                                            <b>{player.gamesPlayed}</b>/8
+                                            <b>{player.gamesPlayed}</b>
+                                            /8
                                         </p>
                                     </div>
                                 </div>

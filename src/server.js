@@ -8,6 +8,7 @@ const dev = NODE_ENV === 'development';
 let throttler = []
 express() // You can also use Express
 	.use((req, res, next) => {
+		if (req.path.includes("assets")) return next()
 		let i = throttler.findIndex(e => e.ip == req.ip)
 		let user1 = throttler[i]
 		if (user1) {

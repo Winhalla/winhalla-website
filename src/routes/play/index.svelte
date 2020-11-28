@@ -10,7 +10,7 @@
             goal:
                 "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
             duration: "<b>30</b> - <b>50</b> minutes",
-            available: false,
+            available: false
         },
         {
             name: "2vs2",
@@ -18,8 +18,8 @@
             goal:
                 "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
             duration: "<b>20</b> - <b>30</b> minutes",
-            available: false,
-        },
+            available: false
+        }
     ];
 
     /*const quests = {
@@ -112,13 +112,13 @@
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus) {
                 gameModesStatus = gameModesStatus.find(
-                    (s) => s.name === "GAMEMODES STATUS"
+                    s => s.name === "GAMEMODES STATUS"
                 );
                 gameModesStatus = gameModesStatus.value;
 
-                Object.keys(gameModesStatus).forEach((gameModeName) => {
+                Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
-                        (g) => g.name === gameModeName.toLowerCase()
+                        g => g.name === gameModeName.toLowerCase()
                     );
                     gameMode.available = gameModesStatus[gameModeName];
                     gameModes = gameModes;
@@ -146,7 +146,8 @@
     <title>Play | Winhalla</title>
     <meta
         name="description"
-        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects! | Exchange here your coins into rewards | Winhalla Shop page " />
+        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
+        | Exchange here your coins into rewards | Winhalla Shop page " />
 </svelte:head>
 <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
     <div class="text-center lg:text-left">
@@ -160,7 +161,7 @@
         lg:flex-row">
         <div
             class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
-                flex flex-col items-center lg:flex-row lg:items-start">
+            flex flex-col items-center lg:flex-row lg:items-start">
             <GameModeCard {gameModes} />
         </div>
         <div>

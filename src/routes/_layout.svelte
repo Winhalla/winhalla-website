@@ -70,7 +70,11 @@
     <Nav />
 
     <main class="bg-background text-font text-default min-h-screen h-full">
+
+        <!--Main-->
         <slot class="flex-grow bg-background block-grow" />
+
+        <!--Footer-->
         <div
             class="w-full flex justify-between text-footer shadow-footer p-8
             pb-6">

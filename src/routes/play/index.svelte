@@ -149,7 +149,7 @@
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Exchange here your coins into rewards | Winhalla Shop page " />
 </svelte:head>
-<div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full mb-7">
+<div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
     <div class="text-center lg:text-left">
         <h1 class="text-6xl leading-snug lg:leading-normal">
             Choose a game mode

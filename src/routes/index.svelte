@@ -43,7 +43,7 @@
     <meta
         name="description"
         content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,
-        Mammoth Coins, Season Packs and more! | Winnhalla home page" />
+        Mammoth Coins, Season Packs and more! | Winhalla home page" />
 
     <link rel="canonical" href="https://winhalla.appspot.com" />
 </svelte:head>

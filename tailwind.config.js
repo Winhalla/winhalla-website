@@ -96,6 +96,7 @@ module.exports = {
                 "screen-70": "70vh",
                 "screen-80": "80vh",
                 "screen-90": "90vh",
+                "40%": "40%",
                 "28%": "28%",
                 "60%": "60%",
                 "70%": "70%",
@@ -110,8 +111,10 @@ module.exports = {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",
                 "card-hover": "0px 0px 10px rgba(255, 255, 255, 0.225)",
                 "button-hover": "0px 0px 10px rgba(255, 255, 255, 0.2)",
-                "button-alternative-hover":
-                    "0px 0px 8px rgba(255, 255, 255, 0.125)"
+                "button-alternative-hover": "0px 0px 8px rgba(255, 255, 255, 0.125)",
+                "footer": '0 -10px 15px -3px rgba(0, 0, 0, 0.2), 0 -4px 6px -2px rgba(0, 0, 0, 0.05)',
+                "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                full: "0 0 2px 4px rgba(0, 0, 0, 0.2)"
             },
             textShadow: {
                 "link-hover": "0px 0px 10px rgba(255, 255, 255, 0.5)",
@@ -137,11 +140,14 @@ module.exports = {
                 legendary: "#fc1870",
 
                 font: "#fdfdfd",
+                footer: "#a8a8a8",
+                "footer-h3": "#bbbbbb",
                 "extra-light": "rgba(253, 253, 253, 0.95)",
                 "ultra-light": "rgba(253, 253, 253, 0.9)",
                 "mid-light": "rgba(253, 253, 253, 0.8)",
                 light: "#afafb4",
-                disabled: "#79797f"
+                disabled: "#79797f",
+                black: "#111111"
             },
 
             inset: {

@@ -151,7 +151,7 @@
 
     <link rel="canonical" href="https://winhalla.appspot.com/play" />
 </svelte:head>
-<div class="lg:block lg:pl-24 pt-8 lg:pt-12 h-full w-full">
+<div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full mb-7">
     <div class="text-center lg:text-left">
         <h1 class="text-6xl leading-snug lg:leading-normal">
             Choose a game mode

@@ -12,6 +12,7 @@ express() // You can also use Express
 		next();
 	})
 	.use((req, res, next) => {
+		if (req.path.includes("assets") || req.path.includes("css")) return next()
 		let i = throttler.findIndex(e => e.ip == req.ip)
 		let user1 = throttler[i]
 		if (user1) {

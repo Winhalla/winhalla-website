@@ -72,8 +72,9 @@
     <title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
         name="description"
-        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Exchange here your coins into rewards | Winhalla Shop page " />
+        content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
+        Battle Pass and Season packs| Exchange here your coins into rewards |
+        Winhalla Shop page " />
     <link rel="canonical" href="https://winhalla.appspot.com/shop" />
 </svelte:head>
 <!--

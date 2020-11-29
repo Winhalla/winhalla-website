@@ -34,5 +34,5 @@
         <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
-    <Loading />
+    <Loading data={"Finding game..."}/>
 {/if}

@@ -293,7 +293,7 @@
     <div class="h-full">
         {#if match}
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners} />
+                <FfaEnd players={match.players} winners={match.winners}/>
             {:else}
                 <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                     <div
@@ -389,7 +389,7 @@
                 </div>
             {/if}
         {:else}
-            <Loading />
+            <Loading data={"Loading game data..."}/>
         {/if}
     </div>
 {/if}

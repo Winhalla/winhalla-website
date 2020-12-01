@@ -76,7 +76,6 @@
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
-
     export let id;
 
     /*export let user;
@@ -142,25 +141,34 @@
             },
         ]
     };*/
-
+    let error
     onMount(async () => {
         user = await getUser();
         user = user.steam;
+        try {
+            match = await callApi("get", `/getMatch/${id}`);
+            isMatchEnded = match.finished;
+            console.log("noobz");
+            //Start the countdown
 
-        match = await callApi("get", `/getMatch/${id}`);
-        isMatchEnded = match.finished;
-        console.log("noobz");
-        //Start the countdown
+            filterUsers();
 
-        filterUsers();
-
-        let d = new Date(userPlayer.joinDate);
-        const endsIn = -(
-            (new Date().getTime() -
-                new Date(d.setHours(d.getHours() + 3)).getTime()) /
-            1000
-        );
-        startTimer(endsIn);
+            let d = new Date(userPlayer.joinDate);
+            const endsIn = -(
+                (new Date().getTime() -
+                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                1000
+            );
+            startTimer(endsIn);
+        } catch (err) {
+        if (err.response) {
+            if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                error="You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)"
+            } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                error="You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)"
+            }
+        }
+    }
     });
 
     const filterUsers = () => {
@@ -276,106 +284,113 @@
 <svelte:head>
     <title>Winhalla | FFA match</title>
 </svelte:head>
-
-<div class="h-full">
-    {#if match}
-        {#if isMatchEnded}
-            <FfaEnd players={match.players} winners={match.winners} />
-        {:else}
-            <div class="h-full flex items-center flex-col lg:block lg:ml-24">
-                <div
-                    class="flex flex-col justify-center lg:flex-row
-                    lg:justify-between items-center lg:mt-12 mt-7">
+{#if error}
+    <div class="w-full content-center lg:mt-60 mt-25 ">
+        <h2 class="lg:text-4xl text-3xl text-center">{error}</h2>
+        <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
+    </div>
+{:else}
+    <div class="h-full">
+        {#if match}
+            {#if isMatchEnded}
+                <FfaEnd players={match.players} winners={match.winners}/>
+            {:else}
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                     <div
-                        class="mode-timer flex justify-center lg:justify-start
+                        class="flex flex-col justify-center lg:flex-row
+                    lg:justify-between items-center lg:mt-12 mt-7">
+                        <div
+                            class="mode-timer flex justify-center lg:justify-start
                         items-end w-60 ">
-                        <h1 class="text-6xl leading-none">FFA</h1>
-                        <p
-                            class="timer text-primary ml-5 text-3xl leading-none">
-                            {#if countDown}{countDown}{:else}Loading...{/if}
-                        </p>
+                            <h1 class="text-6xl leading-none">FFA</h1>
+                            <p
+                                class="timer text-primary ml-5 text-3xl leading-none">
+                                {#if countDown}{countDown}{:else}Loading...{/if}
+                            </p>
+                        </div>
+
+                        <div
+                            class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                        items-center">
+                            <RefreshButton
+                                on:click={() => handleRefresh()}
+                                isRefreshing={isRefreshingStats}
+                                refreshMessage={'Refresh data'} />
+                            {#if userPlayer.gamesPlayed == 0}
+                                <button
+                                    class="button button-brand quit lg:ml-4 mt-2
+                                lg:mt-0"
+                                    on:click={() => handleQuit()}>
+                                    Quit lobby
+                                </button>
+                            {/if}
+                        </div>
                     </div>
 
                     <div
-                        class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
-                        items-center">
-                        <RefreshButton
-                            on:click={() => handleRefresh()}
-                            isRefreshing={isRefreshingStats}
-                            refreshMessage={'Refresh data'} />
-                        {#if userPlayer.gamesPlayed == 0}
-                            <button
-                                class="button button-brand quit lg:ml-4 mt-2
-                                lg:mt-0"
-                                on:click={() => handleQuit()}>
-                                Quit lobby
-                            </button>
+                        class="flex items-center flex-col lg:flex-row lg:items-start
+                    h-full">
+                        <!--Main Player-->
+                        {#if userPlayer}
+                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                                <img
+                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
+                                    alt={userPlayer.legends}
+                                    class="block" />
+
+                                <p class="player-name text-4xl">
+                                    {userPlayer.username}
+                                </p>
+                                <div
+                                    class="stats text-2xl bottom-5 text-ultra-light">
+                                    <p>
+                                        Games played:
+                                        <b>{userPlayer.gamesPlayed}</b>
+                                        /8
+                                    </p>
+                                    <p>
+                                        Games won:
+                                        <b>{userPlayer.wins}</b>
+                                        /8
+                                    </p>
+                                </div>
+                            </div>
+                        {/if}
+
+                        <!--Other Players-->
+                        {#if players}
+                            <div
+                                class="flex flex-col justify-center lg:justify-start
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
+                                {#each players as player}
+                                    <div class="ffa-player card lg:mr-12 mb-8">
+                                        <img
+                                            src="/assets/CharactersBanners/{player.legends}.png"
+                                            alt={player.legends}
+                                            class="block" />
+
+                                        <p class="player-name text-3xl">
+                                            {player.username}
+                                        </p>
+                                        <div
+                                            class="stats text-xl bottom-5
+                                        text-ultra-light">
+                                            <p>
+                                                Games played:
+                                                <b>{player.gamesPlayed}</b>
+                                                /8
+                                            </p>
+                                        </div>
+                                    </div>
+                                {/each}
+                            </div>
                         {/if}
                     </div>
                 </div>
-
-                <div
-                    class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full">
-                    <!--Main Player-->
-                    {#if userPlayer}
-                        <div class="mt-8 lg:mt-25 ffa-player card user">
-                            <img
-                                src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                alt={userPlayer.legends}
-                                class="block" />
-
-                            <p class="player-name text-4xl">
-                                {userPlayer.username}
-                            </p>
-                            <div
-                                class="stats text-2xl bottom-5 text-ultra-light">
-                                <p>
-                                    Games played:
-                                    <b>{userPlayer.gamesPlayed}</b>
-                                    /8
-                                </p>
-                                <p>
-                                    Games won:
-                                    <b>{userPlayer.wins}</b>
-                                    /8
-                                </p>
-                            </div>
-                        </div>
-                    {/if}
-
-                    <!--Other Players-->
-                    {#if players}
-                        <div
-                            class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
-                            {#each players as player}
-                                <div class="ffa-player card lg:mr-12 mb-8">
-                                    <img
-                                        src="/assets/CharactersBanners/{player.legends}.png"
-                                        alt={player.legends}
-                                        class="block" />
-
-                                    <p class="player-name text-3xl">
-                                        {player.username}
-                                    </p>
-                                    <div
-                                        class="stats text-xl bottom-5
-                                        text-ultra-light">
-                                        <p>
-                                            Games played:
-                                            <b>{player.gamesPlayed}</b>
-                                            /8
-                                        </p>
-                                    </div>
-                                </div>
-                            {/each}
-                        </div>
-                    {/if}
-                </div>
-            </div>
+            {/if}
+        {:else}
+            <Loading data={"Loading game data..."}/>
         {/if}
-    {:else}
-        <Loading />
-    {/if}
-</div>
+    </div>
+{/if}
+

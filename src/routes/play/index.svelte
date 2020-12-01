@@ -134,12 +134,21 @@
                 quests = quests.solo;
             }
             return { quests };
-        } catch (err) {}
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                    return { error: "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)" };
+                } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                    return { error: "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)" };
+                }
+            }
+        }
     }
 </script>
 
 <script>
     export let quests;
+    export let error;
 </script>
 
 <svelte:head>
@@ -169,6 +178,10 @@
         <div>
             {#if quests}
                 <Quests data={quests} />
+            {:else if error}
+                {error}
+            {:else}
+                Here are the quests
             {/if}
         </div>
     </div>

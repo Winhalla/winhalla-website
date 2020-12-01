@@ -72,28 +72,53 @@
     <main class="text-font text-default min-h-screen h-full">
         <!--Main-->
         <slot class="flex-grow bg-background block-grow" />
-
     </main>
+
     <!--Footer-->
     <div
-        class="w-full flex justify-between text-footer shadow-footer p-8
-            pb-6 bg-variant">
-        <div class="ml-16">
-            <h3 class="text-footer-h3">Legal</h3>
-            <a href="/privacy" class="block text-base">Privacy</a>
-            <a href="/legal" class="block text-base">Legal notice</a>
-        </div>
+        class="w-full flex py-28 pt-12
+             bg-variant text-font text-default justify-center">
         <div>
-            <h3 class="text-footer-h3">Info</h3>
-            <a href="/help" class="block text-base">How it works</a>
-            <a href="/terms" class="block text-base">Terms of use</a>
-        </div>
-        <div class="mr-16">
-            <h3 class="text-footer-h3">Contact</h3>
-            <a href="/contact" class="block text-base">Contact us</a>
-            <a href="/about" class="block text-base">About</a>
-        </div>
+            <div class="lo o-container  lg:pr-34 text-4xl">
+                Play
+                <b class="text-accent font-normal">Brawlhalla</b>
+                <br />
+                Earn
 
+                <b class="text-accent font-normal">rewards</b>
+            </div>
+            <!--<div class="lo o-container  lg:pr-34 text-4xl">
+                <a class="logo" href="/"> WINHALLA </a>
+                <div />
+            </div>-->
+        </div>
+        <div class="flex justify-around pt-3">
+            <div class="px-8">
+                <h3 class="text-primary">Legal</h3>
+                <a
+                    href="/privacy"
+                    class="block hover:text-shadow-link-hover">Privacy</a>
+                <a
+                    href="/legal"
+                    class="block hover:text-shadow-link-hover">Legal notice</a>
+            </div>
+            <div class="px-8">
+                <h3 class="text-primary">Info</h3>
+                <a href="/help" class="block hover:text-shadow-link-hover">How
+                    does it work</a>
+                <a
+                    href="/terms"
+                    class="block hover:text-shadow-link-hover">Terms of use</a>
+            </div>
+            <div class="px-8">
+                <h3 class="text-primary">Company</h3>
+                <a
+                    href="/contact"
+                    class="block hover:text-shadow-link-hover">Contact us</a>
+                <a
+                    href="/about"
+                    class="block hover:text-shadow-link-hover">About</a>
+            </div>
+        </div>
     </div>
-
 </div>

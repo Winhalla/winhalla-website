@@ -60,7 +60,8 @@
     }
 </style>
 
-<nav class="shadow fixed z-50 lg:flex items-center bg-variant text-font w-full">
+<nav
+    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="lo o-container pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/"> WINHALLA </a>

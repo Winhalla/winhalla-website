@@ -1,5 +1,6 @@
 <script>
     import io from "socket.io-client";
+    import { apiUrl } from "../utils/config";
 
     let variable;
     let update = (update) => {

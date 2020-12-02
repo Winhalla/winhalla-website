@@ -75,7 +75,7 @@
     </main>
 
     <!--Footer-->
-    <div
+    <!--<div
         class="w-full flex py-28 pt-12
              bg-variant text-font text-default justify-center">
         <div>
@@ -87,10 +87,10 @@
 
                 <b class="text-accent font-normal">rewards</b>
             </div>
-            <!--<div class="lo o-container  lg:pr-34 text-4xl">
+            <div class="lo o-container  lg:pr-34 text-4xl">
                 <a class="logo" href="/"> WINHALLA </a>
                 <div />
-            </div>-->
+            </div>
         </div>
         <div class="flex justify-around pt-3">
             <div class="px-8">
@@ -120,5 +120,5 @@
                     class="block hover:text-shadow-link-hover">About</a>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>

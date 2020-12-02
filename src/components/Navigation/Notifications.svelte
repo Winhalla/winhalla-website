@@ -180,7 +180,7 @@
         class:hidden={!isDropdownOpen}
         class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
-        border-primary overflow-y-auto max-h-86 "
+        border-primary hoverflow-y-auto hmax-h-screen-80 "
         use:clickOutside
         on:click_outside={() => (isDropdownOpen = false)}>
         <div>

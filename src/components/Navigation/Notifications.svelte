@@ -3,15 +3,18 @@
     import { callApi } from "../../utils/api.js";
     import { onMount } from "svelte";
     import cookie from "cookie";
+
     export let data;
     let newNotifications = false;
     let opened = false;
     let isDropdownOpen = false;
+
     function handleClick() {
         console.log(isDropdownOpen, !isDropdownOpen);
         isDropdownOpen = !isDropdownOpen;
         opened = true;
     }
+
     onMount(() => {
         if (!data.notifications) return;
         let length = data.notifications.length;
@@ -33,6 +36,7 @@
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
+
     function startTimer(duration, i) {
         let timer = duration,
             hours,
@@ -53,13 +57,16 @@
             }
         }, 1000);
     }
-    const viewedNotifications = () => {};
+
+    const viewedNotifications = () => {
+    };
 
     const idToType = id => {
         if (id === 0) return "match finished";
         if (id === 1) return "quest finished";
         if (id === 2) return "match";
     };
+
     function delNotif(i) {
         callApi("post", "/deleteNotification/" + i);
         data.notifications.splice(i, 1);
@@ -173,7 +180,7 @@
         class:hidden={!isDropdownOpen}
         class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
-        border-primary overflow-y-scroll h-screen-80"
+        border-primary overflow-y-auto max-h-86 "
         use:clickOutside
         on:click_outside={() => (isDropdownOpen = false)}>
         <div>
@@ -200,14 +207,14 @@
                         {#each data.notifications as notification, i}
                             <button
                                 on:click={() => delNotif(i)}
-                                class="card notification flex items-center">
+                                class="card notification flex items-center relative">
                                 <div class="progress-container">
                                     <p class="ml-2 mr-6 lg:mr-12 text-2xl">
                                         {notification.message}
                                     </p>
                                     {#if notification.tip}
                                         <p
-                                            class="ml-2 mr-6 lg:mr-12 text-light
+                                            class=" mr-6 lg:mr-12 text-light
                                             text-lg">
                                             {notification.tip}
                                         </p>
@@ -215,9 +222,18 @@
                                 </div>
                                 <span
                                     class="quest-goal text-sm text-font px-2
-                                    py-1 bg-legendary rounded-lg">
+                                    py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
+                                <button on:click={() => delNotif(i)} class="p-2 absolute top-0 right-0 text-light hover:text-font">
+                                    <svg
+                                        class="w-3 h-3 fill-current "
+                                        viewBox="0 0 28 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
+                                    </svg>
+                                </button>
                             </button>
                         {/each}
                     </div>

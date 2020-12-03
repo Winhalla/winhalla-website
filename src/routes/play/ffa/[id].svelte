@@ -206,15 +206,12 @@
         }, 1000);
     }
 
-    //Function that handles the refresh button on click event
+    //Funtion that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
 
         match = await callApi("get", `/getMatch/${id}`);
-        if(match.finished){
-            isMatchEnded = true
-        }
         filterUsers();
         console.log(userPlayer);
         isRefreshingStats = false;

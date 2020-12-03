@@ -6,6 +6,8 @@
 </script>
 
 <script>
+    import { counter } from "../components/store";
+
     export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
@@ -78,6 +80,9 @@
                 `/auth/createAccount?email=${email}&linkId=${linkId}`
             );
             accountCreationStep++;
+
+            counter.set({"refresh":true})
+
         }
     }
     import { tick } from "svelte";

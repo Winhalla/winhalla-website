@@ -1,6 +1,7 @@
 <script>
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
+    import { counter } from "./store";
 
     export let data;
     console.log(data);
@@ -67,9 +68,9 @@
         isRefreshingQuests = false;
     };
 
-    function collect(type, index) {
-        callApi("post", `solo/collect?type=${type}&index=${index}`);
-
+    async function collect(type, index) {
+        await callApi("post", `solo/collect?type=${type}&index=${index}`);
+        counter.set({"refresh":true})
         data.collected[type].push(...data.finished[type].splice(index, 1));
         data = data;
     }

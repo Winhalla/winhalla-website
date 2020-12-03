@@ -214,12 +214,14 @@
     const handleRefresh = async () => {
         isRefreshingStats = true;
         let winNb = userPlayer.gamesPlayed
+
             match = await callApi("get", `/getMatch/${id}`);
-        if (match.finished) {
-            isMatchEnded = true;
-        }
+
         filterUsers();
         if(userPlayer.gamesPlayed !== winNb){
+            counter.set({"refresh":true})
+        }else if (match.finished && isMatchEnded === false) {
+            isMatchEnded = true;
             counter.set({"refresh":true})
         }
         console.log(userPlayer);

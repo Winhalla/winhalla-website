@@ -25,41 +25,48 @@
         }
     };
 
-    //Reorder quests by rarety
-    if (data.dailyQuests) {
-        data.dailyQuests.sort((b, a) => {
-            return a.reward - b.reward;
-        });
+    function calculateOrder() {
+        //Reorder quests by rarety
+        if (data.dailyQuests) {
+            data.dailyQuests.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (data.finished && data.finished.daily) {
+            data.finished.daily.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (data.weeklyQuests) {
+            data.weeklyQuests.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (data.finished && data.finished.weekly) {
+            data.finished.weekly.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
     }
 
-    if (data.finished && data.finished.daily) {
-        data.finished.daily.sort((b, a) => {
-            return a.reward - b.reward;
-        });
-    }
-
-    if (data.weeklyQuests) {
-        data.weeklyQuests.sort((b, a) => {
-            return a.reward - b.reward;
-        });
-    }
-
-    if (data.finished && data.finished.weekly) {
-        data.finished.weekly.sort((b, a) => {
-            return a.reward - b.reward;
-        });
-    }
-
+    data = data;
+    calculateOrder();
     let isRefreshingQuests = false;
     const handleRefresh = async () => {
         isRefreshingQuests = true;
 
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
+        calculateOrder();
         data = refreshedData.solo;
+
 
         isRefreshingQuests = false;
     };
+
     function collect(type, index) {
         callApi("post", `solo/collect?type=${type}&index=${index}`);
 

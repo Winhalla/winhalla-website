@@ -4,7 +4,6 @@
     import { counter } from "./store";
 
     export let data;
-    console.log(data);
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";

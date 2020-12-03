@@ -7,7 +7,7 @@
     import NavAlert from "./NavAlert.svelte";
 
     import { apiUrl } from "../../utils/config";
-    import { callApi, getUser } from "../../utils/api";
+    import { callApi } from "../../utils/api";
     import { goto } from "@sapper/app";
     import { counter } from "../store.js";
 
@@ -19,34 +19,49 @@
     let user;
     let firstLoad = true;
 
-    function calculatePropreties() {
-        if (user.user) {
-            notificationsObj.notifications = user.user.notifications;
-            notificationsObj.inGame = user.user.inGame;
+    function calculatePropreties(value) {
+        if (value.user) {
+            notificationsObj.notifications = value.user.notifications;
+            notificationsObj.inGame = value.user.inGame;
         }
-        isUserLoggedIn = user.user ? true : user.steam ? "steam" : false;
-        userCoins = user.user.coins;
-        user = user.steam;
+        isUserLoggedIn = value.user ? true : value.steam ? "steam" : false;
+        userCoins = value.user.coins;
+        user = value.steam;
         console.log("USER", isUserLoggedIn);
     }
 
     const resetNav = async (value) => {
-        if (firstLoad === true) return firstLoad = false;
-        if(value.refresh === true) return
         user = value.content;
-        calculatePropreties()
+        if (firstLoad === true) return firstLoad = false;
+        if (value.refresh === true) return;
+        calculatePropreties(user);
 
     };
     const unsubscribe = counter.subscribe(resetNav);
     onDestroy(unsubscribe);
     onMount(async () => {
-        try {
-            informations = await callApi("get", "/informations");
-            user = await getUser();
-        } catch (e) {
-            goto("/status");
+        if (user.then) {
+            user.then(async (value) => {
+                if(value instanceof Error){
+                    return goto("/status")
+                }
+                user = value;
+                try {
+                    informations = await callApi("get", "/informations");
+                    user = value.content;
+                } catch (e) {
+                    goto("/status");
+                }
+                calculatePropreties(value);
+            });
+        } else {
+            try {
+                informations = await callApi("get", "/informations");
+            } catch (e) {
+                goto("/status");
+            }
+            calculatePropreties();
         }
-        calculatePropreties()
     });
 
 

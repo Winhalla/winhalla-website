@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
@@ -9,15 +9,36 @@
     import { apiUrl } from "../../utils/config";
     import { callApi, getUser } from "../../utils/api";
     import { goto } from "@sapper/app";
+    import { counter } from "../store.js";
 
     let isNavbarOpen;
     let isUserLoggedIn;
-
-    let user;
     let userCoins;
     let informations;
     let notificationsObj = {};
+    let user;
+    let firstLoad = true;
 
+    function calculatePropreties() {
+        if (user.user) {
+            notificationsObj.notifications = user.user.notifications;
+            notificationsObj.inGame = user.user.inGame;
+        }
+        isUserLoggedIn = user.user ? true : user.steam ? "steam" : false;
+        userCoins = user.user.coins;
+        user = user.steam;
+        console.log("USER", isUserLoggedIn);
+    }
+
+    const resetNav = async (value) => {
+        if (firstLoad === true) return firstLoad = false;
+        if(value.refresh === true) return
+        user = value.content;
+        calculatePropreties()
+
+    };
+    const unsubscribe = counter.subscribe(resetNav);
+    onDestroy(unsubscribe);
     onMount(async () => {
         try {
             informations = await callApi("get", "/informations");
@@ -25,19 +46,10 @@
         } catch (e) {
             goto("/status");
         }
-
-        if (user.user) {
-            notificationsObj.notifications = user.user.notifications;
-            notificationsObj.inGame = user.user.inGame;
-        }
-
-        //user = user.steam;
-        console.log(user);
-        isUserLoggedIn = user.user ? true : user.steam ? "steam" : false;
-        userCoins = user.user.coins;
-        user = user.steam;
-        console.log("USER", isUserLoggedIn);
+        calculatePropreties()
     });
+
+
 </script>
 
 <style>
@@ -154,11 +166,9 @@
                                 <NavAlert data={informations} />
                             </div>
                         {/if}
-
                         <NavAccount
                             username={user.displayName}
                             avatar={user.photos[1].value} />
-
                         {#if notificationsObj}
                             <div class="hidden lg:flex items-center">
                                 <Notifications data={notificationsObj} />

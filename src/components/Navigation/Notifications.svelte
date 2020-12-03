@@ -3,18 +3,29 @@
     import { callApi } from "../../utils/api.js";
     import { onMount } from "svelte";
     import cookie from "cookie";
+    import { counter } from "../store";
 
     export let data;
     let newNotifications = false;
     let opened = false;
     let isDropdownOpen = false;
-
+    let matchesLength;
     function handleClick() {
         console.log(isDropdownOpen, !isDropdownOpen);
         isDropdownOpen = !isDropdownOpen;
         opened = true;
     }
-
+function calculateTimers(){
+    data.inGame.forEach((match, i) => {
+        let d = new Date(match.Date);
+        const endsIn = -(
+            (new Date().getTime() -
+                new Date(d.setHours(d.getHours() + 3)).getTime()) /
+            1000
+        );
+        startTimer(endsIn, i);
+    });
+}
     onMount(() => {
         if (!data.notifications) return;
         let length = data.notifications.length;
@@ -23,20 +34,19 @@
         if (length > cookies.notificationNb || !cookies.notificationNb)
             newNotifications = true;
         cookies.notificationNb = length;
-        data.inGame.forEach((match, i) => {
-            let d = new Date(match.Date);
-            const endsIn = -(
-                (new Date().getTime() -
-                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                1000
-            );
-            startTimer(endsIn, i);
-            console.log();
-        });
+        matchesLength = data.inGame.length
+        calculateTimers()
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
 
+    counter.subscribe(()=>{
+        if(data.inGame) {
+            if (data.inGame.length !== matchesLength) {
+                calculateTimers()
+            }
+        }
+    })
     function startTimer(duration, i) {
         let timer = duration,
             hours,
@@ -225,13 +235,14 @@
                                     py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
-                                <button on:click={() => delNotif(i)} class="p-2 absolute top-0 right-0 text-light hover:text-font">
+                                <button on:click={() => delNotif(i)}
+                                        class="p-2 absolute top-0 right-0 text-light hover:text-font">
                                     <svg
                                         class="w-3 h-3 fill-current "
                                         viewBox="0 0 28 24"
                                         xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
+                                        <path
+                                            d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
                                     </svg>
                                 </button>
                             </button>

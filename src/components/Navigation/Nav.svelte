@@ -3,13 +3,15 @@
     import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
-    import Notifications from "./Notifications.svelte";
+    import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
 
     import { apiUrl } from "../../utils/config";
     import { callApi, getUser } from "../../utils/api";
     import { goto } from "@sapper/app";
     import { counter } from "../store.js";
+
+    export let isScrolling;
 
     let isNavbarOpen;
     let isUserLoggedIn;
@@ -32,9 +34,9 @@
 
     const resetNav = async (value) => {
         if (firstLoad === true) return firstLoad = false;
-        if(value.refresh === true) return
+        if (value.refresh === true) return;
         user = value.content;
-        calculatePropreties()
+        calculatePropreties();
 
     };
     const unsubscribe = counter.subscribe(resetNav);
@@ -46,7 +48,7 @@
         } catch (e) {
             goto("/status");
         }
-        calculatePropreties()
+        calculatePropreties();
     });
 
 
@@ -73,7 +75,8 @@
 </style>
 
 <nav
-    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full">
+    class:border-primary={isScrolling}
+    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full transition duration-300 border-b border-transparent">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/"> WINHALLA </a>

@@ -12,7 +12,6 @@
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
     import { apiUrl } from "../utils/config";
-    import { goto } from "@sapper/app";
 
     let account;
     let email;
@@ -62,10 +61,23 @@
         }, 1);
     };
     if (link && link != "") onKeyPressLink();
-    onMount(async () => {
-        account = await callApi("get", "/account");
-        if (account.user) goto("/");
-    });
+    onMount(()=>{
+        let unsub = counter.subscribe((value) => {
+            let user = value.content;
+            if (user.then) {
+                user.then((values) => {
+                    if (values.user) {
+                        goto("/");
+                    }
+                });
+            } else if (user) {
+                if (!user.user) {
+                    goto("/");
+                }
+            }
+        });
+        unsub()
+    })
 
     async function handleClick() {
         if (accountCreationStep == 0) {
@@ -81,11 +93,13 @@
             );
             accountCreationStep++;
 
-            counter.set({"refresh":true})
+            counter.set({ "refresh": true });
 
         }
     }
+
     import { tick } from "svelte";
+    import { goto } from "@sapper/app";
 
     /*let valueCopy = null;
     export let value = null;
@@ -414,7 +428,8 @@
                                 0-.717-.582-1.299-1.299-1.299-.339
                                 0-.647.13-.879.342l.001-.001z" />
                             <path
-                                d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" /></svg>
+                                d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" />
+                        </svg>
                     </button>
                 </div>
 

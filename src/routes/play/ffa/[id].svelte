@@ -70,7 +70,7 @@
 
 <script>
     import { onMount } from "svelte";
-    import { callApi, getUser } from "../../../utils/api";
+    import { callApi } from "../../../utils/api";
     import { goto } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
@@ -145,7 +145,10 @@
     };*/
     let error;
     onMount(async () => {
-        user = await getUser();
+        let unsub = counter.subscribe((value) => {
+            user = value.content;
+        });
+        unsub();
         user = user.steam;
         try {
             match = await callApi("get", `/getMatch/${id}`);

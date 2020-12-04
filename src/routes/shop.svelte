@@ -1,9 +1,16 @@
 <script context="module">
     import { callApi } from "../utils/api";
+    import { onMount } from "svelte";
+    import { counter } from "../components/store";
+    import { goto } from "@sapper/app";
 
     export async function preload() {
         let items = await callApi("get", "/shop");
-        let player = await callApi("get", "/account");
+        let player;
+        let unsub = counter.subscribe((value) => {
+            player = value.content;
+        });
+        unsub();
 
         if (player.user) {
             player = player.user.coins;

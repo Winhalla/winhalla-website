@@ -29,7 +29,6 @@
         isUserLoggedIn = value.user ? true : value.steam ? "steam" : false;
         userCoins = value.user.coins;
         user = value.steam;
-        console.log("USER", isUserLoggedIn);
     }
 
     const resetNav = async (value) => {
@@ -92,7 +91,7 @@
 
 <nav
     class:border-primary={isScrolling}
-    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full transition duration-300 border-b border-transparent">
+    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full transition duration-200 border-b border-transparent">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/"> WINHALLA </a>

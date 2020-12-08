@@ -6,13 +6,16 @@ const axiosInstance = axios.create({
 });
 
 const callApi = async (method, url, data) => {
-    const res = await axiosInstance({
-        method: method,
-        url: url,
-        data: data
-    });
-
-    return res.data;
+    try {
+        const res = await axiosInstance({
+            method: method,
+            url: url,
+            data: data
+        });
+        return res.data;
+    }catch (e) {
+        return e
+    }
 };
 
 const getUser = async () => {

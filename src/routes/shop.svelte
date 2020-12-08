@@ -1,9 +1,16 @@
 <script context="module">
     import { callApi } from "../utils/api";
+    import { onMount } from "svelte";
+    import { counter } from "../components/store";
+    import { goto } from "@sapper/app";
 
     export async function preload() {
         let items = await callApi("get", "/shop");
-        let player = await callApi("get", "/account");
+        let player;
+        let unsub = counter.subscribe((value) => {
+            player = value.content;
+        });
+        unsub();
 
         if (player.user) {
             player = player.user.coins;
@@ -51,11 +58,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.6) 0%,
-            rgba(23, 23, 26, 0.75),
-            rgba(23, 23, 26, 0.83) 75%,
-            rgba(23, 23, 26, 0.92) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.6) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.83) 75%,
+                rgba(23, 23, 26, 0.92) 100%
         );
     }
 
@@ -253,7 +260,7 @@
         {/if}
     </div>
     <div
-        class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
+        class="mb-20 md:mb-8 mx-5    xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
         <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
             How does it works ?
         </h3>

@@ -70,12 +70,14 @@
 
 <script>
     import { onMount } from "svelte";
-    import { callApi, getUser } from "../../../utils/api";
+    import { callApi } from "../../../utils/api";
     import { goto } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
+    import { counter } from "../../../components/store";
+
     export let id;
 
     /*export let user;
@@ -141,9 +143,12 @@
             },
         ]
     };*/
-    let error
+    let error;
     onMount(async () => {
-        user = await getUser();
+        let unsub = counter.subscribe((value) => {
+            user = value.content;
+        });
+        unsub();
         user = user.steam;
         try {
             match = await callApi("get", `/getMatch/${id}`);
@@ -160,15 +165,16 @@
                 1000
             );
             startTimer(endsIn);
+            counter.set({"refresh":true})
         } catch (err) {
-        if (err.response) {
-            if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                error="You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)"
-            } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                error="You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)"
+            if (err.response) {
+                if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                }
             }
         }
-    }
     });
 
     const filterUsers = () => {
@@ -210,12 +216,17 @@
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
+        let winNb = userPlayer.gamesPlayed
 
-        match = await callApi("get", `/getMatch/${id}`);
-        if(match.finished){
-            isMatchEnded = true
-        }
+            match = await callApi("get", `/getMatch/${id}`);
+
         filterUsers();
+        if(userPlayer.gamesPlayed !== winNb){
+            counter.set({"refresh":true})
+        }else if (match.finished && isMatchEnded === false) {
+            isMatchEnded = true;
+            counter.set({"refresh":true})
+        }
         console.log(userPlayer);
         isRefreshingStats = false;
     };
@@ -244,11 +255,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.68) 0%,
-            rgba(23, 23, 26, 0.88),
-            rgba(23, 23, 26, 0.95) 75%,
-            rgba(23, 23, 26, 0.98) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
         );
     }
 
@@ -267,11 +278,11 @@
 
     .user::after {
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.55) 0%,
-            rgba(23, 23, 26, 0.75),
-            rgba(23, 23, 26, 0.85) 75%,
-            rgba(23, 23, 26, 0.93) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
         );
     }
 
@@ -296,7 +307,7 @@
     <div class="h-full">
         {#if match}
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners}/>
+                <FfaEnd players={match.players} winners={match.winners} />
             {:else}
                 <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                     <div
@@ -392,7 +403,7 @@
                 </div>
             {/if}
         {:else}
-            <Loading data={"Loading game data..."}/>
+            <Loading data={"Loading game data..."} />
         {/if}
     </div>
 {/if}

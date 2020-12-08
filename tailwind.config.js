@@ -2,6 +2,9 @@ module.exports = {
     purge: [],
     theme: {
         extend: {
+            maxWidth: {
+                60: "15rem"
+            },
             spacing: {
                 "2px": "2px",
                 1: "0.25rem",
@@ -96,7 +99,7 @@ module.exports = {
                 "screen-70": "70vh",
                 "screen-80": "80vh",
                 "screen-90": "90vh",
-                "10%":"10%",
+                "10%": "10%",
                 "40%": "40%",
                 "28%": "28%",
                 "60%": "60%",
@@ -106,15 +109,15 @@ module.exports = {
                 "85%": "85%",
                 "90%": "90%",
                 "shopItemLarge": "calc(35% - 1.5rem)",
-                "shopItem": "calc(30% - 1.5rem)",
+                "shopItem": "calc(30% - 1.5rem)"
             },
             boxShadow: {
                 card: "0px 0px 8px rgba(0, 0, 0, 0.125)",
                 "card-hover": "0px 0px 10px rgba(255, 255, 255, 0.225)",
                 "button-hover": "0px 0px 10px rgba(255, 255, 255, 0.2)",
                 "button-alternative-hover": "0px 0px 8px rgba(255, 255, 255, 0.125)",
-                "footer": '0 -10px 15px -3px rgba(0, 0, 0, 0.2), 0 -4px 6px -2px rgba(0, 0, 0, 0.05)',
-                "nav": '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                "footer": "0 -10px 15px -3px rgba(0, 0, 0, 0.2), 0 -4px 6px -2px rgba(0, 0, 0, 0.05)",
+                "nav": "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
                 "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
                 full: "0 0 2px 4px rgba(0, 0, 0, 0.2)"
             },
@@ -187,12 +190,10 @@ module.exports = {
                 16: "4rem",
                 20: "5rem",
                 24: "6rem",
-                '1/2': '50%',
-                '45%': "45%"
+                "1/2": "50%",
+                "45%": "45%"
             }
         }
-
-
     },
     variants: {},
     plugins: [require("tailwindcss-textshadow")]

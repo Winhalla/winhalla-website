@@ -22,7 +22,6 @@
         right: 0;
     }
 </style>
-
 <div class="lg:relative">
     <div class="flex items-center h-full">
         <button

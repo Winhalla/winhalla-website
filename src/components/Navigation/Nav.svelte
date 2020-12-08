@@ -1,43 +1,73 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
-    import Notifications from "./Notifications.svelte";
+    import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
 
     import { apiUrl } from "../../utils/config";
-    import { callApi, getUser } from "../../utils/api";
+    import { callApi } from "../../utils/api";
     import { goto } from "@sapper/app";
+    import { counter } from "../store.js";
+
+    export let isScrolling;
 
     let isNavbarOpen;
     let isUserLoggedIn;
-
-    let user;
     let userCoins;
     let informations;
     let notificationsObj = {};
+    let user;
+    let firstLoad = true;
 
-    onMount(async () => {
-        try {
-            informations = await callApi("get", "/informations");
-            user = await getUser();
-        } catch (e) {
-            goto("/status");
+    function calculatePropreties(value) {
+        if (value.user) {
+            notificationsObj.notifications = value.user.notifications;
+            notificationsObj.inGame = value.user.inGame;
         }
-
-        if (user.user) {
-            notificationsObj.notifications = user.user.notifications;
-            notificationsObj.inGame = user.user.inGame;
-        }
-
-        //user = user.steam;
-        console.log(user);
-        isUserLoggedIn = user.user ? true : user.steam ? "steam" : false;
-        userCoins = user.user.coins;
-        user = user.steam;
+        isUserLoggedIn = value.user ? true : value.steam ? "steam" : false;
+        userCoins = value.user.coins;
+        user = value.steam;
         console.log("USER", isUserLoggedIn);
+    }
+
+    const resetNav = async (value) => {
+        user = value.content;
+        if (firstLoad === true) return firstLoad = false;
+        if (value.refresh === true) return;
+        calculatePropreties(user);
+
+    };
+    const unsubscribe = counter.subscribe(resetNav);
+    onDestroy(unsubscribe);
+    onMount(async () => {
+        if (user.then) {
+            user.then(async (value) => {
+                if(value instanceof Error){
+                    return goto("/status")
+                }
+                user = value;
+                try {
+                    informations = await callApi("get", "/informations");
+                    user = value.content;
+                } catch (e) {
+                    goto("/status");
+                }
+                calculatePropreties(value);
+            });
+        } else {
+            try {
+                informations = await callApi("get", "/informations");
+            } catch (e) {
+                goto("/status");
+            }
+            calculatePropreties();
+        }
+        calculatePropreties()
     });
+
+
 </script>
 
 <style>
@@ -61,7 +91,8 @@
 </style>
 
 <nav
-    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full">
+    class:border-primary={isScrolling}
+    class="shadow-link-hover fixed z-50 lg:flex items-center bg-background text-font w-full transition duration-300 border-b border-transparent">
     <div class="w-full lg:w-auto flex justify-between items-center py-3">
         <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">
             <a class="logo" href="/"> WINHALLA </a>
@@ -154,11 +185,9 @@
                                 <NavAlert data={informations} />
                             </div>
                         {/if}
-
                         <NavAccount
                             username={user.displayName}
                             avatar={user.photos[1].value} />
-
                         {#if notificationsObj}
                             <div class="hidden lg:flex items-center">
                                 <Notifications data={notificationsObj} />

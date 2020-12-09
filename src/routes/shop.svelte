@@ -85,7 +85,7 @@
         content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
         Battle Pass and Season packs| Exchange here your coins into rewards |
         Winhalla Shop page " />
-    <link rel="canonical" href="https://winhalla.appspot.com/shop" />
+    <link rel="canonical" href="https://winhalla.app/shop" />
 </svelte:head>
 <!--
 {#if bottomItems}

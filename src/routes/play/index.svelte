@@ -158,7 +158,7 @@
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your game mode here | Winhalla play page " />
 
-    <link rel="canonical" href="https://winhalla.appspot.com/play" />
+    <link rel="canonical" href="https://winhalla.app/play" />
 </svelte:head>
 <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
     <div class="text-center lg:text-left">

@@ -36,8 +36,8 @@ const app = express() // You can also use Express
     .set("x-powered-by", false);
 
 https.createServer({
-    key: fs.readFileSync("/etc/letsencrypt/live/api.winhalla.app/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/api.winhalla.app/fullchain.pem")
+    key: fs.readFileSync("/etc/letsencrypt/live/winhalla.app/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/winhalla.app/fullchain.pem")
 }, app).listen(443)
     .listen(443, err => {
         if (err) console.log("error", err);

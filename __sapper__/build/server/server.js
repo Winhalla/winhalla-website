@@ -7601,8 +7601,8 @@ const app = express__default['default']() // You can also use Express
     .set("x-powered-by", false);
 
 https__default['default'].createServer({
-    key: fs__default['default'].readFileSync("/etc/letsencrypt/live/api.winhalla.app/privkey.pem"),
-    cert: fs__default['default'].readFileSync("/etc/letsencrypt/live/api.winhalla.app/fullchain.pem")
+    key: fs__default['default'].readFileSync("/etc/letsencrypt/live/winhalla.app/privkey.pem"),
+    cert: fs__default['default'].readFileSync("/etc/letsencrypt/live/winhalla.app/fullchain.pem")
 }, app).listen(443)
     .listen(443, err => {
         if (err) console.log("error", err);

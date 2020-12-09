@@ -215,6 +215,7 @@
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {
+        //! err ici ?
         isRefreshingStats = true;
         let winNb = userPlayer.gamesPlayed
 

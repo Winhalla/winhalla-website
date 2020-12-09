@@ -1,1 +1,1 @@
-export const apiUrl = "http://34.68.191.216";
+export const apiUrl = "https://api.winhalla.app";

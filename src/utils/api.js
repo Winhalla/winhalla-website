@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "http://34.68.191.216"
+    baseURL: "https://api.winhalla.app"
 });
 
 const callApi = async (method, url, data) => {

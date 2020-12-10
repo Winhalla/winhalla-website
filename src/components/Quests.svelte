@@ -57,19 +57,16 @@
     let isRefreshingQuests = false;
     const handleRefresh = async () => {
         isRefreshingQuests = true;
-
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
-        calculateOrder();
         data = refreshedData.solo;
-
-
+        calculateOrder();
         isRefreshingQuests = false;
     };
 
     async function collect(type, index) {
         await callApi("post", `solo/collect?type=${type}&index=${index}`);
-        counter.set({"refresh":true})
+        counter.set({ "refresh": true });
         data.collected[type].push(...data.finished[type].splice(index, 1));
         data = data;
     }

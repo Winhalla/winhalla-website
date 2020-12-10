@@ -1,4 +1,4 @@
-import { y as _asyncToGenerator, z as regenerator, E as counter, F as callApi, _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, d as _assertThisInitialized, e as dispatch_dev, A as _createClass, S as SvelteComponentDev, s as safe_not_equal, O as validate_each_argument, f as element, t as text, g as space, j as claim_element, m as children, n as claim_text, k as detach_dev, l as claim_space, o as attr_dev, p as add_location, u as insert_dev, r as append_dev, L as listen_dev, I as set_data_dev, M as prop_dev, R as destroy_each, J as toggle_class, N as run_all, q as query_selector_all, C as _slicedToArray, v as noop, w as validate_slots, D as onMount, H as goto, a3 as _toConsumableArray } from './client.ebfafddf.js';
+import { y as _asyncToGenerator, z as regenerator, E as counter, F as callApi, _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, d as _assertThisInitialized, e as dispatch_dev, A as _createClass, S as SvelteComponentDev, s as safe_not_equal, O as validate_each_argument, f as element, t as text, g as space, j as claim_element, m as children, n as claim_text, k as detach_dev, l as claim_space, o as attr_dev, p as add_location, u as insert_dev, r as append_dev, L as listen_dev, I as set_data_dev, M as prop_dev, R as destroy_each, J as toggle_class, N as run_all, q as query_selector_all, C as _slicedToArray, v as noop, w as validate_slots, D as onMount, H as goto, a3 as _toConsumableArray } from './client.cd2c6d21.js';
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -244,7 +244,7 @@ function create_if_block(ctx) {
     },
     h: function hydrate() {
       attr_dev(h1, "class", "text-6xl text-center lg:text-left");
-      add_location(h1, file, 120, 20, 5286);
+      add_location(h1, file, 120, 20, 5278);
       attr_dev(img, "class", "w-full h-full block object-cover");
       if (img.src !== (img_src_value = "assets/ShopItems/" +
       /*featuredItem*/
@@ -252,41 +252,41 @@ function create_if_block(ctx) {
       attr_dev(img, "alt", img_alt_value =
       /*featuredItem*/
       ctx[1].name);
-      add_location(img, file, 125, 24, 5566);
+      add_location(img, file, 125, 24, 5558);
       attr_dev(p0, "class", "text-accent text-6xl");
-      add_location(p0, file, 133, 32, 6046);
+      add_location(p0, file, 133, 32, 6038);
       attr_dev(b, "class", "mr-1 font-normal");
-      add_location(b, file, 144, 44, 6777);
+      add_location(b, file, 144, 44, 6769);
       attr_dev(p1, "class", "text-2xl");
-      add_location(p1, file, 143, 40, 6711);
+      add_location(p1, file, 143, 40, 6703);
       button.disabled = button_disabled_value =
       /*featuredItem*/
       ctx[1].unBuyable;
       attr_dev(button, "class", "px-4 py-1 bg-primary rounded svelte-14qgjwn");
-      add_location(button, file, 139, 36, 6407);
+      add_location(button, file, 139, 36, 6399);
       attr_dev(div0, "class", "flex justify-end md:block pb-1");
-      add_location(div0, file, 138, 32, 6325);
+      add_location(div0, file, 138, 32, 6317);
       attr_dev(div1, "class", "md:flex justify-between w-full md:items-center");
-      add_location(div1, file, 131, 28, 5919);
+      add_location(div1, file, 131, 28, 5911);
       attr_dev(div2, "class", "absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full");
-      add_location(div2, file, 129, 24, 5798);
+      add_location(div2, file, 129, 24, 5790);
       attr_dev(div3, "class", "card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item svelte-14qgjwn");
-      add_location(div3, file, 123, 20, 5418);
-      add_location(div4, file, 119, 16, 5259);
+      add_location(div3, file, 123, 20, 5410);
+      add_location(div4, file, 119, 16, 5251);
       attr_dev(h20, "class", "text-6xl text-center lg:text-left");
-      add_location(h20, file, 154, 20, 7198);
+      add_location(h20, file, 154, 20, 7190);
       attr_dev(div5, "class", "mt-2 flex flex-col items-center lg:flex-row lg:items-start");
-      add_location(div5, file, 157, 20, 7331);
+      add_location(div5, file, 157, 20, 7323);
       attr_dev(div6, "class", "pt-8 lg:pt-16");
-      add_location(div6, file, 153, 16, 7149);
+      add_location(div6, file, 153, 16, 7141);
       attr_dev(h21, "class", "text-6xl text-center lg:text-left");
-      add_location(h21, file, 216, 20, 11085);
+      add_location(h21, file, 216, 20, 11077);
       attr_dev(div7, "class", "mt-2 flex flex-col items-center lg:flex-row lg:items-start");
-      add_location(div7, file, 217, 20, 11163);
+      add_location(div7, file, 217, 20, 11155);
       attr_dev(div8, "class", "pt-8 lg:pt-20 lg:pb-6");
-      add_location(div8, file, 215, 16, 11028);
+      add_location(div8, file, 215, 16, 11020);
       attr_dev(div9, "class", "mt-7 lg:mt-12 lg:ml-24");
-      add_location(div9, file, 118, 12, 5205);
+      add_location(div9, file, 118, 12, 5197);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div9, anchor);
@@ -654,7 +654,7 @@ function create_each_block_1(ctx) {
       attr_dev(img, "alt", img_alt_value =
       /*seasonPack*/
       ctx[11].name);
-      add_location(img, file, 162, 32, 7684);
+      add_location(img, file, 162, 32, 7676);
       attr_dev(p0, "class", "text-accent text-5xl md:mb-0 md:block");
       toggle_class(p0, "hidden",
       /*seasonPack*/
@@ -662,36 +662,36 @@ function create_each_block_1(ctx) {
       toggle_class(p0, "-mb-1", !
       /*seasonPack*/
       ctx[11].isDescriptionToggled);
-      add_location(p0, file, 168, 36, 8060);
+      add_location(p0, file, 168, 36, 8052);
       attr_dev(p1, "class", "block xl:mt-0");
       toggle_class(p1, "hidden", !
       /*seasonPack*/
       ctx[11].isDescriptionToggled);
-      add_location(p1, file, 176, 36, 8591);
+      add_location(p1, file, 176, 36, 8583);
       attr_dev(p2, "class", "hidden xl:block mr-1 -mb-2");
-      add_location(p2, file, 186, 48, 9174);
+      add_location(p2, file, 186, 48, 9166);
       attr_dev(p3, "class", " text-light text-lg underline leading-none");
-      add_location(p3, file, 193, 52, 9712);
+      add_location(p3, file, 193, 52, 9704);
       attr_dev(button0, "class", "focus:outline-none xl:hidden -mb-10 svelte-14qgjwn");
-      add_location(button0, file, 190, 48, 9447);
-      add_location(div0, file, 185, 44, 9119);
+      add_location(button0, file, 190, 48, 9439);
+      add_location(div0, file, 185, 44, 9111);
       attr_dev(div1, "class", "-mb-2 md:mb-0");
-      add_location(div1, file, 184, 40, 9046);
+      add_location(div1, file, 184, 40, 9038);
       attr_dev(b, "class", "mr-1 font-normal");
-      add_location(b, file, 205, 48, 10601);
+      add_location(b, file, 205, 48, 10593);
       attr_dev(p4, "class", "text-2xl");
-      add_location(p4, file, 204, 44, 10531);
+      add_location(p4, file, 204, 44, 10523);
       button1.disabled = button1_disabled_value =
       /*seasonPack*/
       ctx[11].unBuyable;
       attr_dev(button1, "class", "px-4 py-1 bg-primary rounded svelte-14qgjwn");
-      add_location(button1, file, 200, 40, 10215);
+      add_location(button1, file, 200, 40, 10207);
       attr_dev(div2, "class", "flex justify-between w-full items-end pr-4 md:pr-5 pb-1");
-      add_location(div2, file, 182, 36, 8894);
+      add_location(div2, file, 182, 36, 8886);
       attr_dev(div3, "class", "absolute bottom-0 z-10 pl-5 pb-3 w-full");
-      add_location(div3, file, 166, 32, 7932);
+      add_location(div3, file, 166, 32, 7924);
       attr_dev(div4, "class", "mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem svelte-14qgjwn");
-      add_location(div4, file, 160, 28, 7520);
+      add_location(div4, file, 160, 28, 7512);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div4, anchor);
@@ -966,28 +966,28 @@ function create_each_block(ctx) {
       attr_dev(img, "alt", img_alt_value =
       /*pack*/
       ctx[8].name);
-      add_location(img, file, 222, 32, 11476);
+      add_location(img, file, 222, 32, 11468);
       attr_dev(p0, "class", "text-accent text-5xl");
-      add_location(p0, file, 228, 36, 11852);
+      add_location(p0, file, 228, 36, 11844);
       attr_dev(p1, "class", "block mr-1 -mb-2");
-      add_location(p1, file, 238, 48, 12390);
-      add_location(div0, file, 237, 44, 12335);
-      add_location(div1, file, 236, 40, 12284);
+      add_location(p1, file, 238, 48, 12382);
+      add_location(div0, file, 237, 44, 12327);
+      add_location(div1, file, 236, 40, 12276);
       attr_dev(b, "class", "mr-1 font-normal");
-      add_location(b, file, 248, 48, 13060);
+      add_location(b, file, 248, 48, 13052);
       attr_dev(p2, "class", "text-2xl");
-      add_location(p2, file, 247, 44, 12990);
+      add_location(p2, file, 247, 44, 12982);
       button.disabled = button_disabled_value =
       /*pack*/
       ctx[8].unBuyable;
       attr_dev(button, "class", "px-4 py-1 bg-primary rounded svelte-14qgjwn");
-      add_location(button, file, 243, 40, 12686);
+      add_location(button, file, 243, 40, 12678);
       attr_dev(div2, "class", "flex justify-between w-full items-end pb-1");
-      add_location(div2, file, 234, 36, 12145);
+      add_location(div2, file, 234, 36, 12137);
       attr_dev(div3, "class", "absolute bottom-0 z-10 px-5 pb-3 w-full");
-      add_location(div3, file, 226, 32, 11724);
+      add_location(div3, file, 226, 32, 11716);
       attr_dev(div4, "class", "mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item svelte-14qgjwn");
-      add_location(div4, file, 220, 28, 11337);
+      add_location(div4, file, 220, 28, 11329);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div4, anchor);
@@ -1164,7 +1164,7 @@ function create_fragment(ctx) {
       this.h();
     },
     l: function claim(nodes) {
-      var head_nodes = query_selector_all("[data-svelte=\"svelte-i7b2h7\"]", document.head);
+      var head_nodes = query_selector_all("[data-svelte=\"svelte-slm77s\"]", document.head);
       meta = claim_element(head_nodes, "META", {
         name: true,
         content: true
@@ -1287,41 +1287,41 @@ function create_fragment(ctx) {
       attr_dev(meta, "content", "Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,\r\n        Battle Pass and Season packs| Exchange here your coins into rewards |\r\n        Winhalla Shop page ");
       add_location(meta, file, 82, 4, 3827);
       attr_dev(link, "rel", "canonical");
-      attr_dev(link, "href", "https://winhalla.appspot.com/shop");
+      attr_dev(link, "href", "https://winhalla.app/shop");
       add_location(link, file, 87, 4, 4057);
-      add_location(div0, file, 116, 4, 5165);
+      add_location(div0, file, 116, 4, 5157);
       attr_dev(h3, "class", "text-5xl lg:mr-12 text-center lg:text-left");
-      add_location(h3, file, 263, 8, 13640);
+      add_location(h3, file, 263, 8, 13632);
       attr_dev(p0, "class", "text-4xl leading-none text-accent");
-      add_location(p0, file, 268, 16, 13836);
+      add_location(p0, file, 268, 16, 13828);
       attr_dev(p1, "class", "text-4xl text-primary ml-2 leading-none");
-      add_location(p1, file, 269, 16, 13905);
+      add_location(p1, file, 269, 16, 13897);
       attr_dev(p2, "class", "-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0");
-      add_location(p2, file, 270, 16, 13983);
+      add_location(p2, file, 270, 16, 13975);
       attr_dev(div1, "class", "mt-4 flex items-end");
-      add_location(div1, file, 267, 12, 13785);
+      add_location(div1, file, 267, 12, 13777);
       attr_dev(p3, "class", "text-4xl leading-none text-accent");
-      add_location(p3, file, 276, 16, 14266);
+      add_location(p3, file, 276, 16, 14258);
       attr_dev(p4, "class", "text-4xl text-primary ml-2 leading-none");
-      add_location(p4, file, 277, 16, 14335);
+      add_location(p4, file, 277, 16, 14327);
       attr_dev(p5, "class", "-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0");
-      add_location(p5, file, 278, 16, 14411);
+      add_location(p5, file, 278, 16, 14403);
       attr_dev(div2, "class", "mt-4 flex items-end");
-      add_location(div2, file, 275, 12, 14215);
+      add_location(div2, file, 275, 12, 14207);
       attr_dev(p6, "class", "text-4xl leading-none text-accent");
-      add_location(p6, file, 284, 16, 14714);
+      add_location(p6, file, 284, 16, 14706);
       attr_dev(p7, "class", "text-4xl text-primary ml-2 leading-none");
-      add_location(p7, file, 285, 16, 14783);
+      add_location(p7, file, 285, 16, 14775);
       attr_dev(p8, "class", "receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7");
-      add_location(p8, file, 286, 16, 14863);
+      add_location(p8, file, 286, 16, 14855);
       attr_dev(div3, "class", "mt-4 flex items-end");
-      add_location(div3, file, 283, 12, 14663);
+      add_location(div3, file, 283, 12, 14655);
       attr_dev(div4, "class", "pt-4");
-      add_location(div4, file, 266, 8, 13753);
+      add_location(div4, file, 266, 8, 13745);
       attr_dev(div5, "class", "mb-20 md:mb-8 mx-5    xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3");
-      add_location(div5, file, 261, 4, 13516);
+      add_location(div5, file, 261, 4, 13508);
       attr_dev(div6, "class", "xl:flex xl:relative");
-      add_location(div6, file, 115, 0, 5126);
+      add_location(div6, file, 115, 0, 5118);
     },
     m: function mount(target, anchor) {
       append_dev(document.head, meta);

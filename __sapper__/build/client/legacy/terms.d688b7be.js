@@ -1,4 +1,4 @@
-import { _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, d as _assertThisInitialized, e as dispatch_dev, S as SvelteComponentDev, s as safe_not_equal, q as query_selector_all, k as detach_dev, v as noop, w as validate_slots } from './client.ebfafddf.js';
+import { _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, d as _assertThisInitialized, e as dispatch_dev, S as SvelteComponentDev, s as safe_not_equal, q as query_selector_all, k as detach_dev, v as noop, w as validate_slots } from './client.cd2c6d21.js';
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -10,12 +10,12 @@ function create_fragment(ctx) {
       this.h();
     },
     l: function claim(nodes) {
-      var head_nodes = query_selector_all("[data-svelte=\"svelte-chgju\"]", document.head);
+      var head_nodes = query_selector_all("[data-svelte=\"svelte-pwic88\"]", document.head);
       head_nodes.forEach(detach_dev);
       this.h();
     },
     h: function hydrate() {
-      document.title = "How it works | Winhalla";
+      document.title = "Terms of use | Winhalla";
     },
     m: noop,
     p: noop,
@@ -36,37 +36,37 @@ function create_fragment(ctx) {
 function instance($$self, $$props) {
   var writable_props = [];
   Object.keys($$props).forEach(function (key) {
-    if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Help> was created with unknown prop '".concat(key, "'"));
+    if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Terms> was created with unknown prop '".concat(key, "'"));
   });
   var _$$props$$$slots = $$props.$$slots,
       $$slots = _$$props$$$slots === void 0 ? {} : _$$props$$$slots,
       $$scope = $$props.$$scope;
-  validate_slots("Help", $$slots, []);
+  validate_slots("Terms", $$slots, []);
   return [];
 }
 
-var Help = /*#__PURE__*/function (_SvelteComponentDev) {
-  _inherits(Help, _SvelteComponentDev);
+var Terms = /*#__PURE__*/function (_SvelteComponentDev) {
+  _inherits(Terms, _SvelteComponentDev);
 
-  var _super = _createSuper(Help);
+  var _super = _createSuper(Terms);
 
-  function Help(options) {
+  function Terms(options) {
     var _this;
 
-    _classCallCheck(this, Help);
+    _classCallCheck(this, Terms);
 
     _this = _super.call(this, options);
     init(_assertThisInitialized(_this), options, instance, create_fragment, safe_not_equal, {});
     dispatch_dev("SvelteRegisterComponent", {
       component: _assertThisInitialized(_this),
-      tagName: "Help",
+      tagName: "Terms",
       options: options,
       id: create_fragment.name
     });
     return _this;
   }
 
-  return Help;
+  return Terms;
 }(SvelteComponentDev);
 
-export default Help;
+export default Terms;

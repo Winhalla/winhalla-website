@@ -1,5 +1,5 @@
-import { _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, s as safe_not_equal, d as _assertThisInitialized, e as dispatch_dev, A as _createClass, S as SvelteComponentDev, O as validate_each_argument, w as validate_slots, T as empty, u as insert_dev, k as detach_dev, C as _slicedToArray, v as noop, R as destroy_each, f as element, g as space, t as text, h as svg_element, j as claim_element, m as children, l as claim_space, n as claim_text, o as attr_dev, p as add_location, r as append_dev, I as set_data_dev, B as globals, F as callApi, E as counter, L as listen_dev, X as set_style, Y as create_component, Z as claim_component, $ as mount_component, a0 as transition_in, a1 as transition_out, a2 as destroy_component, y as _asyncToGenerator, z as regenerator, a3 as _toConsumableArray, q as query_selector_all, a4 as check_outros, a5 as group_outros } from './client.ebfafddf.js';
-import { R as RefreshButton } from './RefreshButton.51c36c9c.js';
+import { _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, i as init, s as safe_not_equal, d as _assertThisInitialized, e as dispatch_dev, A as _createClass, S as SvelteComponentDev, O as validate_each_argument, w as validate_slots, T as empty, u as insert_dev, k as detach_dev, C as _slicedToArray, v as noop, R as destroy_each, f as element, g as space, t as text, h as svg_element, j as claim_element, m as children, l as claim_space, n as claim_text, o as attr_dev, p as add_location, r as append_dev, I as set_data_dev, B as globals, F as callApi, E as counter, L as listen_dev, X as set_style, Y as create_component, Z as claim_component, $ as mount_component, a0 as transition_in, a1 as transition_out, a2 as destroy_component, y as _asyncToGenerator, z as regenerator, a3 as _toConsumableArray, q as query_selector_all, a4 as check_outros, a5 as group_outros } from './client.cd2c6d21.js';
+import { R as RefreshButton } from './RefreshButton.7ace66a8.js';
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -743,7 +743,7 @@ function get_each_context_5(ctx, list, i) {
   child_ctx[10] = list[i];
   child_ctx[16] = i;
   return child_ctx;
-} // (145:16) {#if data.finished && data.finished.daily}
+} // (142:16) {#if data.finished && data.finished.daily}
 
 
 function create_if_block_5(ctx) {
@@ -783,7 +783,7 @@ function create_if_block_5(ctx) {
     },
     h: function hydrate() {
       attr_dev(div, "class", "pb-1 ");
-      add_location(div, file$1, 145, 20, 5733);
+      add_location(div, file$1, 142, 20, 5731);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -833,11 +833,11 @@ function create_if_block_5(ctx) {
     block: block,
     id: create_if_block_5.name,
     type: "if",
-    source: "(145:16) {#if data.finished && data.finished.daily}",
+    source: "(142:16) {#if data.finished && data.finished.daily}",
     ctx: ctx
   });
   return block;
-} // (147:24) {#each data.finished.daily as quest, i}
+} // (144:24) {#each data.finished.daily as quest, i}
 
 
 function create_each_block_5(ctx) {
@@ -951,9 +951,9 @@ function create_each_block_5(ctx) {
     },
     h: function hydrate() {
       attr_dev(span, "class", "svelte-138nzh5");
-      add_location(span, file$1, 151, 36, 6160);
+      add_location(span, file$1, 148, 36, 6158);
       attr_dev(path, "d", "m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z");
-      add_location(path, file$1, 158, 44, 6667);
+      add_location(path, file$1, 155, 44, 6665);
       attr_dev(svg, "class", svg_class_value = "fill-current checkbox-active\r\n                                            text-" +
       /*calculateRarity*/
       ctx[2](
@@ -961,21 +961,21 @@ function create_each_block_5(ctx) {
       ctx[10].reward, true) + " svelte-138nzh5");
       attr_dev(svg, "viewBox", "0 0 27 24");
       attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-      add_location(svg, file$1, 153, 40, 6301);
+      add_location(svg, file$1, 150, 40, 6299);
       attr_dev(p0, "class", "ml-2 mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 161, 40, 6945);
+      add_location(p0, file$1, 158, 40, 6943);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 152, 36, 6227);
+      add_location(div0, file$1, 149, 36, 6225);
       attr_dev(p1, "class", "line-through");
-      add_location(p1, file$1, 166, 36, 7175);
+      add_location(p1, file$1, 163, 36, 7173);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 150, 32, 6097);
+      add_location(div1, file$1, 147, 32, 6095);
       attr_dev(button, "class", button_class_value = "card quest finished border-2 border-" +
       /*calculateRarity*/
       ctx[2](
       /*quest*/
       ctx[10].reward, true) + " max-w-sm mx-auto block" + " svelte-138nzh5");
-      add_location(button, file$1, 147, 28, 5847);
+      add_location(button, file$1, 144, 28, 5845);
     },
     m: function mount(target, anchor) {
       insert_dev(target, button, anchor);
@@ -1038,11 +1038,11 @@ function create_each_block_5(ctx) {
     block: block,
     id: create_each_block_5.name,
     type: "each",
-    source: "(147:24) {#each data.finished.daily as quest, i}",
+    source: "(144:24) {#each data.finished.daily as quest, i}",
     ctx: ctx
   });
   return block;
-} // (174:16) {#if data.dailyQuests}
+} // (171:16) {#if data.dailyQuests}
 
 
 function create_if_block_4(ctx) {
@@ -1079,7 +1079,7 @@ function create_if_block_4(ctx) {
       this.h();
     },
     h: function hydrate() {
-      add_location(div, file$1, 174, 20, 7442);
+      add_location(div, file$1, 171, 20, 7440);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -1129,11 +1129,11 @@ function create_if_block_4(ctx) {
     block: block,
     id: create_if_block_4.name,
     type: "if",
-    source: "(174:16) {#if data.dailyQuests}",
+    source: "(171:16) {#if data.dailyQuests}",
     ctx: ctx
   });
   return block;
-} // (176:24) {#each data.dailyQuests as quest}
+} // (173:24) {#each data.dailyQuests as quest}
 
 
 function create_each_block_4(ctx) {
@@ -1262,9 +1262,9 @@ function create_each_block_4(ctx) {
       ctx[2](
       /*quest*/
       ctx[10].reward, true) + " svelte-138nzh5");
-      add_location(span, file$1, 178, 36, 7683);
+      add_location(span, file$1, 175, 36, 7681);
       attr_dev(path, "d", "m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z");
-      add_location(path, file$1, 185, 44, 8224);
+      add_location(path, file$1, 182, 44, 8222);
       attr_dev(svg, "class", svg_class_value = "fill-current w-4 text-" +
       /*calculateRarity*/
       ctx[2](
@@ -1272,15 +1272,15 @@ function create_each_block_4(ctx) {
       ctx[10].reward, true) + " svelte-138nzh5");
       attr_dev(svg, "viewBox", "0 0 25 24");
       attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-      add_location(svg, file$1, 181, 40, 7915);
+      add_location(svg, file$1, 178, 40, 7913);
       attr_dev(p0, "class", "ml-2 mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 188, 40, 8424);
+      add_location(p0, file$1, 185, 40, 8422);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 180, 36, 7841);
+      add_location(div0, file$1, 177, 36, 7839);
       attr_dev(p1, "class", "");
-      add_location(p1, file$1, 192, 36, 8665);
+      add_location(p1, file$1, 189, 36, 8663);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 177, 32, 7620);
+      add_location(div1, file$1, 174, 32, 7618);
       attr_dev(div2, "class", div2_class_value = "absolute bottom-0 left-0 h-2px bg-" +
       /*calculateRarity*/
       ctx[2](
@@ -1293,9 +1293,9 @@ function create_each_block_4(ctx) {
       ctx[10].progress,
       /*quest*/
       ctx[10].goal) + "%");
-      add_location(div2, file$1, 194, 32, 8767);
+      add_location(div2, file$1, 191, 32, 8765);
       attr_dev(div3, "class", "relative card quest max-w-sm mx-auto svelte-138nzh5");
-      add_location(div3, file$1, 176, 28, 7536);
+      add_location(div3, file$1, 173, 28, 7534);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div3, anchor);
@@ -1392,11 +1392,11 @@ function create_each_block_4(ctx) {
     block: block,
     id: create_each_block_4.name,
     type: "each",
-    source: "(176:24) {#each data.dailyQuests as quest}",
+    source: "(173:24) {#each data.dailyQuests as quest}",
     ctx: ctx
   });
   return block;
-} // (203:16) {#if data.collected && data.collected.daily}
+} // (200:16) {#if data.collected && data.collected.daily}
 
 
 function create_if_block_3(ctx) {
@@ -1436,7 +1436,7 @@ function create_if_block_3(ctx) {
     },
     h: function hydrate() {
       attr_dev(div, "class", "pt-5");
-      add_location(div, file$1, 203, 20, 9206);
+      add_location(div, file$1, 200, 20, 9204);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -1486,11 +1486,11 @@ function create_if_block_3(ctx) {
     block: block,
     id: create_if_block_3.name,
     type: "if",
-    source: "(203:16) {#if data.collected && data.collected.daily}",
+    source: "(200:16) {#if data.collected && data.collected.daily}",
     ctx: ctx
   });
   return block;
-} // (205:24) {#each data.collected.daily as quest}
+} // (202:24) {#each data.collected.daily as quest}
 
 
 function create_each_block_3(ctx) {
@@ -1553,15 +1553,15 @@ function create_each_block_3(ctx) {
     },
     h: function hydrate() {
       attr_dev(p0, "class", "mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 209, 40, 9583);
+      add_location(p0, file$1, 206, 40, 9581);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 208, 36, 9509);
+      add_location(div0, file$1, 205, 36, 9507);
       attr_dev(p1, "class", "quest-goal line-through");
-      add_location(p1, file$1, 214, 36, 9801);
+      add_location(p1, file$1, 211, 36, 9799);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 207, 32, 9446);
+      add_location(div1, file$1, 204, 32, 9444);
       attr_dev(div2, "class", "card quest text-disabled italic max-w-sm mx-auto svelte-138nzh5");
-      add_location(div2, file$1, 205, 28, 9317);
+      add_location(div2, file$1, 202, 28, 9315);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div2, anchor);
@@ -1589,11 +1589,11 @@ function create_each_block_3(ctx) {
     block: block,
     id: create_each_block_3.name,
     type: "each",
-    source: "(205:24) {#each data.collected.daily as quest}",
+    source: "(202:24) {#each data.collected.daily as quest}",
     ctx: ctx
   });
   return block;
-} // (230:16) {#if data.finished && data.finished.weekly}
+} // (227:16) {#if data.finished && data.finished.weekly}
 
 
 function create_if_block_2(ctx) {
@@ -1633,7 +1633,7 @@ function create_if_block_2(ctx) {
     },
     h: function hydrate() {
       attr_dev(div, "class", "pb-1");
-      add_location(div, file$1, 230, 20, 10453);
+      add_location(div, file$1, 227, 20, 10451);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -1683,11 +1683,11 @@ function create_if_block_2(ctx) {
     block: block,
     id: create_if_block_2.name,
     type: "if",
-    source: "(230:16) {#if data.finished && data.finished.weekly}",
+    source: "(227:16) {#if data.finished && data.finished.weekly}",
     ctx: ctx
   });
   return block;
-} // (232:24) {#each data.finished.weekly as quest, i}
+} // (229:24) {#each data.finished.weekly as quest, i}
 
 
 function create_each_block_2(ctx) {
@@ -1801,9 +1801,9 @@ function create_each_block_2(ctx) {
     },
     h: function hydrate() {
       attr_dev(span, "class", "svelte-138nzh5");
-      add_location(span, file$1, 236, 36, 10876);
+      add_location(span, file$1, 233, 36, 10874);
       attr_dev(path, "d", "m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z");
-      add_location(path, file$1, 243, 44, 11384);
+      add_location(path, file$1, 240, 44, 11382);
       attr_dev(svg, "class", svg_class_value = "fill-current checkbox-active\r\n                                            text-" +
       /*calculateRarity*/
       ctx[2](
@@ -1811,21 +1811,21 @@ function create_each_block_2(ctx) {
       ctx[10].reward, false) + " svelte-138nzh5");
       attr_dev(svg, "viewBox", "0 0 27 24");
       attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-      add_location(svg, file$1, 238, 40, 11017);
+      add_location(svg, file$1, 235, 40, 11015);
       attr_dev(p0, "class", "ml-2 mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 246, 40, 11662);
+      add_location(p0, file$1, 243, 40, 11660);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 237, 36, 10943);
+      add_location(div0, file$1, 234, 36, 10941);
       attr_dev(p1, "class", "quest-goal line-through");
-      add_location(p1, file$1, 251, 36, 11892);
+      add_location(p1, file$1, 248, 36, 11890);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 235, 32, 10813);
+      add_location(div1, file$1, 232, 32, 10811);
       attr_dev(button, "class", button_class_value = "card quest finished border-2 border-" +
       /*calculateRarity*/
       ctx[2](
       /*quest*/
       ctx[10].reward, false) + " max-w-sm mx-auto" + " svelte-138nzh5");
-      add_location(button, file$1, 232, 28, 10567);
+      add_location(button, file$1, 229, 28, 10565);
     },
     m: function mount(target, anchor) {
       insert_dev(target, button, anchor);
@@ -1888,11 +1888,11 @@ function create_each_block_2(ctx) {
     block: block,
     id: create_each_block_2.name,
     type: "each",
-    source: "(232:24) {#each data.finished.weekly as quest, i}",
+    source: "(229:24) {#each data.finished.weekly as quest, i}",
     ctx: ctx
   });
   return block;
-} // (261:16) {#if data.weeklyQuests}
+} // (258:16) {#if data.weeklyQuests}
 
 
 function create_if_block_1(ctx) {
@@ -1929,7 +1929,7 @@ function create_if_block_1(ctx) {
       this.h();
     },
     h: function hydrate() {
-      add_location(div, file$1, 261, 20, 12251);
+      add_location(div, file$1, 258, 20, 12249);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -1979,11 +1979,11 @@ function create_if_block_1(ctx) {
     block: block,
     id: create_if_block_1.name,
     type: "if",
-    source: "(261:16) {#if data.weeklyQuests}",
+    source: "(258:16) {#if data.weeklyQuests}",
     ctx: ctx
   });
   return block;
-} // (263:24) {#each data.weeklyQuests as quest}
+} // (260:24) {#each data.weeklyQuests as quest}
 
 
 function create_each_block_1(ctx) {
@@ -2112,9 +2112,9 @@ function create_each_block_1(ctx) {
       ctx[2](
       /*quest*/
       ctx[10].reward, false) + " svelte-138nzh5");
-      add_location(span, file$1, 265, 36, 12493);
+      add_location(span, file$1, 262, 36, 12491);
       attr_dev(path, "d", "m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z");
-      add_location(path, file$1, 272, 44, 13036);
+      add_location(path, file$1, 269, 44, 13034);
       attr_dev(svg, "class", svg_class_value = "fill-current w-4 text-" +
       /*calculateRarity*/
       ctx[2](
@@ -2122,15 +2122,15 @@ function create_each_block_1(ctx) {
       ctx[10].reward, false) + " svelte-138nzh5");
       attr_dev(svg, "viewBox", "0 0 25 24");
       attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-      add_location(svg, file$1, 268, 40, 12726);
+      add_location(svg, file$1, 265, 40, 12724);
       attr_dev(p0, "class", "ml-2 mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 275, 40, 13236);
+      add_location(p0, file$1, 272, 40, 13234);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 267, 36, 12652);
+      add_location(div0, file$1, 264, 36, 12650);
       attr_dev(p1, "class", "quest-goal");
-      add_location(p1, file$1, 279, 36, 13477);
+      add_location(p1, file$1, 276, 36, 13475);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 264, 32, 12430);
+      add_location(div1, file$1, 261, 32, 12428);
       attr_dev(div2, "class", div2_class_value = "absolute bottom-0 left-0 h-2px bg-" +
       /*calculateRarity*/
       ctx[2](
@@ -2143,9 +2143,9 @@ function create_each_block_1(ctx) {
       ctx[10].progress,
       /*quest*/
       ctx[10].goal) + "%");
-      add_location(div2, file$1, 281, 32, 13589);
+      add_location(div2, file$1, 278, 32, 13587);
       attr_dev(div3, "class", "relative card quest max-w-sm mx-auto svelte-138nzh5");
-      add_location(div3, file$1, 263, 28, 12346);
+      add_location(div3, file$1, 260, 28, 12344);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div3, anchor);
@@ -2242,11 +2242,11 @@ function create_each_block_1(ctx) {
     block: block,
     id: create_each_block_1.name,
     type: "each",
-    source: "(263:24) {#each data.weeklyQuests as quest}",
+    source: "(260:24) {#each data.weeklyQuests as quest}",
     ctx: ctx
   });
   return block;
-} // (289:16) {#if data.collected && data.collected.weekly}
+} // (286:16) {#if data.collected && data.collected.weekly}
 
 
 function create_if_block$1(ctx) {
@@ -2286,7 +2286,7 @@ function create_if_block$1(ctx) {
     },
     h: function hydrate() {
       attr_dev(div, "class", "pt-5");
-      add_location(div, file$1, 289, 20, 14028);
+      add_location(div, file$1, 286, 20, 14026);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div, anchor);
@@ -2336,11 +2336,11 @@ function create_if_block$1(ctx) {
     block: block,
     id: create_if_block$1.name,
     type: "if",
-    source: "(289:16) {#if data.collected && data.collected.weekly}",
+    source: "(286:16) {#if data.collected && data.collected.weekly}",
     ctx: ctx
   });
   return block;
-} // (291:24) {#each data.collected.weekly as quest}
+} // (288:24) {#each data.collected.weekly as quest}
 
 
 function create_each_block$1(ctx) {
@@ -2403,15 +2403,15 @@ function create_each_block$1(ctx) {
     },
     h: function hydrate() {
       attr_dev(p0, "class", "mr-6 lg:mr-12 text-lg");
-      add_location(p0, file$1, 295, 40, 14406);
+      add_location(p0, file$1, 292, 40, 14404);
       attr_dev(div0, "class", "progress-container svelte-138nzh5");
-      add_location(div0, file$1, 294, 36, 14332);
+      add_location(div0, file$1, 291, 36, 14330);
       attr_dev(p1, "class", "quest-goal line-through");
-      add_location(p1, file$1, 300, 36, 14624);
+      add_location(p1, file$1, 297, 36, 14622);
       attr_dev(div1, "class", "quest-infos svelte-138nzh5");
-      add_location(div1, file$1, 293, 32, 14269);
+      add_location(div1, file$1, 290, 32, 14267);
       attr_dev(div2, "class", "card quest text-disabled italic max-w-sm mx-auto svelte-138nzh5");
-      add_location(div2, file$1, 291, 28, 14140);
+      add_location(div2, file$1, 288, 28, 14138);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div2, anchor);
@@ -2439,7 +2439,7 @@ function create_each_block$1(ctx) {
     block: block,
     id: create_each_block$1.name,
     type: "each",
-    source: "(291:24) {#each data.collected.weekly as quest}",
+    source: "(288:24) {#each data.collected.weekly as quest}",
     ctx: ctx
   });
   return block;
@@ -2639,33 +2639,33 @@ function create_fragment$1(ctx) {
     },
     h: function hydrate() {
       attr_dev(h20, "class", "text-6xl text-center lg:text-left");
-      add_location(h20, file$1, 141, 12, 5542);
+      add_location(h20, file$1, 138, 12, 5540);
       attr_dev(div0, "class", "quests-container");
-      add_location(div0, file$1, 143, 12, 5621);
+      add_location(div0, file$1, 140, 12, 5619);
       attr_dev(div1, "class", "daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8");
-      add_location(div1, file$1, 139, 8, 5442);
+      add_location(div1, file$1, 136, 8, 5440);
       attr_dev(h21, "class", "text-6xl text-center lg:text-left");
-      add_location(h21, file$1, 227, 12, 10262);
+      add_location(h21, file$1, 224, 12, 10260);
       attr_dev(div2, "class", "quests-container");
-      add_location(div2, file$1, 228, 12, 10340);
+      add_location(div2, file$1, 225, 12, 10338);
       attr_dev(div3, "class", "weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0\r\n                lg:mt-0");
-      add_location(div3, file$1, 224, 8, 10138);
+      add_location(div3, file$1, 221, 8, 10136);
       attr_dev(div4, "class", "container lg:flex mt-7 w-auto");
-      add_location(div4, file$1, 138, 4, 5389);
+      add_location(div4, file$1, 135, 4, 5387);
       attr_dev(path, "fill", "currentColor");
       attr_dev(path, "d", "M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z");
-      add_location(path, file$1, 334, 16, 17269);
+      add_location(path, file$1, 331, 16, 17267);
       attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
       attr_dev(svg, "class", "w-9 text-primary svelte-138nzh5");
       attr_dev(svg, "viewBox", "0 0 576 512");
-      add_location(svg, file$1, 330, 12, 17113);
+      add_location(svg, file$1, 327, 12, 17111);
       attr_dev(p, "class", "text-lg ml-3 lg:ml-2 tip-text text-light svelte-138nzh5");
-      add_location(p, file$1, 338, 12, 17826);
+      add_location(p, file$1, 335, 12, 17824);
       attr_dev(div5, "class", "flex lg:ml-8 items-center mt-4 lg:mt-0");
-      add_location(div5, file$1, 318, 8, 15254);
+      add_location(div5, file$1, 315, 8, 15252);
       attr_dev(div6, "class", "flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4 ml-5 lg:ml-0");
-      add_location(div6, file$1, 311, 4, 14969);
-      add_location(div7, file$1, 137, 0, 5378);
+      add_location(div6, file$1, 308, 4, 14967);
+      add_location(div7, file$1, 134, 0, 5376);
     },
     m: function mount(target, anchor) {
       insert_dev(target, div7, anchor);
@@ -2913,8 +2913,8 @@ function instance$1($$self, $$props, $$invalidate) {
             case 3:
               refreshedData = _context.sent;
               console.log(refreshedData);
-              calculateOrder();
               $$invalidate(0, data = refreshedData.solo);
+              calculateOrder();
               $$invalidate(1, isRefreshingQuests = false);
 
             case 8:
@@ -3248,7 +3248,7 @@ function create_fragment$2(ctx) {
       this.h();
     },
     l: function claim(nodes) {
-      var head_nodes = query_selector_all("[data-svelte=\"svelte-eaqjiz\"]", document.head);
+      var head_nodes = query_selector_all("[data-svelte=\"svelte-1gdr8ik\"]", document.head);
       meta = claim_element(head_nodes, "META", {
         name: true,
         content: true
@@ -3300,19 +3300,19 @@ function create_fragment$2(ctx) {
       attr_dev(meta, "content", "Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!\r\n        | Choose your game mode here | Winhalla play page ");
       add_location(meta, file$2, 155, 4, 4923);
       attr_dev(link, "rel", "canonical");
-      attr_dev(link, "href", "https://winhalla.appspot.com/play");
+      attr_dev(link, "href", "https://winhalla.app/play");
       add_location(link, file$2, 160, 4, 5109);
       attr_dev(h1, "class", "text-6xl leading-snug lg:leading-normal");
-      add_location(h1, file$2, 164, 8, 5305);
+      add_location(h1, file$2, 164, 8, 5297);
       attr_dev(div0, "class", "text-center lg:text-left");
-      add_location(div0, file$2, 163, 4, 5257);
+      add_location(div0, file$2, 163, 4, 5249);
       attr_dev(div1, "class", "game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center\r\n            flex flex-col items-center lg:flex-row lg:items-start");
-      add_location(div1, file$2, 172, 8, 5532);
-      add_location(div2, file$2, 177, 8, 5754);
+      add_location(div1, file$2, 172, 8, 5524);
+      add_location(div2, file$2, 177, 8, 5746);
       attr_dev(div3, "class", "flex flex-col items-center lg:items-start lg:flex-wrap\r\n        lg:flex-row");
-      add_location(div3, file$2, 169, 4, 5424);
+      add_location(div3, file$2, 169, 4, 5416);
       attr_dev(div4, "class", "lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full");
-      add_location(div4, file$2, 162, 0, 5192);
+      add_location(div4, file$2, 162, 0, 5184);
     },
     m: function mount(target, anchor) {
       append_dev(document.head, meta);

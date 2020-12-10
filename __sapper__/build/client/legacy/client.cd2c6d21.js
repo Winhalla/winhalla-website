@@ -8505,82 +8505,82 @@ var App = /*#__PURE__*/function (_SvelteComponentDev) {
 var ignore = [];
 var components = [{
   js: function js() {
-    return import('./index.c4821dee.js');
+    return import('./index.6b964806.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:index.svelte__"
 }, {
   js: function js() {
-    return import('./create-account.13de91b3.js');
+    return import('./create-account.5da2a539.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:create-account.svelte__"
 }, {
   js: function js() {
-    return import('./change-email.8e3b7eb8.js');
+    return import('./change-email.f60e9ee6.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:change-email.svelte__"
 }, {
   js: function js() {
-    return import('./contact.6f78e78f.js');
+    return import('./contact.0865606a.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:contact.svelte__"
 }, {
   js: function js() {
-    return import('./privacy.8bdee12a.js');
+    return import('./privacy.be2e250b.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:privacy.svelte__"
 }, {
   js: function js() {
-    return import('./status.735f7aef.js');
+    return import('./status.92f068c0.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:status.svelte__"
 }, {
   js: function js() {
-    return import('./about.3bef9822.js');
+    return import('./about.a3e25838.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:about.svelte__"
 }, {
   js: function js() {
-    return import('./terms.2ca97b8e.js');
+    return import('./terms.d688b7be.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:terms.svelte__"
 }, {
   js: function js() {
-    return import('./tests.cdd767d3.js');
+    return import('./tests.b2dee477.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:tests.svelte__"
 }, {
   js: function js() {
-    return import('./help.d5804d10.js');
+    return import('./help.aab5cbe9.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:help.svelte__"
 }, {
   js: function js() {
-    return import('./[id].cdc98860.js');
+    return import('./[id].f6433d2e.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:link/[id].svelte__"
 }, {
   js: function js() {
-    return import('./index.8d81bc96.js');
+    return import('./index.c846480f.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:play/index.svelte__"
 }, {
   js: function js() {
-    return import('./index.5d6c7036.js');
+    return import('./index.2786c92f.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:play/ffa/index.svelte__"
 }, {
   js: function js() {
-    return import('./[id].c8e158a0.js');
+    return import('./[id].474048fc.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:play/ffa/[id].svelte__"
 }, {
   js: function js() {
-    return import('./shop.aa20239f.js');
+    return import('./shop.8ff9936f.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:shop.svelte__"
 }, {
   js: function js() {
-    return import('./test.063a861a.js');
+    return import('./test.ff702227.js');
   },
   css: "__SAPPER_CSS_PLACEHOLDER:test.svelte__"
 }];

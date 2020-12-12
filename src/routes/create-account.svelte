@@ -441,7 +441,7 @@
                     !
                 </p>
                 <a
-                    href="{apiUrl}/auth/redirect-after-account"
+                    href="/play"
                     class="button button-brand mt-10 block mx-auto mb-6 md:mb-0">
                     Finish
                 </a>

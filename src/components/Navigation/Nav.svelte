@@ -21,14 +21,16 @@
     let user;
     let firstLoad = true;
 
-    function calculatePropreties(value) {
-        if (value.user) {
-            notificationsObj.notifications = value.user.notifications;
-            notificationsObj.inGame = value.user.inGame;
-        }
-        isUserLoggedIn = value.user ? true : value.steam ? "steam" : false;
-        userCoins = value.user.coins;
-        user = value.steam;
+    async function calculatePropreties(value) {
+        const tempUserData = await value;
+        console.log(tempUserData);
+        /*if (tempUserData.user) {
+            notificationsObj.notifications = tempUserData.user.notifications;
+            notificationsObj.inGame = tempUserData.user.inGame;
+        }*/
+        user = tempUserData.steam;
+        userCoins = tempUserData.user.coins;
+        isUserLoggedIn = tempUserData.user ? true : tempUserData.steam ? "steam" : false;
         console.log("USER", isUserLoggedIn);
     }
 
@@ -42,29 +44,12 @@
     const unsubscribe = counter.subscribe(resetNav);
     onDestroy(unsubscribe);
     onMount(async () => {
-        if (user.then) {
-            user.then(async (value) => {
-                if(value instanceof Error){
-                    return goto("/status")
-                }
-                user = value;
-                try {
-                    informations = await callApi("get", "/informations");
-                    user = value.content;
-                } catch (e) {
-                    goto("/status");
-                }
-                calculatePropreties(value);
-            });
-        } else {
-            try {
-                informations = await callApi("get", "/informations");
-            } catch (e) {
-                goto("/status");
-            }
-            calculatePropreties();
+        try {
+            informations = await callApi("get", "/informations");
+        } catch (e) {
+            goto("/status");
         }
-        calculatePropreties()
+        await calculatePropreties(user);
     });
 
 
@@ -185,9 +170,11 @@
                                 <NavAlert data={informations} />
                             </div>
                         {/if}
-                        <NavAccount
-                            username={user.displayName}
-                            avatar={user.photos[1].value} />
+                        {#if user.displayName && user.photos}
+                            <NavAccount
+                                username={user.displayName}
+                                avatar={user.photos[0].value} />
+                        {/if}
                         {#if notificationsObj}
                             <div class="hidden lg:flex items-center">
                                 <Notifications data={notificationsObj} />

@@ -35,8 +35,10 @@
                 <svg
                     class="w-4 h-6 fill-current hidden lg:block"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"><path
-                        d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" /></svg>
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                </svg>
             </div>
         </button>
     </div>

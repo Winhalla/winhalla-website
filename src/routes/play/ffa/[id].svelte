@@ -147,25 +147,28 @@
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
             user = value.content;
+
         });
         unsub();
-        user = user.steam;
+
+        //await user
+        //user = user.steam
         try {
+            user = await user;
+            user = user.steam
             match = await callApi("get", `/getMatch/${id}`);
             isMatchEnded = match.finished;
-            console.log("noobz");
             //Start the countdown
 
             filterUsers();
-
-            let d = new Date(userPlayer.joinDate);
+            const d = new Date(userPlayer.joinDate);
             const endsIn = -(
                 (new Date().getTime() -
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
             startTimer(endsIn);
-            counter.set({"refresh":true})
+            counter.set({ "refresh": true });
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
@@ -175,6 +178,7 @@
                 }
             }
         }
+
     });
 
     const filterUsers = () => {
@@ -216,18 +220,17 @@
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
-        let winNb = userPlayer.gamesPlayed
+        let winNb = userPlayer.gamesPlayed;
 
-            match = await callApi("get", `/getMatch/${id}`);
+        match = await callApi("get", `/getMatch/${id}`);
 
         filterUsers();
-        if(userPlayer.gamesPlayed !== winNb){
-            counter.set({"refresh":true})
-        }else if (match.finished && isMatchEnded === false) {
+        if (userPlayer.gamesPlayed !== winNb) {
+            counter.set({ "refresh": true });
+        } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({"refresh":true})
+            counter.set({ "refresh": true });
         }
-        console.log(userPlayer);
         isRefreshingStats = false;
     };
 
@@ -407,4 +410,3 @@
         {/if}
     </div>
 {/if}
-

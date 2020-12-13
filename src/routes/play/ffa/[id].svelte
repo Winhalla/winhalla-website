@@ -77,6 +77,8 @@
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
     import { counter } from "../../../components/store";
+    import io from "socket.io-client";
+    import { apiUrl } from "../../../utils/config";
 
     export let id;
 
@@ -169,6 +171,18 @@
             );
             startTimer(endsIn);
             counter.set({ "refresh": true });
+            let socket = io.io(apiUrl);
+            socket.on("connection", (status) => {
+                console.log(status);
+                socket.emit("match connection","FFA"+id)
+            });
+            socket.on('join match',(status)=>{
+                console.log(status)
+            })
+            socket.on("lobbyUpdate",(value)=>{
+                match = value
+                filterUsers()
+            })
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {

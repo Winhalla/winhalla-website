@@ -1,0 +1,26 @@
+b.svelte-yr78kx{font-weight:400;--tw-text-opacity:1;color:rgba(61, 114, 228, var(--tw-text-opacity))}.ffa-player.svelte-yr78kx{height:22rem;position:relative;text-align:center;width:13.25rem}.ffa-player.svelte-yr78kx::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
+        )}.player-name.svelte-yr78kx{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;position:absolute;right:0px;left:0px;top:4rem;z-index:10}.stats.svelte-yr78kx{position:absolute;right:0px;left:0px;z-index:10}.user.svelte-yr78kx{height:25rem;width:15rem}.user.svelte-yr78kx::after{background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
+        )}
+b.svelte-11bbg9s{font-weight:400;--tw-text-opacity:1;color:rgba(61, 114, 228, var(--tw-text-opacity))}.ffa-player.svelte-11bbg9s{height:22rem;position:relative;text-align:center;width:13.25rem}.ffa-player.svelte-11bbg9s::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
+        )}.player-name.svelte-11bbg9s{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;position:absolute;right:0px;left:0px;top:4rem;z-index:10}.stats.svelte-11bbg9s{position:absolute;right:0px;left:0px;z-index:10}.user.svelte-11bbg9s{height:25rem;width:15rem}.user.svelte-11bbg9s::after{background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
+        )}.timer.svelte-11bbg9s{margin-bottom:0.35rem}.quit.svelte-11bbg9s{--tw-bg-opacity:1;background-color:rgba(252, 24, 112, var(--tw-bg-opacity));padding-left:1.75rem;padding-right:1.75rem}

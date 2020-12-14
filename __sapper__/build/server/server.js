@@ -7254,7 +7254,7 @@ function noop$1() { }
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 let throttler = [];
-const app = express__default['default']() // You can also use Express
+express__default['default']() // You can also use Express
     .use((req, res, next) => {
         if (req.path.includes("assets") || req.path.includes("css")) return next();
         let i = throttler.findIndex(e => e.ip == req.ip);
@@ -7279,14 +7279,5 @@ const app = express__default['default']() // You can also use Express
         sirv__default['default']("static", { dev }),
         middleware()
     )
-    .set("x-powered-by", false);
-try {
-    https__default['default'].createServer({
-        key: fs__default['default'].readFileSync("/etc/letsencrypt/live/winhalla.app/privkey.pem"),
-        cert: fs__default['default'].readFileSync("/etc/letsencrypt/live/winhalla.app/fullchain.pem")
-    }, app).listen(443, err => {
-        if (err) console.log("error", err);
-    });
-}catch (e) {
-    app.listen(3000);
-}
+    .set("x-powered-by", false)
+    .listen(80);

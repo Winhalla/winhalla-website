@@ -162,7 +162,7 @@
             isMatchEnded = match.finished;
             //Start the countdown
 
-            filterUsers();
+            filterUsers(false);
             const d = new Date(userPlayer.joinDate);
             const endsIn = -(
                 (new Date().getTime() -
@@ -181,7 +181,7 @@
             })
             socket.on("lobbyUpdate",(value)=>{
                 match = value
-                filterUsers()
+                filterUsers(true)
             })
         } catch (err) {
             if (err.response) {
@@ -195,10 +195,15 @@
 
     });
 
-    const filterUsers = () => {
+    const filterUsers = (isFromSocket) => {
         //Find user's object
-        userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
-
+        if(isFromSocket === false) {
+            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+        } else {
+            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            match.players[playerIndex].wins = userPlayer.wins
+            userPlayer = match.players[playerIndex]
+        }
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
@@ -238,7 +243,7 @@
 
         match = await callApi("get", `/getMatch/${id}`);
 
-        filterUsers();
+        filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
             counter.set({ "refresh": true });
         } else if (match.finished && isMatchEnded === false) {

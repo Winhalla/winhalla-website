@@ -79,7 +79,6 @@
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
-    import { data } from "../../../components/Navigation/NavNotifications.svelte";
 
     export let id;
 

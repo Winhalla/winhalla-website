@@ -171,7 +171,7 @@
                 1000
             );
             if(endsIn < 1){
-                countDown = "Waiting for others to finish (you can start a new game in the play page)"
+                countDown = "Waiting for others to finish (you can start a new game from the play page)"
             }else{
                 startTimer(endsIn);
             }

@@ -24,10 +24,10 @@
     async function calculatePropreties(value) {
         const tempUserData = await value;
         console.log(tempUserData);
-        /*if (tempUserData.user) {
+        if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
-        }*/
+        }
         user = tempUserData.steam;
         userCoins = tempUserData.user.coins;
         isUserLoggedIn = tempUserData.user ? true : tempUserData.steam ? "steam" : false;

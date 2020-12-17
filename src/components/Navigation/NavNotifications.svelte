@@ -10,7 +10,6 @@
     let opened = false;
     let isDropdownOpen = false;
     let matchesLength;
-
     function handleClick() {
         console.log(isDropdownOpen, !isDropdownOpen);
         isDropdownOpen = !isDropdownOpen;
@@ -25,7 +24,11 @@
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
-            startTimer(endsIn, i);
+            if(endsIn < 1){
+                data.inGame[i].timer = ""
+            }else{
+                startTimer(endsIn, i);
+            }
         });
     }
 

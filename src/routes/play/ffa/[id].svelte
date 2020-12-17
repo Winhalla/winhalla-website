@@ -79,6 +79,7 @@
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
+    import { data } from "../../../components/Navigation/NavNotifications.svelte";
 
     export let id;
 
@@ -169,7 +170,11 @@
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
-            startTimer(endsIn);
+            if(endsIn < 1){
+                countDown = "Waiting for others to finish (you can start a new game from the play page)"
+            }else{
+                startTimer(endsIn);
+            }
             counter.set({ "refresh": true });
             let socket = io.io(apiUrl);
             socket.on("connection", (status) => {

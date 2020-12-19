@@ -73,20 +73,24 @@ self.addEventListener("fetch", event => {
             .open(`offline${timestamp}`)
             .then(async cache => {
                 let response;
-                if(url.pathname.includes("assets")){
+                let asset = false;
+                ["assets", "sitemap.xml", "manifest.json", "robots.txt"].forEach(e => {
+                    if (url.pathname.includes(e)) asset = true
+                })
+                if (asset) {
                     response = await cache.match(event.request);
                 }
                 if (!response) {
                     try {
-                        console.log("network "+url.pathname)
+                        console.log("network " + url.pathname)
                         const response = await fetch(event.request);
                         cache.put(event.request, response.clone());
                         return response;
-                    } catch{
+                    } catch {
                         return await caches.match("/offline.html")
                     }
                 }
-                console.log("cache offline "+url.pathname)
+                console.log("cache offline " + url.pathname)
                 return response;
             })
     );

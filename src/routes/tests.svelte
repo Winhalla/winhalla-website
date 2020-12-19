@@ -13,8 +13,6 @@
     };
     let socket = io("http://localhost:9000");
     socket.on("test", update);
-
-
 </script>
 <div class="m-40">
     {variable}

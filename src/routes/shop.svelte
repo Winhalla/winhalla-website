@@ -116,7 +116,7 @@
 <div class="xl:flex xl:relative">
     <div>
         {#if packs}
-            <div class="mt-7 lg:mt-12 lg:ml-24">
+            <div class="mt-7 lg:mt-12 lg:ml-24 ">
                 <div>
                     <h1 class="text-6xl text-center lg:text-left">
                         Battle pass
@@ -293,3 +293,4 @@
         </div>
     </div>
 </div>
+<div hidden class="-mb-1"></div>

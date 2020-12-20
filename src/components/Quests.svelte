@@ -323,3 +323,4 @@
         </div>
     </div>
 </div>
+<div hidden class="bg-epic text-epic bg-legendary text-legendary"></div>

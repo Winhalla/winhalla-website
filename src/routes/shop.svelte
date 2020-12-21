@@ -157,103 +157,107 @@
                     </h2>
                     <div
                         class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
-                        {#each seasonPacks as seasonPack, i}
-                            <div
-                                class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
-                                <img
-                                    class="w-full h-full block "
-                                    src="assets/ShopItems/{seasonPack.name}.jpg"
-                                    alt={seasonPack.name} />
+                        {#if seasonPacks.forEach}
+                            {#each seasonPacks as seasonPack, i}
                                 <div
-                                    class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
-                                    <p
-                                        class:hidden={seasonPack.isDescriptionToggled}
-                                        class:-mb-1={!seasonPack.isDescriptionToggled}
-                                        class="text-accent text-5xl md:mb-0 md:block">
-                                        {seasonPack.name
-                                            .toLowerCase()
-                                            .replace(/\-/g, ' ')}
-                                    </p>
-                                    <p
-                                        class:hidden={!seasonPack.isDescriptionToggled}
-                                        class="block xl:mt-0">
-                                        {seasonPack.description}
-                                    </p>
-
+                                    class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
+                                    <img
+                                        class="w-full h-full block "
+                                        src="assets/ShopItems/{seasonPack.name}.jpg"
+                                        alt={seasonPack.name} />
                                     <div
-                                        class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
-                                        <div class="-mb-2 md:mb-0">
-                                            <div>
-                                                <p
-                                                    class="hidden xl:block mr-1 -mb-2">
-                                                    {seasonPack.description}
-                                                </p>
-                                                <button
-                                                    class="focus:outline-none xl:hidden -mb-10"
-                                                    on:click={() => handleDescriptionToggle(seasonPack)}>
+                                        class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                                        <p
+                                            class:hidden={seasonPack.isDescriptionToggled}
+                                            class:-mb-1={!seasonPack.isDescriptionToggled}
+                                            class="text-accent text-5xl md:mb-0 md:block">
+                                            {seasonPack.name
+                                                .toLowerCase()
+                                                .replace(/\-/g, ' ')}
+                                        </p>
+                                        <p
+                                            class:hidden={!seasonPack.isDescriptionToggled}
+                                            class="block xl:mt-0">
+                                            {seasonPack.description}
+                                        </p>
+
+                                        <div
+                                            class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                            <div class="-mb-2 md:mb-0">
+                                                <div>
                                                     <p
-                                                        class=" text-light text-lg underline leading-none">
-                                                        {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                        class="hidden xl:block mr-1 -mb-2">
+                                                        {seasonPack.description}
                                                     </p>
-                                                </button>
+                                                    <button
+                                                        class="focus:outline-none xl:hidden -mb-10"
+                                                        on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                        <p
+                                                            class=" text-light text-lg underline leading-none">
+                                                            {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                        </p>
+                                                    </button>
+                                                </div>
                                             </div>
+                                            <button
+                                                disabled={seasonPack.unBuyable}
+                                                on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
+                                                class="px-4 py-1 bg-primary rounded">
+                                                <p class="text-2xl">
+                                                    <b
+                                                        class="mr-1 font-normal">{seasonPack.cost}</b>$
+                                                </p>
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={seasonPack.unBuyable}
-                                            on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
-                                            class="px-4 py-1 bg-primary rounded">
-                                            <p class="text-2xl">
-                                                <b
-                                                    class="mr-1 font-normal">{seasonPack.cost}</b>$
-                                            </p>
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                        {/each}
+                            {/each}
+                        {/if}
                     </div>
                 </div>
                 <div class="pt-8 lg:pt-20 lg:pb-6">
                     <h2 class="text-6xl text-center lg:text-left">Packs</h2>
                     <div
                         class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
-                        {#each packs as pack}
-                            <div
-                                class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
-                                <img
-                                    class="w-full h-full block object-cover"
-                                    src="assets/ShopItems/{pack.name}.jpg"
-                                    alt={pack.name} />
+                        {#if packs.forEach}
+                            {#each packs as pack}
                                 <div
-                                    class="absolute bottom-0 z-10 px-5 pb-3 w-full">
-                                    <p class="text-accent text-5xl">
-                                        {pack.name
-                                            .toLowerCase()
-                                            .replace(/\-/g, ' ')}
-                                    </p>
-
+                                    class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
+                                    <img
+                                        class="w-full h-full block object-cover"
+                                        src="assets/ShopItems/{pack.name}.jpg"
+                                        alt={pack.name} />
                                     <div
-                                        class="flex justify-between w-full items-end pb-1">
-                                        <div>
+                                        class="absolute bottom-0 z-10 px-5 pb-3 w-full">
+                                        <p class="text-accent text-5xl">
+                                            {pack.name
+                                                .toLowerCase()
+                                                .replace(/\-/g, ' ')}
+                                        </p>
+
+                                        <div
+                                            class="flex justify-between w-full items-end pb-1">
                                             <div>
-                                                <p class="block mr-1 -mb-2">
-                                                    {pack.description}
-                                                </p>
+                                                <div>
+                                                    <p class="block mr-1 -mb-2">
+                                                        {pack.description}
+                                                    </p>
+                                                </div>
                                             </div>
+                                            <button
+                                                disabled={pack.unBuyable}
+                                                on:click={() => callApi('post', `/buy/${pack.id}`)}
+                                                class="px-4 py-1 bg-primary rounded">
+                                                <p class="text-2xl">
+                                                    <b
+                                                        class="mr-1 font-normal">{pack.cost}</b>$
+                                                </p>
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={pack.unBuyable}
-                                            on:click={() => callApi('post', `/buy/${pack.id}`)}
-                                            class="px-4 py-1 bg-primary rounded">
-                                            <p class="text-2xl">
-                                                <b
-                                                    class="mr-1 font-normal">{pack.cost}</b>$
-                                            </p>
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                        {/each}
+                            {/each}
+                        {/if}
                     </div>
                 </div>
             </div>

@@ -77,17 +77,31 @@ self.addEventListener("fetch", event => {
                 ["assets", "sitemap.xml", "manifest.json", "robots.txt"].forEach(e => {
                     if (url.pathname.includes(e)) asset = true
                 })
+                // If request is an asset then search for it in cache
                 if (asset) {
                     response = await cache.match(event.request);
                 }
+                // If request isn't an asset or is not founc in cache then try fetching it to the server
                 if (!response) {
                     try {
                         console.log("network " + url.pathname)
                         const response = await fetch(event.request);
+                        if (url.host == "api.winhalla.app") return response
                         cache.put(event.request, response.clone());
                         return response;
                     } catch {
-                        return await caches.match("/offline.html")
+                        // If remote doesn't respond then try cache for every somewhat static request
+                        // This specify to not search in cache for API responses
+                        if (url.host == "api.winhalla.app") return
+
+                        // This specify to not search in cache for lobby pages (beacause they are too much dynamical)
+                        if (url.pathname.includes('/play/')) return await caches.match("/offline.html")
+
+                        // Serve the request from cache 
+                        const cacheTest = await caches.match(event.request)
+                        // If the request isn't in the cache then display an simple html page that warns the user it is offline
+                        if (!cacheTest) return await caches.match("/offline.html")
+                        return cacheTest
                     }
                 }
                 console.log("cache offline " + url.pathname)

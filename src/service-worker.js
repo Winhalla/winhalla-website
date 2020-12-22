@@ -6,6 +6,7 @@ const ASSETS = `cache${timestamp}`;
 // `files` is an array of everything in the `static` directory
 const to_cache_all = shell.concat(files);
 const to_cache = to_cache_all.filter(url => !(url.includes("CharactersBanners") || url.includes("brawlhalla-gameplay")));
+to_cache.push("/offline");
 const cached = new Set(to_cache);
 self.addEventListener("install", event => {
     event.waitUntil(
@@ -86,28 +87,38 @@ self.addEventListener("fetch", event => {
                 if (!response) {
                     try {
                         const response = await fetch(event.request);
-                        console.log("network "+ event.request.url)
-                        if (url.host == "api.winhalla.app") return response;
+                        console.log("network " + event.request.url);
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
                         cache.put(event.request, response.clone());
-                        return response
+                        return response;
                     } catch {
                         // If remote doesn't respond then try cache for every somewhat static request
-                        // This specify to not search in cache for API responses
-                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return;
+                        // This specify to not search in cache for API responses that are dynamic
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/informations" || url.pathname !== "/status")) return;
 
                         // This specify to not search in cache for lobby pages (because they are too much dynamical)
-                        if (url.pathname.includes("/play/ffa")) return await caches.match("/offline.html");
+                        if (url.pathname.includes("/play/ffa")) return await caches.match("/offline");
 
                         // Serve the request from cache 
                         const cacheTest = await caches.match(event.request);
                         // If the request isn't in the cache then display an simple html page that warns the user it is offline
-                        if (!cacheTest) return await caches.match("/offline.html");
-                        console.log("cache offline " + url.pathname)
+
+                        if (!cacheTest) return await caches.match("/offline");
+                        console.log("cache offline " + url.pathname);
+                        //This permits the nav component to display an offline warning by catching and editing response data from cache
+                        if (url.href === "http://localhost:4000/account") {
+                            const responseBlob = await cacheTest.clone().blob()
+                            let payload = JSON.parse(await responseBlob.text())
+                            payload.offline = true
+                            return new Response(new Blob([JSON.stringify(payload)], {type : 'application/json'}),{status:cacheTest.status,statusText:cacheTest.statusText,headers:cacheTest.headers})
+                        }
                         return cacheTest;
                     }
                 }
                 console.log("cache assets " + url.pathname);
                 return response;
             })
-    );
-});
+    )
+    ;
+})
+;

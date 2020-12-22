@@ -290,8 +290,7 @@
                 <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
                 <p
                     class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                    You will receive the item you purchased within 1 week to 1
-                    month
+                    You will receive the item you purchased within 1 week to 1 month
                 </p>
             </div>
         </div>

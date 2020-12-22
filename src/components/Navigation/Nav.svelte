@@ -88,7 +88,7 @@
         class:border-b-2={isShowingPoll}
         class="shadow-link-hover  bg-background lg:flex items-center  text-font w-full transition duration-200 border-b border-transparent">
         {#if offline}
-            <div class="hidden bg-legendary w-full">You are disconnected</div>
+            <div class="bg-legendary w-full">You are disconnected</div>
         {/if}
         <div class="w-full lg:w-auto flex justify-between items-center py-3 relative">
             <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">

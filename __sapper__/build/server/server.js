@@ -793,7 +793,7 @@ const routes = (d => [
 
 	{
 		// link/[id].svelte
-		pattern: /^\/link\/([^\/]+?)\/?$/,
+		pattern: /^\/link\/([^/]+?)\/?$/,
 		parts: [
 			null,
 			{ i: 11, params: match => ({ id: d(match[1]) }) }
@@ -819,7 +819,7 @@ const routes = (d => [
 
 	{
 		// play/ffa/[id].svelte
-		pattern: /^\/play\/ffa\/([^\/]+?)\/?$/,
+		pattern: /^\/play\/ffa\/([^/]+?)\/?$/,
 		parts: [
 			null,
 			null,
@@ -2346,7 +2346,7 @@ const manifest = {
 
 		{
 			// link/[id].svelte
-			pattern: /^\/link\/([^\/]+?)\/?$/,
+			pattern: /^\/link\/([^/]+?)\/?$/,
 			parts: [
 				null,
 				{ name: "link_$id", file: "link/[id].svelte", component: component_11, params: match => ({ id: d(match[1]) }) }
@@ -2372,7 +2372,7 @@ const manifest = {
 
 		{
 			// play/ffa/[id].svelte
-			pattern: /^\/play\/ffa\/([^\/]+?)\/?$/,
+			pattern: /^\/play\/ffa\/([^/]+?)\/?$/,
 			parts: [
 				null,
 				null,

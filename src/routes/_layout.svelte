@@ -69,13 +69,16 @@
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />
-<div class="font w-full bg-background min-h-screen h-full flex flex-col">
+<div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
     <Nav isScrolling={scrollY > 0} />
 
     <main class="text-font text-default min-h-screen h-full">
         <!--Main-->
         <slot class="flex-grow bg-background block-grow" />
     </main>
+    <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
+        <Poll/>
+    </div>-->
 
     <!--Footer-->
     <Footer />

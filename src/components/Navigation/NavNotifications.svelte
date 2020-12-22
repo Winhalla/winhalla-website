@@ -12,7 +12,6 @@
     let matchesLength;
 
     function handleClick() {
-        console.log(isDropdownOpen, !isDropdownOpen);
         isDropdownOpen = !isDropdownOpen;
         opened = true;
     }
@@ -31,14 +30,18 @@
 
     onMount(() => {
         if (!data.notifications) return;
+
         let length = data.notifications.length;
         let cookies = cookie.parse(document.cookie);
-        console.log(length, cookies.notificationNb);
-        if (length > cookies.notificationNb || !cookies.notificationNb)
+
+        if (length > cookies.notificationNb || !cookies.notificationNb) {
             newNotifications = true;
+        }
+
         cookies.notificationNb = length;
         matchesLength = data.inGame.length;
         calculateTimers();
+
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
@@ -71,9 +74,6 @@
             }
         }, 1000);
     }
-
-    const viewedNotifications = () => {
-    };
 
     const idToType = id => {
         if (id === 0) return "match finished";
@@ -206,7 +206,7 @@
                 <div
                     on:click={() => {
                         setTimeout(() => {
-                            if (opened == true) {
+                            if (opened === true) {
                                 document.cookie = cookie.serialize(
                                     'notificationNb',
                                     data.notifications.length,

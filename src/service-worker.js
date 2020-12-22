@@ -76,7 +76,7 @@ self.addEventListener("fetch", event => {
                 let response;
                 let asset = false;
                 // Test if this is an asset
-                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js"].forEach(e => {
+                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js", ".png", ".jpg"].forEach(e => {
                     if (url.pathname.includes(e)) asset = true;
                 });
                 // If request is an asset then search for it in cache

@@ -1,8 +1,7 @@
 import { writable } from "svelte/store";
 import { getUser } from "../utils/api.js";
 
-let counter;
-    counter = writable({ content: getUser(), refresh: false });
+let counter = writable({ content: getUser(), refresh: false });
     //counter = writable({ content: "err", refresh: false });
 
 

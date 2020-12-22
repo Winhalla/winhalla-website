@@ -106,7 +106,7 @@ self.addEventListener("fetch", event => {
                         if (!cacheTest) return await caches.match("/offline");
                         console.log("cache offline " + url.pathname);
                         //This permits the nav component to display an offline warning by catching and editing response data from cache
-                        if (url.href === "http://localhost:4000") {
+                        if (url.href === "http://localhost:4000/account") {
                             const responseBlob = await cacheTest.clone().blob()
                             let payload = JSON.parse(await responseBlob.text())
                             payload.offline = true

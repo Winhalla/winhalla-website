@@ -175,7 +175,7 @@
             flex flex-col items-center lg:flex-row lg:items-start">
             <GameModeCard {gameModes} />
         </div>
-        <div>
+        <div class="pb-16">
             {#if quests}
                 <Quests data={quests} />
             {:else if error}

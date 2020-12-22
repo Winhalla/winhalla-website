@@ -6,9 +6,9 @@ let counter = writable({ content: getUser(), refresh: false });
 
 
 
-counter.subscribe(async (value) => {
+counter.subscribe((value) => {
     if (value.refresh === true) {
-        counter.set({ content: await getUser(), refresh: false });
+        counter.set({ content: getUser(), refresh: false });
     }
 });
 export { counter };

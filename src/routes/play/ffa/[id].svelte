@@ -77,6 +77,8 @@
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
     import { counter } from "../../../components/store";
+    import io from "socket.io-client";
+    import { apiUrl } from "../../../utils/config";
 
     export let id;
 
@@ -147,25 +149,44 @@
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
             user = value.content;
+
         });
         unsub();
-        user = user.steam;
+
+        //await user
+        //user = user.steam
         try {
+            user = await user;
+            user = user.steam
             match = await callApi("get", `/getMatch/${id}`);
             isMatchEnded = match.finished;
-            console.log("noobz");
             //Start the countdown
 
-            filterUsers();
-
-            let d = new Date(userPlayer.joinDate);
+            filterUsers(false);
+            const d = new Date(userPlayer.joinDate);
             const endsIn = -(
                 (new Date().getTime() -
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
-            startTimer(endsIn);
-            counter.set({"refresh":true})
+            if(endsIn < 1){
+                countDown = "Waiting for others to finish (you can start a new game from the play page)"
+            }else{
+                startTimer(endsIn);
+            }
+            counter.set({ "refresh": true });
+            let socket = io.io(apiUrl);
+            socket.on("connection", (status) => {
+                console.log(status);
+                socket.emit("match connection","FFA"+id)
+            });
+            socket.on('join match',(status)=>{
+                console.log(status)
+            })
+            socket.on("lobbyUpdate",(value)=>{
+                match = value
+                filterUsers(true)
+            })
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
@@ -175,12 +196,18 @@
                 }
             }
         }
+
     });
 
-    const filterUsers = () => {
+    const filterUsers = (isFromSocket) => {
         //Find user's object
-        userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
-
+        if(isFromSocket === false) {
+            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+        } else {
+            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            match.players[playerIndex].wins = userPlayer.wins
+            userPlayer = match.players[playerIndex]
+        }
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
@@ -216,18 +243,17 @@
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
-        let winNb = userPlayer.gamesPlayed
+        let winNb = userPlayer.gamesPlayed;
 
-            match = await callApi("get", `/getMatch/${id}`);
+        match = await callApi("get", `/getMatch/${id}`);
 
-        filterUsers();
-        if(userPlayer.gamesPlayed !== winNb){
-            counter.set({"refresh":true})
-        }else if (match.finished && isMatchEnded === false) {
+        filterUsers(false);
+        if (userPlayer.gamesPlayed !== winNb) {
+            counter.set({ "refresh": true });
+        } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({"refresh":true})
+            counter.set({ "refresh": true });
         }
-        console.log(userPlayer);
         isRefreshingStats = false;
     };
 
@@ -407,4 +433,3 @@
         {/if}
     </div>
 {/if}
-

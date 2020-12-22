@@ -82,7 +82,7 @@
 </style>
 
 <div class="h-auto w-full fixed z-50">
-    {#if !offline}
+    {#if offline}
         <div class="bg-legendary w-full text-white text-center lg:text-xl">
             You are offline, you may experience bugs on the website.
         </div>

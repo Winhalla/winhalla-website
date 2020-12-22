@@ -76,7 +76,7 @@ self.addEventListener("fetch", event => {
                 let response;
                 let asset = false;
                 // Test if this is an asset
-                ["assets", "sitemap.xml", "manifest.json", "robots.txt"].forEach(e => {
+                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js"].forEach(e => {
                     if (url.pathname.includes(e)) asset = true;
                 });
                 // If request is an asset then search for it in cache
@@ -106,11 +106,11 @@ self.addEventListener("fetch", event => {
                         if (!cacheTest) return await caches.match("/offline");
                         console.log("cache offline " + url.pathname);
                         //This permits the nav component to display an offline warning by catching and editing response data from cache
-                        if (url.href === "http://localhost:4000/account") {
+                        if (url.href === "http://localhost:4000") {
                             const responseBlob = await cacheTest.clone().blob()
                             let payload = JSON.parse(await responseBlob.text())
                             payload.offline = true
-                            return new Response(new Blob([JSON.stringify(payload)], {type : 'application/json'}),{status:cacheTest.status,statusText:cacheTest.statusText,headers:cacheTest.headers})
+                            return new Response(new Blob([JSON.stringify(payload)], { type: 'application/json' }), { status: cacheTest.status, statusText: cacheTest.statusText, headers: cacheTest.headers })
                         }
                         return cacheTest;
                     }
@@ -119,6 +119,6 @@ self.addEventListener("fetch", event => {
                 return response;
             })
     )
-    ;
+        ;
 })
-;
+    ;

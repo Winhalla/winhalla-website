@@ -87,7 +87,7 @@ self.addEventListener("fetch", event => {
                 if (!response) {
                     try {
                         const response = await fetch(event.request);
-                        .log("network " + event.request.url);
+                        console.log("network " + event.request.url);
                         if (url.host === "api.winhalla.app" && (url.pathname !== "/getSolo" && url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return response;
                         cache.put(event.request, response.clone());
                         return response;

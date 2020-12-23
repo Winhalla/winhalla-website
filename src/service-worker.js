@@ -88,13 +88,13 @@ self.addEventListener("fetch", event => {
                     try {
                         const response = await fetch(event.request);
                         console.log("network " + event.request.url);
-                        if (url.host === "localhost" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
                         cache.put(event.request, response.clone());
                         return response;
                     } catch {
                         // If remote doesn't respond then try cache for every somewhat static request
                         // This specify to not search in cache for API responses that are dynamic
-                        if (url.host === "localhost" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return;
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return;
 
                         // This specify to not search in cache for lobby pages (because they are too much dynamical)
                         if (url.pathname.includes("/play/ffa")) return await caches.match("/offline");

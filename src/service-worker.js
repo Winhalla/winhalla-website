@@ -76,7 +76,7 @@ self.addEventListener("fetch", event => {
                 let response;
                 let asset = false;
                 // Test if this is an asset
-                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js", ".png", ".jpg"].forEach(e => {
+                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".png", ".jpg"].forEach(e => {
                     if (url.pathname.includes(e)) asset = true;
                 });
                 // If request is an asset then search for it in cache
@@ -87,14 +87,14 @@ self.addEventListener("fetch", event => {
                 if (!response) {
                     try {
                         const response = await fetch(event.request);
-                        console.log("network " + event.request.url);
-                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return response;
+                        console.log("cache putted " + url.href)
                         cache.put(event.request, response.clone());
                         return response;
                     } catch {
                         // If remote doesn't respond then try cache for every somewhat static request
                         // This specify to not search in cache for API responses that are dynamic
-                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return;
+                        if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return;
 
                         // This specify to not search in cache for lobby pages (because they are too much dynamical)
                         if (url.pathname.includes("/play/ffa")) return await caches.match("/offline");
@@ -104,9 +104,9 @@ self.addEventListener("fetch", event => {
                         // If the request isn't in the cache then display an simple html page that warns the user it is offline
 
                         if (!cacheTest) return await caches.match("/offline");
-                        console.log("cache offline " + url.pathname);
                         //This permits the nav component to display an offline warning by catching and editing response data from cache
                         if (url.href === "https://api.winhalla.app/account") {
+                            console.log("account cache")
                             const responseBlob = await cacheTest.clone().blob()
                             let payload = JSON.parse(await responseBlob.text())
                             payload.offline = true

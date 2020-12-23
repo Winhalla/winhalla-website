@@ -108,6 +108,7 @@ module.exports = {
                 "80%": "80%",
                 "85%": "85%",
                 "90%": "90%",
+                "99%": "99%",
                 "shopItemLarge": "calc(35% - 1.5rem)",
                 "shopItem": "calc(30% - 1.5rem)"
             },

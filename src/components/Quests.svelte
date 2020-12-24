@@ -46,7 +46,7 @@
                     ? days + ":" + hours + ":" + minutes + ":" + seconds
                     : hours + ":" + minutes + ":" + seconds;
             countDown[i].speed =
-                hours >= 6 && days >= 0
+                hours >= 6 || days > 0
                     ? "primary"
                     : hours >= 1
                     ? "accent"

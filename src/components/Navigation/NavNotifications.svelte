@@ -23,9 +23,9 @@
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
-            if(endsIn < 1){
-                data.inGame[i].timer = ""
-            }else{
+            if (endsIn < 1) {
+                data.inGame[i].timer = "";
+            } else {
                 startTimer(endsIn, i);
             }
         });
@@ -48,7 +48,7 @@
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
-
+    //TODO: on peut opti ça enutilisant la data de export let data au lieu de resubscribe pour save de la ram
     counter.subscribe(() => {
         if (data.inGame) {
             if (data.inGame.length !== matchesLength) {
@@ -187,11 +187,12 @@
                 {#if newNotifications}
                     <span class="flex">
                         <span
-                            class="inline-flex animate-ping absolute top-0 right-0 w-2 h-2 rounded-full bg-legendary opacity-75"></span>
+                            class="inline-flex animate-ping absolute top-0
+                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75" />
                         <span
-                            class="inline-flex absolute top-0 right-0 w-2 h-2 rounded-full bg-legendary"></span>
+                            class="inline-flex absolute top-0 right-0 w-2 h-2
+                            rounded-full bg-legendary" />
                     </span>
-
                 {/if}
             </div>
         </div>
@@ -228,7 +229,8 @@
                         {#each data.notifications as notification, i}
                             <button
                                 on:click={() => delNotif(i)}
-                                class="card notification flex items-center relative">
+                                class="card notification flex items-center
+                                relative">
                                 <div class="progress-container">
                                     <p class="ml-2 mr-6 lg:mr-12 text-2xl">
                                         {notification.message}
@@ -246,14 +248,19 @@
                                     py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
-                                <button on:click={() => delNotif(i)}
-                                        class="p-2 absolute top-0 right-0 text-light hover:text-font">
+                                <button
+                                    on:click={() => delNotif(i)}
+                                    class="p-2 absolute top-0 right-0 text-light
+                                    hover:text-font">
                                     <svg
                                         class="w-3 h-3 fill-current "
                                         viewBox="0 0 28 24"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
+                                            d="m24 2.4-2.4-2.4-9.6
+                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
+                                            2.4 2.4 9.6-9.6 9.6 9.6
+                                            2.4-2.4-9.6-9.6z" />
                                     </svg>
                                 </button>
                             </button>

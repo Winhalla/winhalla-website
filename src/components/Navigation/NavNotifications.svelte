@@ -10,6 +10,7 @@
     let opened = false;
     let isDropdownOpen = false;
     let matchesLength;
+
     function handleClick() {
         isDropdownOpen = !isDropdownOpen;
         opened = true;
@@ -48,7 +49,7 @@
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
-    //TODO: on peut opti ça enutilisant la data de export let data au lieu de resubscribe pour save de la ram
+    //TODO: on peut opti ça en utilisant la data de export let data au lieu de resubscribe pour save de la ram
     counter.subscribe(() => {
         if (data.inGame) {
             if (data.inGame.length !== matchesLength) {
@@ -227,10 +228,9 @@
                     <p class="ml-1">Notifications</p>
                     <div>
                         {#each data.notifications as notification, i}
-                            <button
-                                on:click={() => delNotif(i)}
+                            <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
                                 class="card notification flex items-center
-                                relative">
+                                relative" class:cursor-default={notification.id === 2}>
                                 <div class="progress-container">
                                     <p class="ml-2 mr-6 lg:mr-12 text-2xl">
                                         {notification.message}
@@ -263,7 +263,7 @@
                                             2.4-2.4-9.6-9.6z" />
                                     </svg>
                                 </button>
-                            </button>
+                            </a>
                         {/each}
                     </div>
                 </div>

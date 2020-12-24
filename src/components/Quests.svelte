@@ -2,7 +2,7 @@
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
-
+    let countDown = [{}, {}];
     export let data;
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -24,6 +24,55 @@
             return calculatedProgress;
         }
     };
+    function startTimer(duration, i) {
+        let timer = duration,
+            days,
+            hours,
+            minutes,
+            seconds;
+        function calculateTime() {
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
+            days = Math.floor(hours / 24);
+
+            hours = hours - days * 24;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            countDown[i].timer =
+                days != 0
+                    ? days + ":" + hours + ":" + minutes + ":" + seconds
+                    : hours + ":" + minutes + ":" + seconds;
+            countDown[i].speed =
+                hours >= 6 && days >= 0
+                    ? "primary"
+                    : hours >= 1
+                    ? "accent"
+                    : "legendary";
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }
+        calculateTime();
+        setInterval(calculateTime, 1000);
+    }
+    for (let i = 0; i < 2; i++) {
+        let d = new Date(i === 0 ? data.lastDaily : data.lastWeekly);
+        const endsIn = -(
+            (new Date().getTime() -
+                new Date(
+                    d.setHours(d.getHours() + i === 0 ? 24 : 168)
+                ).getTime()) /
+            1000
+        );
+        if (endsIn < 1) {
+            countDown[i] = "";
+        } else {
+            startTimer(endsIn, i);
+        }
+    }
 
     function calculateOrder() {
         //Reorder quests by rarety
@@ -57,10 +106,13 @@
     let isRefreshingQuests = false;
     const handleRefresh = async () => {
         isRefreshingQuests = true;
+
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
-        data = refreshedData.solo;
         calculateOrder();
+        data = refreshedData.solo;
+
+
         isRefreshingQuests = false;
     };
 
@@ -119,15 +171,22 @@
     <div class="container lg:flex mt-7 w-auto">
         <div
             class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
-            <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
-
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
+                <p
+                    class="text-{countDown[0].speed} ml-5 text-3xl leading-none
+                    lg:pt-6">
+                    {countDown[0].timer}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
                                 on:click={() => collect('daily', i)}
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
+                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
+                                max-w-sm mx-auto block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -204,8 +263,15 @@
         </div>
         <div
             class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
-                lg:mt-0">
-            <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+            lg:mt-0">
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+                <p
+                    class="text-{countDown[1].speed} ml-5 text-3xl leading-none
+                    lg:pt-6">
+                    {countDown[1].timer}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">

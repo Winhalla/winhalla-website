@@ -72,7 +72,7 @@
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
     <Nav isScrolling={scrollY > 0} />
 
-    <main class="text-font text-default min-h-screen h-full">
+    <main class="text-font text-default min-h-screen h-full relative">
         <!--Main-->
         <slot class="flex-grow bg-background block-grow" />
     </main>

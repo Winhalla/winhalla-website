@@ -3,6 +3,7 @@
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
 
+    let countDown = [{}, {}];
     export let data;
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -24,6 +25,63 @@
             return calculatedProgress;
         }
     };
+
+    function startTimer(duration, i) {
+        let timer = duration,
+            days,
+            hours,
+            minutes,
+            seconds;
+
+        function calculateTime() {
+            if (--timer < 0) {
+                countDown.finished = true;
+                countDown[i].timer = "Refresh for new quests";
+                return;
+            }
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
+            days = Math.floor(hours / 24);
+
+            hours = hours - days * 24;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            countDown[i].timer =
+                days != 0
+                    ? days + ":" + hours + ":" + minutes + ":" + seconds
+                    : hours + ":" + minutes + ":" + seconds;
+            countDown[i].speed =
+                hours >= 6 || days > 0
+                    ? "primary"
+                    : hours >= 1
+                    ? "accent"
+                    : "legendary";
+
+
+        }
+
+        calculateTime();
+        setInterval(calculateTime, 1000);
+    }
+
+    for (let i = 0; i < 2; i++) {
+        let d = new Date(i === 0 ? data.lastDaily : data.lastWeekly);
+        const endsIn = -(
+            (new Date().getTime() -
+                new Date(
+                    d.setHours(d.getHours() + i === 0 ? 24 : 168)
+                ).getTime()) /
+            1000
+        );
+        if (endsIn < 1) {
+            countDown[i] = "";
+        } else {
+            startTimer(endsIn, i);
+        }
+    }
 
     function calculateOrder() {
         //Reorder quests by rarety
@@ -63,13 +121,12 @@
         calculateOrder();
         data = refreshedData.solo;
 
-
         isRefreshingQuests = false;
     };
 
     async function collect(type, index) {
         await callApi("post", `solo/collect?type=${type}&index=${index}`);
-        counter.set({"refresh":true})
+        counter.set({ refresh: true });
         data.collected[type].push(...data.finished[type].splice(index, 1));
         data = data;
     }
@@ -122,15 +179,22 @@
     <div class="container lg:flex mt-7 w-auto">
         <div
             class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
-            <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
-
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
+                <p
+                    class="text-{countDown[0].speed} ml-5 text-3xl leading-none
+                    lg:pt-6" class:text-xl={countDown[0].finished}>
+                    {#if countDown[0].timer} {countDown[0].timer} {/if}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
                                 on:click={() => collect('daily', i)}
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
+                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
+                                max-w-sm mx-auto block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -140,7 +204,11 @@
                                             viewBox="0 0 27 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                                d="m24
+                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
+                                                1.807-1.807 5.422 5.422
+                                                13.68-13.68 1.811 1.803-15.491
+                                                15.491z" />
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             Click to collect
@@ -160,14 +228,17 @@
                             <div class="relative card quest max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span
-                                        class="text-{calculateRarity(quest.reward, true)}">{quest.reward}$</span>
+                                        class="text-{calculateRarity(quest.reward, true)}">
+                                        {quest.reward}$
+                                    </span>
                                     <div class="progress-container">
                                         <svg
                                             class="fill-current w-4 text-{calculateRarity(quest.reward, true)}"
                                             viewBox="0 0 25 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
+                                                d="m24
+                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             {quest.progress}/{quest.goal}
@@ -187,7 +258,8 @@
                     <div class="pt-5">
                         {#each data.collected.daily as quest}
                             <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                                class="card quest text-disabled italic max-w-sm
+                                mx-auto">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">
@@ -207,15 +279,23 @@
         </div>
         <div
             class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
-                lg:mt-0">
-            <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+            lg:mt-0">
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+                <p
+                    class="text-{countDown[1].speed} ml-5 text-3xl leading-none
+                    lg:pt-6" class:text-xl={countDown[1].finished}>
+                    {#if countDown[1].timer} {countDown[1].timer} {/if}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
                             <button
                                 on:click={() => collect('weekly', i)}
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
+                                class="card quest finished border-2 border-{calculateRarity(quest.reward, false)}
+                                max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -225,7 +305,11 @@
                                             viewBox="0 0 27 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                                d="m24
+                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
+                                                1.807-1.807 5.422 5.422
+                                                13.68-13.68 1.811 1.803-15.491
+                                                15.491z" />
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             Click to collect
@@ -247,14 +331,17 @@
                             <div class="relative card quest max-w-sm mx-auto">
                                 <div class="quest-infos">
                                     <span
-                                        class="text-{calculateRarity(quest.reward, false)}">{quest.reward}$</span>
+                                        class="text-{calculateRarity(quest.reward, false)}">
+                                        {quest.reward}$
+                                    </span>
                                     <div class="progress-container">
                                         <svg
                                             class="fill-current w-4 text-{calculateRarity(quest.reward, false)}"
                                             viewBox="0 0 25 24"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
-                                                d="m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
+                                                d="m24
+                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z" />
                                         </svg>
                                         <p class="ml-2 mr-6 lg:mr-12 text-lg">
                                             {quest.progress}/{quest.goal}
@@ -273,7 +360,8 @@
                     <div class="pt-5">
                         {#each data.collected.weekly as quest}
                             <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                                class="card quest text-disabled italic max-w-sm
+                                mx-auto">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">
@@ -293,7 +381,8 @@
         </div>
     </div>
     <div
-        class="flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4 ml-5 lg:ml-0">
+        class="flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4
+        ml-5 lg:ml-0">
         <RefreshButton
             on:click={() => handleRefresh()}
             isRefreshing={isRefreshingQuests}
@@ -317,7 +406,15 @@
                 viewBox="0 0 576 512">
                 <path
                     fill="currentColor"
-                    d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z" />
+                    d="M569.517 440.013C587.975 472.007 564.806 512 527.94
+                    512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423
+                    23.985c18.467-32.009 64.72-31.951 83.154 0l239.94
+                    416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46
+                    46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418
+                    136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0
+                    11.635-4.982
+                    11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884
+                    0-12.356 5.78-11.981 12.654z" />
             </svg>
             <p class="text-lg ml-3 lg:ml-2 tip-text text-light">
                 Daily and Weekly quests data may take up to 30 minutes to

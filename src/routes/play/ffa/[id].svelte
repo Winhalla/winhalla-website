@@ -267,6 +267,7 @@
     };
 
     let isInfoDropdownOpen = false;
+
     function handleInfoDropdown() {
         isInfoDropdownOpen = !isInfoDropdownOpen;
     }
@@ -436,13 +437,17 @@
                     </div>
                 </div>
             {/if}
-            <div class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 pb-4">
+            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
-                    <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
                         <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
                     </svg>
-                    <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"/></svg>
+                    <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                    </svg>
                 </button>
                 <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
                     <div class="w-68">
@@ -450,16 +455,19 @@
                         <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p>
                     </div>
                     <div class="w-68 ml-12 xl:ml-0">
+                        <p class="text-primary text-lg ">Delay</p>
+                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when
+                            you click on the "REFRESH DATA" button.</p>
+                    </div>
+                    <div class="w-68 ml-12 xl:ml-0">
                         <p class="text-primary text-lg ">Refresh data</p>
                         <p>The other players will see your data updated when you click on the "REFRESH DATA" button.</p>
                     </div>
-                    <div class="w-68 ml-12 xl:ml-0">
-                        <p class="text-primary text-lg ">Delay</p>
-                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when you click on the "REFRESH DATA" button.</p>
-                    </div>
+
                     <div class="w-68 ml-12 xl:ml-0 xl:mr-40">
                         <p class="text-primary text-lg ">Quit</p>
-                        <p>YOu will be able to quit the match when you click on the "QUIT" button, if you still didn't played.</p>
+                        <p>You will be able to quit the match when you click on the "QUIT" button, if you still didn't
+                            played.</p>
                     </div>
                 </div>
             </div>

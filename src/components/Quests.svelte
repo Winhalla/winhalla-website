@@ -2,6 +2,7 @@
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
+
     let countDown = [{}, {}];
     export let data;
     const calculateRarity = (reward, daily) => {
@@ -24,13 +25,20 @@
             return calculatedProgress;
         }
     };
+
     function startTimer(duration, i) {
         let timer = duration,
             days,
             hours,
             minutes,
             seconds;
+
         function calculateTime() {
+            if (--timer < 0) {
+                countDown.finished = true;
+                countDown[i].timer = "Refresh for new quests";
+                return;
+            }
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -52,13 +60,13 @@
                     ? "accent"
                     : "legendary";
 
-            if (--timer < 0) {
-                timer = duration;
-            }
+
         }
+
         calculateTime();
         setInterval(calculateTime, 1000);
     }
+
     for (let i = 0; i < 2; i++) {
         let d = new Date(i === 0 ? data.lastDaily : data.lastWeekly);
         const endsIn = -(
@@ -175,8 +183,8 @@
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
                     class="text-{countDown[0].speed} ml-5 text-3xl leading-none
-                    lg:pt-6">
-                    {countDown[0].timer}
+                    lg:pt-6" class:text-xl={countDown[0].finished}>
+                    {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
             </div>
             <div class="quests-container">
@@ -276,8 +284,8 @@
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
                     class="text-{countDown[1].speed} ml-5 text-3xl leading-none
-                    lg:pt-6">
-                    {countDown[1].timer}
+                    lg:pt-6" class:text-xl={countDown[1].finished}>
+                    {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
             </div>
             <div class="quests-container">

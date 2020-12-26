@@ -157,7 +157,7 @@
         //user = user.steam
         try {
             user = await user;
-            user = user.steam
+            user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
             isMatchEnded = match.finished;
             //Start the countdown
@@ -169,24 +169,27 @@
                     new Date(d.setHours(d.getHours() + 3)).getTime()) /
                 1000
             );
-            if(endsIn < 1){
-                countDown = "Waiting for others to finish (you can start a new game from the play page)"
-            }else{
+            if (endsIn < 1) {
+                countDown = "Waiting for others to finish (you can start a new game from the play page)";
+            } else {
                 startTimer(endsIn);
             }
             counter.set({ "refresh": true });
+
             let socket = io.io(apiUrl);
             socket.on("connection", (status) => {
                 console.log(status);
-                socket.emit("match connection","FFA"+id)
+                socket.emit("match connection", "FFA" + id);
             });
-            socket.on('join match',(status)=>{
-                console.log(status)
-            })
-            socket.on("lobbyUpdate",(value)=>{
-                match = value
-                filterUsers(true)
-            })
+
+            socket.on("join match", (status) => {
+                console.log(status);
+            });
+
+            socket.on("lobbyUpdate", (value) => {
+                match = value;
+                filterUsers(true);
+            });
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
@@ -201,12 +204,12 @@
 
     const filterUsers = (isFromSocket) => {
         //Find user's object
-        if(isFromSocket === false) {
+        if (isFromSocket === false) {
             userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
         } else {
             let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
-            match.players[playerIndex].wins = userPlayer.wins
-            userPlayer = match.players[playerIndex]
+            match.players[playerIndex].wins = userPlayer.wins;
+            userPlayer = match.players[playerIndex];
         }
         //Delete user's object from array.
         players = [...match.players];
@@ -263,6 +266,12 @@
         await callApi("post", `/exitMatch`);
         goto(`/play`);
     };
+
+    let isInfoDropdownOpen = false;
+
+    function handleInfoDropdown() {
+        isInfoDropdownOpen = !isInfoDropdownOpen;
+    }
 </script>
 
 <style>
@@ -331,7 +340,7 @@
         <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
-    <div class="h-full">
+    <div class="h-full  ">
         {#if match}
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
@@ -429,6 +438,40 @@
                     </div>
                 </div>
             {/if}
+            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
+                <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
+                    { !isInfoDropdownOpen ? "Show" : "Hide" } information
+                    <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                    </svg>
+                    <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                    </svg>
+                </button>
+                <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
+                    <div class="w-68">
+                        <p class="text-primary text-lg ">Ranked matches</p>
+                        <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p>
+                    </div>
+                    <div class="w-68 ml-12 xl:ml-0">
+                        <p class="text-primary text-lg ">Delay</p>
+                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when
+                            you click on the "REFRESH DATA" button.</p>
+                    </div>
+                    <div class="w-68 ml-12 xl:ml-0">
+                        <p class="text-primary text-lg ">Refresh data</p>
+                        <p>The other players will see your data updated when you click on the "REFRESH DATA" button.</p>
+                    </div>
+
+                    <div class="w-68 ml-12 xl:ml-0 xl:mr-40">
+                        <p class="text-primary text-lg ">Quit</p>
+                        <p>You will be able to quit the match when you click on the "QUIT" button, if you still didn't
+                            played.</p>
+                    </div>
+                </div>
+            </div>
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

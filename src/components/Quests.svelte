@@ -68,14 +68,8 @@
     }
 
     for (let i = 0; i < 2; i++) {
-        let d = new Date(i === 0 ? data.lastDaily : data.lastWeekly);
-        const endsIn = -(
-            (new Date().getTime() -
-                new Date(
-                    d.setHours(d.getHours() + i === 0 ? 24 : 168)
-                ).getTime()) /
-            1000
-        );
+        let d = i === 0 ? data.lastDaily : data.lastWeekly
+        const endsIn = ((i===0?d+3600000*24:d+3600000*168)-Date.now())/1000
         if (endsIn < 1) {
             countDown[i] = "";
         } else {

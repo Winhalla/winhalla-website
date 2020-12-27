@@ -147,6 +147,9 @@
 </script>
 
 <script>
+    import GameModeCards from "../../components/GameModeCards.svelte";
+    import GuideCard from "../../components/GuideCard.svelte";
+
     export let quests;
     export let error;
 </script>
@@ -184,3 +187,4 @@
         </div>
     </div>
 </div>
+<GuideCard />

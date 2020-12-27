@@ -16,7 +16,7 @@
 {#if isCardVisible}
     <div class="absolute z-50 top-0 bottom-0 left-0 right-0 flex items-center justify-center">
 
-        <div class="p-10 rounded-lg w-1/2 border border-primary bg-background  relative  flex flex-col justify-center">
+        <div class="p-10 pb-7 rounded-lg w-1/2 border border-primary bg-background  relative flex flex-col justify-center">
 
             <button class="absolute top-0 right-0  p-3 text-mid-light hover:text-font" on:click={() => handleClose()}>
                 <svg class="fill-current w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"/></svg>

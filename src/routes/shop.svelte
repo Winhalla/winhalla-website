@@ -116,8 +116,8 @@
 <div class="xl:flex xl:relative pb-16">
     <div>
         {#if packs}
-            <div class="mt-7 lg:mt-12 lg:ml-24 ">
-                <div>
+            <div class="mt-7 lg:mt-12 lg:ml-24">
+                <div class="xl:w-71/100 2xl:w-62/100">
                     <h1 class="text-6xl text-center lg:text-left">
                         Battle pass
                     </h1>

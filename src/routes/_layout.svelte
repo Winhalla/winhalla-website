@@ -2,6 +2,7 @@
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
+    import GameModeCards from "../components/GameModeCards.svelte";
 
     let scrollY = 0;
     //export let segment;
@@ -75,6 +76,7 @@
     <main class="text-font text-default min-h-screen h-full relative">
         <!--Main-->
         <slot class="flex-grow bg-background block-grow" />
+        <!--<GameModeCards page={"play"}/>-->
     </main>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
         <Poll/>

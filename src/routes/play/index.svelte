@@ -187,4 +187,4 @@
         </div>
     </div>
 </div>
-<GuideCard />
+<GuideCard page="ffa" />

@@ -271,6 +271,7 @@
     function handleInfoDropdown() {
         isInfoDropdownOpen = !isInfoDropdownOpen;
     }
+    console.log(players)
 </script>
 
 <style>
@@ -471,8 +472,12 @@
                     </div>
                 </div>
             </div>
+
+
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}
+
+
     </div>
 {/if}

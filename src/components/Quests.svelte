@@ -170,13 +170,13 @@
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
-    <div class="container lg:flex mt-7 w-auto">
+    <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
         <div
-            class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
+            class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
             <div class="lg:flex">
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
-                    class="text-{countDown[0].speed} ml-5 text-3xl leading-none
+                    class="text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
                     lg:pt-6" class:text-xl={countDown[0].finished}>
                     {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
@@ -188,7 +188,7 @@
                             <button
                                 on:click={() => collect('daily', i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
-                                max-w-sm mx-auto block">
+                                max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -219,7 +219,7 @@
                 {#if data.dailyQuests}
                     <div>
                         {#each data.dailyQuests as quest}
-                            <div class="relative card quest max-w-sm mx-auto">
+                            <div class="relative card quest max-w-s mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
                                         class="text-{calculateRarity(quest.reward, true)}">
@@ -253,7 +253,7 @@
                         {#each data.collected.daily as quest}
                             <div
                                 class="card quest text-disabled italic max-w-sm
-                                mx-auto">
+                                mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">
@@ -272,12 +272,12 @@
             </div>
         </div>
         <div
-            class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
-            lg:mt-0">
+            class="ml-5 mr-5 mt-12 md:ml-5 md:mr-0
+            md:mt-0">
             <div class="lg:flex">
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
-                    class="text-{countDown[1].speed} ml-5 text-3xl leading-none
+                    class="text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
                     lg:pt-6" class:text-xl={countDown[1].finished}>
                     {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
@@ -289,7 +289,7 @@
                             <button
                                 on:click={() => collect('weekly', i)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)}
-                                max-w-sm mx-auto">
+                                max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -322,7 +322,7 @@
                 {#if data.weeklyQuests}
                     <div>
                         {#each data.weeklyQuests as quest}
-                            <div class="relative card quest max-w-sm mx-auto">
+                            <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
                                         class="text-{calculateRarity(quest.reward, false)}">
@@ -355,7 +355,7 @@
                         {#each data.collected.weekly as quest}
                             <div
                                 class="card quest text-disabled italic max-w-sm
-                                mx-auto">
+                                mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">

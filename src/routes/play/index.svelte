@@ -1,7 +1,5 @@
 <script context="module">
-    import Quests from "../../components/Quests.svelte";
     import { callApi } from "../../utils/api";
-    import GameModeCard from "../../components/GameModeCards.svelte";
 
     let gameModes = [
         {
@@ -148,6 +146,7 @@
 
 <script>
     import GameModeCards from "../../components/GameModeCards.svelte";
+    import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
 
     export let quests;
@@ -172,9 +171,9 @@
         class="flex flex-col items-center lg:items-start lg:flex-wrap
         lg:flex-row">
         <div
-            class="game-mode-card-container lg:mb-10 lg:mr-15 mt-10 text-center
-            flex flex-col items-center lg:flex-row lg:items-start">
-            <GameModeCard {gameModes} />
+            class="lg:mb-10 lg:mr- mt-10 text-center
+            flex flex-col items-center md:flex-row lg:items-start">
+            <GameModeCards {gameModes} />
         </div>
         <div class="pb-16">
             {#if quests}

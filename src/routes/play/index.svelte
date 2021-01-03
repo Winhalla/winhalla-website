@@ -171,7 +171,7 @@
         class="flex flex-col items-center lg:items-start lg:flex-wrap
         lg:flex-row">
         <div
-            class="lg:mb-10 lg:mr- mt-10 text-center
+            class="lg:mb-10 lg:mr-10 mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
             <GameModeCards {gameModes} />
         </div>
@@ -186,4 +186,5 @@
         </div>
     </div>
 </div>
+
 <GuideCard page="ffa" />

@@ -23,7 +23,7 @@
             }
         }, 1000);
     }*/
-    export async function preload({ params }) {
+    export async function preload({params}) {
         let id = params.id;
         /*let user = await getUser();
         user = user.steam;
@@ -69,16 +69,16 @@
 </script>
 
 <script>
-    import { onMount } from "svelte";
-    import { callApi } from "../../../utils/api";
-    import { goto } from "@sapper/app";
+    import {onMount} from "svelte";
+    import {callApi} from "../../../utils/api";
+    import {goto} from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import { counter } from "../../../components/store";
+    import {counter} from "../../../components/store";
     import io from "socket.io-client";
-    import { apiUrl } from "../../../utils/config";
+    import {apiUrl} from "../../../utils/config";
 
     export let id;
 
@@ -97,54 +97,7 @@
 
     let userPlayer;
     let players;
-    /*const data = {
-        players: [
-            {
-                steamId: "76561198860469702",
-                brawlhallaId: 13465463,
-                username: "WeAreNoobs65",
-                wins: 0,
-                gamesPlayed: 0,
-                legends: "artemis",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-            {
-                steamId: "76561198860469701",
-                brawlhallaId: 13465463,
-                username: "Ghom",
-                wins: 0,
-                gamesPlayed: 0,
-                legends: "wu-shang",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-            {
-                steamId: "76561198860469700",
-                brawlhallaId: 13465463,
-                username: "Felons",
-                wins: 0,
-                gamesPlayed: 0,
-                legends: "petra",
-                "avatarURL": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ef/ef5ba04474789d724a8f24fc4599f38ff435b05f_full.jpg"
-            },
-        ],
-        winners: [
-            {
-                steamId: "76561198860469700",
-                coinsEarned: 4000,
-                multiplier: "x10"
-            },
-            {
-                steamId: "76561198860469701",
-                coinsEarned: 2000,
-                multiplier: "x5"
-            },
-            {
-                steamId: "76561198860469702",
-                coinsEarned: 2000,
-                multiplier: "x10"
-            },
-        ]
-    };*/
+
     let error;
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
@@ -159,6 +112,9 @@
             user = await user;
             user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
+            if (match instanceof Error) {
+                throw match
+            }
             isMatchEnded = match.finished;
             //Start the countdown
 
@@ -174,7 +130,7 @@
             } else {
                 startTimer(endsIn);
             }
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
 
             let socket = io.io(apiUrl);
             socket.on("connection", (status) => {
@@ -193,11 +149,12 @@
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";return
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                }
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";return
+                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";return
             }
+            error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
         }
 
     });
@@ -226,7 +183,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function() {
+        setInterval(function () {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -252,10 +209,10 @@
 
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
         }
         isRefreshingStats = false;
     };
@@ -271,7 +228,6 @@
     function handleInfoDropdown() {
         isInfoDropdownOpen = !isInfoDropdownOpen;
     }
-    console.log(players)
 </script>
 
 <style>
@@ -336,41 +292,41 @@
 </svelte:head>
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
-        <h2 class="lg:text-4xl text-3xl text-center">{error}</h2>
-        <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
+        <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
+        <a href="/play"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
     <div class="h-full  ">
         {#if match}
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners} />
+                <FfaEnd players={match.players} winners={match.winners}/>
             {:else}
                 <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                     <div
-                        class="flex flex-col justify-center lg:flex-row
+                            class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                            class="mode-timer flex justify-center lg:justify-start
+                                class="mode-timer flex justify-center lg:justify-start
                         items-end w-60 ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
-                                class="timer text-primary ml-5 text-3xl leading-none">
+                                    class="timer text-primary ml-5 text-3xl leading-none">
                                 {#if countDown}{countDown}{:else}Loading...{/if}
                             </p>
                         </div>
 
                         <div
-                            class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                                class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
                             <RefreshButton
-                                on:click={() => handleRefresh()}
-                                isRefreshing={isRefreshingStats}
-                                refreshMessage={'Refresh data'} />
+                                    on:click={() => handleRefresh()}
+                                    isRefreshing={isRefreshingStats}
+                                    refreshMessage={'Refresh data'}/>
                             {#if userPlayer.gamesPlayed == 0}
                                 <button
-                                    class="button button-brand quit lg:ml-4 mt-2
+                                        class="button button-brand quit lg:ml-4 mt-2
                                 lg:mt-0"
-                                    on:click={() => handleQuit()}>
+                                        on:click={() => handleQuit()}>
                                     Quit lobby
                                 </button>
                             {/if}
@@ -378,21 +334,21 @@
                     </div>
 
                     <div
-                        class="flex items-center flex-col lg:flex-row lg:items-start
+                            class="flex items-center flex-col lg:flex-row lg:items-start
                     h-full">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">
                                 <img
-                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                    alt={userPlayer.legends}
-                                    class="block" />
+                                        src="/assets/CharactersBanners/{userPlayer.legends}.png"
+                                        alt={userPlayer.legends}
+                                        class="block"/>
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
                                 <div
-                                    class="stats text-2xl bottom-5 text-ultra-light">
+                                        class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
                                         Games played:
                                         <b>{userPlayer.gamesPlayed}</b>
@@ -410,20 +366,20 @@
                         <!--Other Players-->
                         {#if players}
                             <div
-                                class="flex flex-col justify-center lg:justify-start
+                                    class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
                                         <img
-                                            src="/assets/CharactersBanners/{player.legends}.png"
-                                            alt={player.legends}
-                                            class="block" />
+                                                src="/assets/CharactersBanners/{player.legends}.png"
+                                                alt={player.legends}
+                                                class="block"/>
 
                                         <p class="player-name text-3xl">
                                             {player.username}
                                         </p>
                                         <div
-                                            class="stats text-xl bottom-5
+                                                class="stats text-xl bottom-5
                                         text-ultra-light">
                                             <p>
                                                 Games played:
@@ -443,11 +399,11 @@
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
                     <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z"/>
                     </svg>
                     <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"/>
                     </svg>
                 </button>
                 <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
@@ -475,7 +431,7 @@
 
 
         {:else}
-            <Loading data={"Loading game data..."} />
+            <Loading data={"Loading game data..."}/>
         {/if}
 
 

@@ -24,7 +24,10 @@
     async function calculateProperties(value) {
         const tempUserData = await value;
         if (tempUserData.offline) offline = true;
-        console.log(tempUserData);
+        if(tempUserData instanceof Error){
+            if(tempUserData.response) if(tempUserData.response.status === 503) goto("/status")
+            return isUserLoggedIn = "network"
+        }
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
@@ -74,7 +77,6 @@
         width: 1.05rem;
         height: 1.05rem;
     }
-
     .nav-link-container {
         @apply pr-9 flex items-center my-3;
     }
@@ -312,6 +314,8 @@
                             href="/create-account">
                             CREATE ACCOUNT
                         </a>
+                    {:else if isUserLoggedIn === 'network'}
+                        <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}
                         <a
                             class="button-brand button mr-3"

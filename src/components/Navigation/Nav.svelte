@@ -54,8 +54,11 @@
     onMount(async () => {
         try {
             informations = await callApi("get", "/informations");
+            if(informations instanceof Error){
+               throw informations
+            }
         } catch (e) {
-            goto("/status");
+            informations = "network"
         }
         await calculateProperties(user);
     });
@@ -284,14 +287,14 @@
 
                     </div>
                 {/if}
-                <div class="ml-7 mt-5 md:m-0 md:mr-7">
+                <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
+                    {#if informations}
+                        <div class="hidden lg:flex items-center">
+                            <NavAlert data={informations} />
+                        </div>
+                    {/if}
                     {#if isUserLoggedIn === true}
                         <div class="lg:flex lg:items-center">
-                            {#if informations}
-                                <div class="hidden lg:flex items-center">
-                                    <NavAlert data={informations} />
-                                </div>
-                            {/if}
                             {#if user.displayName && user.photos}
                                 <NavAccount
                                     username={user.displayName}

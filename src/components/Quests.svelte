@@ -81,41 +81,41 @@
         error = e
     }
 
-    function calculateOrder() {
+    function calculateOrder(object) {
         //Reorder quests by rarety
-        if (data.dailyQuests) {
-            data.dailyQuests.sort((b, a) => {
+        if (object.dailyQuests) {
+            object.dailyQuests.sort((b, a) => {
                 return a.reward - b.reward;
             });
         }
 
-        if (data.finished && data.finished.daily) {
-            data.finished.daily.sort((b, a) => {
+        if (object.finished && object.finished.daily) {
+            object.finished.daily.sort((b, a) => {
                 return a.reward - b.reward;
             });
         }
 
-        if (data.weeklyQuests) {
-            data.weeklyQuests.sort((b, a) => {
+        if (object.weeklyQuests) {
+            object.weeklyQuests.sort((b, a) => {
                 return a.reward - b.reward;
             });
         }
 
-        if (data.finished && data.finished.weekly) {
-            data.finished.weekly.sort((b, a) => {
+        if (object.finished && object.finished.weekly) {
+            object.finished.weekly.sort((b, a) => {
                 return a.reward - b.reward;
             });
         }
     }
     data = data;
-    calculateOrder();
+    calculateOrder(data);
     let isRefreshingQuests = false;
     const handleRefresh = async () => {
         isRefreshingQuests = true;
 
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
-        calculateOrder();
+        calculateOrder(refreshedData.solo)
         data = refreshedData.solo;
 
         isRefreshingQuests = false;

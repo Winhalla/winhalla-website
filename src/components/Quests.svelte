@@ -34,8 +34,8 @@
             minutes,
             seconds;
 
-        function calculateTime() {
-            if (--timer < 0) {
+        function calculateTime(first) {
+            if (timer <= 0) {
                 countDown.finished = true;
                 countDown[i].timer = "Refresh for new quests";
                 return;
@@ -54,18 +54,23 @@
                 days != 0
                     ? days + ":" + hours + ":" + minutes + ":" + seconds
                     : hours + ":" + minutes + ":" + seconds;
+            if(first !== true){
+                if(countDown[i].timer.includes("NaN") || countDown[i].timer === undefined) {
+                    countDown[i].timer = "Error occured, please refresh page or try again later."
+                    countDown[i].speed = "legendary"
+                    clearInterval(interval)
+                }
+            }
             countDown[i].speed =
                 hours >= 6 || days > 0
                     ? "primary"
                     : hours >= 1
                     ? "accent"
                     : "legendary";
-
-
         }
+        calculateTime(true);
+        let interval = setInterval(calculateTime, 1000);
 
-        calculateTime();
-        setInterval(calculateTime, 1000);
     }
     try {
         for (let i = 0; i < 2; i++) {

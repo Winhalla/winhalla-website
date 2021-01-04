@@ -1,5 +1,5 @@
 <script>
-
+console.log("terms")
 </script>
 
 <svelte:head>

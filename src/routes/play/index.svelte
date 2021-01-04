@@ -10,6 +10,7 @@
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
+
     onMount(async () => {
         gameModes = [
             {
@@ -138,5 +139,5 @@
             </div>
         </div>
     </div>
-    <GuideCard page="ffa" />
+    <GuideCard page="play" />
 {/if}

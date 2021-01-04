@@ -187,4 +187,4 @@
     </div>
 </div>
 
-<GuideCard page="ffa" />
+<GuideCard page="play" />

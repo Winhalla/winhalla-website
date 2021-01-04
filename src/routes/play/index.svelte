@@ -2,14 +2,15 @@
     import GameModeCards from "../../components/GameModeCards.svelte";
     import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
-    import {onMount} from "svelte"
-    import {callApi} from "../../utils/api";
+    import { onMount } from "svelte";
+    import { callApi } from "../../utils/api";
 
     let quests;
     let error;
     let gameModesError;
     let gameModes;
-    let errorDetailsOpen = false
+    let errorDetailsOpen = false;
+
     onMount(async () => {
         gameModes = [
             {
@@ -34,13 +35,14 @@
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-                gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`
+                gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.find(
                     s => s.name === "GAMEMODES STATUS"
                 );
                 gameModesStatus = gameModesStatus.value;
+
                 Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
                         g => g.name === gameModeName.toLowerCase()
@@ -49,42 +51,43 @@
                     gameModes = gameModes;
                 });
             }
+
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) throw quests
-            if (quests instanceof Error && quests.response.status === 403) return
+            if (quests instanceof Error && quests.response.status !== 403) throw quests;
+            if (quests instanceof Error && quests.response.status === 403) return;
             quests = quests.solo;
 
             if (!quests.lastDaily || !quests.lastWeekly) {
                 quests = await callApi("get", "/solo");
-                if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests
+                if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests;
                 quests = quests.solo;
             }
         } catch
             (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)"
-                    return
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    return;
 
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)"
-                    return
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                    return;
 
                 }
             }
-            error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`
+            error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
-    })
+    });
 </script>
 
 <svelte:head>
     <title>Play | Winhalla</title>
     <meta
-            name="description"
-            content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Exchange here your coins into rewards | Winhalla Shop page "/>
+        name="description"
+        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
+        | Exchange here your coins into rewards | Winhalla Shop page " />
 </svelte:head>
 {#if gameModesError && error}
     <div class="w-full content-center lg:mt-60 mt-25">
@@ -111,7 +114,7 @@
         </div>
 
         <div
-                class="flex flex-col items-center lg:items-start lg:flex-wrap
+            class="flex flex-col items-center lg:items-start lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
@@ -120,9 +123,9 @@
                 </div>
             {:else if gameModes}
                 <div
-                        class="lg:mb-10 lg:mr- mt-10 text-center
+                    class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes}/>
+                    <GameModeCards {gameModes} />
                 </div>
             {/if}
             <div class="pb-16">
@@ -131,10 +134,10 @@
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <Quests data={quests}/>
+                    <Quests data={quests} />
                 {/if}
             </div>
         </div>
     </div>
-    <GuideCard page="ffa"/>
+    <GuideCard page="play" />
 {/if}

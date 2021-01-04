@@ -72,10 +72,11 @@
         let interval = setInterval(calculateTime, 1000);
 
     }
+
     try {
         for (let i = 0; i < 2; i++) {
-            let d = i === 0 ? data.lastDaily : data.lastWeekly
-            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000
+            let d = i === 0 ? data.lastDaily : data.lastWeekly;
+            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;
             if (endsIn < 1) {
                 countDown[i] = "";
             } else {
@@ -83,7 +84,7 @@
             }
         }
     } catch (e) {
-        error = e
+        error = e;
     }
 
     function calculateOrder(object) {
@@ -112,6 +113,7 @@
             });
         }
     }
+
     data = data;
     calculateOrder(data);
     let isRefreshingQuests = false;
@@ -120,7 +122,7 @@
 
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
-        calculateOrder(refreshedData.solo)
+        calculateOrder(refreshedData.solo);
         data = refreshedData.solo;
 
         isRefreshingQuests = false;
@@ -179,7 +181,8 @@
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
     {#if error}
-        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might show wierdly. </p>
+        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might show
+            wierdly. </p>
         <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
     {/if}
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
@@ -231,7 +234,7 @@
                 {#if data.dailyQuests}
                     <div>
                         {#each data.dailyQuests as quest}
-                            <div class="relative card quest max-w-s mx-auto lg:mx-0">
+                            <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
                                         class="text-{calculateRarity(quest.reward, true)}">

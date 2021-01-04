@@ -97,7 +97,7 @@ self.addEventListener("fetch", event => {
                         const response = await fetch(event.request);
                         //console.log("network " + event.request.url);
                         if (url.host === "localhost" && (url.pathname !== "/getSolo" && url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
-                        cache.put(event.request, response.clone());
+                        if(response.status >= 200 && response.status <= 299) cache.put(event.request, response.clone());
                         return response;
                     } catch {
                         // If remote doesn't respond then try cache for every somewhat static request

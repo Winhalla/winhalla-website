@@ -5,6 +5,7 @@
 
     let countDown = [{}, {}];
     export let data;
+
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";

@@ -303,7 +303,7 @@
                                         class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
                                         Games played:
-                                        <b>{userPlayer.gamesPlayed}</b>
+                                        <b>{userPlayer.gamesPlayed}</b> 
                                         /8
                                     </p>
                                     <p>

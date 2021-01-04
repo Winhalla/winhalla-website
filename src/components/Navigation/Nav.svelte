@@ -24,7 +24,10 @@
     async function calculateProperties(value) {
         const tempUserData = await value;
         if (tempUserData.offline) offline = true;
-        console.log(tempUserData);
+        if(tempUserData instanceof Error){
+            if(tempUserData.response) if(tempUserData.response.status === 503) goto("/status")
+            return isUserLoggedIn = "network"
+        }
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
@@ -51,8 +54,11 @@
     onMount(async () => {
         try {
             informations = await callApi("get", "/informations");
+            if(informations instanceof Error){
+               throw informations
+            }
         } catch (e) {
-            goto("/status");
+            informations = "network"
         }
         await calculateProperties(user);
     });
@@ -74,7 +80,6 @@
         width: 1.05rem;
         height: 1.05rem;
     }
-
     .nav-link-container {
         @apply pr-9 flex items-center my-3;
     }
@@ -282,14 +287,14 @@
 
                     </div>
                 {/if}
-                <div class="ml-7 mt-5 md:m-0 md:mr-7">
+                <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
+                    {#if informations}
+                        <div class="hidden lg:flex items-center">
+                            <NavAlert data={informations} />
+                        </div>
+                    {/if}
                     {#if isUserLoggedIn === true}
                         <div class="lg:flex lg:items-center">
-                            {#if informations}
-                                <div class="hidden lg:flex items-center">
-                                    <NavAlert data={informations} />
-                                </div>
-                            {/if}
                             {#if user.displayName && user.photos}
                                 <NavAccount
                                     username={user.displayName}
@@ -312,6 +317,8 @@
                             href="/create-account">
                             CREATE ACCOUNT
                         </a>
+                    {:else if isUserLoggedIn === 'network'}
+                        <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}
                         <a
                             class="button-brand button mr-3"

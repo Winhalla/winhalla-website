@@ -9,16 +9,16 @@
 </script>
 
 <script>
-    import {onMount} from "svelte";
-    import {callApi} from "../../../utils/api";
-    import {goto} from "@sapper/app";
+    import { onMount } from "svelte";
+    import { callApi } from "../../../utils/api";
+    import { goto } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import {counter} from "../../../components/store";
+    import { counter } from "../../../components/store";
     import io from "socket.io-client";
-    import {apiUrl} from "../../../utils/config";
+    import { apiUrl } from "../../../utils/config";
 
     export let id;
 
@@ -43,6 +43,9 @@
             user = await user;
             user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
+            if (match instanceof Error) {
+                throw match
+            }
             isMatchEnded = match.finished;
             //Start the countdown
 
@@ -58,7 +61,7 @@
             } else {
                 startTimer(endsIn);
             }
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
 
             let socket = io.io(apiUrl);
             socket.on("connection", (status) => {
@@ -77,11 +80,12 @@
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";return
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                }
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";return
+                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";return
             }
+            error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
         }
 
     });
@@ -110,7 +114,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function () {
+        setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -129,7 +133,6 @@
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {
-        //! err ici ?
         isRefreshingStats = true;
         let winNb = userPlayer.gamesPlayed;
 
@@ -137,10 +140,10 @@
 
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
         }
         isRefreshingStats = false;
     };
@@ -222,8 +225,8 @@
 </svelte:head>
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
-        <h2 class="lg:text-4xl text-3xl text-center">{error}</h2>
-        <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
+        <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
+        <a href="/play"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
     <div class="h-full  ">

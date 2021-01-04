@@ -69,7 +69,7 @@
     }
 
     h3 {
-    //text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4); @apply absolute text-6xl top-24 left-0 right-0 text-shadow-link-hover;
+        @apply absolute text-6xl top-24 left-0 right-0 text-shadow-link-hover;
     }
 
     .stats {
@@ -104,12 +104,13 @@
     }
 
 </style>
+
 {#each gameModes as gameMode}
     {#if gameMode.available}
         <a
             class="game-mode-card block relative shadow-card border
                         border-transparent hover:border-primary
-                        hover:shadow-card-hover mb-10 lg:mb-0 lg:mr-15 relative"
+                        hover:shadow-card-hover mb-10 md:mb-0 md:mr-15 relative"
             href="/play/{gameMode.name}">
 
             <div class="h-full">
@@ -138,7 +139,8 @@
             </div>
         </a>
     {:else}
-        <div class="game-mode-card block relative shadow-card border border-transparent mb-10 lg:mb-0 lg:mr-15 relative">
+        <div
+            class="game-mode-card block relative shadow-card border border-transparent mb-10 md:mb-0 md:mr-0 lg:mr-15 relative">
 
             <div class="h-full locked-gradient">
                 <img

@@ -5,7 +5,7 @@
 
     let countDown = [{}, {}];
     export let data;
-
+    let error;
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";
@@ -67,15 +67,18 @@
         calculateTime();
         setInterval(calculateTime, 1000);
     }
-
-    for (let i = 0; i < 2; i++) {
-        let d = i === 0 ? data.lastDaily : data.lastWeekly
-        const endsIn = ((i===0?d+3600000*24:d+3600000*168)-Date.now())/1000
-        if (endsIn < 1) {
-            countDown[i] = "";
-        } else {
-            startTimer(endsIn, i);
+    try {
+        for (let i = 0; i < 2; i++) {
+            let d = i === 0 ? data.lastDaily : data.lastWeekly
+            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000
+            if (endsIn < 1) {
+                countDown[i] = "";
+            } else {
+                startTimer(endsIn, i);
+            }
         }
+    } catch (e) {
+        error = e
     }
 
     function calculateOrder() {
@@ -104,7 +107,6 @@
             });
         }
     }
-
     data = data;
     calculateOrder();
     let isRefreshingQuests = false;
@@ -171,6 +173,10 @@
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
+    {#if error}
+        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might show wierdly. </p>
+        <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
+    {/if}
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
         <div
             class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">

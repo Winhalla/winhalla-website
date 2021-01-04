@@ -49,7 +49,15 @@
             hours = hours < 10 ? "0" + hours : hours;
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
-
+            let errDetected
+            let vars = [hours,minutes,days,seconds]
+            for(let i=0;i<4;i++) {
+                if(vars[i]==undefined || isNaN(vars[i])) errDetected = true
+            }
+            if (errDetected) {
+                countDown[i].timer = "Oops error :("
+                return countDown[i].speed = "legendary"
+            }
             countDown[i].timer =
                 days != 0
                     ? days + ":" + hours + ":" + minutes + ":" + seconds
@@ -60,8 +68,6 @@
                     : hours >= 1
                     ? "accent"
                     : "legendary";
-
-
         }
 
         calculateTime();

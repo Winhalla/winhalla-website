@@ -2,8 +2,9 @@
     import GameModeCards from "../../components/GameModeCards.svelte";
     import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
-    import { onMount } from "svelte";
-    import { callApi } from "../../utils/api";
+    import {onMount} from "svelte";
+    import {callApi} from "../../utils/api";
+    import Loading from "../../components/Loading.svelte";
 
     let quests;
     let error;
@@ -19,7 +20,7 @@
                 goal:
                     "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
-                available: false
+                available: true
             },
             {
                 name: "2vs2",
@@ -27,7 +28,7 @@
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
                 duration: "<b>20</b> - <b>30</b> minutes",
-                available: false
+                available: true
             }
         ];
 
@@ -85,9 +86,9 @@
 <svelte:head>
     <title>Play | Winhalla</title>
     <meta
-        name="description"
-        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Exchange here your coins into rewards | Winhalla Shop page " />
+            name="description"
+            content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
+        | Exchange here your coins into rewards | Winhalla Shop page "/>
 </svelte:head>
 {#if gameModesError && error}
     <div class="w-full content-center lg:mt-60 mt-25">
@@ -114,7 +115,7 @@
         </div>
 
         <div
-            class="flex flex-col items-center lg:items-start lg:flex-wrap
+                class="flex flex-col items-center lg:items-start lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
@@ -123,9 +124,9 @@
                 </div>
             {:else if gameModes}
                 <div
-                    class="lg:mb-10 lg:mr- mt-10 text-center
+                        class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes} />
+                    <GameModeCards {gameModes}/>
                 </div>
             {/if}
             <div class="pb-16">
@@ -134,10 +135,12 @@
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <Quests data={quests} />
+                    <Quests data={quests}/>
+                {:else}
+                    <Loading type="inline"/>
                 {/if}
             </div>
         </div>
     </div>
-    <GuideCard page="play" />
+
 {/if}

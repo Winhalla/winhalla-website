@@ -79,6 +79,7 @@
     import {counter} from "../../../components/store";
     import io from "socket.io-client";
     import {apiUrl} from "../../../utils/config";
+    import {fly} from "svelte/transition"
 
     export let id;
 
@@ -99,6 +100,7 @@
     let players;
 
     let error;
+    let pushError
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
             user = value.content;
@@ -149,10 +151,13 @@
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";return
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    return
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";return
-                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";return
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                    return
+                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+                return
             }
             error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
         }
@@ -218,9 +223,16 @@
     };
 
     const handleQuit = async () => {
-        console.log("quit");
-        await callApi("post", `/exitMatch`);
-        goto(`/play`);
+        try {
+            const exitStatus = await callApi("post", `/exitMatch`);
+            if (exitStatus instanceof Error) throw exitStatus
+            goto(`/play`);
+        } catch (e) {
+            pushError = e.response.data.message?e.response.data.message:e.response.data?e.response.data.toString():e.toString();
+            setTimeout(() => {
+                pushError = undefined
+            }, 8000)
+        }
     };
 
     let isInfoDropdownOpen = false;
@@ -329,6 +341,13 @@
                                         on:click={() => handleQuit()}>
                                     Quit lobby
                                 </button>
+                                {#if pushError}
+                                    <div class="z-20 absolute right-0 top-5 lg:top-30 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
+                                         transition:fly={{ x:200, duration: 500 }}>
+                                        <h3 class="text-legendary">There was an error exiting the match.</h3>
+                                        <p class="text-light text-base">{pushError}</p>
+                                    </div>
+                                {/if}
                             {/if}
                         </div>
                     </div>

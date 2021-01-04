@@ -93,5 +93,8 @@
       "test.8ea568aa.js",
       "inject_styles.5607aec6.js"
     ]
+  },
+  "legacy_assets": {
+    "main": "client.94999d6d.js"
   }
 }

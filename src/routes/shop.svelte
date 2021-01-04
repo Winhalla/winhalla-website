@@ -37,9 +37,9 @@
             return {featuredItem, seasonPacks, packs};
         } catch (err) {
             if (err.response) {
-                 if (err.response.status === 404) return {error:"<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>"};
+                if (err.response.status === 404) return {error: "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>"};
             }
-            return {error:`<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`}
+            return {error: `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`}
         }
     }
 </script>
@@ -92,11 +92,11 @@
 <svelte:head>
     <title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
-        name="description"
-        content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
+            name="description"
+            content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
         Battle Pass and Season packs| Exchange here your coins into rewards |
-        Winhalla Shop page " />
-    <link rel="canonical" href="https://winhalla.app/shop" />
+        Winhalla Shop page "/>
+    <link rel="canonical" href="https://winhalla.app/shop"/>
 </svelte:head>
 <!--
 {#if bottomItems}
@@ -252,65 +252,66 @@
                                                     .replace(/\-/g, ' ')}
                                             </p>
 
-                                        <div
-                                            class="flex justify-between w-full items-end pb-1">
-                                            <div>
+                                            <div
+                                                    class="flex justify-between w-full items-end pb-1">
                                                 <div>
-                                                    <p class="block mr-1 -mb-2">
-                                                        {pack.description}
-                                                    </p>
+                                                    <div>
+                                                        <p class="block mr-1 -mb-2">
+                                                            {pack.description}
+                                                        </p>
+                                                    </div>
                                                 </div>
+                                                <button
+                                                        disabled={pack.unBuyable}
+                                                        on:click={() => callApi('post', `/buy/${pack.id}`)}
+                                                        class="px-4 py-1 bg-primary rounded">
+                                                    <p class="text-2xl">
+                                                        <b
+                                                                class="mr-1 font-normal">{pack.cost}</b>$
+                                                    </p>
+                                                </button>
                                             </div>
-                                            <button
-                                                disabled={pack.unBuyable}
-                                                on:click={() => callApi('post', `/buy/${pack.id}`)}
-                                                class="px-4 py-1 bg-primary rounded">
-                                                <p class="text-2xl">
-                                                    <b
-                                                        class="mr-1 font-normal">{pack.cost}</b>$
-                                                </p>
-                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                            {/each}
-                        {/if}
+                                {/each}
+                            {/if}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {/if}
-    </div>
-    <div
-        class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
-        <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
-            How does it works ?
-        </h3>
-        <div class="pt-4">
-            <div class="mt-4 flex items-end">
-                <p class="text-4xl leading-none text-accent">1.</p>
-                <p class="text-4xl text-primary ml-2 leading-none">Click</p>
-                <p
-                    class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
-                    Click on the item you want to purchase
-                </p>
-            </div>
-            <div class="mt-4 flex items-end">
-                <p class="text-4xl leading-none text-accent">2.</p>
-                <p class="text-4xl text-primary ml-2 leading-none">Add</p>
-                <p
-                    class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
-                    Add the Winhalla Steam account to your friend list
-                </p>
-            </div>
-            <div class="mt-4 flex items-end">
-                <p class="text-4xl leading-none text-accent">3.</p>
-                <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
-                <p
-                    class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                    You will receive the item you purchased within 1 week to 1 month
-                </p>
+            {/if}
+        </div>
+        <div
+                class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
+            <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
+                How does it works ?
+            </h3>
+            <div class="pt-4">
+                <div class="mt-4 flex items-end">
+                    <p class="text-4xl leading-none text-accent">1.</p>
+                    <p class="text-4xl text-primary ml-2 leading-none">Click</p>
+                    <p
+                            class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
+                        Click on the item you want to purchase
+                    </p>
+                </div>
+                <div class="mt-4 flex items-end">
+                    <p class="text-4xl leading-none text-accent">2.</p>
+                    <p class="text-4xl text-primary ml-2 leading-none">Add</p>
+                    <p
+                            class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
+                        Add the Winhalla Steam account to your friend list
+                    </p>
+                </div>
+                <div class="mt-4 flex items-end">
+                    <p class="text-4xl leading-none text-accent">3.</p>
+                    <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
+                    <p
+                            class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
+                        You will receive the item you purchased within 1 week to 1 month
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{/if}
 <div hidden class="-mb-1"></div>

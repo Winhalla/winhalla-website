@@ -1,7 +1,0 @@
-.shop-item.svelte-9agtho{position:relative}.shop-item.svelte-9agtho::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.6) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.83) 75%,
-                rgba(23, 23, 26, 0.92) 100%
-        )}button.svelte-9agtho:disabled{--tw-bg-opacity:1;background-color:rgba(121, 121, 127, var(--tw-bg-opacity));cursor:not-allowed}

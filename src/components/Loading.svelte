@@ -30,8 +30,9 @@
 </style>
 <script>
     export let data;
+    export let type
 </script>
-<div class="h-screen-90 bg-fixed bg-no-repeat flex items-center justify-center">
+<div class:xl:mt-40={type==="inline"} class:xl:ml-100={type==="inline"} class:h-screen-90={!type} class="bg-fixed bg-no-repeat flex items-center justify-center">
     <div class="pb-20">
         <div class="loader"></div>
         {#if data}

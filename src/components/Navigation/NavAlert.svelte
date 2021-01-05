@@ -19,8 +19,7 @@
         @apply flex justify-between px-4 py-3 mt-2 mb-1 relative overflow-hidden w-full;
     }
 </style>
-{#if data === "network"}
-{:else}
+{#if data !== "network"}
     <div class="relative">
         <div class="flex items-center h-full mr-4 lg:m-0">
             <button

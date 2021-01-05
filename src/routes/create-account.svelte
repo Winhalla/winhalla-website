@@ -12,6 +12,7 @@
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
     import { apiUrl } from "../utils/config";
+    import {fly} from "svelte/transition";
 
     let account;
     let email;
@@ -22,6 +23,7 @@
 
     let accountCreationStep = 0;
     let generatedLink;
+    let pushError;
 
     const onKeyPressLink = () => {
         setTimeout(async () => {
@@ -87,13 +89,20 @@
             } catch (err) {
                 console.log(err);
             }
-            generatedLink = await callApi(
-                "post",
-                `/auth/createAccount?email=${email}&linkId=${linkId}`
-            );
-            accountCreationStep++;
-
-            counter.set({ "refresh": true });
+            try {
+                generatedLink = await callApi(
+                    "post",
+                    `/auth/createAccount?email=${email}&linkId=${linkId}`
+                );
+                if(generatedLink instanceof Error) throw generatedLink
+                accountCreationStep++;
+                counter.set({"refresh": true});
+            } catch (e) {
+                pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
+                setTimeout(() => {
+                    pushError = undefined
+                }, 8000)
+            }
 
         }
     }
@@ -177,6 +186,13 @@
         get a Battle Pass and Mammoth Coins FOR FREE" />
 </svelte:head>
 <div>
+    {#if pushError}
+        <div class="z-20 absolute right-30 top-5 lg:top-50 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
+             transition:fly={{ x:200, duration: 500 }}>
+            <h3 class="text-legendary">There was an error creating your account.</h3>
+            <p class="text-light text-base">{pushError}</p>
+        </div>
+    {/if}
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}
             <div class="flex flex-col justify-center px-5 md:p-0">

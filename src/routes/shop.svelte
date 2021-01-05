@@ -310,6 +310,37 @@
                         You will receive the item you purchased within 1 week to 1 month
                     </p>
                 </div>
+                <div class="mt-40">
+                <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
+                    Lottery
+                </h3>
+                <div class="pt-4">
+                    <div class="mt-4 flex items-end">
+                        <p class="text-4xl leading-none text-accent">1.</p>
+                        <p class="text-4xl text-primary ml-2 leading-none"><br>Buy a ticket</p>
+                        <p
+                                class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
+                            A ticket will give you a chance to win the prize you have chosen.
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-end">
+                        <p class="text-4xl leading-none text-accent">2.</p>
+                        <p class="text-4xl text-primary ml-2 leading-none">Multiple tickets</p>
+                        <p
+                                class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
+                            The more tickets you buy, the more chances to win you have !
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-end">
+                        <p class="text-4xl leading-none text-accent">3.</p>
+                        <p class="text-4xl text-primary ml-2 leading-none">Win</p>
+                        <p
+                                class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
+                            If you win a prize, an email will be sent to the adress you specified when you created the account
+                        </p>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
     </div>

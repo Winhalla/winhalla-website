@@ -84,7 +84,7 @@
 </script>
 
 <svelte:head>
-    <title>Play | Winhalla</title>
+    <title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
             name="description"
             content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!

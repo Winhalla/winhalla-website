@@ -1,7 +1,10 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
+    import Footer from "../components/Footer.svelte";
+    import GameModeCards from "../components/GameModeCards.svelte";
 
+    let scrollY = 0;
     //export let segment;
 </script>
 
@@ -18,7 +21,7 @@
     body {
         margin: 0;
         font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         font-size: 14px;
         line-height: 1.5;
         color: #333;
@@ -62,17 +65,23 @@
 <Tailwindcss />
 
 <svelte:head>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-        rel="stylesheet" />
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
 </svelte:head>
 
-<div class="font w-full min-h-screen h-full flex flex-col">
-    <Nav />
+<svelte:window bind:scrollY={scrollY} />
+<div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
+    <Nav isScrolling={scrollY > 0} />
 
-    <main class="bg-background text-font text-default min-h-screen h-full">
-        <slot class="flex-grow bg-background" />
+    <main class="text-font text-default min-h-screen h-full relative">
+        <!--Main-->
+        <slot class="flex-grow bg-background block-grow" />
+        <!--<GameModeCards page={"play"}/>-->
     </main>
+    <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
+        <Poll/>
+    </div>-->
+
+    <!--Footer-->
+    <Footer />
 </div>

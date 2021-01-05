@@ -6,11 +6,13 @@
 </script>
 
 <script>
+    import { counter } from "../components/store";
+
     export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
     import { apiUrl } from "../utils/config";
-    import { goto } from "@sapper/app";
+    import {fly} from "svelte/transition";
 
     let account;
     let email;
@@ -21,6 +23,7 @@
 
     let accountCreationStep = 0;
     let generatedLink;
+    let pushError;
 
     const onKeyPressLink = () => {
         setTimeout(async () => {
@@ -60,10 +63,23 @@
         }, 1);
     };
     if (link && link != "") onKeyPressLink();
-    onMount(async () => {
-        account = await callApi("get", "/account");
-        if (account.user) goto("/");
-    });
+    onMount(()=>{
+        let unsub = counter.subscribe((value) => {
+            let user = value.content;
+            if (user.then) {
+                user.then((values) => {
+                    if (values.user) {
+                        goto("/");
+                    }
+                });
+            } else if (user) {
+                if (!user.user) {
+                    goto("/");
+                }
+            }
+        });
+        unsub()
+    })
 
     async function handleClick() {
         if (accountCreationStep == 0) {
@@ -73,14 +89,26 @@
             } catch (err) {
                 console.log(err);
             }
-            generatedLink = await callApi(
-                "post",
-                `/auth/createAccount?email=${email}&linkId=${linkId}`
-            );
-            accountCreationStep++;
+            try {
+                generatedLink = await callApi(
+                    "post",
+                    `/auth/createAccount?email=${email}&linkId=${linkId}`
+                );
+                if(generatedLink instanceof Error) throw generatedLink
+                accountCreationStep++;
+                counter.set({"refresh": true});
+            } catch (e) {
+                pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
+                setTimeout(() => {
+                    pushError = undefined
+                }, 8000)
+            }
+
         }
     }
+
     import { tick } from "svelte";
+    import { goto } from "@sapper/app";
 
     /*let valueCopy = null;
     export let value = null;
@@ -154,15 +182,24 @@
     <title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
         name="description"
-        content="This is where all starts | Create a Winhalla account now and get a Battle Pass and Mammoth Coins FOR FREE" />
+        content="This is where all starts | Create a Winhalla account now and
+        get a Battle Pass and Mammoth Coins FOR FREE" />
 </svelte:head>
 <div>
+    {#if pushError}
+        <div class="z-20 absolute right-30 top-5 lg:top-50 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
+             transition:fly={{ x:200, duration: 500 }}>
+            <h3 class="text-legendary">There was an error creating your account.</h3>
+            <p class="text-light text-base">{pushError}</p>
+        </div>
+    {/if}
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}
             <div class="flex flex-col justify-center px-5 md:p-0">
                 <div class="text-center md:text-left mt-7 md:mt-12">
                     <h1
-                        class="text-6xl mb-6 md:mb-8 leading-snug md:leading-normal">
+                        class="text-6xl mb-6 md:mb-8 leading-snug
+                        md:leading-normal">
                         Create your account
                     </h1>
                 </div>
@@ -294,13 +331,15 @@
             <div class="flex flex-col items-center px-5">
                 <div class="text-center mt-7 lg:mt-12">
                     <h1
-                        class="text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal">
+                        class="text-6xl mb-8 lg:mb-8 leading-snug
+                        lg:leading-normal">
                         Share your affiliate link
                     </h1>
                 </div>
                 <div class="flex flex-col md:flex-row items-center">
                     <div
-                        class="card py-8 px-6 text-center w-64 h-78 mb-6 md:mb-0 md:mr-12">
+                        class="card py-8 px-6 text-center w-64 h-78 mb-6 md:mb-0
+                        md:mr-12">
                         <p class="text-6xl mt-6">You</p>
                         <p class="leading-7 mt-13">
                             will get
@@ -312,7 +351,8 @@
                             with
                             <u>your</u>
                             link
-                            <b>wins</b>, for one month!
+                            <b>wins</b>
+                            , for one month!
                         </p>
                     </div>
                     <div class="flex items-center md:block">
@@ -320,36 +360,50 @@
                             <svg
                                 class="w-4 fill-current text-accent -mr-3"
                                 viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m19.2 2.43-2.422-2.43-11.978 12 11.978 12 2.422-2.43-9.547-9.57z" /></svg>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m19.2 2.43-2.422-2.43-11.978 12 11.978 12
+                                    2.422-2.43-9.547-9.57z" />
+                            </svg>
                             <div class="h-2px bg-accent w-40" />
                             <svg
                                 class="w-4 fill-current text-accent -ml-3"
                                 viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" /></svg>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m4.8 21.57 2.422 2.43
+                                    11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                            </svg>
                         </div>
                         <div class="flex flex-col md:hidden items-center">
                             <svg
                                 class="w-4 fill-current text-accent -mb-3"
                                 viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" /></svg>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m21.57 19.2 2.43-2.422-12-11.978-12
+                                    11.978 2.43 2.422 9.57-9.547z" />
+                            </svg>
                             <div class="w-2px bg-accent h-16" />
                             <svg
                                 class="w-4 fill-current text-accent -mt-3"
                                 viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"><path
-                                    d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" /></svg>
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m2.43 4.8-2.43 2.422 12 11.978
+                                    12-11.978-2.43-2.422-9.57 9.547z" />
+                            </svg>
                         </div>
 
                         <p
-                            class="text-center text-extra-light text-lg ml-4 md:ml-0">
+                            class="text-center text-extra-light text-lg ml-4
+                            md:ml-0">
                             Everyone wins!
                         </p>
                     </div>
                     <div
-                        class="card py-8 px-6 text-center w-64 h-78 mt-6 lg:mt-0 md:ml-12">
+                        class="card py-8 px-6 text-center w-64 h-78 mt-6 lg:mt-0
+                        md:ml-12">
                         <p class="text-6xl">Each person</p>
                         <p class="leading-7 mt-4">
                             that will
@@ -359,7 +413,8 @@
                             link will get
                             <b>20%</b>
                             of reward
-                            <b>boost</b>, for one month!
+                            <b>boost</b>
+                            , for one month!
                         </p>
                     </div>
                 </div>
@@ -370,14 +425,27 @@
                         class="text-background bg-font py-4 px-4 mt-14 flex items-center rounded">
                         <p class="leading-none">{generatedLink}</p>
                         <svg
-                            class="fill-current text-primary w-10 md:w-5 ml-1 lg:ml-4  lg:block"
+                            class="fill-current text-primary w-10 md:w-5 ml-1
+                            lg:ml-4 lg:block"
                             viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"><path
-                                d="m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z" />
+                            xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z" />
+                                d="m12.922 16.587-3.671 3.671c-.693.645-1.626
+                                1.041-2.651 1.041-2.152
+                                0-3.896-1.744-3.896-3.896 0-1.025.396-1.958
+                                1.043-2.654l-.002.002
+                                3.671-3.671c.212-.23.341-.539.341-.878
+                                0-.717-.582-1.299-1.299-1.299-.339
+                                0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108
+                                1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494
+                                6.494 6.494 1.738 0 3.316-.683
+                                4.482-1.795l-.003.002
+                                3.671-3.671c.212-.23.341-.539.341-.878
+                                0-.717-.582-1.299-1.299-1.299-.339
+                                0-.647.13-.879.342l.001-.001z" />
                             <path
-                                d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" /></svg>
+                                d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" />
+                        </svg>
                     </button>
                 </div>
 
@@ -385,10 +453,11 @@
                     You will be able to
                     <b class="accent">access your link</b>
                     by clicking on
-                    <b class="accent">your profile</b>!
+                    <b class="accent">your profile</b>
+                    !
                 </p>
                 <a
-                    href="{apiUrl}/auth/redirect-after-account"
+                    href="/play"
                     class="button button-brand mt-10 block mx-auto mb-6 md:mb-0">
                     Finish
                 </a>

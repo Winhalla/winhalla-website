@@ -1,0 +1,103 @@
+{
+  "bundler": "rollup",
+  "shimport": "2.0.4",
+  "assets": {
+    "main": "client.cf17be4f.js"
+  },
+  "css": {
+    "main": [
+      "client-925341a3.css"
+    ]
+  },
+  "dependencies": {
+    "index.svelte": [
+      "index.a82f1a97.js",
+      "inject_styles.5607aec6.js",
+      "index-05a5af07.css"
+    ],
+    "create-account.svelte": [
+      "create-account.403364f3.js",
+      "index.ff7bd4a9.js",
+      "inject_styles.5607aec6.js",
+      "create-account-bfc049a0.css"
+    ],
+    "change-email.svelte": [
+      "change-email.cc23c926.js",
+      "inject_styles.5607aec6.js",
+      "change-email-346ded2f.css"
+    ],
+    "contact.svelte": [
+      "contact.48660105.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "offline.svelte": [
+      "offline.f36ce069.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "privacy.svelte": [
+      "privacy.953d87eb.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "status.svelte": [
+      "status.9e44ae58.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "about.svelte": [
+      "about.1b3d1aa4.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "terms.svelte": [
+      "terms.c5cd7384.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "tests.svelte": [
+      "tests.9abe6019.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "help.svelte": [
+      "help.c7496064.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "link/[id].svelte": [
+      "[id].56c93358.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "play/index.svelte": [
+      "index.af364e71.js",
+      "RefreshButton.89c22edc.js",
+      "Loading.78d689cf.js",
+      "inject_styles.5607aec6.js",
+      "RefreshButton-cddd02f2.css",
+      "Loading-6d3e7c1c.css",
+      "index-7f298dba.css"
+    ],
+    "play/ffa/index.svelte": [
+      "index.0f9c5b0f.js",
+      "Loading.78d689cf.js",
+      "inject_styles.5607aec6.js",
+      "Loading-6d3e7c1c.css"
+    ],
+    "play/ffa/[id].svelte": [
+      "[id].c88ab33d.js",
+      "index.ff7bd4a9.js",
+      "RefreshButton.89c22edc.js",
+      "Loading.78d689cf.js",
+      "inject_styles.5607aec6.js",
+      "RefreshButton-cddd02f2.css",
+      "Loading-6d3e7c1c.css",
+      "[id]-8fe545c6.css"
+    ],
+    "shop.svelte": [
+      "shop.4d52c904.js",
+      "inject_styles.5607aec6.js",
+      "shop-948a85e0.css"
+    ],
+    "test.svelte": [
+      "test.8cac6d98.js",
+      "inject_styles.5607aec6.js"
+    ]
+  },
+  "legacy_assets": {
+    "main": "client.08a0517b.js"
+  }
+}

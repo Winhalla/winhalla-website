@@ -2,17 +2,20 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "https://api-dot-winhalla.appspot.com"
+    baseURL: "https://api.winhalla.app"
 });
 
 const callApi = async (method, url, data) => {
-    const res = await axiosInstance({
-        method: method,
-        url: url,
-        data: data
-    });
-
-    return res.data;
+    try {
+        const res = await axiosInstance({
+            method: method,
+            url: url,
+            data: data
+        });
+        return res.data;
+    }catch (e) {
+        return e
+    }
 };
 
 const getUser = async () => {

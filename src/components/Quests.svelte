@@ -1,9 +1,11 @@
 <script>
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
+    import { counter } from "./store";
 
+    let countDown = [{}, {}];
     export let data;
-    console.log(data);
+    let error;
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";
@@ -25,44 +27,111 @@
         }
     };
 
-    //Reorder quests by rarety
-    if (data.dailyQuests) {
-        data.dailyQuests.sort((b, a) => {
-            return a.reward - b.reward;
-        });
+    function startTimer(duration, i) {
+        let timer = duration,
+            days,
+            hours,
+            minutes,
+            seconds;
+
+        function calculateTime() {
+            if (--timer < 0) {
+                countDown.finished = true;
+                countDown[i].timer = "Refresh for new quests";
+                return;
+            }
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
+            days = Math.floor(hours / 24);
+
+            hours = hours - days * 24;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            let errDetected
+            let vars = [hours,minutes,days,seconds]
+            for(let i=0;i<4;i++) {
+                if(vars[i]==undefined || isNaN(vars[i])) errDetected = true
+            }
+            if (errDetected) {
+                countDown[i].timer = "Oops error :("
+                return countDown[i].speed = "legendary"
+            }
+            countDown[i].timer =
+                days != 0
+                    ? days + ":" + hours + ":" + minutes + ":" + seconds
+                    : hours + ":" + minutes + ":" + seconds;
+            countDown[i].speed =
+                hours >= 6 || days > 0
+                    ? "primary"
+                    : hours >= 1
+                    ? "accent"
+                    : "legendary";
+        }
+
+        calculateTime();
+        setInterval(calculateTime, 1000);
     }
 
-    if (data.finished && data.finished.daily) {
-        data.finished.daily.sort((b, a) => {
-            return a.reward - b.reward;
-        });
+    try {
+        for (let i = 0; i < 2; i++) {
+            let d = i === 0 ? data.lastDaily : data.lastWeekly;
+            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;
+            if (endsIn < 1) {
+                countDown[i] = "";
+            } else {
+                startTimer(endsIn, i);
+            }
+        }
+    } catch (e) {
+        error = e;
     }
 
-    if (data.weeklyQuests) {
-        data.weeklyQuests.sort((b, a) => {
-            return a.reward - b.reward;
-        });
+    function calculateOrder(object) {
+        //Reorder quests by rarety
+        if (object.dailyQuests) {
+            object.dailyQuests.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (object.finished && object.finished.daily) {
+            object.finished.daily.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (object.weeklyQuests) {
+            object.weeklyQuests.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
+
+        if (object.finished && object.finished.weekly) {
+            object.finished.weekly.sort((b, a) => {
+                return a.reward - b.reward;
+            });
+        }
     }
 
-    if (data.finished && data.finished.weekly) {
-        data.finished.weekly.sort((b, a) => {
-            return a.reward - b.reward;
-        });
-    }
-
+    data = data;
+    calculateOrder(data);
     let isRefreshingQuests = false;
     const handleRefresh = async () => {
         isRefreshingQuests = true;
 
         const refreshedData = await callApi("get", "solo");
         console.log(refreshedData);
+        calculateOrder(refreshedData.solo);
         data = refreshedData.solo;
 
         isRefreshingQuests = false;
     };
-    function collect(type, index) {
-        callApi("post", `solo/collect?type=${type}&index=${index}`);
 
+    async function collect(type, index) {
+        await callApi("post", `solo/collect?type=${type}&index=${index}`);
+        counter.set({ "refresh": true });
         data.collected[type].push(...data.finished[type].splice(index, 1));
         data = data;
     }
@@ -112,18 +181,30 @@
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
-    <div class="container lg:flex mt-7 w-auto">
+    {#if error}
+        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might show
+            wierdly. </p>
+        <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
+    {/if}
+    <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
         <div
-            class="daily-container ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
-            <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
-
+            class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
+                <p
+                    class="text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
+                    lg:pt-6" class:text-xl={countDown[0].finished}>
+                    {#if countDown[0].timer} {countDown[0].timer} {/if}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
                                 on:click={() => collect('daily', i)}
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)} max-w-sm mx-auto block">
+                                class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
+                                max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -150,7 +231,7 @@
                 {#if data.dailyQuests}
                     <div>
                         {#each data.dailyQuests as quest}
-                            <div class="relative card quest max-w-sm mx-auto">
+                            <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
                                         class="text-{calculateRarity(quest.reward, true)}">{quest.reward}$</span>
@@ -180,7 +261,7 @@
                     <div class="pt-5">
                         {#each data.collected.daily as quest}
                             <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                                class="card quest text-disabled italic max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">
@@ -199,16 +280,23 @@
             </div>
         </div>
         <div
-            class="weekly-container ml-5 mr-5 mt-12 md:ml-10 md:mr-10 lg:mr-0
-                lg:mt-0">
-            <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+            class="ml-5 mr-5 mt-12 md:ml-5 md:mr-0
+            md:mt-0">
+            <div class="lg:flex">
+                <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
+                <p
+                    class="text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
+                    lg:pt-6" class:text-xl={countDown[1].finished}>
+                    {#if countDown[1].timer} {countDown[1].timer} {/if}
+                </p>
+            </div>
             <div class="quests-container">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
                             <button
                                 on:click={() => collect('weekly', i)}
-                                class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto">
+                                class="card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span>Click to collect</span>
                                     <div class="progress-container">
@@ -237,7 +325,7 @@
                 {#if data.weeklyQuests}
                     <div>
                         {#each data.weeklyQuests as quest}
-                            <div class="relative card quest max-w-sm mx-auto">
+                            <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
                                         class="text-{calculateRarity(quest.reward, false)}">{quest.reward}$</span>
@@ -266,7 +354,7 @@
                     <div class="pt-5">
                         {#each data.collected.weekly as quest}
                             <div
-                                class="card quest text-disabled italic max-w-sm mx-auto">
+                                class="card quest text-disabled italic max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <div class="progress-container">
                                         <p class="mr-6 lg:mr-12 text-lg">
@@ -319,3 +407,4 @@
         </div>
     </div>
 </div>
+<div hidden class="bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90"></div>

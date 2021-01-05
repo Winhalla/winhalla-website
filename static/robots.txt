@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /feltrom
+Disallow: /play/ffa
+Sitemap: https://winhalla.app/sitemap.xml

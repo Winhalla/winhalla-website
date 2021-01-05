@@ -16,3 +16,5 @@
 # Node.js dependencies:
 node_modules/
 __sapper__/dev/
+.idea
+.vscode

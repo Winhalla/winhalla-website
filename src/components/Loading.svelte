@@ -28,10 +28,17 @@
         }
     }
 </style>
-
-<div class="h-screen-90 bg-fixed bg-no-repeat flex items-center justify-center">
+<script>
+    export let data;
+    export let type
+</script>
+<div class:xl:mt-40={type==="inline"} class:xl:ml-100={type==="inline"} class:h-screen-90={!type} class="bg-fixed bg-no-repeat flex items-center justify-center">
     <div class="pb-20">
         <div class="loader"></div>
-        <h2 class="text-center text-3xl font-bold pt-4">Loading...</h2>
+        {#if data}
+            <h2 class="text-center text-3xl font-bold pt-4">{data}</h2>
+        {:else}
+            <h2 class="text-center text-3xl font-bold pt-4">Loading...</h2>
+        {/if}
     </div>
 </div>

@@ -11,8 +11,9 @@
     export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
+    import { goto } from "@sapper/app";
     import { apiUrl } from "../utils/config";
-    import {fly} from "svelte/transition";
+    import { fly } from "svelte/transition";
 
     let account;
     let email;
@@ -63,7 +64,7 @@
         }, 1);
     };
     if (link && link != "") onKeyPressLink();
-    onMount(()=>{
+    onMount(() => {
         let unsub = counter.subscribe((value) => {
             let user = value.content;
             if (user.then) {
@@ -78,8 +79,8 @@
                 }
             }
         });
-        unsub()
-    })
+        unsub();
+    });
 
     async function handleClick() {
         if (accountCreationStep == 0) {
@@ -94,23 +95,23 @@
                     "post",
                     `/auth/createAccount?email=${email}&linkId=${linkId}`
                 );
-                if(generatedLink instanceof Error) throw generatedLink
+                if (generatedLink instanceof Error) throw generatedLink;
                 accountCreationStep++;
-                counter.set({"refresh": true});
+                counter.set({ "refresh": true });
             } catch (e) {
                 pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
                 setTimeout(() => {
-                    pushError = undefined
-                }, 8000)
+                    pushError = undefined;
+                }, 8000);
             }
 
         }
     }
 
+    /*
     import { tick } from "svelte";
-    import { goto } from "@sapper/app";
 
-    /*let valueCopy = null;
+    let valueCopy = null;
     export let value = null;
     let areaDom;
     async function copy() {
@@ -187,11 +188,17 @@
 </svelte:head>
 <div>
     {#if pushError}
-        <div class="z-20 absolute right-30 top-5 lg:top-50 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
-             transition:fly={{ x:200, duration: 500 }}>
-            <h3 class="text-legendary">There was an error creating your account.</h3>
-            <p class="text-light text-base">{pushError}</p>
+
+        <div class="px-5    w-full lg:w-auto   absolute left-0 lg:left-auto lg:right-0 2xl:right-30 z-20 top-5 lg:top-50 xl:mr-6">
+            <div
+                class="w-full lg:w-auto h-auto  p-5 bg-background border rounded-lg border-legendary"
+                transition:fly={{ x:200, duration: 400 }}>
+                <h3 class="text-legendary">There was an error creating your account.</h3>
+                <p class="text-light text-base">{pushError}</p>
+            </div>
         </div>
+
+
     {/if}
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}

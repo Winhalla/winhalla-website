@@ -407,4 +407,4 @@
         </div>
     </div>
 </div>
-<div hidden class="bg-epic text-epic bg-legendary text-legendary"></div>
+<div hidden class="bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90"></div>

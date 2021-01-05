@@ -7,7 +7,7 @@
 
 <script>
     import { counter } from "../components/store";
-
+    import Error from "../components/ErrorAlert.svelte"
     export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
@@ -188,17 +188,7 @@
 </svelte:head>
 <div>
     {#if pushError}
-
-        <div class="px-5    w-full lg:w-auto   absolute left-0 lg:left-auto lg:right-0 2xl:right-30 z-20 top-5 lg:top-50 xl:mr-6">
-            <div
-                class="w-full lg:w-auto h-auto  p-5 bg-background border rounded-lg border-legendary"
-                transition:fly={{ x:200, duration: 400 }}>
-                <h3 class="text-legendary">There was an error creating your account.</h3>
-                <p class="text-light text-base">{pushError}</p>
-            </div>
-        </div>
-
-
+        <Error pushError={pushError} message="There was an error creating your account"  type="createAccount"/>
     {/if}
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}

@@ -11,11 +11,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-            to bottom,
-            rgba(23, 23, 26, 0.3) 0%,
-            rgba(23, 23, 26, 0.4),
-            rgba(23, 23, 26, 0.6) 75%,
-            rgba(23, 23, 26, 1) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.3) 0%,
+                rgba(23, 23, 26, 0.4),
+                rgba(23, 23, 26, 0.6) 75%,
+                rgba(23, 23, 26, 1) 100%
         );
     }
 

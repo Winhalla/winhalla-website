@@ -1,0 +1,7 @@
+.video-container.svelte-a6l51s::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.3) 0%,
+                rgba(23, 23, 26, 0.4),
+                rgba(23, 23, 26, 0.6) 75%,
+                rgba(23, 23, 26, 1) 100%
+        )}@keyframes svelte-a6l51s-arrow{0%{transform:translateY(0rem)}100%{transform:translateY(0.55rem)}}.arrow-svg.svelte-a6l51s{animation:svelte-a6l51s-arrow 0.8s infinite alternate ease-in-out}.cards.svelte-a6l51s{height:calc(100% + 5rem)}

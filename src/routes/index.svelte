@@ -41,8 +41,8 @@
 <svelte:head>
     <title>Play Brawlhalla. Earn rewards. - Winhalla</title>
     <meta
-        name="description"
-        content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,
+            name="description"
+            content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,
         Mammoth Coins, Season Packs and more! | Winhalla home page" />
 
     <link rel="canonical" href="https://winhalla.app" />

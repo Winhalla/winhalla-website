@@ -1,5 +1,5 @@
 <svelte:head>
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
+    <script async src="http://localhost:3000/adplayerpro.js"></script>
 
 </svelte:head>
 <div>

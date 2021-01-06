@@ -1,9 +1,9 @@
 <svelte:head>
-    <script async src="http://localhost:3000/adplayerpro.js"></script>
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 
 </svelte:head>
 <div>
-
+    <button class="button" onclick="playAd()">Play ad</button>
 </div>
 <div>
     <script data-playerPro="current">
@@ -32,6 +32,5 @@
                 init: init
             });
         }
-        playAd()
     </script>
 </div>

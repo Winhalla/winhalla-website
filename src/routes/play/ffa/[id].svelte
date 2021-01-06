@@ -80,6 +80,7 @@
     import io from "socket.io-client";
     import {apiUrl} from "../../../utils/config";
     import {fly} from "svelte/transition"
+    import ErrorAlert from "../../../components/ErrorAlert.svelte";
 
     export let id;
 
@@ -228,7 +229,7 @@
             if (exitStatus instanceof Error) throw exitStatus
             goto(`/play`);
         } catch (e) {
-            pushError = e.response.data.message?e.response.data.message:e.response.data?e.response.data.toString():e.toString();
+            pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
             setTimeout(() => {
                 pushError = undefined
             }, 8000)
@@ -342,11 +343,7 @@
                                     Quit lobby
                                 </button>
                                 {#if pushError}
-                                    <div class="z-20 absolute right-0 top-5 lg:top-30 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
-                                         transition:fly={{ x:200, duration: 500 }}>
-                                        <h3 class="text-legendary">There was an error exiting the match.</h3>
-                                        <p class="text-light text-base">{pushError}</p>
-                                    </div>
+                                    <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
                                 {/if}
                             {/if}
                         </div>

@@ -1,12 +1,14 @@
 <script>
-    import { callApi } from "../utils/api.js";
-    import { onMount } from "svelte";
-    import { goto } from "@sapper/app";
-    import { counter } from "../components/store";
+    import {callApi} from "../utils/api.js";
+    import {onMount} from "svelte";
+    import {goto} from "@sapper/app";
+    import {counter} from "../components/store";
+    import ErrorAlert from "../components/ErrorAlert.svelte";
 
     let account;
     let email;
     let valid = false;
+    let pushError;
 
     function onKeyPress() {
         setTimeout(async () => {
@@ -19,7 +21,7 @@
     }
 
     let user;
-    onMount(()=>{
+    onMount(() => {
         let unsub = counter.subscribe(async (value) => {
             user = value.content
             if (user.then) {
@@ -39,31 +41,105 @@
 
 
     async function onClick() {
-        await callApi("post", `/auth/changeEmail?email=${email}`);
-        goto("/");
+        try {
+            const changeEmailStatus = await callApi("patch", `/auth/changeEmail?email=${email}`);
+            if(changeEmailStatus instanceof Error) throw changeEmailStatus
+            goto("/");
+        } catch (e) {
+            pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
+            setTimeout(() => {
+                pushError = undefined;
+            }, 8000);
+        }
     }
 </script>
+
+<svelte:head>
+    <title>Change email | Winhalla</title>
+</svelte:head>
+
 <style>
+    b {
+        @apply text-primary font-normal leading-none;
+    }
+
+    .accent {
+        @apply text-accent;
+    }
+
+    input {
+        @apply w-full text-background bg-font py-3 px-4 rounded;
+    }
+
     button:disabled {
         @apply bg-disabled;
         cursor: not-allowed;
     }
+
+    .info {
+        @apply text-lg mt-1;
+    }
+
+    .input-header {
+        @apply text-primary text-3xl;
+        margin-bottom: 0.35rem;
+    }
+
+    .check {
+        margin-top: 0.15rem;
+        margin-right: 0.4rem;
+    }
 </style>
-<svelte:head>
-    <title>Change email | Winhalla</title>
-</svelte:head>
-<div class="p-8">
-    <h2>Email</h2>
-    <input on:keydown={onKeyPress} size="100" id="test" bind:value={email} class="text-black p-1" />
 
-    {#if valid}
-        <p class="text-green-700">VALID EMAIL</p>
-    {:else}
-        <p class="text-red-700">INVALID EMAIL</p>
+<div>
+    {#if pushError}
+        <ErrorAlert pushError={pushError} message="There was an error creating your account"  type="createAccount"/>
     {/if}
+    <div class="flex items-center justify-center md:h-screen-7">
+            <div class="flex flex-col justify-center px-5 md:p-0">
+                <div class="text-center md:text-left mt-7 md:mt-12">
+                    <h1
+                            class="text-6xl mb-6 md:mb-8 leading-snug
+                        md:leading-normal">
+                        Change your email
+                    </h1>
+                </div>
+                <div class="md:mt-4">
+                    <p class="input-header">Email</p>
+                    <div>
+                        <input
+                                on:keydown={onKeyPress}
+                                type="email"
+                                placeholder="Your email goes here"
+                                bind:value={email}
+                                class:border-legendary={valid == false}
+                                class="input-style focus:outline-none
+                            focus:border-primary placeholder-disabled" />
 
-    <br />
-    <button disabled={!valid} on:click={onClick} class="px-4 py-1 mt-4 bg-primary rounded">
-        Create account
-    </button>
+                        {#if valid}
+                            <div class="flex items-center">
+                                <svg
+                                        class="fill-current text-green w-4 check"
+                                        viewBox="0 0 33 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                            d="m0 10.909 4.364-4.364 8.727 8.727
+                                        15.273-15.273 4.364 4.364-19.636 19.636z" />
+                                </svg>
+                                <p class="text-green info">VALID EMAIL</p>
+                            </div>
+                        {:else if valid == false}
+                            <p class="text-legendary info ">INVALID EMAIL</p>
+                        {/if}
+                    </div>
+                </div>
+                <button
+                        disabled={!valid}
+                        on:click={onClick}
+                        class:mt-11={valid == null}
+                        class="button button-brand mt-3">
+                    Change emails
+                </button>
+            </div>
+    </div>
 </div>

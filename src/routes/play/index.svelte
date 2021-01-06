@@ -2,8 +2,8 @@
     import GameModeCards from "../../components/GameModeCards.svelte";
     import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
-    import {onMount} from "svelte";
-    import {callApi} from "../../utils/api";
+    import { onMount } from "svelte";
+    import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
 
     let quests;
@@ -86,9 +86,9 @@
 <svelte:head>
     <title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
-            name="description"
-            content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Exchange here your coins into rewards | Winhalla Shop page "/>
+        name="description"
+        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
+        | Exchange here your coins into rewards | Winhalla Shop page " />
 </svelte:head>
 {#if gameModesError && error}
     <div class="w-full lg:mt-60 mt-25">
@@ -116,7 +116,7 @@
         </div>
 
         <div
-                class="flex flex-col items-center lg:flex-wrap
+            class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
@@ -125,9 +125,9 @@
                 </div>
             {:else if gameModes}
                 <div
-                        class="lg:mb-10 lg:mr- mt-10 text-center
+                    class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes}/>
+                    <GameModeCards {gameModes} />
                 </div>
             {/if}
             <div class="pb-16 flex-grow lg:-ml-15">
@@ -136,9 +136,11 @@
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <Quests data={quests}/>
+                    <div class="lg:ml-15">
+                        <Quests data={quests} />
+                    </div>
                 {:else}
-                    <Loading type="inline"/>
+                    <Loading type="inline" />
                 {/if}
             </div>
         </div>

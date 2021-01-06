@@ -105,12 +105,14 @@
         let tempNb
         setInterval(()=>{
             tempNb = document.getElementById("transfer").value
+            console.log(tempNb, adVideos)
             if(adVideos < tempNb){
                 info = "You will earn 5 times more coins for this match"
                 setTimeout(()=>{
                     info = undefined
                 }, 5000)
             }
+            adVideos = tempNb
         },5000)
 
     });

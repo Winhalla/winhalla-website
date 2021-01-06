@@ -1,7 +1,7 @@
 <script context="module">
+
     export async function preload({params}) {
         let id = params.id;
-
         return {
             id
         };
@@ -9,20 +9,27 @@
 </script>
 
 <script>
-    import { onMount } from "svelte";
-    import { callApi } from "../../../utils/api";
-    import { goto } from "@sapper/app";
+    import {onMount} from "svelte";
+    import {callApi} from "../../../utils/api";
+    import {goto} from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import { counter } from "../../../components/store";
+    import {counter} from "../../../components/store";
     import io from "socket.io-client";
-    import { apiUrl } from "../../../utils/config";
-    import {fly} from "svelte/transition"
+    import {apiUrl} from "../../../utils/config";
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
-
+    import Infos from "../../../components/Infos.svelte"
     export let id;
+
+    /*export let user;
+    export let match;
+    export let isMatchEnded;
+    export let countDown;
+
+    export let userPlayer;
+    export let players;*/
 
     let user;
     let match;
@@ -31,6 +38,7 @@
 
     let userPlayer;
     let players;
+    let info;
     let error;
     let pushError
     onMount(async () => {
@@ -64,7 +72,7 @@
             } else {
                 startTimer(endsIn);
             }
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
 
             let socket = io.io(apiUrl);
             socket.on("connection", (status) => {
@@ -93,6 +101,17 @@
             }
             error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
         }
+        let adVideos = 0;
+        let tempNb
+        setInterval(()=>{
+            tempNb = document.getElementById("transfer").value
+            if(adVideos < tempNb){
+                info = "You will earn 5 times more coins for this match"
+                setTimeout(()=>{
+                    info = undefined
+                }, 5000)
+            }
+        },5000)
 
     });
 
@@ -120,7 +139,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function() {
+        setInterval(function () {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -135,7 +154,7 @@
             }
         }, 1000);
     }
-
+    let videoSeen = 0
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {
@@ -146,14 +165,13 @@
 
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
         }
         isRefreshingStats = false;
     };
-
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
@@ -235,6 +253,7 @@
     <title>Winhalla | FFA match</title>
     <script src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
             id="purpleads-client"></script>
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
@@ -242,6 +261,9 @@
         <a href="/play"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
+    {#if info}
+        <Infos message="Thanks for watching a video" pushError={info} />
+    {/if}
     <div class="h-full  ">
         {#if match}
             {#if isMatchEnded}
@@ -274,6 +296,9 @@
                                 lg:mt-0"
                                         on:click={() => handleQuit()}>
                                     Quit lobby
+                                </button>
+                                <button class="button button-brand quit lg:ml-4 mt-2
+                                lg:mt-0" onclick="playAd()">Play ad
                                 </button>
                                 {#if pushError}
                                     <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
@@ -343,6 +368,7 @@
                     </div>
                 </div>
             {/if}
+            <input hidden value={videoSeen} id="transfer"/>
             <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
@@ -382,3 +408,33 @@
         {/if}
     </div>
 {/if}
+
+<div>
+    <script data-playerPro="current">
+        function playAd() {
+            const init = (api) => {
+                if (api) {
+                    api.on('AdStarted', function (test) {
+                        }
+                    );
+
+
+                    api.on('AdVideoComplete', function () {
+                        document.getElementById("transfer").value = parseInt(document.getElementById("transfer").value)+1
+                        console.log(document.getElementById("transfer").value)
+                        }
+                    );
+                } else {
+                    console.log('blank');
+                }
+            }
+            var s = document.querySelector('script[data-playerPro="current"]');
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script>
+</div>

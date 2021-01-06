@@ -88,6 +88,7 @@
         error = e;
     }
 
+
     function calculateOrder(object) {
         //Reorder quests by rarety
         if (object.dailyQuests) {
@@ -117,8 +118,9 @@
 
     data = data;
     calculateOrder(data);
+
     let isRefreshingQuests = false;
-    const handleRefresh = async () => {
+    async function handleRefresh() {
         isRefreshingQuests = true;
 
         const refreshedData = await callApi("get", "solo");
@@ -182,8 +184,8 @@
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <div>
     {#if error}
-        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might show
-            wierdly. </p>
+        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might appear
+            weirdly. </p>
         <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
     {/if}
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">

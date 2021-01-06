@@ -2,8 +2,8 @@
     import GameModeCards from "../../components/GameModeCards.svelte";
     import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
-    import {onMount} from "svelte";
-    import {callApi} from "../../utils/api";
+    import { onMount } from "svelte";
+    import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
 
     let quests;
@@ -36,7 +36,7 @@
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-                gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
+                gameModesError = `<p class='text-accent'>Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.find(
@@ -77,7 +77,7 @@
 
                 }
             }
-            error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class='text-accent'>Oops a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
     });
@@ -95,10 +95,11 @@
             id="purpleads-client"></script>
 </svelte:head>
 {#if gameModesError && error}
-    <div class="w-full content-center lg:mt-60 mt-25">
+    <div class="w-full lg:mt-60 mt-25">
+
         <div class="text-center">
             <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed. Did you
-                broke grandma's porcelain bowls ?</h2>
+                broke grandma's porcelain bowls?</h2>
             <h3 class="text-center lg:text-3xl text-2xl"><a href="/" class="underline text-primary">Wanna go to
                 homepage</a> then ?</h3>
             <p class="text-light text-center pt-10">If this occurs regularly, maybe clear your cookies and cache. <br>
@@ -119,7 +120,7 @@
         </div>
 
         <div
-                class="flex flex-col items-center lg:items-start lg:flex-wrap
+            class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
@@ -128,20 +129,22 @@
                 </div>
             {:else if gameModes}
                 <div
-                        class="lg:mb-10 lg:mr- mt-10 text-center
+                    class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes}/>
+                    <GameModeCards {gameModes} />
                 </div>
             {/if}
-            <div class="pb-16">
+            <div class="pb-16 flex-grow lg:-ml-15">
                 {#if error}
-                    <div class="w-full content-center lg:mt-60 mt-25 ">
+                    <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <Quests data={quests}/>
+                    <div class="lg:ml-15">
+                        <Quests data={quests} />
+                    </div>
                 {:else}
-                    <Loading type="inline"/>
+                    <Loading type="inline" />
                 {/if}
             </div>
         </div>

@@ -110,7 +110,9 @@
                 info = "You will earn 5 times more coins for this match"
                 setTimeout(()=>{
                     info = undefined
+                    console.log("infocleared")
                 }, 5000)
+                console.log(info)
             }
             adVideos = tempNb
         },5000)

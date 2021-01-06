@@ -1945,7 +1945,7 @@ const Infos = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	if ($$props.pushError === void 0 && $$bindings.pushError && pushError !== void 0) $$bindings.pushError(pushError);
 	if ($$props.message === void 0 && $$bindings.message && message !== void 0) $$bindings.message(message);
 
-	return `<div class="${"z-20 absolute right-0 top-5 lg:top-30 mr-8 lg:mr-6 w-auto h-auto p-7 bg-background border rounded-lg border-primary"}"><h3 class="${"text-primary text-3xl"}">${escape(message)}</h3>
+	return `<div class="${"z-20 absolute right-0 top-5 lg:top-30 mr-5 lg:mr-8 lg:mr-6 w-auto h-auto p-7 bg-background border rounded-lg border-primary"}"><h3 class="${"text-primary text-3xl"}">${escape(message)}</h3>
     <p class="${"text-white text-2xl"}">${escape(pushError)}</p></div>`;
 });
 

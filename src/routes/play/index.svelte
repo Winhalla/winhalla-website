@@ -36,7 +36,7 @@
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-                gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
+                gameModesError = `<p class='text-accent'>Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.find(
@@ -77,7 +77,7 @@
 
                 }
             }
-            error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class='text-accent'>Oops a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : You might not be logged in or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
     });
@@ -94,7 +94,7 @@
     <div class="w-full content-center lg:mt-60 mt-25">
         <div class="text-center">
             <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed. Did you
-                broke grandma's porcelain bowls ?</h2>
+                broke grandma's porcelain bowls?</h2>
             <h3 class="text-center lg:text-3xl text-2xl"><a href="/" class="underline text-primary">Wanna go to
                 homepage</a> then ?</h3>
             <p class="text-light text-center pt-10">If this occurs regularly, maybe clear your cookies and cache. <br>

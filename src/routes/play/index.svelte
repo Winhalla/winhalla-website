@@ -77,7 +77,7 @@
 
                 }
             }
-            error = `<p class='text-accent'>Oops a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : You might not be logged in or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class='text-accent'>Oops a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
     });
@@ -91,7 +91,8 @@
         | Exchange here your coins into rewards | Winhalla Shop page "/>
 </svelte:head>
 {#if gameModesError && error}
-    <div class="w-full content-center lg:mt-60 mt-25">
+    <div class="w-full lg:mt-60 mt-25">
+
         <div class="text-center">
             <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed. Did you
                 broke grandma's porcelain bowls?</h2>
@@ -115,7 +116,7 @@
         </div>
 
         <div
-                class="flex flex-col items-center lg:items-start lg:flex-wrap
+                class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
@@ -129,9 +130,9 @@
                     <GameModeCards {gameModes}/>
                 </div>
             {/if}
-            <div class="pb-16">
+            <div class="pb-16 flex-grow lg:-ml-15">
                 {#if error}
-                    <div class="w-full content-center lg:mt-60 mt-25 ">
+                    <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}

@@ -1,69 +1,9 @@
 <script context="module">
-    //Start the countdown
 
-    //Function that starts a timer with a date, and refreshes it every second
-    /*let countDown;
-    function startTimer(duration) {
-        let timer = duration,
-            hours,
-            minutes,
-            seconds;
-        setInterval(function () {
-            seconds = Math.floor(timer % 60);
-            minutes = Math.floor((timer / 60) % 60);
-            hours = Math.floor(timer / (60 * 60));
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            countDown = hours + ":" + minutes + ":" + seconds;
-
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }*/
     export async function preload({params}) {
         let id = params.id;
-        /*let user = await getUser();
-        user = user.steam;
-
-        let match = await callApi("get", `/getMatch/${id}`);
-        let isMatchEnded = match.finished;
-        let d = new Date(match.Date);
-        const endsIn = -(
-            (new Date().getTime() -
-                new Date(d.setHours(d.getHours() + 3)).getTime()) /
-            1000
-        );
-
-        startTimer(endsIn);
-
-        let userPlayer;
-        let players;
-        const filterUsers = () => {
-            //Find user's object
-            userPlayer = match.players.find(
-                (p) => p.steamId === parseInt(user.id)
-            );
-
-            //Delete user's object from array.
-            players = [...match.players];
-            players.splice(
-                match.players.findIndex((p) => p.steamId === parseInt(user.id)),
-                1
-            );
-        };
-        filterUsers();
-        console.log(id, match);*/
         return {
             id
-            /*user,
-            match,
-            isMatchEnded,
-            countDown,
-            userPlayer,
-            players,*/
         };
     }
 </script>
@@ -79,7 +19,6 @@
     import {counter} from "../../../components/store";
     import io from "socket.io-client";
     import {apiUrl} from "../../../utils/config";
-    import {fly} from "svelte/transition"
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
 
     export let id;

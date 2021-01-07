@@ -30,7 +30,7 @@
 
     async function handleSubmit() {
         answered = true
-        //await callApi("post",`/pollresponse?answer=${answer}&name=${poll.name}`)
+        await callApi("post",`/pollresponse?answer=${answer}&name=${poll.name}`)
 
     }
 </script>
@@ -121,7 +121,7 @@
 
                 {/each}
             {:else}
-                <h2 class="text-3xl p-4 my-3 mx-4 rounded-lg focus:outline-none block flex items-center"> Thanks for your answer!</h2>
+                <h2 class="text-3xl p-4 my-3 mx-4 rounded-lg focus:outline-none block flex items-center">Thanks for your answer!</h2>
             {/if}
 
         </div>

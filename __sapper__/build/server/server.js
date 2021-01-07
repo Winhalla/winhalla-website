@@ -503,7 +503,8 @@ const Poll = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 	async function handleSubmit() {
 		answered = true;
-	} //await callApi("post",`/pollresponse?answer=${answer}&name=${poll.name}`)
+		await callApi("post", `/pollresponse?answer=${answer}&name=${poll.name}`);
+	}
 
 	if ($$props.poll === void 0 && $$bindings.poll && poll !== void 0) $$bindings.poll(poll);
 

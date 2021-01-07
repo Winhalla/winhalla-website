@@ -16,7 +16,9 @@ const callApi = async (method, url, data) => {
         });
         return res.data;
     }catch (e) {
-        eventEmitter.set({error:e})
+        if(!url.includes("createAccount")&&!url.includes("changeEmail")&&!url.includes("exitMatch")) {
+            eventEmitter.set({error: e})
+        }
         return e
     }
 };

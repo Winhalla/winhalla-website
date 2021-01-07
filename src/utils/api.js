@@ -1,4 +1,6 @@
 import axios from "axios";
+import {writable} from "svelte/store";
+let eventEmitter = writable({ error:undefined });
 
 const axiosInstance = axios.create({
     withCredentials: true,
@@ -14,6 +16,7 @@ const callApi = async (method, url, data) => {
         });
         return res.data;
     }catch (e) {
+        eventEmitter.set({error:e})
         return e
     }
 };
@@ -23,4 +26,4 @@ const getUser = async () => {
 };
 
 
-export { callApi, getUser};
+export { callApi, getUser, eventEmitter};

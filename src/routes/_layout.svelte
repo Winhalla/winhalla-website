@@ -3,6 +3,23 @@
     import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
     import GameModeCards from "../components/GameModeCards.svelte";
+    import ErrorAlert from "../components/ErrorAlert.svelte"
+    import {eventEmitter} from "../utils/api";
+    import {onMount} from "svelte"
+
+    let error;
+    onMount(()=>{
+        eventEmitter.subscribe(async e => {
+            e = e.error
+            if (!e) return
+            if (e instanceof Error) {
+                error = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
+                setTimeout(()=>{
+                    error = undefined
+                },8000)
+            }
+        })
+    })
 
     let scrollY = 0;
     //export let segment;
@@ -62,20 +79,23 @@
     }
 </style>
 
-<Tailwindcss />
+<Tailwindcss/>
 
 <svelte:head>
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
 </svelte:head>
 
-<svelte:window bind:scrollY={scrollY} />
+<svelte:window bind:scrollY={scrollY}/>
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
-    <Nav isScrolling={scrollY > 0} />
+    <Nav isScrolling={scrollY > 0}/>
+    {#if error}
+        <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error}/>
+    {/if}
 
     <main class="text-font text-default min-h-screen h-full relative">
         <!--Main-->
-        <slot class="flex-grow bg-background block-grow" />
+        <slot class="flex-grow bg-background block-grow"/>
         <!--<GameModeCards page={"play"}/>-->
     </main>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
@@ -83,5 +103,5 @@
     </div>-->
 
     <!--Footer-->
-    <Footer />
+    <Footer/>
 </div>

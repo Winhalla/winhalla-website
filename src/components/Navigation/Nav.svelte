@@ -1,17 +1,17 @@
 <script>
-    import {onMount, onDestroy} from "svelte";
-    import {clickOutside} from "../../utils/clickOutside";
+    import { onMount, onDestroy } from "svelte";
+    import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
     import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
-    import {fly} from "svelte/transition"
+    import { fly } from "svelte/transition";
 
-    import {apiUrl} from "../../utils/config";
-    import {callApi} from "../../utils/api";
-    import {goto} from "@sapper/app";
-    import {counter} from "../store.js";
+    import { apiUrl } from "../../utils/config";
+    import { callApi } from "../../utils/api";
+    import { goto } from "@sapper/app";
+    import { counter } from "../store.js";
 
     export let isScrolling;
     let isNavbarOpen;
@@ -23,14 +23,14 @@
     let user;
     let firstLoad = true;
     let offline;
-    let loaded = false
+    let loaded = false;
 
     async function calculateProperties(value) {
         const tempUserData = await value;
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
-            if (tempUserData.response) if (tempUserData.response.status === 503) goto("/status")
-            return isUserLoggedIn = "network"
+            if (tempUserData.response) if (tempUserData.response.status === 503) goto("/status");
+            return isUserLoggedIn = "network";
         }
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
@@ -60,25 +60,24 @@
             informations = await callApi("get", "/informations");
 
 
-
             if (informations instanceof Error) {
-                throw informations
+                throw informations;
             }
         } catch (e) {
-            informations = "network"
+            informations = "network";
         }
         setTimeout(async () => {
                 try {
 
-                    poll = await callApi("get", "/getpoll")
+                    poll = await callApi("get", "/getpoll");
 
                 } catch (e) {
-                    console.log(e)
+                    console.log(e);
                 }
-            },1000
-        )
+            }, 1000
+        );
         await calculateProperties(user);
-        loaded = true
+        loaded = true;
     });
 </script>
 
@@ -255,7 +254,7 @@
                         SHOP
                     </a>
                 </div>
-                {#if loaded && poll}
+                <!---{#if loaded && !poll}
                     <div
                             class="absolute top-2 "
                             style="left: 50% ; transform: translate(-50%, 0);"
@@ -267,7 +266,7 @@
                                 md:text-left ml-10">
                                 {poll.name}
                             </p>
-                            <button on:click={()=>{poll.submitted = true;setTimeout(()=>{poll.submitted = false;poll = undefined},5000)}}
+                            <button on:click={()=>{poll.submitted = true;setTimeout(()=>{poll.submitted = false; poll = undefined},5000)}}
                                     class="button button-brand ml-4 w-24"
                                     style="padding: 0.5rem 0.75rem">
                                 SUBMIT
@@ -305,7 +304,7 @@
                         </div>
 
                     </div>
-                {/if}
+                {/if}-->
                 <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
                     {#if informations}
                         <div class="hidden lg:flex items-center">
@@ -356,43 +355,8 @@
         </div>
 
     </nav>
-
-    <div class="flex justify-center items-start absolute top-2 left-0 right-0">
-        <!--
-        <div class="h-px flex-grow bg-green"></div>
-
-                <div class="relative">
-                    <div class="h-0 w-0" style=" border-top : 21.15rem solid #17171a; border-left : 5rem solid transparent;"></div>
-                    <div class="absolute top-0 h-0 w-0" style="right: -3.99rem; z-index: -5; border-top : 21.21rem solid #3de488; border-right: 4rem solid transparent; border-left : 5.11rem solid transparent;"></div>
-                </div>        <div class="h-12 w-11 bg-background rounded-bl-lg mt-13 border-b-2 border-l-2 border-green">
-
-        </div>
-        <div class="">
-            <Poll />
-        </div>
-        <div class="h-12 w-11 bg-background rounded-br-lg mt-13 border-b-2 border-r-2 border-green">
-
-        </div>
-        -->
-
-        <!--
-        <div class="h-full">
-            <div class="w-4 bg-font h-96 max-h-full" style="clip-path: polygon(100% 0, 0 100%, 0 0);">
-
-            </div>
-        </div>
-        <div class="relative max-h-20">
-            <div class="h-full w-full " style=" background-image: linear-gradient(to right top, green 0%, green 50%, transparent 50%);"></div>
-            <div class="absolute top-0 h-0 w-0" style="left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;"></div>
-        </div>
-                <div class="relative">
-                    <div class="h-0 w-0 " style=" border-top : 21.15rem solid #17171a; border-right : 5rem solid transparent;"></div>
-                    <div class="absolute top-0 h-0 w-0" style="left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;"></div>
-                </div>
-
-
-        <div class="h-px flex-grow bg-green"></div>-->
+    <div class="fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0">
+        <Poll poll={poll}/>
     </div>
 
 </div>
-<!--<div class=" h-2px w-72  bg-font ml-28"> </div> <div class=" h-2px w-72 bg-font mr-28"> </div> -->

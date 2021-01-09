@@ -34,4 +34,23 @@
 
         @apply bg-variant rounded;
     }
+
+    .scrollbar::-webkit-scrollbar {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+
+        /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/
+
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        height: 3px;
+        border: 6px solid rgba(0, 0, 0, 0);
+        background-clip: padding-box;
+        -webkit-border-radius: 15px;
+        background-color: #1C1C2C;
+        -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+        /*outline: 1px solid slategrey;*/
+    }
 </style>

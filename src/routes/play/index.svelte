@@ -150,4 +150,5 @@
         </div>
     </div>
 
+    <GuideCard page="play"/>
 {/if}

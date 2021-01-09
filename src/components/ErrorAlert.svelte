@@ -10,14 +10,14 @@
         <div
                 class="w-full lg:w-auto h-auto  p-5 bg-background border rounded-lg border-legendary"
                 transition:fly={{ x:200, duration: 400 }}>
-            <h3 class="text-legendary">{message}</h3>
-            <p class="text-light text-base">{pushError}</p>
+            <h3 class="text-legendary text-xl">{message}</h3>
+            <p class="text-light text-lg">{pushError}</p>
         </div>
     </div>
 {:else}
     <div class="z-20 absolute right-0 top-5 lg:top-30 mr-8 lg:mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
          transition:fly={{ x:200, duration: 400 }}>
-        <h3 class="text-legendary">{message}</h3>
-        <p class="text-light text-base">{pushError}</p>
+        <h3 class="text-legendary text-xl">{message}</h3>
+        <p class="text-light text-lg">{pushError}</p>
     </div>
 {/if}

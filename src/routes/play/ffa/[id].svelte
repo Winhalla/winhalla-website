@@ -1,6 +1,6 @@
 <script context="module">
 
-    export async function preload({params}) {
+    export async function preload({ params }) {
         let id = params.id;
         return {
             id
@@ -9,17 +9,18 @@
 </script>
 
 <script>
-    import {onMount} from "svelte";
-    import {callApi} from "../../../utils/api";
-    import {goto} from "@sapper/app";
+    import { onMount } from "svelte";
+    import { callApi } from "../../../utils/api";
+    import { goto } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import {counter} from "../../../components/store";
+    import { counter } from "../../../components/store";
     import io from "socket.io-client";
-    import {apiUrl} from "../../../utils/config";
+    import { apiUrl } from "../../../utils/config";
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
+    import Infos from "../../../components/Infos.svelte";
 
     export let id;
 
@@ -38,16 +39,17 @@
 
     let userPlayer;
     let players;
-
+    let info;
     let error;
-    let pushError
+    let pushError;
+    let socket;
+    let adError;
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
             user = value.content;
 
         });
         unsub();
-
         //await user
         //user = user.steam
         try {
@@ -55,7 +57,7 @@
             user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
             if (match instanceof Error) {
-                throw match
+                throw match;
             }
             isMatchEnded = match.finished;
             //Start the countdown
@@ -72,9 +74,9 @@
             } else {
                 startTimer(endsIn);
             }
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
 
-            let socket = io.io(apiUrl);
+            socket = io.io(apiUrl);
             socket.on("connection", (status) => {
                 console.log(status);
                 socket.emit("match connection", "FFA" + id);
@@ -92,15 +94,57 @@
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                     error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
-                    return
+                    return;
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
                     error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                    return
+                    return;
                 } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
-                return
+                return;
             }
-            error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
+            error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
+        let adVideos = 0;
+        let stop = 0
+        let advideostate = 0;
+        let tempNb;
+        let interval = setInterval(() => {
+            if(stop > 0){
+                return stop--
+            }
+            tempNb = document.getElementById("transfer").value;
+            console.log(tempNb,advideostate)
+            if (tempNb !== advideostate) {
+                socket.emit("advideo", tempNb === "1" ? { state: 1, steamId: userPlayer.steamId, room: id } : tempNb);
+                console.log(tempNb);
+            }
+            /*if(adVideos < tempNb){
+
+                console.log(info)
+            }*/
+            advideostate = tempNb;
+        }, 1000);
+        socket.on("advideo", (e) => {
+            if (e.code === "error") {
+                console.log(e.message)
+                clearInterval(interval);
+                advideostate = 0;
+                tempNb = 0;
+                adVideos = 0;
+                adError = e.message;
+                setTimeout(() => {
+                    adError = undefined;
+                }, 25000);
+            } else if (e.code === "success") {
+                stop = 5
+                info = e.message;
+                advideostate = 0;
+                tempNb;
+                adVideos = 0;
+                setTimeout(() => {
+                    info = undefined;
+                }, 5000);
+            }
+        });
 
     });
 
@@ -128,7 +172,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function () {
+        setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -144,6 +188,7 @@
         }, 1000);
     }
 
+    let videoSeen = 0;
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {
@@ -154,24 +199,23 @@
 
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({"refresh": true});
+            counter.set({ "refresh": true });
         }
         isRefreshingStats = false;
     };
-
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
-            if (exitStatus instanceof Error) throw exitStatus
+            if (exitStatus instanceof Error) throw exitStatus;
             goto(`/play`);
         } catch (e) {
             pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
             setTimeout(() => {
-                pushError = undefined
-            }, 8000)
+                pushError = undefined;
+            }, 8000);
         }
     };
 
@@ -241,6 +285,7 @@
 
 <svelte:head>
     <title>Winhalla | FFA match</title>
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
@@ -248,38 +293,44 @@
         <a href="/play"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
+    {#if info}
+        <Infos message="Thanks for watching a video" pushError={info} />
+    {/if}
     <div class="h-full  ">
         {#if match}
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners}/>
+                <FfaEnd players={match.players} winners={match.winners} />
             {:else}
                 <div class="h-full flex items-center flex-col lg:block lg:ml-24">
                     <div
-                            class="flex flex-col justify-center lg:flex-row
+                        class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                                class="mode-timer flex justify-center lg:justify-start
+                            class="mode-timer flex justify-center lg:justify-start
                         items-end w-60 ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
-                                    class="timer text-primary ml-5 text-3xl leading-none">
+                                class="timer text-primary ml-5 text-3xl leading-none">
                                 {#if countDown}{countDown}{:else}Loading...{/if}
                             </p>
                         </div>
 
                         <div
-                                class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                            class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
                             <RefreshButton
-                                    on:click={() => handleRefresh()}
-                                    isRefreshing={isRefreshingStats}
-                                    refreshMessage={'Refresh data'}/>
+                                on:click={() => handleRefresh()}
+                                isRefreshing={isRefreshingStats}
+                                refreshMessage={'Refresh data'} />
                             {#if userPlayer.gamesPlayed == 0}
                                 <button
-                                        class="button button-brand quit lg:ml-4 mt-2
+                                    class="button button-brand quit lg:ml-4 mt-2
                                 lg:mt-0"
-                                        on:click={() => handleQuit()}>
+                                    on:click={() => handleQuit()}>
                                     Quit lobby
+                                </button>
+                                <button class="button button-brand quit lg:ml-4 mt-2
+                                lg:mt-0" onclick="playAd()">Play ad
                                 </button>
                                 {#if pushError}
                                     <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
@@ -289,21 +340,21 @@
                     </div>
 
                     <div
-                            class="flex items-center flex-col lg:flex-row lg:items-start
+                        class="flex items-center flex-col lg:flex-row lg:items-start
                     h-full">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">
                                 <img
-                                        src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                        alt={userPlayer.legends}
-                                        class="block"/>
+                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
+                                    alt={userPlayer.legends}
+                                    class="block" />
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
                                 <div
-                                        class="stats text-2xl bottom-5 text-ultra-light">
+                                    class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
                                         Games played:
                                         <b>{userPlayer.gamesPlayed}</b>
@@ -321,20 +372,20 @@
                         <!--Other Players-->
                         {#if players}
                             <div
-                                    class="flex flex-col justify-center lg:justify-start
+                                class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
                                         <img
-                                                src="/assets/CharactersBanners/{player.legends}.png"
-                                                alt={player.legends}
-                                                class="block"/>
+                                            src="/assets/CharactersBanners/{player.legends}.png"
+                                            alt={player.legends}
+                                            class="block" />
 
                                         <p class="player-name text-3xl">
                                             {player.username}
                                         </p>
                                         <div
-                                                class="stats text-xl bottom-5
+                                            class="stats text-xl bottom-5
                                         text-ultra-light">
                                             <p>
                                                 Games played:
@@ -349,16 +400,17 @@
                     </div>
                 </div>
             {/if}
+            <input hidden value={videoSeen} id="transfer" />
             <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
                     <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z"/>
+                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
                     </svg>
                     <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"/>
+                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
                     </svg>
                 </button>
                 <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
@@ -386,9 +438,56 @@
 
 
         {:else}
-            <Loading data={"Loading game data..."}/>
+            <Loading data={"Loading game data..."} />
         {/if}
 
 
     </div>
 {/if}
+
+<div>
+    {#if adError}
+        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
+    {/if}
+    <script data-playerPro="current">
+        function playAd() {
+            const init = (api) => {
+                if (api) {
+
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = 1;
+                        api.setAdVolume(0.5);
+                        document.body.onblur = function (){api.pauseAd()};
+                        document.body.onfocus = function (){api.resumeAd()};
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = 2;
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = 3;
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = 4;
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = 5;
+                        setTimeout(()=>{
+                            document.getElementById("transfer").value = 0;
+                        },1200)
+                        document.body.onblur = null
+                        document.body.onfocus = null
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\"current\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script>
+</div>

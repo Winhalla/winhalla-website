@@ -77,7 +77,7 @@
 
                 }
             }
-            error = `<p class='text-accent'>Oops a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class='text-accent'>Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
     });

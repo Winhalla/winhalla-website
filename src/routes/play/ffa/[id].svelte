@@ -104,15 +104,15 @@
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
         let adVideos = 0;
-        let stop = 0
+        let stop = 0;
         let advideostate = 0;
         let tempNb;
         let interval = setInterval(() => {
-            if(stop > 0){
-                return stop--
+            if (stop > 0) {
+                return stop--;
             }
             tempNb = document.getElementById("transfer").value;
-            console.log(tempNb,advideostate)
+            console.log(tempNb, advideostate);
             if (tempNb !== advideostate) {
                 socket.emit("advideo", tempNb === "1" ? { state: 1, steamId: userPlayer.steamId, room: id } : tempNb);
                 console.log(tempNb);
@@ -125,7 +125,7 @@
         }, 1000);
         socket.on("advideo", (e) => {
             if (e.code === "error") {
-                console.log(e.message)
+                console.log(e.message);
                 clearInterval(interval);
                 advideostate = 0;
                 tempNb = 0;
@@ -135,10 +135,12 @@
                     adError = undefined;
                 }, 25000);
             } else if (e.code === "success") {
-                stop = 5
+                stop = 5;
                 info = e.message;
                 advideostate = 0;
                 tempNb;
+                userPlayer.adsWatched++;
+                userPlayer.multiplier = userPlayer.adsWatched === 1 ? 500 : 1000;
                 adVideos = 0;
                 setTimeout(() => {
                     info = undefined;
@@ -230,7 +232,13 @@
     b {
         @apply text-primary font-normal;
     }
-
+    button:disabled{
+        @apply bg-disabled;
+        cursor: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-shadow: none;
+    }
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -318,6 +326,10 @@
                         <div
                             class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
+                            <p class="mx-4">You have watched <strong
+                                class="text-accent font-normal text-3xl">{userPlayer.adsWatched}
+                                ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, you have multiplied your earnings by
+                                <strong class="text-accent text-3xl font-normal">{userPlayer.multiplier / 100}</strong></p>
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
@@ -329,13 +341,13 @@
                                     on:click={() => handleQuit()}>
                                     Quit lobby
                                 </button>
-                                <button class="button button-brand quit lg:ml-4 mt-2
-                                lg:mt-0" onclick="playAd()">Play ad
-                                </button>
                                 {#if pushError}
                                     <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
                                 {/if}
                             {/if}
+                                <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:ml-4 mt-2
+                                lg:mt-0" onclick="playAd()">{userPlayer.adsWatched < 2?"Play ad":"Maximum ads reached"}
+                                </button>
                         </div>
                     </div>
 
@@ -457,8 +469,12 @@
                     api.on("AdVideoStart", function() {
                         document.getElementById("transfer").value = 1;
                         api.setAdVolume(0.5);
-                        document.body.onblur = function (){api.pauseAd()};
-                        document.body.onfocus = function (){api.resumeAd()};
+                        document.body.onblur = function() {
+                            api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            api.resumeAd();
+                        };
                     });
                     api.on("AdVideoFirstQuartile", () => {
                         document.getElementById("transfer").value = 2;
@@ -471,11 +487,11 @@
                     });
                     api.on("AdVideoComplete", function() {
                         document.getElementById("transfer").value = 5;
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             document.getElementById("transfer").value = 0;
-                        },1200)
-                        document.body.onblur = null
-                        document.body.onfocus = null
+                        }, 1200);
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
                     });
                 } else {
                     console.log("blank");

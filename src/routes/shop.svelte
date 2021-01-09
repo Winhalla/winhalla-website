@@ -1,14 +1,13 @@
 <script context="module">
-    import {callApi} from "../utils/api";
-    import {onMount} from "svelte";
-    import {counter} from "../components/store";
-    import {goto} from "@sapper/app";
+    import { callApi } from "../utils/api";
+    import { counter } from "../components/store";
+    import { goto } from "@sapper/app";
 
     export async function preload() {
         try {
             let items = await callApi("get", "/shop");
             if (items instanceof Error) {
-                throw items
+                throw items;
             }
             let player;
             let unsub = counter.subscribe((value) => {
@@ -34,21 +33,82 @@
             let seasonPacks = await items.filter((i) => i.state === 1);
             let packs = await items.filter((i) => i.state === 2);
 
-            return {featuredItem, seasonPacks, packs};
+            return { featuredItem, seasonPacks, packs };
         } catch (err) {
             if (err.response) {
-                if (err.response.status === 404) return {error: "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>"};
+                if (err.response.status === 404) return { error: "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>" };
             }
-            return {error: `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`}
+            return { error: `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>` };
         }
     }
 </script>
 
 <script>
+
     export let featuredItem;
     export let seasonPacks;
     export let packs;
     export let error;
+
+    //* Required for videoAd
+    import ErrorAlert from "../components/ErrorAlert.svelte";
+    import Infos from "../components/Infos.svelte";
+    import { onMount } from "svelte";
+    import io from "socket.io-client";
+    import { apiUrl } from "../utils/config";
+
+    let adError;
+    let info;
+    let userPlayer;
+
+    onMount(async () => {
+        let socket;
+        let unsub = counter.subscribe(async (value) => {
+            userPlayer = await value.content;
+            console.log(userPlayer.steam.id)
+        });
+        unsub();
+        socket = io.io(apiUrl);
+        let stop = 0;
+        let advideostate = 0;
+        let tempNb;
+        setInterval(() => {
+            if (stop > 0) {
+                return stop--;
+            }
+            tempNb = document.getElementById("transfer").value;
+            console.log(tempNb, advideostate);
+            if (tempNb !== advideostate) {
+                socket.emit("advideo", tempNb === "1" ? { state: 1, steamId: parseInt(userPlayer.steam.id), shopItemId:0, goal:"enterLottery"} : tempNb);
+                console.log(tempNb)
+            }
+            advideostate = tempNb;
+        }, 1000);
+        socket.on("advideo", (e) => {
+            if (e.code === "error") {
+                console.log(e.message);
+                stop = 5
+                advideostate = 0;
+                tempNb = 0;
+                adError = e.message;
+                setTimeout(() => {
+                    adError = undefined;
+                }, 25000);
+            } else if (e.code === "success") {
+                console.log(e)
+                stop = 5;
+                info = e.won >0?e.message + ". You have WON A BATTLE PASS, view your mails for more informations":e.message + ". You have not won, better luck next time!"
+                advideostate = 0;
+                tempNb;
+                setTimeout(() => {
+                    info = undefined;
+                }, 5000);
+            } else{
+                console.log(e)
+            }
+        });
+    });
+    //* End of required for videoAd
 
     const handleDescriptionToggle = (seasonPack) => {
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
@@ -92,11 +152,12 @@
 <svelte:head>
     <title>Shop | Winhalla</title>
     <meta
-            name="description"
-            content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
+        name="description"
+        content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,
         Battle Pass and Season packs| Exchange here your coins into rewards |
-        Winhalla Shop page "/>
-    <link rel="canonical" href="https://winhalla.appspot.com/shop"/>
+        Winhalla Shop page " />
+    <link rel="canonical" href="https://winhalla.appspot.com/shop" />
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 <!--
 {#if bottomItems}
@@ -131,6 +192,9 @@
     </div>
 {:else}
     <div class="xl:flex xl:relative pb-16">
+        {#if info}
+            <Infos message="Thanks for watching a video" pushError={info} />
+        {/if}
         <div>
             {#if packs}
                 <div class="mt-7 lg:mt-12 lg:ml-24">
@@ -139,15 +203,15 @@
                             Battle pass
                         </h1>
                         <div
-                                class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
+                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                             <img
-                                    class="w-full h-full block object-cover"
-                                    src="assets/ShopItems/{featuredItem.name}.jpg"
-                                    alt={featuredItem.name}/>
+                                class="w-full h-full block object-cover"
+                                src="assets/ShopItems/{featuredItem.name}.jpg"
+                                alt={featuredItem.name} />
                             <div
-                                    class="absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full">
+                                class="absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full">
                                 <div
-                                        class="md:flex justify-between w-full md:items-center">
+                                    class="md:flex justify-between w-full md:items-center">
                                     <p class="text-accent text-6xl">
                                         {featuredItem.name
                                             .toLowerCase()
@@ -155,12 +219,12 @@
                                     </p>
                                     <div class="flex justify-end md:block pb-1">
                                         <button
-                                                disabled={featuredItem.unBuyable}
-                                                on:click={() => callApi('post', `/buy/${featuredItem.id}`)}
-                                                class="px-4 py-1 bg-primary rounded">
+                                            disabled={featuredItem.unBuyable}
+                                            on:click={() => callApi('post', `/buy/${featuredItem.id}`)}
+                                            class="px-4 py-1 bg-primary rounded">
                                             <p class="text-2xl">
                                                 <b
-                                                        class="mr-1 font-normal">{featuredItem.cost}</b>$
+                                                    class="mr-1 font-normal">{featuredItem.cost}</b>$
                                             </p>
                                         </button>
                                     </div>
@@ -173,56 +237,56 @@
                             Season packs
                         </h2>
                         <div
-                                class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
+                            class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                             {#if seasonPacks.forEach}
                                 {#each seasonPacks as seasonPack, i}
                                     <div
-                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
+                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
                                         <img
-                                                class="w-full h-full block "
-                                                src="assets/ShopItems/{seasonPack.name}.jpg"
-                                                alt={seasonPack.name}/>
+                                            class="w-full h-full block "
+                                            src="assets/ShopItems/{seasonPack.name}.jpg"
+                                            alt={seasonPack.name} />
                                         <div
-                                                class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                                            class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
                                             <p
-                                                    class:hidden={seasonPack.isDescriptionToggled}
-                                                    class:-mb-1={!seasonPack.isDescriptionToggled}
-                                                    class="text-accent text-5xl md:mb-0 md:block">
+                                                class:hidden={seasonPack.isDescriptionToggled}
+                                                class:-mb-1={!seasonPack.isDescriptionToggled}
+                                                class="text-accent text-5xl md:mb-0 md:block">
                                                 {seasonPack.name
                                                     .toLowerCase()
                                                     .replace(/\-/g, ' ')}
                                             </p>
                                             <p
-                                                    class:hidden={!seasonPack.isDescriptionToggled}
-                                                    class="block xl:mt-0">
+                                                class:hidden={!seasonPack.isDescriptionToggled}
+                                                class="block xl:mt-0">
                                                 {seasonPack.description}
                                             </p>
 
                                             <div
-                                                    class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                                class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
                                                 <div class="-mb-2 md:mb-0">
                                                     <div>
                                                         <p
-                                                                class="hidden xl:block mr-1 -mb-2">
+                                                            class="hidden xl:block mr-1 -mb-2">
                                                             {seasonPack.description}
                                                         </p>
                                                         <button
-                                                                class="focus:outline-none xl:hidden -mb-10"
-                                                                on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                            class="focus:outline-none xl:hidden -mb-10"
+                                                            on:click={() => handleDescriptionToggle(seasonPack)}>
                                                             <p
-                                                                    class=" text-light text-lg underline leading-none">
+                                                                class=" text-light text-lg underline leading-none">
                                                                 {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
                                                             </p>
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <button
-                                                        disabled={seasonPack.unBuyable}
-                                                        on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
-                                                        class="px-4 py-1 bg-primary rounded">
+                                                    disabled={seasonPack.unBuyable}
+                                                    on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
+                                                    class="px-4 py-1 bg-primary rounded">
                                                     <p class="text-2xl">
                                                         <b
-                                                                class="mr-1 font-normal">{seasonPack.cost}</b>$
+                                                            class="mr-1 font-normal">{seasonPack.cost}</b>$
                                                     </p>
                                                 </button>
                                             </div>
@@ -235,17 +299,17 @@
                     <div class="pt-8 lg:pt-20 lg:pb-6">
                         <h2 class="text-6xl text-center lg:text-left">Packs</h2>
                         <div
-                                class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
+                            class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                             {#if packs.forEach}
                                 {#each packs as pack}
                                     <div
-                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
+                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
                                         <img
-                                                class="w-full h-full block object-cover"
-                                                src="assets/ShopItems/{pack.name}.jpg"
-                                                alt={pack.name}/>
+                                            class="w-full h-full block object-cover"
+                                            src="assets/ShopItems/{pack.name}.jpg"
+                                            alt={pack.name} />
                                         <div
-                                                class="absolute bottom-0 z-10 px-5 pb-3 w-full">
+                                            class="absolute bottom-0 z-10 px-5 pb-3 w-full">
                                             <p class="text-accent text-5xl">
                                                 {pack.name
                                                     .toLowerCase()
@@ -253,7 +317,7 @@
                                             </p>
 
                                             <div
-                                                    class="flex justify-between w-full items-end pb-1">
+                                                class="flex justify-between w-full items-end pb-1">
                                                 <div>
                                                     <div>
                                                         <p class="block mr-1 -mb-2">
@@ -262,12 +326,12 @@
                                                     </div>
                                                 </div>
                                                 <button
-                                                        disabled={pack.unBuyable}
-                                                        on:click={() => callApi('post', `/buy/${pack.id}`)}
-                                                        class="px-4 py-1 bg-primary rounded">
+                                                    disabled={pack.unBuyable}
+                                                    on:click={() => callApi('post', `/buy/${pack.id}`)}
+                                                    class="px-4 py-1 bg-primary rounded">
                                                     <p class="text-2xl">
                                                         <b
-                                                                class="mr-1 font-normal">{pack.cost}</b>$
+                                                            class="mr-1 font-normal">{pack.cost}</b>$
                                                     </p>
                                                 </button>
                                             </div>
@@ -281,7 +345,7 @@
             {/if}
         </div>
         <div
-                class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
+            class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
             <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                 How does it works ?
             </h3>
@@ -290,7 +354,7 @@
                     <p class="text-4xl leading-none text-accent">1.</p>
                     <p class="text-4xl text-primary ml-2 leading-none">Click</p>
                     <p
-                            class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
+                        class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
                         Click on the item you want to purchase
                     </p>
                 </div>
@@ -298,7 +362,7 @@
                     <p class="text-4xl leading-none text-accent">2.</p>
                     <p class="text-4xl text-primary ml-2 leading-none">Add</p>
                     <p
-                            class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
+                        class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
                         Add the Winhalla Steam account to your friend list
                     </p>
                 </div>
@@ -306,42 +370,95 @@
                     <p class="text-4xl leading-none text-accent">3.</p>
                     <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
                     <p
-                            class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
+                        class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
                         You will receive the item you purchased within 1 week to 1 month
                     </p>
                 </div>
                 <div class="mt-40">
-                <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
-                    Lottery
-                </h3>
-                <div class="pt-4">
-                    <div class="mt-4 flex items-end">
-                        <p class="text-4xl leading-none text-accent">1.</p>
-                        <p class="text-4xl text-primary ml-2 leading-none"><br>Buy a ticket</p>
-                        <p
+                    <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
+                        Lottery
+                    </h3>
+                    <div class="pt-4">
+                        <div class="mt-4 flex items-end">
+                            <p class="text-4xl leading-none text-accent">1.</p>
+                            <p class="text-4xl text-primary ml-2 leading-none"><br>Buy a ticket</p>
+                            <p
                                 class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0">
-                            A ticket will give you a chance to win the prize you have chosen.
-                        </p>
-                    </div>
-                    <div class="mt-4 flex items-end">
-                        <p class="text-4xl leading-none text-accent">2.</p>
-                        <p class="text-4xl text-primary ml-2 leading-none">Multiple tickets</p>
-                        <p
+                                A ticket will give you a chance to win the prize you have chosen.
+                            </p>
+                        </div>
+                        <div class="mt-4 flex items-end">
+                            <p class="text-4xl leading-none text-accent">2.</p>
+                            <p class="text-4xl text-primary ml-2 leading-none">Multiple tickets</p>
+                            <p
                                 class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
-                            The more tickets you buy, the more chances to win you have !
-                        </p>
-                    </div>
-                    <div class="mt-4 flex items-end">
-                        <p class="text-4xl leading-none text-accent">3.</p>
-                        <p class="text-4xl text-primary ml-2 leading-none">Win</p>
-                        <p
+                                The more tickets you buy, the more chances to win you have !
+                            </p>
+                        </div>
+                        <div class="mt-4 flex items-end">
+                            <p class="text-4xl leading-none text-accent">3.</p>
+                            <p class="text-4xl text-primary ml-2 leading-none">Win</p>
+                            <p
                                 class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                            If you win a prize, an email will be sent to the adress you specified when you created the account
-                        </p>
+                                If you win a prize, an email will be sent to the adress you specified when you created
+                                the account
+                            </p>
+                        </div>
+                        <button class="button button-brand mt-10" onclick="playAd()">Play ad for lottery</button>
                     </div>
-                </div>
+
                 </div>
             </div>
         </div>
     </div>
 {/if}
+<div>
+    <input id="transfer" value="0" hidden />
+    {#if adError}
+        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
+    {/if}
+    <script data-playerPro="current">
+        function playAd() {
+            const init = (api) => {
+                if (api) {
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = 1;
+                        //api.setAdVolume(1);
+                        document.body.onblur = function() {
+                            //api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            //api.resumeAd();
+                        };
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = 2;
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = 3;
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = 4;
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = 5;
+                        setTimeout(() => {
+                            document.getElementById("transfer").value = 0;
+                        }, 1200);
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\"current\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script>
+</div>

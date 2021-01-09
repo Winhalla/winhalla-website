@@ -114,8 +114,14 @@
             tempNb = document.getElementById("transfer").value;
             console.log(tempNb, advideostate);
             if (tempNb !== advideostate) {
-                socket.emit("advideo", tempNb === "1" ? { state: 1, steamId: userPlayer.steamId, room: id } : tempNb);
-                console.log(tempNb);
+                if(tempNb !== 0) {
+                    socket.emit("advideo", tempNb === "1" ? {
+                        state: 1,
+                        steamId: userPlayer.steamId,
+                        room: id
+                    } : tempNb);
+                    console.log(tempNb);
+                }
             }
             /*if(adVideos < tempNb){
 
@@ -468,7 +474,7 @@
 
                     api.on("AdVideoStart", function() {
                         document.getElementById("transfer").value = 1;
-                        api.setAdVolume(0.5);
+                        api.setAdVolume(1);
                         document.body.onblur = function() {
                             api.pauseAd();
                         };

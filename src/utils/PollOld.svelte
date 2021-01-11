@@ -14,7 +14,6 @@
     let answered = false;
 
     function handleChoose(number) {
-        console.log("test")
         /*if(answer === number) {
             return answer = undefined;
         }*/

@@ -65,29 +65,37 @@
         let socket;
         let unsub = counter.subscribe(async (value) => {
             userPlayer = await value.content;
-            console.log(userPlayer.steam.id)
+            console.log(userPlayer.steam.id);
         });
         unsub();
         socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
         let tempNb;
+        let goal;
         setInterval(() => {
             if (stop > 0) {
                 return stop--;
             }
-            tempNb = document.getElementById("transfer").value;
+            tempNb = JSON.parse(document.getElementById("transfer").value);
+            goal = tempNb.goal?tempNb.goal:goal;
+            tempNb = tempNb.state;
             console.log(tempNb, advideostate);
             if (tempNb !== advideostate) {
-                socket.emit("advideo", tempNb === "1" ? { state: 1, steamId: parseInt(userPlayer.steam.id), shopItemId:0, goal:"enterLottery"} : tempNb);
-                console.log(tempNb)
+                socket.emit("advideo", tempNb === 1 ? {
+                    state: 1,
+                    steamId: parseInt(userPlayer.steam.id),
+                    shopItemId: 0,
+                    goal: goal
+                } : tempNb);
+                console.log("emit")
             }
             advideostate = tempNb;
         }, 1000);
         socket.on("advideo", (e) => {
             if (e.code === "error") {
                 console.log(e.message);
-                stop = 5
+                stop = 5;
                 advideostate = 0;
                 tempNb = 0;
                 adError = e.message;
@@ -95,16 +103,16 @@
                     adError = undefined;
                 }, 25000);
             } else if (e.code === "success") {
-                console.log(e)
+                console.log(e);
                 stop = 5;
-                info = e.won >0?e.message + ". You have WON A BATTLE PASS, view your mails for more informations":e.message + ". You have not won, better luck next time!"
+                info = e.message
                 advideostate = 0;
                 tempNb;
                 setTimeout(() => {
                     info = undefined;
                 }, 5000);
-            } else{
-                console.log(e)
+            } else {
+                console.log(e);
             }
         });
     });
@@ -404,7 +412,10 @@
                                 the account
                             </p>
                         </div>
-                        <button class="button button-brand mt-10" onclick="playAd()">Play ad for lottery</button>
+                        <button class="button button-brand mt-10" onclick="playAd('enterLottery')">Play ad for lottery
+                        </button>
+                        <button class="button button-brand mt-10" onclick="playAd('earnCoins')">Play ad for money
+                        </button>
                     </div>
 
                 </div>
@@ -418,11 +429,11 @@
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
     {/if}
     <script data-playerPro="current">
-        function playAd() {
+        function playAd(goal) {
             const init = (api) => {
                 if (api) {
                     api.on("AdVideoStart", function() {
-                        document.getElementById("transfer").value = 1;
+                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
                         //api.setAdVolume(1);
                         document.body.onblur = function() {
                             //api.pauseAd();
@@ -432,18 +443,18 @@
                         };
                     });
                     api.on("AdVideoFirstQuartile", () => {
-                        document.getElementById("transfer").value = 2;
+                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
                     });
                     api.on("AdVideoMidpoint", () => {
-                        document.getElementById("transfer").value = 3;
+                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
                     });
                     api.on("AdVideoThirdQuartile", () => {
-                        document.getElementById("transfer").value = 4;
+                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
                     });
                     api.on("AdVideoComplete", function() {
-                        document.getElementById("transfer").value = 5;
+                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
                         setTimeout(() => {
-                            document.getElementById("transfer").value = 0;
+                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
                         }, 1200);
                         document.body.onblur = null;
                         document.body.onfocus = null;

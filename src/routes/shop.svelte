@@ -65,7 +65,6 @@
         let socket;
         let unsub = counter.subscribe(async (value) => {
             userPlayer = await value.content;
-            console.log(userPlayer.steam.id);
         });
         unsub();
         socket = io.io(apiUrl);
@@ -80,7 +79,6 @@
             tempNb = JSON.parse(document.getElementById("transfer").value);
             goal = tempNb.goal?tempNb.goal:goal;
             tempNb = tempNb.state;
-            console.log(tempNb, advideostate);
             if (tempNb !== advideostate) {
                 socket.emit("advideo", tempNb === 1 ? {
                     state: 1,
@@ -88,7 +86,6 @@
                     shopItemId: 0,
                     goal: goal
                 } : tempNb);
-                console.log("emit")
             }
             advideostate = tempNb;
         }, 1000);
@@ -111,6 +108,7 @@
                 setTimeout(() => {
                     info = undefined;
                 }, 5000);
+                counter.set({refresh: true})
             } else {
                 console.log(e);
             }

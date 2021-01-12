@@ -64,7 +64,7 @@
                                  alt="Game modes section">
                         </section>
 
-                        <section class="md:flex justify-between mt-16">
+                        <section class="md:flex justify-between mt-16 mb-4">
                             <img class="hidden md:block w-1/2 h-41 object-cover object-left-top"
                                  src="/assets/GuidesImages/quests_section.png"
                                  alt="">
@@ -99,7 +99,7 @@
                                  alt="FFA player card example">
                         </section>
 
-                        <section class="md:flex justify-between mt-8">
+                        <section class="md:flex justify-between mt-8 mb-2">
                             <img class="hidden md:block  w-1/2 h-41 object-contain object-left-top"
                                  src="/assets/GuidesImages/ffa_buttons.png"
                                  alt="FFA action buttons">
@@ -121,7 +121,9 @@
                     {/if}
 
 
-                    <button class="button button-brand mt-14 w-full ml-2 md:ml-0" on:click={() => handleClose()}>LET'S GO!</button>
+                    <button class="button button-brand mt-10 w-full ml-2 md:ml-0" on:click={() => handleClose()}>LET'S
+                        GO!
+                    </button>
                 </div>
 
             </div>

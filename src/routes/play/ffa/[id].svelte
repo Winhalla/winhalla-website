@@ -425,7 +425,7 @@
                 </div>
             {/if}
             <input hidden value={videoSeen} id="transfer" />
-            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
+            <!--<div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
                     <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
@@ -458,7 +458,7 @@
                             played.</p>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <GuideCard page="ffa" />
         {:else}

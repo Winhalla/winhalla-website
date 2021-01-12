@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.6001e085.js"
+    "main": "client.0d8ca246.js"
   },
   "css": {
     "main": [
@@ -11,57 +11,57 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.4d53e520.js",
+      "index.62648e62.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.da6d79ee.js",
+      "create-account.4e3428eb.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.e4cd612f.js",
+      "change-email.98f0549a.js",
       "inject_styles.5607aec6.js",
       "change-email-5e828158.css"
     ],
     "contact.svelte": [
-      "contact.c48f78a5.js",
+      "contact.34945065.js",
       "inject_styles.5607aec6.js"
     ],
     "offline.svelte": [
-      "offline.2aaa84be.js",
+      "offline.db9510fd.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.32f9e9bd.js",
+      "privacy.026aa3be.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.3c5ab00d.js",
+      "status.aa46df3e.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.47b09b29.js",
+      "about.f12fc4fd.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.be8ac54d.js",
+      "terms.eb1e460d.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.7ddc29b2.js",
+      "help.517cfd2d.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].3ac8bcd0.js",
+      "[id].22f85f24.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.a22b49c2.js",
-      "RefreshButton.96894cf9.js",
-      "GuideCard.7ff3f14c.js",
-      "Loading.2a9eef6d.js",
+      "index.600534ec.js",
+      "RefreshButton.ced2d506.js",
+      "GuideCard.92fdeaff.js",
+      "Loading.1c3c21c8.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "GuideCard-909fbf0f.css",
@@ -69,17 +69,17 @@
       "index-3acaacf7.css"
     ],
     "play/ffa/index.svelte": [
-      "index.b89b055b.js",
-      "Loading.2a9eef6d.js",
+      "index.51e313c0.js",
+      "Loading.1c3c21c8.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].d46e657a.js",
-      "RefreshButton.96894cf9.js",
-      "GuideCard.7ff3f14c.js",
-      "Loading.2a9eef6d.js",
-      "Infos.0a97aa7f.js",
+      "[id].3059bfb3.js",
+      "RefreshButton.ced2d506.js",
+      "GuideCard.92fdeaff.js",
+      "Loading.1c3c21c8.js",
+      "Infos.1c5475da.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "GuideCard-909fbf0f.css",
@@ -87,19 +87,19 @@
       "[id]-08dc7097.css"
     ],
     "shop.svelte": [
-      "shop.d1e9cfca.js",
-      "RefreshButton.96894cf9.js",
-      "Infos.0a97aa7f.js",
+      "shop.df5406aa.js",
+      "RefreshButton.ced2d506.js",
+      "Infos.1c5475da.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.c56fa488.js",
+      "test.c5919a36.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.333ef201.js"
+    "main": "client.0a3fdc26.js"
   }
 }

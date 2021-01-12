@@ -296,9 +296,6 @@
         margin-bottom: 0.35rem;
     }
 
-    .quit {
-        @apply bg-legendary px-7;
-    }
 </style>
 
 <svelte:head>
@@ -325,7 +322,7 @@
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
                             class="mode-timer flex justify-center lg:justify-start
-                        items-end w-60 ">
+                        items-end w-52 ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
                                 class="timer text-primary ml-5 text-3xl leading-none">
@@ -336,19 +333,26 @@
                         <div
                             class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                            <p class="mx-4">You have watched <strong
-                                class="text-accent font-normal text-3xl">{userPlayer.adsWatched}
-                                ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, you have multiplied your earnings by
-                                <strong class="text-accent text-3xl font-normal">{userPlayer.multiplier / 100}</strong>
+                            <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
+                                class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
+                                <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                             </p>
+                            <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:mr-8 mt-2
+                                lg:mt-0 mb-5
+                                lg:mb-0  text-background" style="background-color: #3de488"
+                                    onclick="playAd()">{userPlayer.adsWatched < 2 ? "Play ad" : "Maximum ads reached"}
+                            </button>
+
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
                                 refreshMessage={'Refresh data'} />
                             {#if userPlayer.gamesPlayed == 0}
                                 <button
-                                    class="button button-brand quit lg:ml-4 mt-2
-                                lg:mt-0"
+                                    class="button button-brand quit lg:ml-4 mt-3
+                                lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
+
                                     on:click={() => handleQuit()}>
                                     Quit lobby
                                 </button>
@@ -356,16 +360,13 @@
                                     <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
                                 {/if}
                             {/if}
-                            <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:ml-4 mt-2
-                                lg:mt-0"
-                                    onclick="playAd()">{userPlayer.adsWatched < 2 ? "Play ad" : "Maximum ads reached"}
-                            </button>
+
                         </div>
                     </div>
 
                     <div
                         class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full">
+                    h-full lg:mt-6">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">

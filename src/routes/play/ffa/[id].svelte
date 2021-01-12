@@ -21,6 +21,8 @@
     import { apiUrl } from "../../../utils/config";
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
     import Infos from "../../../components/Infos.svelte";
+    import GameModeCards from "../../../components/GameModeCards.svelte";
+    import GuideCard from "../../../components/GuideCard.svelte";
 
     export let id;
 
@@ -114,7 +116,7 @@
             tempNb = document.getElementById("transfer").value;
             console.log(tempNb, advideostate);
             if (tempNb !== advideostate) {
-                if(tempNb !== 0) {
+                if (tempNb !== 0) {
                     socket.emit("advideo", tempNb === "1" ? {
                         state: 1,
                         steamId: userPlayer.steamId,
@@ -238,13 +240,15 @@
     b {
         @apply text-primary font-normal;
     }
-    button:disabled{
+
+    button:disabled {
         @apply bg-disabled;
         cursor: auto;
         padding-left: 1rem;
         padding-right: 1rem;
         box-shadow: none;
     }
+
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -335,7 +339,8 @@
                             <p class="mx-4">You have watched <strong
                                 class="text-accent font-normal text-3xl">{userPlayer.adsWatched}
                                 ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, you have multiplied your earnings by
-                                <strong class="text-accent text-3xl font-normal">{userPlayer.multiplier / 100}</strong></p>
+                                <strong class="text-accent text-3xl font-normal">{userPlayer.multiplier / 100}</strong>
+                            </p>
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
@@ -351,9 +356,10 @@
                                     <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
                                 {/if}
                             {/if}
-                                <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:ml-4 mt-2
-                                lg:mt-0" onclick="playAd()">{userPlayer.adsWatched < 2?"Play ad":"Maximum ads reached"}
-                                </button>
+                            <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:ml-4 mt-2
+                                lg:mt-0"
+                                    onclick="playAd()">{userPlayer.adsWatched < 2 ? "Play ad" : "Maximum ads reached"}
+                            </button>
                         </div>
                     </div>
 
@@ -454,7 +460,7 @@
                 </div>
             </div>
 
-
+            <GuideCard page="ffa" />
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

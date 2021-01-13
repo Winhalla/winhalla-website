@@ -243,7 +243,7 @@
 
     button:disabled {
         @apply bg-disabled;
-        cursor: auto;
+        @apply text-white;
         padding-left: 1rem;
         padding-right: 1rem;
         box-shadow: none;
@@ -346,7 +346,7 @@
                             <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:mr-8 mt-2
                                 lg:mt-0 mb-5
                                 lg:mb-0  text-background" style="background-color: #3de488"
-                                    onclick="playAd()">{userPlayer.adsWatched < 2 ? "Play ad" : "Maximum ads reached"}
+                                    onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
                             </button>
 
                             <RefreshButton

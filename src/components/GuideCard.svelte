@@ -1,12 +1,38 @@
 <script>
     import { fly } from "svelte/transition";
+    import cookie from "cookie";
+    import { getCookie } from "../utils/getCookie";
+    import { onMount } from "svelte";
 
     export let page = "";
-    export let isCardVisible = true;
+    export let isCardVisible = false;
+    let hiddenCardsList;
+    onMount(() => {
+        hiddenCardsList = JSON.parse(decodeURI(getCookie("hideCards")).replace(/%2C/g, ","));
+
+        if (!hiddenCardsList || !hiddenCardsList.includes(page)) isCardVisible = true;
+    });
 
 
     function handleClose() {
         isCardVisible = false;
+
+        if (hiddenCardsList) {
+            !hiddenCardsList.includes(page) ? hiddenCardsList.push(page) : null;
+        } else {
+            hiddenCardsList = [page];
+        }
+
+        document.cookie = cookie.serialize(
+            "hideCards",
+            JSON.stringify(hiddenCardsList),
+            {
+                maxAge: 15552000,
+                sameSite: "lax",
+                path: "/"
+            }
+        );
+
     }
 </script>
 
@@ -60,7 +86,8 @@
                                 <p class="text-3xl text-legendary">Game modes section</p>
                                 <p><b>Click </b> on the game mode <b>you want to play</b> !</p>
                             </div>
-                            <img class="w-full mt-2 md:mt-0 md:w-1/2 md:h-41 object-cover" src="/assets/GuidesImages/game_modes_section.png"
+                            <img class="w-full mt-2 md:mt-0 md:w-1/2 md:h-41 object-cover"
+                                 src="/assets/GuidesImages/game_modes_section.png"
                                  alt="Game modes section">
                         </section>
 
@@ -83,7 +110,8 @@
                     {:else if page === "ffa"}
                         <h2 class="text-center text-5xl">FFA PAGE GUIDE</h2>
 
-                        <section class="mt-10 md:mt-16 text-center text-green"><p>Only Brawlhalla <u>ranked games will count</u>
+                        <section class="mt-10 md:mt-16 text-center text-green"><p>Only Brawlhalla <u>ranked games will
+                            count</u>
                             in this game mode. You can play <u>1vs1</u> or <u>2vs2!</u></p></section>
 
                         <section class="md:flex justify-between mt-12">
@@ -95,8 +123,10 @@
                                     will see
                                     your <b>number of wins</b> on <b>your</b> player card.</p>
                             </div>
-                            <img class="mt-2 w-5/6 mx-auto block max-w-xs px-8  md:px-0 md:max-w-full  md:mt-0 md:mx-0 md:w-1/2 md:h-64 object-contain " src="/assets/GuidesImages/ffa_player_card.png"
-                                 alt="FFA player card example">
+                            <img
+                                class="mt-2 w-5/6 mx-auto block max-w-xs px-8  md:px-0 md:max-w-full  md:mt-0 md:mx-0 md:w-1/2 md:h-64 object-contain "
+                                src="/assets/GuidesImages/ffa_player_card.png"
+                                alt="FFA player card example">
                         </section>
 
                         <section class="md:flex justify-between mt-8 mb-2">
@@ -121,7 +151,8 @@
                     {/if}
 
 
-                    <button class="button button-brand mt-10 w-full ml-2 md:ml-0" on:click={() => handleClose()}>LET'S
+                    <button class="button button-brand mt-10 w-full ml-2 md:ml-0"
+                            on:click={() => handleClose()}>LET'S
                         GO!
                     </button>
                 </div>

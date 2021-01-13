@@ -68,16 +68,19 @@
 
     function startTimer(duration) {
         let timer = duration,
+            hours,
             minutes,
             seconds;
         setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            countDown = minutes + ":" + seconds;
+            if (hours > 0) countDown = hours + ":" + minutes + ":" + seconds;
+            else countDown = minutes + ":" + seconds;
 
             if (--timer < 0) {
                 timer = duration;
@@ -93,7 +96,7 @@
 
             if (userPlayer.user.lastVideoAd.earnCoins + 3600 * 1000 > Date.now()) {
                 console.log("heyeye");
-                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins + 3600 * 1000) - Date.now()) / 1000;
+                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins + 7200 * 1000) - Date.now()) / 1000;
                 startTimer(endsIn);
             } else {
                 countDown = undefined;
@@ -135,7 +138,7 @@
                     adError = undefined;
                 }, 12000);
             } else if (e.code === "success") {
-                if (goal === "earnCoins") startTimer(3599);
+                if (goal === "earnCoins") startTimer(7199);
                 console.log(e);
                 stop = 2;
                 info = e.message;

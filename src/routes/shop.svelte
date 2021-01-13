@@ -63,7 +63,7 @@
     let info;
     let userPlayer;
     let ticketsNb = 1;
-    let isLoadingTicket = false
+    let isLoadingTicket = false;
 
     onMount(async () => {
         let socket;
@@ -122,11 +122,11 @@
     //* End of required for videoAd
     async function buyTickets() {
         try {
-            isLoadingTicket = true
+            isLoadingTicket = true;
             const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
             info = `You have successfully received ${ticketsNb} ticket${ticketsNb > 1 ? "s" : ""}, ${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
-            if (coins > 0) counter.set({ refresh: true });
-            isLoadingTicket = false
+            counter.set({ refresh: true });
+            isLoadingTicket = false;
             setTimeout(() => {
                 info = undefined;
             }, 5000);
@@ -432,7 +432,9 @@
                         <div class="block mt-10">
                             <div class="flex">
                                 <input class="mr-3" type="range" min="1" max="50" bind:value={ticketsNb}>
-                                <RefreshButton on:click={buyTickets} refreshMessage={`Buy ${ticketsNb} tickets for ${ticketsNb * 100} coins`} isRefreshing={isLoadingTicket}/>
+                                <RefreshButton on:click={buyTickets}
+                                               refreshMessage={`Buy ${ticketsNb} tickets for ${ticketsNb * 100} coins`}
+                                               isRefreshing={isLoadingTicket} />
                             </div>
 
                             <div class="flex mt-8">

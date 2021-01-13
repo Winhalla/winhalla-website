@@ -183,13 +183,13 @@
                             <!--For each player in rank-->
                             {#each winners as winner}
                                 {#if winner.avatarURL || winner.username}
-                                    <tr>
+                                    <tr class="text-center">
                                         <td class="px-6 py-2">
-                                            <b class="font-normal">{i+1}</b>
+                                            <b class="font-normal">{i + 1}</b>
                                         </td>
                                         <td class="flex items-center px-6 py-2">
                                             <img class="block w-10 h-10 rounded-full" src={winner.avatarURL}
-                                                 alt={winner.legends}>
+                                                 alt={winner.username}>
                                             <p class="pl-2">{winner.username}</p>
                                         </td>
                                         <td class="px-6 py-2">

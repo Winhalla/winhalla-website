@@ -46,6 +46,7 @@
     let pushError;
     let socket;
     let adError;
+
     onMount(async () => {
         let unsub = counter.subscribe((value) => {
             user = value.content;
@@ -58,6 +59,7 @@
             user = await user;
             user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
+
             if (match instanceof Error) {
                 throw match;
             }
@@ -105,6 +107,7 @@
             }
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
+
         let adVideos = 0;
         let stop = 0;
         let advideostate = 0;
@@ -131,6 +134,7 @@
             }*/
             advideostate = tempNb;
         }, 1000);
+
         socket.on("advideo", (e) => {
             if (e.code === "error") {
                 console.log(e.message);
@@ -160,7 +164,7 @@
 
     const filterUsers = (isFromSocket) => {
         //Find user's object
-        if (isFromSocket === false) {
+        if (!isFromSocket) {
             userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
         } else {
             let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
@@ -199,6 +203,7 @@
     }
 
     let videoSeen = 0;
+
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async () => {

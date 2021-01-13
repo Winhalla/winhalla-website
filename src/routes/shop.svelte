@@ -64,13 +64,44 @@
     let userPlayer;
     let ticketsNb = 1;
     let isLoadingTicket = false;
+    let countDown = "Loading...";
+
+    function startTimer(duration) {
+        let timer = duration,
+            minutes,
+            seconds;
+        setInterval(function() {
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            countDown = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
 
     onMount(async () => {
         let socket;
         let unsub = counter.subscribe(async (value) => {
             userPlayer = await value.content;
+            if (!userPlayer.user.lastVideoAd) return countDown = undefined;
+
+            if (userPlayer.user.lastVideoAd.earnCoins + 3600 * 1000 > Date.now()) {
+                console.log("heyeye");
+                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins + 3600 * 1000) - Date.now()) / 1000;
+                startTimer(endsIn);
+            } else {
+                countDown = undefined;
+            }
+
         });
         unsub();
+
         socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
@@ -92,20 +123,21 @@
                 } : tempNb);
             }
             advideostate = tempNb;
-        }, 1000);
+        }, 1200);
         socket.on("advideo", (e) => {
             if (e.code === "error") {
                 console.log(e.message);
-                stop = 5;
+                stop = 2;
                 advideostate = 0;
                 tempNb = 0;
                 adError = e.message;
                 setTimeout(() => {
                     adError = undefined;
-                }, 25000);
+                }, 12000);
             } else if (e.code === "success") {
+                if (goal === "earnCoins") startTimer(3599);
                 console.log(e);
-                stop = 5;
+                stop = 2;
                 info = e.message;
                 advideostate = 0;
                 tempNb;
@@ -120,6 +152,7 @@
     });
 
     //* End of required for videoAd
+
     async function buyTickets() {
         try {
             isLoadingTicket = true;
@@ -441,8 +474,9 @@
                                 <button class="button button-brand" onclick="playAd('enterLottery')">Play ad for
                                     lottery
                                 </button>
-                                <button class="button button-brand ml-4" onclick="playAd('earnCoins')">Play ad for
-                                    money
+                                <button class="button button-brand ml-4" onclick="playAd('earnCoins')"
+                                        disabled={!!countDown}>
+                                    {!!countDown ? countDown : "Play ad for money"}
                                 </button>
                             </div>
                         </div>

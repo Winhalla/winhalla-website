@@ -55,7 +55,7 @@
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
 
@@ -71,7 +71,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function() {
+        return setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -87,24 +87,28 @@
             }
         }, 1000);
     }
-
+    let unsub;
     onMount(async () => {
         let socket;
-        let unsub = counter.subscribe(async (value) => {
+        let interval;
+        unsub = counter.subscribe(async (value) => {
+            if(value.refresh === true) return
+            console.log("refresh")
             userPlayer = await value.content;
+            clearInterval(interval)
+            console.log("heyeye")
             if (!userPlayer.user.lastVideoAd) return countDown = undefined;
-
-            if (userPlayer.user.lastVideoAd.earnCoins + 3600 * 1000 > Date.now()) {
-                console.log("heyeye");
-                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins + 7200 * 1000) - Date.now()) / 1000;
-                startTimer(endsIn);
+            console.log("heyeye1")
+            if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;
+            console.log("heyeye2")
+            if (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 > Date.now()) {
+                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000) - Date.now()) / 1000;
+                interval = startTimer(endsIn);
             } else {
                 countDown = undefined;
             }
 
         });
-        unsub();
-
         socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
@@ -128,6 +132,7 @@
             advideostate = tempNb;
         }, 1200);
         socket.on("advideo", (e) => {
+            console.log(e)
             if (e.code === "error") {
                 console.log(e.message);
                 stop = 2;
@@ -138,8 +143,7 @@
                     adError = undefined;
                 }, 12000);
             } else if (e.code === "success") {
-                if (goal === "earnCoins") startTimer(7199);
-                console.log(e);
+                countDown = "Wait a second..."
                 stop = 2;
                 info = e.message;
                 advideostate = 0;
@@ -149,10 +153,13 @@
                 }, 5000);
                 counter.set({ refresh: true });
             } else {
-                console.log(e);
+                console.log("code not supported");
             }
         });
     });
+    onDestroy(()=>{
+        if(unsub) unsub()
+    })
 
     //* End of required for videoAd
 

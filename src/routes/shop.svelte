@@ -45,6 +45,8 @@
 
 <script>
 
+    import RefreshButton from "../components/RefreshButton.svelte";
+
     export let featuredItem;
     export let seasonPacks;
     export let packs;
@@ -60,6 +62,8 @@
     let adError;
     let info;
     let userPlayer;
+    let ticketsNb = 1;
+    let isLoadingTicket = false;
 
     onMount(async () => {
         let socket;
@@ -77,7 +81,7 @@
                 return stop--;
             }
             tempNb = JSON.parse(document.getElementById("transfer").value);
-            goal = tempNb.goal?tempNb.goal:goal;
+            goal = tempNb.goal ? tempNb.goal : goal;
             tempNb = tempNb.state;
             if (tempNb !== advideostate) {
                 socket.emit("advideo", tempNb === 1 ? {
@@ -102,19 +106,34 @@
             } else if (e.code === "success") {
                 console.log(e);
                 stop = 5;
-                info = e.message
+                info = e.message;
                 advideostate = 0;
                 tempNb;
                 setTimeout(() => {
                     info = undefined;
                 }, 5000);
-                counter.set({refresh: true})
+                counter.set({ refresh: true });
             } else {
                 console.log(e);
             }
         });
     });
+
     //* End of required for videoAd
+    async function buyTickets() {
+        try {
+            isLoadingTicket = true;
+            const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
+            info = `You have successfully received ${ticketsNb} ticket${ticketsNb > 1 ? "s" : ""}, ${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
+            counter.set({ refresh: true });
+            isLoadingTicket = false;
+            setTimeout(() => {
+                info = undefined;
+            }, 5000);
+        } catch (e) {
+
+        }
+    }
 
     const handleDescriptionToggle = (seasonPack) => {
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
@@ -380,7 +399,7 @@
                         You will receive the item you purchased within 1 week to 1 month
                     </p>
                 </div>
-                <div class="mt-40">
+                <div class="mt-30">
                     <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                         Lottery
                     </h3>
@@ -410,10 +429,23 @@
                                 the account
                             </p>
                         </div>
-                        <button class="button button-brand mt-10" onclick="playAd('enterLottery')">Play ad for lottery
-                        </button>
-                        <button class="button button-brand mt-10" onclick="playAd('earnCoins')">Play ad for money
-                        </button>
+                        <div class="block mt-10">
+                            <div class="flex">
+                                <input class="mr-3" type="range" min="1" max="50" bind:value={ticketsNb}>
+                                <RefreshButton on:click={buyTickets}
+                                               refreshMessage={`Buy ${ticketsNb} tickets for ${ticketsNb * 100} coins`}
+                                               isRefreshing={isLoadingTicket} />
+                            </div>
+
+                            <div class="flex mt-8">
+                                <button class="button button-brand" onclick="playAd('enterLottery')">Play ad for
+                                    lottery
+                                </button>
+                                <button class="button button-brand ml-4" onclick="playAd('earnCoins')">Play ad for
+                                    money
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

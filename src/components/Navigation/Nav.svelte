@@ -30,8 +30,8 @@
     let loaded = false;
 
     async function calculateProperties(value) {
-        const tempUserData = await value;
-
+        const tempUserData = value
+        console.log(tempUserData)
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
             if (tempUserData.response) if (tempUserData.response.status === 503) goto("/status");
@@ -52,11 +52,10 @@
     }
 
     const resetNav = async value => {
-        user = value.content;
-        if (firstLoad === true) return (firstLoad = false);
         if (value.refresh === true) return;
-
-        await calculateProperties(user);
+        user = await value.content;
+        if (firstLoad === true) return (firstLoad = false);
+        calculateProperties(user);
     };
 
     const unsubscribe = counter.subscribe(resetNav);
@@ -84,8 +83,8 @@
                 }
             }, 1000
         );
-
-        await calculateProperties(user);
+        await user
+        calculateProperties(user);
         loaded = true;
     });
 </script>

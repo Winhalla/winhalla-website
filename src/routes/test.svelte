@@ -1,36 +1,11 @@
-<svelte:head>
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
 
-</svelte:head>
-<div>
-    <button class="button" onclick="playAd()">Play ad</button>
-</div>
-<div>
-    <script data-playerPro="current">
-        function playAd() {
-            const init = (api) => {
-                if (api) {
-                    api.on('AdStarted', function () {
-                            console.log('AdStarted')
-                        }
-                    );
+<script>
+    import { counter } from "../components/store";
 
-
-                    api.on('AdVideoComplete', function () {
-                            console.log('AdVideoComplete')
-                        }
-                    );
-                } else {
-                    console.log('blank');
-                }
-            }
-            var s = document.querySelector('script[data-playerPro="current"]');
-            s.removeAttribute("data-playerPro");
-            (playerPro = window.playerPro || []).push({
-                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
-                after: s,
-                init: init
-            });
-        }
-    </script>
-</div>
+    function click(){
+        counter.set({refresh: true})
+    }
+</script>
+<body>
+    <button class="button" on:click={click}>Refresh</button>
+</body>

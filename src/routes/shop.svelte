@@ -125,7 +125,7 @@
             isLoadingTicket = true
             const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
             info = `You have successfully received ${ticketsNb} ticket${ticketsNb > 1 ? "s" : ""}, ${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
-            if (coins > 0) counter.set({ refresh: true });
+            counter.set({ refresh: true });
             isLoadingTicket = false
             setTimeout(() => {
                 info = undefined;

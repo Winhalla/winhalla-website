@@ -1,0 +1,1 @@
+<div class="text-legendary">Please disable your adblocker, we use ads revenue to give you free stuff. </div>

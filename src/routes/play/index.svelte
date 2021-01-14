@@ -5,13 +5,15 @@
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
-    import Infos from "../../components/Infos.svelte"
+    import Infos from "../../components/Infos.svelte";
+    import AdblockAlert from "../../components/AdblockAlert.svelte";
 
     let quests;
     let error;
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
+    let adblocker = false;
     onMount(async () => {
         gameModes = [
             {
@@ -36,7 +38,7 @@
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
             let gameModesStatus = await callApi("get", "/status");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-                gameModesError = `<p class='text-accent'>Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
+                gameModesError = `<p class="text-accent">Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class="text-2xl text-light">${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.find(
@@ -62,8 +64,8 @@
                 quests = await callApi("get", "/solo");
                 if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests;
                 quests = quests.solo;
-            } else{
-                quests = quests.solo
+            } else {
+                quests = quests.solo;
             }
         } catch
             (err) {
@@ -78,10 +80,18 @@
 
                 }
             }
-            error = `<p class='text-accent'>Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 
         }
-
+        //Adblock detector
+        setTimeout(() => {
+            if (quests.dailyQuests) {
+                if (!document.getElementById("vdngZEmaYJWQ")) {
+                    //Is blocking ads
+                    adblocker = true;
+                }
+            }
+        }, 10000);
     });
 </script>
 
@@ -91,6 +101,9 @@
         name="description"
     content="Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!
         | Exchange here your coins into rewards | Winhalla Shop page " />
+    <!--Adblock detector-->
+    <script src="/adblocker.js"></script>
+    <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
         | Choose your game mode here | Winhalla play page " />
 
@@ -122,7 +135,9 @@
                 Choose a game mode
             </h1>
         </div>
-
+        {#if adblocker}
+            <AdblockAlert />
+        {/if}
         <div
             class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">
@@ -147,6 +162,7 @@
                     <div class="lg:ml-15">
                         <Quests data={quests} />
                     </div>
+
                 {:else}
                     <Loading type="inline" />
                 {/if}
@@ -154,5 +170,5 @@
         </div>
     </div>
 
-    <GuideCard page="play"/>
+    <GuideCard page="play" />
 {/if}

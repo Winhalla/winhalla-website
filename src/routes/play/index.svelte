@@ -100,7 +100,7 @@
     <meta
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Exchange here your coins into rewards | Winhalla Shop page " />
+        | Choose your gamemode here | Winhalla Play page" />
     <!--Adblock detector-->
     <script src="/adblocker.js"></script>
     <!--Video ads-->

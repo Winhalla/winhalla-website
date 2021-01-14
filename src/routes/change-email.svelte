@@ -110,7 +110,7 @@
                         <input
                                 on:keydown={onKeyPress}
                                 type="email"
-                                placeholder="Your email goes here"
+                                placeholder="Your new email goes here"
                                 bind:value={email}
                                 class:border-legendary={valid == false}
                                 class="input-style focus:outline-none
@@ -138,7 +138,7 @@
                         on:click={onClick}
                         class:mt-11={valid == null}
                         class="button button-brand mt-3">
-                    Change emails
+                    Change email
                 </button>
             </div>
     </div>

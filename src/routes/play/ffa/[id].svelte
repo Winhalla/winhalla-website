@@ -124,7 +124,7 @@
                         state: 1,
                         steamId: userPlayer.steamId,
                         room: id
-                    } : tempNb);
+                    } : { state: tempNb, steamId: userPlayer.steamId });
                     console.log(tempNb);
                 }
             }

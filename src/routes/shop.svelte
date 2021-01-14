@@ -122,10 +122,10 @@
             if (tempNb !== advideostate) {
                 socket.emit("advideo", tempNb === 1 ? {
                     state: 1,
-                    steamId: parseInt(userPlayer.steam.id),
+                    steamId: userPlayer.steam.id,
                     shopItemId: 0,
                     goal: goal
-                } : tempNb);
+                } : { state:tempNb, steamId: userPlayer.steam.id });
             }
             advideostate = tempNb;
         }, 1200);

@@ -5,13 +5,13 @@
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
+    import Infos from "../../components/Infos.svelte"
 
     let quests;
     let error;
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
-
     onMount(async () => {
         gameModes = [
             {
@@ -57,12 +57,13 @@
             quests = await callApi("get", "/getSolo");
             if (quests instanceof Error && quests.response.status !== 403) throw quests;
             if (quests instanceof Error && quests.response.status === 403) return;
-            quests = quests.solo;
 
-            if (!quests.lastDaily || !quests.lastWeekly) {
+            if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");
                 if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests;
                 quests = quests.solo;
+            } else{
+                quests = quests.solo
             }
         } catch
             (err) {
@@ -80,14 +81,17 @@
             error = `<p class='text-accent'>Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
 
         }
+
     });
 </script>
 
 <svelte:head>
     <title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>
-    <meta
+    l<meta
         name="description"
-        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
+    content="Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!
+        | Exchange here your coins into rewards | Winhalla Shop page " />
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
         | Choose your game mode here | Winhalla play page " />
 
     <link rel="canonical" href="https://winhalla.app/play" />

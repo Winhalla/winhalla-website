@@ -124,7 +124,7 @@
                         state: 1,
                         steamId: userPlayer.steamId,
                         room: id
-                    } : tempNb);
+                    } : { state: tempNb, steamId: userPlayer.steamId });
                     console.log(tempNb);
                 }
             }
@@ -343,7 +343,7 @@
                                 ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
                                 <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                             </p>
-                            <button disabled={userPlayer.adsWatched > 1} class="button button-brand lg:mr-8 mt-2
+                            <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                                 lg:mt-0 mb-5
                                 lg:mb-0  text-background" style="background-color: #3de488"
                                     onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}

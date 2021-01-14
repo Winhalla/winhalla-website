@@ -55,7 +55,7 @@
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
 
@@ -64,13 +64,49 @@
     let userPlayer;
     let ticketsNb = 1;
     let isLoadingTicket = false;
+    let countDown = "Loading...";
 
+    function startTimer(duration) {
+        let timer = duration,
+            hours,
+            minutes,
+            seconds;
+        return setInterval(function() {
+            seconds = Math.floor(timer % 60);
+            minutes = Math.floor((timer / 60) % 60);
+            hours = Math.floor(timer / (60 * 60));
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            if (hours > 0) countDown = hours + ":" + minutes + ":" + seconds;
+            else countDown = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+    let unsub;
     onMount(async () => {
         let socket;
-        let unsub = counter.subscribe(async (value) => {
+        let interval;
+        unsub = counter.subscribe(async (value) => {
+            if(value.refresh === true) return
             userPlayer = await value.content;
+            clearInterval(interval)
+            if (!userPlayer.user.lastVideoAd) return countDown = undefined;
+
+            if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;
+
+            if (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 > Date.now()) {
+                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000) - Date.now()) / 1000;
+                interval = startTimer(endsIn);
+            } else {
+                countDown = undefined;
+            }
+
         });
-        unsub();
         socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
@@ -86,26 +122,27 @@
             if (tempNb !== advideostate) {
                 socket.emit("advideo", tempNb === 1 ? {
                     state: 1,
-                    steamId: parseInt(userPlayer.steam.id),
+                    steamId: userPlayer.steam.id,
                     shopItemId: 0,
                     goal: goal
-                } : tempNb);
+                } : { state:tempNb, steamId: userPlayer.steam.id });
             }
             advideostate = tempNb;
-        }, 1000);
+        }, 1200);
         socket.on("advideo", (e) => {
+            console.log(e)
             if (e.code === "error") {
                 console.log(e.message);
-                stop = 5;
+                stop = 2;
                 advideostate = 0;
                 tempNb = 0;
                 adError = e.message;
                 setTimeout(() => {
                     adError = undefined;
-                }, 25000);
+                }, 12000);
             } else if (e.code === "success") {
-                console.log(e);
-                stop = 5;
+                countDown = "Wait a second..."
+                stop = 2;
                 info = e.message;
                 advideostate = 0;
                 tempNb;
@@ -114,12 +151,16 @@
                 }, 5000);
                 counter.set({ refresh: true });
             } else {
-                console.log(e);
+                console.log("code not supported");
             }
         });
     });
+    onDestroy(()=>{
+        if(unsub) unsub()
+    })
 
     //* End of required for videoAd
+
     async function buyTickets() {
         try {
             isLoadingTicket = true;
@@ -441,8 +482,9 @@
                                 <button class="button button-brand" onclick="playAd('enterLottery')">Play ad for
                                     lottery
                                 </button>
-                                <button class="button button-brand ml-4" onclick="playAd('earnCoins')">Play ad for
-                                    money
+                                <button class="button button-brand ml-4" onclick="playAd('earnCoins')"
+                                        disabled={!!countDown}>
+                                    {!!countDown ? countDown : "Play ad for money"}
                                 </button>
                             </div>
                         </div>

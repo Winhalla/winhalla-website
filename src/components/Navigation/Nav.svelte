@@ -332,7 +332,7 @@
                                 </div>
                             {/if}
 
-                            <a class="ml-8 text-2xl text-primary" href="/shop">
+                            <a class="lg:mt-0 lg:ml-8 text-2xl text-primary" href="/shop">
                                 <b class="font-normal ">{userCoins}</b>
                                 $
                             </a>

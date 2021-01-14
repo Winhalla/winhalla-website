@@ -34,7 +34,7 @@
         console.log(tempUserData)
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
-            if (tempUserData.response) if (tempUserData.response.status === 503) goto("/status");
+            if (tempUserData.response) if (tempUserData.response.status === 503 ||tempUserData.response.status === 502) goto("/status");
             return isUserLoggedIn = "network";
         }
         if (tempUserData.user) {
@@ -81,7 +81,7 @@
                 } catch (e) {
                     console.log(e);
                 }
-            }, 1000
+            }, 5000
         );
         await user
         calculateProperties(user);

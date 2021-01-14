@@ -1,11 +1,23 @@
 <script>
-    import { callApi } from "../utils/api";
+    import { callApi, getUser } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
+    import { onMount } from "svelte";
+    import io from "socket.io-client";
+    import { apiUrl } from "../utils/config";
+    import Infos from "./Infos.svelte";
+    import ErrorAlert from "./ErrorAlert.svelte";
 
     let countDown = [{}, {}];
     export let data;
     let error;
+    let socket;
+    let adError;
+    let info;
+    let user;
+    let waitingAd;
+    let waitingAdAccept = false;
+
     const calculateRarity = (reward, daily) => {
         if (daily) {
             if (reward == 100) return "primary";
@@ -49,14 +61,14 @@
             hours = hours < 10 ? "0" + hours : hours;
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
-            let errDetected
-            let vars = [hours,minutes,days,seconds]
-            for(let i=0;i<4;i++) {
-                if(vars[i]==undefined || isNaN(vars[i])) errDetected = true
+            let errDetected;
+            let vars = [hours, minutes, days, seconds];
+            for (let i = 0; i < 4; i++) {
+                if (vars[i] == undefined || isNaN(vars[i])) errDetected = true;
             }
             if (errDetected) {
-                countDown[i].timer = "Oops error :("
-                return countDown[i].speed = "legendary"
+                countDown[i].timer = "Oops error :(";
+                return countDown[i].speed = "legendary";
             }
             countDown[i].timer =
                 days != 0
@@ -87,7 +99,58 @@
     } catch (e) {
         error = e;
     }
-
+    onMount(async () => {
+        user = await getUser();
+        socket = io.io(apiUrl);
+        let stop = 0;
+        let advideostate = 0;
+        let tempNb;
+        let goal;
+        setInterval(() => {
+            if (stop > 0) {
+                return stop--;
+            }
+            tempNb = JSON.parse(document.getElementById("transfer").value);
+            goal = tempNb.goal ? tempNb.goal : goal;
+            tempNb = tempNb.state;
+            if (tempNb !== advideostate) {
+                socket.emit("advideo", tempNb === 1 ? {
+                    state: 1,
+                    steamId: parseInt(user.steam.id),
+                    shopItemId: 0,
+                    goal: goal
+                } : tempNb);
+            }
+            advideostate = tempNb;
+        }, 1200);
+        socket.on("advideo", async (e) => {
+            console.log(e);
+            if (e.code === "error") {
+                console.log(e.message);
+                stop = 2;
+                advideostate = 0;
+                tempNb = 0;
+                adError = e.message;
+                setTimeout(() => {
+                    adError = undefined;
+                }, 12000);
+            } else if (e.code === "success") {
+                stop = 2;
+                info = e.message;
+                advideostate = 0;
+                tempNb;
+                setTimeout(() => {
+                    info = undefined;
+                }, 5000);
+                counter.set({ refresh: true });
+                if (waitingAd) {
+                    collect(waitingAd.type, waitingAd.index, false);
+                }
+            } else {
+                console.log("code not supported");
+            }
+        });
+    });
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -120,22 +183,41 @@
     calculateOrder(data);
 
     let isRefreshingQuests = false;
+
     async function handleRefresh() {
-        isRefreshingQuests = true;
+        try {
+            isRefreshingQuests = true;
 
-        const refreshedData = await callApi("get", "solo");
-        console.log(refreshedData);
-        calculateOrder(refreshedData.solo);
-        data = refreshedData.solo;
+            const refreshedData = await callApi("get", "solo");
+            console.log(refreshedData);
+            calculateOrder(refreshedData.solo);
+            data = refreshedData.solo;
 
-        isRefreshingQuests = false;
+            isRefreshingQuests = false;
+        } catch (e) {
+            isRefreshingQuests = false;
+        }
     };
 
-    async function collect(type, index) {
-        await callApi("post", `solo/collect?type=${type}&index=${index}`);
-        counter.set({ "refresh": true });
-        data.collected[type].push(...data.finished[type].splice(index, 1));
-        data = data;
+    function acceptAd(accepted) {
+        if (accepted) document.getElementById("playAd").onclick("earnMoreQuests");
+        if (!accepted) waitingAd = undefined;
+        waitingAdAccept = false;
+    }
+
+    async function collect(type, index, possibleAd) {
+        let probability;
+        if (possibleAd) probability = Math.floor(Math.random() * 3);
+        if (probability === 2) {
+            waitingAdAccept = true;
+            waitingAd = { type, index };
+            console.log("waitingAdAccept");
+        } else {
+            await callApi("post", `solo/collect?type=${type}&index=${index}`);
+            counter.set({ "refresh": true });
+            data.collected[type].push(...data.finished[type].splice(index, 1));
+            data = data;
+        }
     }
 </script>
 
@@ -179,10 +261,31 @@
     .text-light {
         color: #e2e2ea;
     }
+
 </style>
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
+
+
 <div>
+    {#if waitingAdAccept}
+        <div class="absolute top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
+            <style>
+                .button-alternative {
+                    display: inline-block;
+                    padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
+                    border-radius: 0.125rem;
+                    border-width: 1px;
+                    border-color: #3d72e4;
+                    font-size: 1.25rem;
+                }
+            </style>
+            <h1 class="text-2xl">Watch an ad to earn x2 coins for your next quest</h1>
+            <button on:click={()=>acceptAd(true)} class="button button-brand">Play ad</button>
+            <button on:click={()=>acceptAd(false)} class="bg-background button-alternative button-brand">No thanks
+            </button>
+        </div>
+    {/if}
     {#if error}
         <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might appear
             weirdly. </p>
@@ -204,7 +307,7 @@
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
-                                on:click={() => collect('daily', i)}
+                                on:click={() => collect('daily', i, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
                                 max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
@@ -260,7 +363,7 @@
                                 </div>
                                 <div
                                     class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}"
-                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                    style="width:{calculateProgressBarWidth(quest.progress, quest.goal)}%" />
                             </div>
                         {/each}
                     </div>
@@ -399,7 +502,6 @@
             on:click={() => handleRefresh()}
             isRefreshing={isRefreshingQuests}
             refreshMessage={'Refresh quests data'} />
-
         <div class="flex lg:ml-8 items-center mt-4 lg:mt-0">
             <!--<div class="flex items-center ">
                 <div class="py-2 px-2 rounded-full bg-primary">
@@ -434,4 +536,57 @@
             </p>
         </div>
     </div>
+</div>
+<div>
+    <input id="transfer" value="0" hidden />
+    {#if info}
+        <Infos message="Thanks for watching a video" pushError={info} />
+    {/if}
+    {#if adError}
+        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
+    {/if}
+    <script data-playerPro="current">
+        function playAd(goal) {
+            const init = (api) => {
+                if (api) {
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
+                        //api.setAdVolume(1);
+                        document.body.onblur = function() {
+                            //api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            //api.resumeAd();
+                        };
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
+                        setTimeout(() => {
+                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
+                        }, 1200);
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\"current\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script>
 </div>

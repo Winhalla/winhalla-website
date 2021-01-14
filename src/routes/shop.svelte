@@ -93,14 +93,12 @@
         let interval;
         unsub = counter.subscribe(async (value) => {
             if(value.refresh === true) return
-            console.log("refresh")
             userPlayer = await value.content;
             clearInterval(interval)
-            console.log("heyeye")
             if (!userPlayer.user.lastVideoAd) return countDown = undefined;
-            console.log("heyeye1")
+
             if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;
-            console.log("heyeye2")
+
             if (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 > Date.now()) {
                 const endsIn = ((userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000) - Date.now()) / 1000;
                 interval = startTimer(endsIn);

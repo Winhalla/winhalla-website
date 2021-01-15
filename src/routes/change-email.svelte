@@ -107,7 +107,7 @@
                         type="email"
                         placeholder="Type here your new email"
                         bind:value={email}
-                        class:border-legendary={valid == false}
+                        class:border-legendary={valid === false}
                         class="input-style focus:outline-none
                             focus:border-primary placeholder-disabled" />
 
@@ -123,7 +123,7 @@
                             </svg>
                             <p class="text-green info">VALID EMAIL</p>
                         </div>
-                    {:else if valid == false}
+                    {:else if valid === false}
                         <p class="text-legendary info ">INVALID EMAIL</p>
                     {/if}
                 </div>

@@ -178,7 +178,7 @@
             </svg>
         </div>
 
-        <div class="ml-2 text-lg">
+        <div class="ml-2 text-xl">
             Show guide
         </div>
     </button>

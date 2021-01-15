@@ -1,4 +1,4 @@
-<script>
+D<script>
     import { fly } from "svelte/transition";
 
     import cookie from "cookie";
@@ -66,7 +66,7 @@
 
 {#if isCardVisible}
     <div class="absolute z-50 top-0 bottom-0 left-0 right-0     h-screen">
-        <div class="w-full md:w-3/4 2xl:w-3/5   fixed top-1/2 left-1/2  px-5 md:px-0"
+        <div class="w-full md:w-3/4   fixed top-1/2 left-1/2  px-5 md:px-0"
              style="transform: translate(-50%, -46.5%);" transition:fly={{ y: 300, duration: 350 }}>
             <div
                 class="w-full max-h-screen-85   border border-primary rounded-lg bg-background    flex flex-col justify-center">

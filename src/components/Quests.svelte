@@ -67,7 +67,7 @@
                 if (vars[i] == undefined || isNaN(vars[i])) errDetected = true;
             }
             if (errDetected) {
-                countDown[i].timer = "Oops error :(";
+                countDown[i].timer = "Refreshing...";
                 return countDown[i].speed = "legendary";
             }
             countDown[i].timer =

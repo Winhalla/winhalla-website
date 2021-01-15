@@ -414,7 +414,9 @@
         </div>
         <div
             class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
-            <AdblockAlert class="lg:mr-12 text-center lg:text-left" user="{userPlayer.user}" />
+            {#if userPlayer}
+                <AdblockAlert class="lg:mr-12 text-center lg:text-left" user="{userPlayer.user}" />
+            {/if}
             <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                 How does it works ?
             </h3>

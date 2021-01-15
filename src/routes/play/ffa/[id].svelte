@@ -23,6 +23,7 @@
     import Infos from "../../../components/Infos.svelte";
     import GameModeCards from "../../../components/GameModeCards.svelte";
     import GuideCard from "../../../components/GuideCard.svelte";
+    import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
     export let id;
 
@@ -339,7 +340,7 @@
                                 {#if countDown}{countDown}{:else}Loading...{/if}
                             </p>
                         </div>
-
+                        <AdblockAlert user="{userPlayer}" />
                         <div
                             class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">

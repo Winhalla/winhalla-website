@@ -167,7 +167,6 @@
                 }
             });
         });
-        onDestroy(pages)
     });
 
 

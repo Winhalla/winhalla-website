@@ -105,7 +105,7 @@
                     <input
                         on:keydown={onKeyPress}
                         type="email"
-                        placeholder="Your new email goes here"
+                        placeholder="Type here your new email"
                         bind:value={email}
                         class:border-legendary={valid == false}
                         class="input-style focus:outline-none

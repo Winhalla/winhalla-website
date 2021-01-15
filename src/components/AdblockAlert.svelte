@@ -20,5 +20,5 @@
     <script src="/adblocker.js"></script>
 </div>
 {#if adblocker}
-    <div class="text-legendary">Please disable your adblocker, we use ads revenue to give you free stuff.</div>
+    <div class="text-legendary">Please disable your adblocker, we use ads revenue to gift you free items :)</div>
 {/if}

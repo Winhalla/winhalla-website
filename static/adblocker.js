@@ -1,5 +1,5 @@
 setTimeout(()=> {
-    var e = document.createElement('div');
+    let e = document.createElement("div");
     e.id = 'vdngZEmaYJWQ';
     e.style.display = 'none';
     document.body.appendChild(e);

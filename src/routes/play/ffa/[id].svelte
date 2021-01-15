@@ -127,7 +127,8 @@
                             socket.emit("advideo", tempNb === "1" ? {
                                 state: 1,
                                 steamId: userPlayer.steamId,
-                                room: id
+                                room: id,
+                                goal:"earnMoreFFA"
                             } : { state: tempNb, steamId: userPlayer.steamId });
                             console.log(tempNb);
                         }
@@ -494,12 +495,12 @@
 
                     api.on("AdVideoStart", function() {
                         document.getElementById("transfer").value = 1;
-                        api.setAdVolume(1);
+                        //api.setAdVolume(1);
                         document.body.onblur = function() {
-                            api.pauseAd();
+                            //api.pauseAd();
                         };
                         document.body.onfocus = function() {
-                            api.resumeAd();
+                            //api.resumeAd();
                         };
                     });
                     api.on("AdVideoFirstQuartile", () => {

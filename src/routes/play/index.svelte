@@ -99,7 +99,7 @@
     <title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
         name="description"
-    content="Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!
+        content="Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
     <!--Adblock detector-->
     <script src="/adblocker.js"></script>
@@ -170,5 +170,8 @@
 
     <GuideCard page="play" />
 {/if}
-<script defer src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
+<div>
+    <script defer
+            src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
             id="purpleads-client"></script>
+</div>

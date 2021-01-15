@@ -1,0 +1,103 @@
+{
+  "bundler": "rollup",
+  "shimport": "2.0.4",
+  "assets": {
+    "main": "client.6d75402b.js"
+  },
+  "css": {
+    "main": [
+      "client-90ce955b.css"
+    ]
+  },
+  "dependencies": {
+    "index.svelte": [
+      "index.6cd71a5c.js",
+      "inject_styles.5607aec6.js",
+      "index-05a5af07.css"
+    ],
+    "create-account.svelte": [
+      "create-account.0178c7d9.js",
+      "inject_styles.5607aec6.js",
+      "create-account-bfc049a0.css"
+    ],
+    "change-email.svelte": [
+      "change-email.8bbe7cc5.js",
+      "inject_styles.5607aec6.js",
+      "change-email-5e828158.css"
+    ],
+    "contact.svelte": [
+      "contact.63b3e4dc.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "offline.svelte": [
+      "offline.ae7da65b.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "privacy.svelte": [
+      "privacy.c9e0025d.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "status.svelte": [
+      "status.73604f34.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "about.svelte": [
+      "about.1c6c74cf.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "terms.svelte": [
+      "terms.7f21bf81.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "help.svelte": [
+      "help.59b0e52d.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "link/[id].svelte": [
+      "[id].3726ad67.js",
+      "inject_styles.5607aec6.js"
+    ],
+    "play/index.svelte": [
+      "index.fb53cd1d.js",
+      "Infos.a2978f11.js",
+      "GuideCard.3912dd2f.js",
+      "Loading.eb5be77a.js",
+      "inject_styles.5607aec6.js",
+      "Infos-cddd02f2.css",
+      "GuideCard-909fbf0f.css",
+      "Loading-6d3e7c1c.css",
+      "index-c97e130b.css"
+    ],
+    "play/ffa/index.svelte": [
+      "index.d9a8a43d.js",
+      "Loading.eb5be77a.js",
+      "inject_styles.5607aec6.js",
+      "Loading-6d3e7c1c.css"
+    ],
+    "play/ffa/[id].svelte": [
+      "[id].0ef9e8c8.js",
+      "Infos.a2978f11.js",
+      "GuideCard.3912dd2f.js",
+      "Loading.eb5be77a.js",
+      "inject_styles.5607aec6.js",
+      "Infos-cddd02f2.css",
+      "GuideCard-909fbf0f.css",
+      "Loading-6d3e7c1c.css",
+      "[id]-0b882b70.css"
+    ],
+    "shop.svelte": [
+      "shop.53f560bd.js",
+      "Infos.a2978f11.js",
+      "inject_styles.5607aec6.js",
+      "Infos-cddd02f2.css",
+      "shop-948a85e0.css"
+    ],
+    "test.svelte": [
+      "test.f4a541b0.js",
+      "inject_styles.5607aec6.js"
+    ]
+  },
+  "legacy_assets": {
+    "main": "client.f12dd1e6.js"
+  }
+}

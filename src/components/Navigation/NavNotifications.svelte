@@ -232,7 +232,7 @@
                                 class="card notification flex items-center
                                 relative" class:cursor-default={notification.id === 2}>
                                 <div class="progress-container">
-                                    <p class="ml-2 mr-6 lg:mr-12 text-2xl">
+                                    <p class="mr-6 lg:mr-12 text-2xl">
                                         {notification.message}
                                     </p>
                                     {#if notification.tip}

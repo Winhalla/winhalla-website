@@ -1,0 +1,1 @@
+import{S as s,i as t,s as a,q as e,d as c,n as i}from"./client.aa9d7cda.js";function l(s){return{c(){this.h()},l(s){e('[data-svelte="svelte-pwic88"]',document.head).forEach(c),this.h()},h(){document.title="Terms of use | Winhalla"},m:i,p:i,i:i,o:i,d:i}}export default class extends s{constructor(s){super(),t(this,s,null,l,a,{})}}

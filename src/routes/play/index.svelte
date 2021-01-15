@@ -13,7 +13,6 @@
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
-    let adblocker = false;
     onMount(async () => {
         gameModes = [
             {
@@ -83,15 +82,7 @@
             error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 
         }
-        //Adblock detector
-        setTimeout(() => {
-            if (quests.dailyQuests) {
-                if (!document.getElementById("vdngZEmaYJWQ")) {
-                    //Is blocking ads
-                    adblocker = true;
-                }
-            }
-        }, 10000);
+
     });
 </script>
 
@@ -101,8 +92,6 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
-    <!--Adblock detector-->
-    <script src="/adblocker.js"></script>
     <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
@@ -130,9 +119,7 @@
                 Choose a game mode
             </h1>
         </div>
-        {#if adblocker}
-            <AdblockAlert />
-        {/if}
+        <AdblockAlert quests={quests} />
         <div
             class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">

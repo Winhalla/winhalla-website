@@ -58,6 +58,7 @@
     import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
+    import AdblockAlert from "../components/AdblockAlert.svelte";
 
     let adError;
     let info;
@@ -87,14 +88,15 @@
             }
         }, 1000);
     }
+
     let unsub;
     onMount(async () => {
         let socket;
         let interval;
         unsub = counter.subscribe(async (value) => {
-            if(value.refresh === true) return
+            if (value.refresh === true) return;
             userPlayer = await value.content;
-            clearInterval(interval)
+            clearInterval(interval);
             if (!userPlayer.user.lastVideoAd) return countDown = undefined;
 
             if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;
@@ -125,12 +127,12 @@
                     steamId: userPlayer.steam.id,
                     shopItemId: 0,
                     goal: goal
-                } : { state:tempNb, steamId: userPlayer.steam.id });
+                } : { state: tempNb, steamId: userPlayer.steam.id });
             }
             advideostate = tempNb;
         }, 1200);
         socket.on("advideo", (e) => {
-            console.log(e)
+            console.log(e);
             if (e.code === "error") {
                 console.log(e.message);
                 stop = 2;
@@ -141,7 +143,7 @@
                     adError = undefined;
                 }, 12000);
             } else if (e.code === "success") {
-                countDown = "Wait a second..."
+                countDown = "Wait a second...";
                 stop = 2;
                 info = e.message;
                 advideostate = 0;
@@ -155,9 +157,9 @@
             }
         });
     });
-    onDestroy(()=>{
-        if(unsub) unsub()
-    })
+    onDestroy(() => {
+        if (unsub) unsub();
+    });
 
     //* End of required for videoAd
 
@@ -412,6 +414,7 @@
         </div>
         <div
             class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
+            <AdblockAlert class="lg:mr-12 text-center lg:text-left" user="{userPlayer.user}" />
             <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                 How does it works ?
             </h3>

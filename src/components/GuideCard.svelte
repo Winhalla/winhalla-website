@@ -1,4 +1,4 @@
-D<script>
+<script>
     import { fly } from "svelte/transition";
 
     import cookie from "cookie";

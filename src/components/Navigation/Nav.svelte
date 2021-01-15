@@ -75,8 +75,7 @@
 
         setTimeout(async () => {
                 try {
-
-                    poll = await callApi("get", "/getpoll");
+                    if(isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
 
                 } catch (e) {
                     console.log(e);

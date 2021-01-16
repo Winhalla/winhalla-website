@@ -2,7 +2,7 @@
     import { callApi, getUser } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import Infos from "./Infos.svelte";
@@ -17,6 +17,7 @@
     let user;
     let waitingAd;
     let waitingAdAccept = false;
+    let interval;
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -106,22 +107,26 @@
         let advideostate = 0;
         let tempNb;
         let goal;
-        setInterval(() => {
-            if (stop > 0) {
-                return stop--;
+        interval = setInterval(() => {
+            try {
+                if (stop > 0) {
+                    return stop--;
+                }
+                tempNb = JSON.parse(document.getElementById("transfer").value);
+                goal = tempNb.goal ? tempNb.goal : goal;
+                tempNb = tempNb.state;
+                if (tempNb !== advideostate) {
+                    socket.emit("advideo", tempNb === 1 ? {
+                        state: 1,
+                        steamId: user.steam.id,
+                        shopItemId: 0,
+                        goal: goal
+                    } : { state: tempNb, steamId: user.steam.id });
+                }
+                advideostate = tempNb;
+            } catch (e) {
+                
             }
-            tempNb = JSON.parse(document.getElementById("transfer").value);
-            goal = tempNb.goal ? tempNb.goal : goal;
-            tempNb = tempNb.state;
-            if (tempNb !== advideostate) {
-                socket.emit("advideo", tempNb === 1 ? {
-                    state: 1,
-                    steamId: user.steam.id,
-                    shopItemId: 0,
-                    goal: goal
-                } : { state:tempNb,steamId: user.steam.id });
-            }
-            advideostate = tempNb;
         }, 1200);
         socket.on("advideo", async (e) => {
             console.log(e);
@@ -151,6 +156,9 @@
             }
         });
     });
+    onDestroy(()=>{
+        if (interval) clearInterval(interval);
+    })
 
     function calculateOrder(object) {
         //Reorder quests by rarety

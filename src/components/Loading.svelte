@@ -32,10 +32,10 @@
     export let data;
     export let type
 </script>
-<div class:xl:mt-40={type==="inline"} class:absolute={type !== "inline"} class:xl:ml-100={type==="inline"} class:h-screen-90={!type} class="bg-fixed z-20 bg-no-repeat flex items-center justify-center">
-    <div class="pb-20 bg-background z-20" class:w-screenw-99={type !== "inline"} class:h-screen-90={type !== "inline"}>
+<div  class="absolute bg-fixed z-50 bg-no-repeat flex items-center justify-center h-screen-90">
+    <div class="pb-20 bg-background z-50 w-screenw-99 h-screen-90">
         <div class="m-auto">
-        <div class="loader mt-15% mx-auto"></div>
+        <div class="loader mt-15% mx-auto" ></div>
         {#if data}
             <h2 class="text-center text-3xl font-bold pt-4">{data}</h2>
         {:else}
@@ -44,3 +44,4 @@
         </div>
     </div>
 </div>
+<div class=""></div>

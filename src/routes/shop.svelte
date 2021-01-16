@@ -257,7 +257,7 @@
         <a href="/"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to homepage</p></a>
     </div>
 {:else}
-    <div class="xl:flex xl:relative pb-16" transition:fly={{ y: 450, duration: 300 }}>
+    <div class="xl:flex xl:relative pb-16" out:fly={{ y: 450, duration: 300 }}>
         {#if info}
             <Infos message="Thanks for watching a video" pushError={info} />
         {/if}

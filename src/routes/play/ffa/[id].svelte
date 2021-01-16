@@ -15,7 +15,6 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
     import { stores } from "@sapper/app";
-    import { fade, fly, draw, blur, crossfade, scale } from "svelte/transition";
 
     const { page } = stores();
 
@@ -332,7 +331,7 @@
 
 
         {#if isLoadingOpen}
-            <div out:fly={{y:2000,duration:4000}} class="z-20">
+            <div out:fade={{duration:1000}} class="z-20">
                 <Loading data={"Loading game data..."} />
             </div>
         {/if}

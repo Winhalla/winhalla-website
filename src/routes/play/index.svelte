@@ -7,6 +7,7 @@
     import Loading from "../../components/Loading.svelte";
     import Infos from "../../components/Infos.svelte";
     import AdblockAlert from "../../components/AdblockAlert.svelte";
+    import { fade } from "svelte/transition";
 
     let quests;
     let error;
@@ -95,6 +96,11 @@
     <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
+{#if !quests}
+    <div out:fade={{delay:300,duration:500}} class="z-50 bg-background absolute">
+        <Loading type="inline" />
+    </div>
+{/if}
 {#if gameModesError && error}
     <div class="w-full lg:mt-60 mt-25">
 
@@ -125,7 +131,7 @@
         lg:flex-row">
 
             {#if gameModesError}
-                <div class="lg:w-40% content-center lg:mt-60 mt-25 pb-20">
+                <div class="lg:w-40% z-50 content-center lg:mt-60 mt-25 pb-20">
                     <h2 class="lg:text-3xl text-2xl text-center">{@html gameModesError}</h2>
                 </div>
             {:else if gameModes}
@@ -136,21 +142,23 @@
                 </div>
             {/if}
             <div class="pb-16 flex-grow lg:-ml-15">
+
                 {#if error}
                     <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
+                    <!--{#if !quests.lastDaily || !quests.lastWeekly}
+                        <div out:fade={{duration:1000}} class="z-20">
+                            <Loading type="inline" />
+                        </div>
+                    {/if}-->
                     {#if quests.lastDaily && quests.lastWeekly}
                         <div class="lg:ml-15">
                             <Quests data={quests} />
                         </div>
-                    {:else}
-                        <Loading type="inline" />
                     {/if}
 
-                {:else}
-                    <Loading type="inline" />
                 {/if}
             </div>
         </div>

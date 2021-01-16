@@ -32,9 +32,9 @@
     export let data;
     export let type
 </script>
-<div  class="absolute bg-fixed z-50 bg-no-repeat flex items-center justify-center h-screen-90">
-    <div class="pb-20 bg-background z-50 w-screenw-99 h-screen-90">
-        <div class="m-auto">
+<div  class="absolute top-20 bg-fixed z-50 bg-no-repeat flex items-center justify-center h-screen-90">
+    <div class="pb-20 bg-background z-50 w-screenw-99 h-screen-99">
+        <div class="mx-auto">
         <div class="loader mt-15% mx-auto" ></div>
         {#if data}
             <h2 class="text-center text-3xl font-bold pt-4">{data}</h2>

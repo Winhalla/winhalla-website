@@ -99,7 +99,7 @@
     <link rel="canonical" href="https://winhalla.app/play" />
 
 </svelte:head>
-{#if !quests}
+{#if !quests || (!quests.lastDaily || !quests.lastWeekly)}
     <div out:fade={{delay:300,duration:500}} class="z-50 bg-background absolute">
         <Loading type="inline" />
     </div>

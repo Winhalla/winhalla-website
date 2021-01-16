@@ -1,48 +1,3 @@
-<script context="module">
-    import { callApi } from "../utils/api";
-    import { counter } from "../components/store";
-    import { goto } from "@sapper/app";
-
-    export async function preload() {
-        try {
-            let items = await callApi("get", "/shop");
-            if (items instanceof Error) {
-                throw items;
-            }
-            let player;
-            let unsub = counter.subscribe((value) => {
-                player = value.content;
-            });
-            unsub();
-
-            if (player.user) {
-                player = player.user.coins;
-            } else {
-                player = 0;
-            }
-
-            items.forEach((item, i) => {
-                items[i].isDescriptionToggled = false;
-
-                items[i].unBuyable = false;
-                item.name = item.name.toLowerCase().replace(/\s/g, "-");
-                if (item.cost >= player) items[i].unBuyable = true;
-            });
-
-            let featuredItem = await items.find((i) => i.state === 0);
-            let seasonPacks = await items.filter((i) => i.state === 1);
-            let packs = await items.filter((i) => i.state === 2);
-
-            return { featuredItem, seasonPacks, packs };
-        } catch (err) {
-            if (err.response) {
-                if (err.response.status === 404) return { error: "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>" };
-            }
-            return { error: `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>` };
-        }
-    }
-</script>
-
 <script>
 
     import RefreshButton from "../components/RefreshButton.svelte";
@@ -59,6 +14,9 @@
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import AdblockAlert from "../components/AdblockAlert.svelte";
+    import { callApi } from "../utils/api";
+    import { counter } from "../components/store";
+    import {fly} from "svelte/transition"
 
     let adError;
     let info;
@@ -66,6 +24,8 @@
     let ticketsNb = 1;
     let isLoadingTicket = false;
     let countDown = "Loading...";
+    let interval;
+    let loaded;
 
     function startTimer(duration) {
         let timer = duration,
@@ -93,7 +53,38 @@
     onMount(async () => {
         let socket;
         let interval;
+        let items;
+        try {
+            items = await callApi("get", "/shop");
+            if (items instanceof Error) {
+                throw items;
+            }
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+            }
+            error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
+        }
+        let player;
         unsub = counter.subscribe(async (value) => {
+
+            player = await value.content;
+            if (player.user) {
+                player = player.user.coins;
+            } else {
+                player = 0;
+            }
+            items.forEach((item, i) => {
+                items[i].isDescriptionToggled = false;
+
+                items[i].unBuyable = false;
+                item.name = item.name.toLowerCase().replace(/\s/g, "-");
+                if (item.cost > player) items[i].unBuyable = true;
+            });
+
+            featuredItem = items.find((i) => i.state === 0);
+            seasonPacks = items.filter((i) => i.state === 1);
+            packs = items.filter((i) => i.state === 2);
             if (value.refresh === true) return;
             userPlayer = await value.content;
             clearInterval(interval);
@@ -107,29 +98,33 @@
             } else {
                 countDown = undefined;
             }
-
+            loaded = true;
         });
         socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
         let tempNb;
         let goal;
-        setInterval(() => {
-            if (stop > 0) {
-                return stop--;
+        interval = setInterval(() => {
+            try {
+                if (stop > 0) {
+                    return stop--;
+                }
+                tempNb = JSON.parse(document.getElementById("transfer").value);
+                goal = tempNb.goal ? tempNb.goal : goal;
+                tempNb = tempNb.state;
+                if (tempNb !== advideostate) {
+                    socket.emit("advideo", tempNb === 1 ? {
+                        state: 1,
+                        steamId: userPlayer.steam.id,
+                        shopItemId: 0,
+                        goal: goal
+                    } : { state: tempNb, steamId: userPlayer.steam.id });
+                }
+                advideostate = tempNb;
+            } catch (e) {
+
             }
-            tempNb = JSON.parse(document.getElementById("transfer").value);
-            goal = tempNb.goal ? tempNb.goal : goal;
-            tempNb = tempNb.state;
-            if (tempNb !== advideostate) {
-                socket.emit("advideo", tempNb === 1 ? {
-                    state: 1,
-                    steamId: userPlayer.steam.id,
-                    shopItemId: 0,
-                    goal: goal
-                } : { state: tempNb, steamId: userPlayer.steam.id });
-            }
-            advideostate = tempNb;
         }, 1200);
         socket.on("advideo", (e) => {
             console.log(e);
@@ -155,10 +150,13 @@
             } else {
                 console.log("code not supported");
             }
+
         });
+
     });
     onDestroy(() => {
         if (unsub) unsub();
+        if (interval) clearInterval(interval);
     });
 
     //* End of required for videoAd
@@ -259,13 +257,13 @@
         <a href="/"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to homepage</p></a>
     </div>
 {:else}
-    <div class="xl:flex xl:relative pb-16">
+    <div class="xl:flex xl:relative pb-16" transition:fly={{ y: 450, duration: 300 }}>
         {#if info}
             <Infos message="Thanks for watching a video" pushError={info} />
         {/if}
         <div>
             {#if packs}
-                <div class="mt-7 lg:mt-12 lg:ml-24">
+                <div class="mt-7 lg:mt-12 lg:ml-24" >
                     <div class="xl:w-71/100 2xl:w-62/100">
                         <h1 class="text-6xl text-center lg:text-left">
                             Battle pass
@@ -471,7 +469,8 @@
                             <p class="text-4xl text-primary ml-2 leading-none">Win</p>
                             <p
                                 class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                                If you win a prize, an email will be sent to the adress you specified when you created
+                                If you win a prize, an email will be sent to the adress you specified when you
+                                created
                                 the account
                             </p>
                         </div>

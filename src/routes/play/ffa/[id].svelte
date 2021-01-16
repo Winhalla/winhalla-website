@@ -15,6 +15,7 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
     import { stores } from "@sapper/app";
+    import { fade, fly, draw, blur, crossfade, scale } from "svelte/transition";
 
     const { page } = stores();
 
@@ -40,6 +41,7 @@
     let pushError;
     let socket;
     let adError;
+    let isLoadingOpen = true;
     pages = page.subscribe(async value => {
         user = undefined;
         match = undefined;
@@ -49,8 +51,8 @@
         error = undefined;
         socket = undefined;
         id = value.params.id;
-        if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match")
-        else console.log("ffa match")
+        if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
+        else console.log("ffa match");
         let unsub = counter.subscribe((user1) => {
             user = user1.content;
         });
@@ -96,6 +98,7 @@
                 match = value;
                 filterUsers(true);
             });
+            isLoadingOpen = false;
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
@@ -331,11 +334,18 @@
         <Infos message="Thanks for watching a video" pushError={info} />
     {/if}
     <div class="h-full  ">
+
+
+        {#if isLoadingOpen}
+            <div out:fly={{y:2000,duration:4000}} class="z-20">
+                <Loading data={"Loading game data..."} />
+            </div>
+        {/if}
         {#if match}
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
                     <div
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
@@ -392,7 +402,7 @@
                                 <img
                                     src="/assets/CharactersBanners/{userPlayer.legends}.png"
                                     alt={userPlayer.legends}
-                                    class="block" />
+                                    class="block" style="z-index: 0" />
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
@@ -481,14 +491,9 @@
             </div>-->
 
             <GuideCard page="ffa" />
-        {:else}
-            <Loading data={"Loading game data..."} />
         {/if}
-
-
     </div>
 {/if}
-
 <div>
     {#if adError}
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />

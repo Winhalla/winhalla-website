@@ -15,6 +15,7 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
     import { stores } from "@sapper/app";
+    import { fade, fly, draw, blur, crossfade, scale } from "svelte/transition";
 
     const { page } = stores();
 
@@ -27,7 +28,7 @@
 
     export let userPlayer;
     export let players;*/
-
+    let pages;
     let user;
     let match;
     let isMatchEnded;
@@ -40,135 +41,137 @@
     let pushError;
     let socket;
     let adError;
-    onMount(() => {
-        let pages = page.subscribe(async value => {
-             user = undefined
-             match = undefined
-             isMatchEnded = undefined
-             userPlayer = undefined
-             players = undefined
-             error = undefined
-             socket = undefined
-            id = value.params.id;
-
-            let unsub = counter.subscribe((user1) => {
-                user = user1.content;
-
-            });
-            unsub();
-            //await user
-            //user = user.steam
-            try {
-                user = await user;
-                user = user.steam;
-                match = await callApi("get", `/getMatch/${id}`);
-
-                if (match instanceof Error) {
-                    throw match;
-                }
-                isMatchEnded = match.finished;
-                //Start the countdown
-
-                filterUsers(false);
-                const d = new Date(userPlayer.joinDate);
-                const endsIn = -(
-                    (new Date().getTime() -
-                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                    1000
-                );
-                if (endsIn < 1) {
-                    countDown = "Waiting for others to finish (you can start a new game from the play page)";
-                } else {
-                    startTimer(endsIn);
-                }
-                counter.set({ "refresh": true });
-
-                socket = io.io(apiUrl);
-                socket.on("connection", (status) => {
-                    console.log(status);
-                    socket.emit("match connection", "FFA" + id);
-                });
-
-                socket.on("join match", (status) => {
-                    console.log(status);
-                });
-
-                socket.on("lobbyUpdate", (value) => {
-                    match = value;
-                    filterUsers(true);
-                });
-            } catch (err) {
-                if (err.response) {
-                    if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                        error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
-                        return;
-                    } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                        error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                        return;
-                    } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
-                    return;
-                }
-                error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
-            }
-
-            let adVideos = 0;
-            let stop = 0;
-            let advideostate = 0;
-            let tempNb;
-            let interval = setInterval(() => {
-                try {
-                    if (stop > 0) {
-                        return stop--;
-                    }
-
-                    tempNb = document.getElementById("transfer").value;
-                    if (tempNb !== advideostate) {
-                        if (tempNb !== 0) {
-                            socket.emit("advideo", tempNb === "1" ? {
-                                state: 1,
-                                steamId: userPlayer.steamId,
-                                room: id
-                            } : { state: tempNb, steamId: userPlayer.steamId });
-                            console.log(tempNb);
-                        }
-                    }
-                    /*if(adVideos < tempNb){
-
-                    console.log(info)
-                }*/
-                    advideostate = tempNb;
-                } catch (e) {
-
-                }
-            }, 1000);
-
-            socket.on("advideo", (e) => {
-                if (e.code === "error") {
-                    console.log(e.message);
-                    clearInterval(interval);
-                    advideostate = 0;
-                    tempNb = 0;
-                    adVideos = 0;
-                    adError = e.message;
-                    setTimeout(() => {
-                        adError = undefined;
-                    }, 25000);
-                } else if (e.code === "success") {
-                    stop = 5;
-                    info = e.message;
-                    advideostate = 0;
-                    tempNb;
-                    userPlayer.adsWatched++;
-                    userPlayer.multiplier = userPlayer.adsWatched === 1 ? 500 : 1000;
-                    adVideos = 0;
-                    setTimeout(() => {
-                        info = undefined;
-                    }, 5000);
-                }
-            });
+    let isLoadingOpen = true;
+    pages = page.subscribe(async value => {
+        user = undefined;
+        match = undefined;
+        isMatchEnded = undefined;
+        userPlayer = undefined;
+        players = undefined;
+        error = undefined;
+        socket = undefined;
+        id = value.params.id;
+        if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
+        else console.log("ffa match");
+        let unsub = counter.subscribe((user1) => {
+            user = user1.content;
         });
-        onDestroy(pages)
+        unsub();
+        //await user
+        //user = user.steam
+        try {
+            user = await user;
+            user = user.steam;
+            match = await callApi("get", `/getMatch/${id}`);
+
+            if (match instanceof Error) {
+                throw match;
+            }
+            isMatchEnded = match.finished;
+            //Start the countdown
+
+            filterUsers(false);
+            const d = new Date(userPlayer.joinDate);
+            const endsIn = -(
+                (new Date().getTime() -
+                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                1000
+            );
+            if (endsIn < 1) {
+                countDown = "Waiting for others to finish (you can start a new game from the play page)";
+            } else {
+                startTimer(endsIn);
+            }
+            counter.set({ "refresh": true });
+
+            socket = io.io(apiUrl);
+            socket.on("connection", (status) => {
+                console.log(status);
+                socket.emit("match connection", "FFA" + id);
+            });
+
+            socket.on("join match", (status) => {
+                console.log(status);
+            });
+
+            socket.on("lobbyUpdate", (value) => {
+                match = value;
+                filterUsers(true);
+            });
+            isLoadingOpen = false;
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    return;
+                } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                    return;
+                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+                return;
+            }
+            error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
+        }
+
+        let adVideos = 0;
+        let stop = 0;
+        let advideostate = 0;
+        let tempNb;
+        let interval = setInterval(() => {
+            try {
+                if (stop > 0) {
+                    return stop--;
+                }
+
+                tempNb = document.getElementById("transfer").value;
+                if (tempNb !== advideostate) {
+                    if (tempNb !== 0) {
+                        socket.emit("advideo", tempNb === "1" ? {
+                            state: 1,
+                            steamId: userPlayer.steamId,
+                            room: id,
+                            goal: "earnMoreFFA"
+                        } : { state: tempNb, steamId: userPlayer.steamId });
+                        console.log(tempNb);
+                    }
+                }
+                /*if(adVideos < tempNb){
+
+                console.log(info)
+            }*/
+                advideostate = tempNb;
+            } catch (e) {
+
+            }
+        }, 1000);
+
+        socket.on("advideo", (e) => {
+            if (e.code === "error") {
+                console.log(e.message);
+                clearInterval(interval);
+                advideostate = 0;
+                tempNb = 0;
+                adVideos = 0;
+                adError = e.message;
+                setTimeout(() => {
+                    adError = undefined;
+                }, 25000);
+            } else if (e.code === "success") {
+                stop = 5;
+                info = e.message;
+                advideostate = 0;
+                tempNb;
+                userPlayer.adsWatched++;
+                userPlayer.multiplier = userPlayer.adsWatched === 1 ? 500 : 1000;
+                adVideos = 0;
+                setTimeout(() => {
+                    info = undefined;
+                }, 5000);
+            }
+        });
     });
+
+    onDestroy(pages);
 
 
     const filterUsers = (isFromSocket) => {
@@ -326,11 +329,18 @@
         <Infos message="Thanks for watching a video" pushError={info} />
     {/if}
     <div class="h-full  ">
+
+
+        {#if isLoadingOpen}
+            <div out:fly={{y:2000,duration:4000}} class="z-20">
+                <Loading data={"Loading game data..."} />
+            </div>
+        {/if}
         {#if match}
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
                     <div
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
@@ -387,7 +397,7 @@
                                 <img
                                     src="/assets/CharactersBanners/{userPlayer.legends}.png"
                                     alt={userPlayer.legends}
-                                    class="block" />
+                                    class="block" style="z-index: 0" />
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
@@ -476,14 +486,9 @@
             </div>-->
 
             <GuideCard page="ffa" />
-        {:else}
-            <Loading data={"Loading game data..."} />
         {/if}
-
-
     </div>
 {/if}
-
 <div>
     {#if adError}
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
@@ -495,12 +500,12 @@
 
                     api.on("AdVideoStart", function() {
                         document.getElementById("transfer").value = 1;
-                        api.setAdVolume(1);
+                        //api.setAdVolume(1);
                         document.body.onblur = function() {
-                            api.pauseAd();
+                            //api.pauseAd();
                         };
                         document.body.onfocus = function() {
-                            api.resumeAd();
+                            //api.resumeAd();
                         };
                     });
                     api.on("AdVideoFirstQuartile", () => {

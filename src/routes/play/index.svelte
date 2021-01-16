@@ -141,9 +141,13 @@
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <div class="lg:ml-15">
-                        <Quests data={quests} />
-                    </div>
+                    {#if quests.lastDaily && quests.lastWeekly}
+                        <div class="lg:ml-15">
+                            <Quests data={quests} />
+                        </div>
+                    {:else}
+                        <Loading type="inline" />
+                    {/if}
 
                 {:else}
                     <Loading type="inline" />

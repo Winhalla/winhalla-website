@@ -2,10 +2,10 @@
 
     import RefreshButton from "../components/RefreshButton.svelte";
 
-    export let featuredItem;
-    export let seasonPacks;
-    export let packs;
-    export let error;
+    let featuredItem;
+    let seasonPacks;
+    let packs;
+    let error;
 
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
@@ -16,7 +16,7 @@
     import AdblockAlert from "../components/AdblockAlert.svelte";
     import { callApi } from "../utils/api";
     import { counter } from "../components/store";
-    import {fly} from "svelte/transition"
+    import { fly } from "svelte/transition";
 
     let adError;
     let info;
@@ -69,6 +69,7 @@
         unsub = counter.subscribe(async (value) => {
 
             player = await value.content;
+            console.log(player);
             if (player.user) {
                 player = player.user.coins;
             } else {
@@ -106,6 +107,7 @@
         let tempNb;
         let goal;
         interval = setInterval(() => {
+            console.log("interval")
             try {
                 if (stop > 0) {
                     return stop--;
@@ -114,6 +116,7 @@
                 goal = tempNb.goal ? tempNb.goal : goal;
                 tempNb = tempNb.state;
                 if (tempNb !== advideostate) {
+                    console.log(tempNb)
                     socket.emit("advideo", tempNb === 1 ? {
                         state: 1,
                         steamId: userPlayer.steam.id,
@@ -156,7 +159,6 @@
     });
     onDestroy(() => {
         if (unsub) unsub();
-        if (interval) clearInterval(interval);
     });
 
     //* End of required for videoAd
@@ -257,13 +259,13 @@
         <a href="/"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to homepage</p></a>
     </div>
 {:else}
-    <div class="xl:flex xl:relative pb-16" out:fly={{ y: 450, duration: 300 }}>
+    <div class="xl:flex xl:relative pb-16" out:fly={{ y: -450, duration: 400 }}>
         {#if info}
             <Infos message="Thanks for watching a video" pushError={info} />
         {/if}
         <div>
             {#if packs}
-                <div class="mt-7 lg:mt-12 lg:ml-24" >
+                <div class="mt-7 lg:mt-12 lg:ml-24">
                     <div>
                         <h1 class="text-6xl text-center lg:text-left">
                             Battle pass

@@ -50,7 +50,6 @@
                 <div class="text-logo">
                     <a class="logo leading-0" href="/"> WINHALLA </a>
                 </div>
-                <p class="text-lg ml-3" style="padding-bottom: 0.2rem">© 2020</p>
             </div>
 
             <div class="flex items-center">

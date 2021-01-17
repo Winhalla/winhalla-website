@@ -156,9 +156,6 @@
             }
         });
     });
-    onDestroy(()=>{
-        if (interval) clearInterval(interval);
-    })
 
     function calculateOrder(object) {
         //Reorder quests by rarety

@@ -131,8 +131,8 @@
         </div>
     {/if}
     <nav
-        class:border-green={isScrolling || (loaded && poll)}
-        class:border-b-2={loaded && poll}
+        class:border-primary={isScrolling}
+        class:border-b-2={isScrolling}
         class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div

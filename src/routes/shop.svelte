@@ -21,7 +21,7 @@
     let adError;
     let info;
     let userPlayer;
-    let ticketsNb = 1;
+    let ticketsNb = 100;
     let isLoadingTicket = false;
     let countDown = "Loading...";
     let interval;
@@ -67,7 +67,7 @@
         }
         let player;
         unsub = counter.subscribe(async (value) => {
-
+            if(value.refresh === true ) return
             player = await value.content;
             console.log(player);
             if (player.user) {
@@ -167,7 +167,7 @@
         try {
             isLoadingTicket = true;
             const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
-            info = `You have successfully received ${ticketsNb} ticket${ticketsNb > 1 ? "s" : ""}, ${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
+            info = `You have successfully put ${ticketsNb} ,${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
             counter.set({ refresh: true });
             isLoadingTicket = false;
             setTimeout(() => {
@@ -478,9 +478,9 @@
                         </div>
                         <div class="block mt-10">
                             <div class="flex">
-                                <input class="mr-3" type="range" min="1" max="50" bind:value={ticketsNb}>
+                                <input class="mr-3" type="range" step="100" min="100" max="10000" bind:value={ticketsNb}>
                                 <RefreshButton on:click={buyTickets}
-                                               refreshMessage={`Buy ${ticketsNb} tickets for ${ticketsNb * 100} coins`}
+                                               refreshMessage={`Put ${ticketsNb} in the lottery`}
                                                isRefreshing={isLoadingTicket} />
                             </div>
 

@@ -325,8 +325,7 @@
 
 <svelte:head>
     <title>Winhalla | FFA match</title>
-    <script src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
-            id="purpleads-client"></script>
+
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if isLoadingOpen}
@@ -550,3 +549,10 @@
         }
     </script>
 </div>
+<!--
+<div>
+    <script defer
+            src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
+            id="purpleads-client"></script>
+</div>
+-->

@@ -25,9 +25,10 @@
 
 </script>
 <style>
-    input[type=text]{
-        @apply py-3 px-4
+    input[type=text] {
+        @apply py-3 px-4;
     }
+
     .input {
         @apply w-full text-background bg-font py-3 px-4 rounded;
     }
@@ -137,7 +138,21 @@
                         <div class="mb-20">
                             <h1 class="text-5xl text-primary">{config.name}</h1>
                             <div class="pl-8 pt-4">
-                                {#if config.name === "ADVICES"}
+                                {#if config.name === "GAMEMODE STATUS"}
+                                    <div class="flex">
+                                        <h2 class="text-3xl">2vs2</h2>
+                                        <p>
+                                            • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                        </p>
+                                    </div>
+                                    <div class="flex">
+                                        <h2 class="text-3xl">2vs2</h2>
+                                        <p>
+                                            • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                        </p>
+                                    </div>
+
+                                {:else if config.name === "ADVICES"}
                                     <div class="flex">
                                         <p>Probability:</p>
                                         <input type="number" class="ml-2 rounded text-black w-15"
@@ -153,8 +168,7 @@
                                                bind:value={info.strong}>
 
                                     {/each}
-                                {/if}
-                                {#if config.name === "INFOS"}
+                                {:else if config.name === "INFOS"}
                                     {#each config.value as info,ii}
                                         <h2 class="text-4xl text-accent">1.</h2>
                                         <h3 class="text-3xl">Name</h3>

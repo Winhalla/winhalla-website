@@ -21,6 +21,11 @@
 
     onMount(async () => {
         isAuthorizedUser = (await callApi("get", "/feltrom/login")) === true;
+
+        isLoggedIn = true;
+        configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
+        newConfig = configs;
+        users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
     });
 
 </script>
@@ -138,16 +143,20 @@
                         <div class="mb-20">
                             <h1 class="text-5xl text-primary">{config.name}</h1>
                             <div class="pl-8 pt-4">
-                                {#if config.name === "GAMEMODE STATUS"}
+                                {#if config.name === "GAMEMODES STATUS"}
+                                    <h2 class="text-3xl">2vs2</h2>
                                     <div class="flex">
-                                        <h2 class="text-3xl">2vs2</h2>
-                                        <p>
+                                        <p class:text-green={config.value.FFA === true}
+                                           class:text-accent={config.value.FFA === "maintenance"}
+                                           class:text-legendary={config.value.FFA === false}>
                                             • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
                                         </p>
                                     </div>
+                                    <h2 class="text-3xl">2vs2</h2>
                                     <div class="flex">
-                                        <h2 class="text-3xl">2vs2</h2>
-                                        <p>
+                                        <p class:text-green={config.value["2vs2"] === true}
+                                           class:text-accent={config.value["2vs2"] === "maintenance"}
+                                           class:text-legendary={config.value["2vs2"] === false}>
                                             • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
                                         </p>
                                     </div>
@@ -190,6 +199,6 @@
         </div>
     {/if}
 {:else}
-    <h1 class="h1">404</h1>
-    <p class="p">Not found</p>
+    <!--<h1 class="h1">404</h1>
+    <p class="p">Not found</p>-->
 {/if}

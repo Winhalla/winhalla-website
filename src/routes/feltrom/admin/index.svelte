@@ -11,12 +11,15 @@
     let pwd = "";
     let users;
     let newConfig;
+    let goldEvent = ["","","",""]
 
     async function login() {
         isLoggedIn = true;
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
         newConfig = configs;
         users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
+        goldEvent[0] = Math.floor((config.value.expiration - Date.now())/1000/86400)
+        goldEvent[1] = Math.floor((config.value.expiration - Date.now())/1000/3600 - goldEvent[0]*24)
     }
 
     onMount(async () => {
@@ -26,12 +29,15 @@
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
         newConfig = configs;
         users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
+        goldEvent[0] = Math.floor((configs[4].value.expiration - Date.now())/1000/86400)
+        goldEvent[1] = Math.floor((configs[4].value.expiration - Date.now())/1000/3600 - goldEvent[0]*24)
+        goldEvent[2] = Math.floor((configs[4].value.expiration - Date.now())/1000/60 - goldEvent[0]*24*60 - goldEvent[1]*60)
     });
 
 </script>
 <style>
     input[type=text] {
-        @apply py-3 px-4;
+        @apply py-2 px-4;
     }
 
     .input {
@@ -140,7 +146,7 @@
             <div class="flex justify-center">
                 <div class="w-1/2 mx-4 block h-full p-8">
                     {#each newConfig as config,i}
-                        <div class="mb-20">
+                        <div class="mb-16">
                             <h1 class="text-5xl text-primary">{config.name}</h1>
                             <div class="pl-8 pt-4">
                                 {#if config.name === "GAMEMODES STATUS"}
@@ -160,26 +166,35 @@
                                             • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
                                         </p>
                                     </div>
-
+                                {:else if config.name === "FFA REWARDS CONFIG"}
+                                    <div class="block">
+                                        {#each config.value as reward,ii}
+                                            <div class="flex">
+                                                <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
+                                                : {reward}$
+                                            </div>
+                                        {/each}
+                                    </div>
                                 {:else if config.name === "ADVICES"}
-                                    <div class="flex">
+                                    <div class="flex mb-5">
                                         <p>Probability:</p>
-                                        <input type="number" class="ml-2 rounded text-black w-15"
+                                        <input type="text" class="text-2xl bg-variant rounded -mt-3 mx-2 text-center"
+                                               size="3"
                                                bind:value={config.value.probability} />%
                                     </div>
                                     {#each config.value.advices as info,ii}
-                                        <h2 class="text-4xl text-accent">1.</h2>
+                                        <h2 class="text-4xl text-accent">{ii + 1}.</h2>
                                         <h3 class="text-3xl">Name</h3>
                                         <input class="text-2xl bg-variant rounded" size="40" type="text"
                                                bind:value={info.name} />
-                                        <h3 class="text-3xl">Strong</h3>
+                                        <h3 class="text-3xl mt-3">Strong</h3>
                                         <input class="text-xl bg-variant rounded mt-2" size="40" type="text"
                                                bind:value={info.strong}>
 
                                     {/each}
                                 {:else if config.name === "INFOS"}
                                     {#each config.value as info,ii}
-                                        <h2 class="text-4xl text-accent">1.</h2>
+                                        <h2 class="text-4xl text-accent">{ii + 1}.</h2>
                                         <h3 class="text-3xl">Name</h3>
                                         <input class="text-2xl bg-variant rounded" size="40" type="text"
                                                bind:value={info.name} />
@@ -188,12 +203,24 @@
                                                bind:value={info.description}>
 
                                     {/each}
+                                {:else if config.name === "GOLD EVENT"}
+                                    <h3 class="text-3xl">Boost of <strong class="font-normal text-accent">{config.value.percentage - 100}%</strong></h3>
+                                    <p class="text-3xl">
+                                        Exipires in
+                                        <strong class="text-accent font-normal">{goldEvent[0]}</strong> days,
+                                        <strong class="text-accent font-normal">{goldEvent[1]}</strong> hours,
+                                        <strong class="text-accent font-normal">{goldEvent[2]}</strong> minutes,
+                                    </p>
                                 {/if}
                             </div>
                         </div>
                     {/each}
                 </div>
-                <div class="w-1/4 h-full">b</div>
+                <div class="w-1/4 h-full block">
+                    <!--{#each users as user,i}
+                        {user.brawlhallaName}
+                    {/each}-->
+                </div>
                 <div class="w-1/4 mx-4 h-full">c</div>
             </div>
         </div>

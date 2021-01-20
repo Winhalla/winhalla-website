@@ -26,7 +26,7 @@
 </script>
 <style>
     input[type=text] {
-        @apply py-3 px-4
+        @apply py-3 px-4;
     }
 
     .input {
@@ -140,10 +140,16 @@
                             <div class="pl-8 pt-4">
                                 {#if config.name === "GAMEMODE STATUS"}
                                     <div class="flex">
-                                        •
+                                        <h2 class="text-3xl">2vs2</h2>
+                                        <p>
+                                            • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                        </p>
                                     </div>
                                     <div class="flex">
-                                        • {}
+                                        <h2 class="text-3xl">2vs2</h2>
+                                        <p>
+                                            • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                        </p>
                                     </div>
 
                                 {:else if config.name === "ADVICES"}

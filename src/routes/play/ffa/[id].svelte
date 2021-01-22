@@ -9,11 +9,10 @@
 
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
     import Infos from "../../../components/Infos.svelte";
-    import GameModeCards from "../../../components/GameModeCards.svelte";
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
-    import {fade} from "svelte/transition"
+    import { fade } from "svelte/transition";
 
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
@@ -343,8 +342,6 @@
         <Infos message="Thanks for watching a video" pushError={info} />
     {/if}
     <div class="h-full  ">
-
-
 
         {#if match}
             {#if isMatchEnded}

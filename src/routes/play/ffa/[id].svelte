@@ -6,15 +6,19 @@
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
+
     import ErrorAlert from "../../../components/ErrorAlert.svelte";
     import Infos from "../../../components/Infos.svelte";
+    import GameModeCards from "../../../components/GameModeCards.svelte";
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
+
+    import {fade} from "svelte/transition"
 
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
-    import { fly } from "svelte/transition";
+
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
 
     const { page } = stores();
@@ -162,7 +166,7 @@
                 advideostate = 0;
                 tempNb;
                 userPlayer.adsWatched++;
-                userPlayer.multiplier = userPlayer.adsWatched === 1 ? 500 : 1000;
+                userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200:300;
                 adVideos = 0;
                 setTimeout(() => {
                     info = undefined;
@@ -257,13 +261,18 @@
     b {
         @apply text-primary font-normal;
     }
+    button{
+        background-color: #3de488;
+        cursor: pointer;
 
+    }
     button:disabled {
         @apply bg-disabled;
         @apply text-white;
         padding-left: 1rem;
         padding-right: 1rem;
         box-shadow: none;
+        cursor: auto;
     }
 
     .ffa-player {
@@ -319,6 +328,11 @@
     <title>Winhalla | FFA match</title>
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
+{#if isLoadingOpen}
+    <div out:fade={{duration:500}} class="z-50 bg-background absolute">
+        <Loading data={"Loading game data..."} />
+    </div>
+{/if}
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
         <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
@@ -331,11 +345,7 @@
     <div class="h-full  ">
 
 
-        {#if isLoadingOpen}
-            <div out:fly={{y:2000,duration:4000}} class="z-20">
-                <Loading data={"Loading game data..."} />
-            </div>
-        {/if}
+
         {#if match}
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
@@ -364,7 +374,7 @@
                             </p>
                             <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                                 lg:mt-0 mb-5
-                                lg:mb-0  text-background" style="background-color: #3de488"
+                                lg:mb-0  text-background"
                                     onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
                             </button>
 

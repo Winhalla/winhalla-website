@@ -2,10 +2,10 @@
 
     import RefreshButton from "../components/RefreshButton.svelte";
 
-    export let featuredItem;
-    export let seasonPacks;
-    export let packs;
-    export let error;
+    let featuredItem;
+    let seasonPacks;
+    let packs;
+    let error;
 
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
@@ -16,12 +16,12 @@
     import AdblockAlert from "../components/AdblockAlert.svelte";
     import { callApi } from "../utils/api";
     import { counter } from "../components/store";
-    import {fly} from "svelte/transition"
+    import { fly } from "svelte/transition";
 
     let adError;
     let info;
     let userPlayer;
-    let ticketsNb = 1;
+    let ticketsNb = 100;
     let isLoadingTicket = false;
     let countDown = "Loading...";
     let interval;
@@ -67,8 +67,9 @@
         }
         let player;
         unsub = counter.subscribe(async (value) => {
-
+            if(value.refresh === true ) return
             player = await value.content;
+            console.log(player);
             if (player.user) {
                 player = player.user.coins;
             } else {
@@ -106,6 +107,7 @@
         let tempNb;
         let goal;
         interval = setInterval(() => {
+            console.log("interval")
             try {
                 if (stop > 0) {
                     return stop--;
@@ -114,6 +116,7 @@
                 goal = tempNb.goal ? tempNb.goal : goal;
                 tempNb = tempNb.state;
                 if (tempNb !== advideostate) {
+                    console.log(tempNb)
                     socket.emit("advideo", tempNb === 1 ? {
                         state: 1,
                         steamId: userPlayer.steam.id,
@@ -156,7 +159,6 @@
     });
     onDestroy(() => {
         if (unsub) unsub();
-        if (interval) clearInterval(interval);
     });
 
     //* End of required for videoAd
@@ -165,7 +167,7 @@
         try {
             isLoadingTicket = true;
             const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
-            info = `You have successfully received ${ticketsNb} ticket${ticketsNb > 1 ? "s" : ""}, ${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
+            info = `You have successfully put ${ticketsNb} ,${won > 0 ? "You have won a battle pass! Check your mails for more information." : coins > 0 ? "You have won " + coins + " coins" : "You have won nothing, better luck next time"}`;
             counter.set({ refresh: true });
             isLoadingTicket = false;
             setTimeout(() => {
@@ -257,13 +259,13 @@
         <a href="/"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to homepage</p></a>
     </div>
 {:else}
-    <div class="xl:flex xl:relative pb-16" transition:fly={{ y: 450, duration: 300 }}>
+    <div class="xl:flex xl:relative pb-16" out:fly={{ y: -450, duration: 400 }}>
         {#if info}
             <Infos message="Thanks for watching a video" pushError={info} />
         {/if}
         <div>
             {#if packs}
-                <div class="mt-7 lg:mt-12 lg:ml-24" >
+                <div class="mt-7 lg:mt-12 lg:ml-24">
                     <div>
                         <h1 class="text-6xl text-center lg:text-left">
                             Battle pass
@@ -476,9 +478,9 @@
                         </div>
                         <div class="block mt-10">
                             <div class="flex">
-                                <input class="mr-3" type="range" min="1" max="50" bind:value={ticketsNb}>
+                                <input class="mr-3" type="range" step="100" min="100" max="10000" bind:value={ticketsNb}>
                                 <RefreshButton on:click={buyTickets}
-                                               refreshMessage={`Buy ${ticketsNb} tickets for ${ticketsNb * 100} coins`}
+                                               refreshMessage={`Put ${ticketsNb} in the lottery`}
                                                isRefreshing={isLoadingTicket} />
                             </div>
 

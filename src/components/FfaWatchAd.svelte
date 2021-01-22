@@ -1,3 +1,7 @@
+<script>
+    let randomInfo = Math.floor(Math.random() * 2);
+</script>
+
 <style>
     b {
         @apply font-normal text-primary;
@@ -30,13 +34,23 @@
                     <b>win</b> by playing this match?</p>
                 <p class="text-2xl mt-4 text-mid-light italic">Watch a short video by clicking the button below!</p>
             </div>
+            {#if randomInfo == 1}
+                <div class="card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10" style="max-width: 27.5rem">
+                    <p class="mb-4 text-4xl text-primary">Did you know?</p>
+                    <p>Watching at least <strong>2 videos per match</strong> will <u>divide</u> the time to earn a
+                        battle
+                        pass by <strong>10
+                            hours</strong>
+                </div>
+            {:else}
+                <div class="card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10" style="max-width: 27.5rem">
+                    <p class="mb-4 text-4xl text-primary">Did you know?</p>
+                    <p>If you are first and you watch <strong>2 videos</strong> this match you will earn <strong>1000
+                        coins</strong> vs <b style="color: #fc1870">100 coins</b> if you watch <b
+                        style="color: #fc1870">0 video</b>
+                </div>
+            {/if}
 
-            <div class="card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10" style="max-width: 27.5rem">
-                <p class="mb-4 text-4xl text-primary">Did you know?</p>
-                <p>Watching at least <strong>2 videos per match</strong> will <u>divide</u> the time to earn a battle
-                    pass by <strong>10
-                        hours</strong>
-            </div>
 
             <div class="mt-12 sm:mt-0 sm:mb-24">
                 <div class="mt-4 flex flex-col items-center sm:items-start sm:flex-row">

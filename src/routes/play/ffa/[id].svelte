@@ -1,21 +1,21 @@
 <script>
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy } from "svelte";
     import { callApi } from "../../../utils/api";
-    import { goto } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
+    import ErrorAlert from "../../../components/ErrorAlert.svelte";
+    import Infos from "../../../components/Infos.svelte";
+    import GuideCard from "../../../components/GuideCard.svelte";
+    import AdblockAlert from "../../../components/AdblockAlert.svelte";
+
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
-    import ErrorAlert from "../../../components/ErrorAlert.svelte";
-    import Infos from "../../../components/Infos.svelte";
-    import GameModeCards from "../../../components/GameModeCards.svelte";
-    import GuideCard from "../../../components/GuideCard.svelte";
-    import AdblockAlert from "../../../components/AdblockAlert.svelte";
-    import { stores } from "@sapper/app";
-    import { fade, fly, draw, blur, crossfade, scale } from "svelte/transition";
+    import { fly } from "svelte/transition";
+    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
 
     const { page } = stores();
 
@@ -397,7 +397,7 @@
                                 <img
                                     src="/assets/CharactersBanners/{userPlayer.legends}.png"
                                     alt={userPlayer.legends}
-                                    class="block" style="z-index: 0" />
+                                    class="block" />
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
@@ -486,9 +486,15 @@
             </div>-->
 
             <GuideCard page="ffa" />
+            <FfaWatchAd />
+        {:else}
+            <Loading data={"Loading game data..."} />
         {/if}
+
+
     </div>
 {/if}
+
 <div>
     {#if adError}
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />

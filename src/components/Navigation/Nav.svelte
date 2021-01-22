@@ -204,8 +204,7 @@
                         class="nav-link-container
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
-                        href="/play"
-                        rel="prefetch">
+                        href="/play">
                         <svg
                             class="fill-current play"
                             viewBox="0 0 24 24"

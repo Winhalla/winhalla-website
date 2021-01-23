@@ -17,7 +17,9 @@
     let loadingUsers;
     let sortBy = "alphabetic";
     let suspiciousBitches = [];
-    let suspiciousUsersFound = 0
+    let suspiciousUsersFound = 0;
+    let bannedOnes = [];
+
     async function login() {
         isLoggedIn = true;
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
@@ -28,15 +30,21 @@
         goldEvent[2] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60);
     }
 
+    function sortArrays(fx) {
+        users.sort(fx);
+        suspiciousBitches.sort(fx);
+    }
+
     function sort(by, stats) {
         if (stats) {
-            users.sort((a, b) => {
+            sortArrays((a, b) => {
                 return b.stats.ffa[by] - a.stats.ffa[by];
             });
+
         } else if (by === "alphabetic") {
-            users.sort((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
+            sortArrays((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
         } else {
-            users.sort((a, b) => {
+            sortArrays((a, b) => {
                 return b[by] - a[by];
             });
         }
@@ -52,8 +60,8 @@
             users = result;
             users.forEach((user, i) => {
                 users[i].winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
-                if(isNaN(users[i].winrate)){
-                    users[i].winrate = 0
+                if (isNaN(users[i].winrate)) {
+                    users[i].winrate = 0;
                 }
             });
             users.sort((a, b) => {
@@ -72,16 +80,26 @@
         loadingUsers = true;
         users.then(result => {
             users = result;
-            for (let i=0;i<users.length*2;i++){
-                if(!users[i-suspiciousUsersFound]) return
-                users[i-suspiciousUsersFound].winrate = Math.round((users[i-suspiciousUsersFound].stats.ffa.wins / users[i-suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
-                if (users[i-suspiciousUsersFound].isSucpicious.ffa === true || users[i-suspiciousUsersFound].isSucpicious.solo === true) {
-                    suspiciousBitches.push(...users.splice(i-suspiciousUsersFound, 1));
-                    suspiciousUsersFound +=1
+            for (let i = 0; i < users.length * 2; i++) {
+                if (!users[i - suspiciousUsersFound]) return;
+                users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
+                if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
+                if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
+                    suspiciousBitches.push(...users.splice(i - suspiciousUsersFound, 1));
+                    suspiciousUsersFound += 1;
                 }
             }
-            users.sort((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
+            sortArrays((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
             loadingUsers = false;
+            /* TODO: gérer les bannis dans un array comme les suspicious après avoir fait les bans en on:click
+            bannedOnes = configs.find(e=>e.name === "IDs BANNED").value
+            bannedOnes.forEach((e,i)=>{
+                let {brawlhallaName,gamesPlayed,wins,coins} = users.find(user=>user.steamId === e)
+                let winrate =  Math.round((wins / gamesPlayed) * 100)
+                if(isNaN(winrate)) winrate = 0
+                bannedOnes[i] = {steamId:e,brawlhallaName,gamesPlayed,coins,winrate}
+            })
+            */
             users = users;
             suspiciousBitches = suspiciousBitches;
         });
@@ -327,7 +345,8 @@
                                 {#if suspiciousBitches.length > 0}
                                     <div class="mb-25">
                                         <p class="text-3xl mt-5 mb-2 ml-2">
-                                            <strong class="text-accent font-normal">{suspiciousUsersFound}</strong> suspicious user{suspiciousUsersFound>1?"s":""} found
+                                            <strong class="text-accent font-normal">{suspiciousUsersFound}</strong>
+                                            suspicious user{suspiciousUsersFound > 1 ? "s" : ""} found
                                         </p>
                                         <UsersArray users="{suspiciousBitches}" color="red" />
                                     </div>
@@ -338,7 +357,7 @@
                                 {/if}
                                 <UsersArray users="{users}" color="blue" />
                             </div>
-                            <div class="block ml-4 mt-2 ">
+                            <div class="block ml-5 mt-11 ">
                                 <p class="mt-6 text-xl">
                                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-2"
                                          style="fill: #fc1870">

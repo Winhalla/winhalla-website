@@ -38,8 +38,9 @@
             <td class="flex items-center px-6 py-2 overflow-x-auto" style="width: 14rem">
                 <img class="block w-10 h-10 rounded-full" src={user.avatarURL}
                      alt={user.brawlhallaName}>
-                <p class="pl-2" class:text-lg={user.brawlhallaName.length>=17 && user.brawlhallaName.length<26}
-                   class:text-legendary={user.isSucpicious.ffa ||user.isSucpicious.solo}>{user.brawlhallaName}</p>
+                <p class="pl-2" class:text-lg={user.brawlhallaName.length>=17 && user.brawlhallaName.length<26}>
+                    {user.brawlhallaName}
+                </p>
             </td>
             <td class="px-6 py-2">
                 <b class:text-legendary={user.inGame.findIndex(e => !e.isFinished) === -1}

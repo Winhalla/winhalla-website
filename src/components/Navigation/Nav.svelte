@@ -30,11 +30,11 @@
     let loaded = false;
 
     async function calculateProperties(value) {
-        const tempUserData = value
-        console.log(tempUserData)
+        const tempUserData = value;
+        console.log(tempUserData);
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
-            if (tempUserData.response) if (tempUserData.response.status === 503 ||tempUserData.response.status === 502) goto("/status");
+            if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
             return isUserLoggedIn = "network";
         }
         if (tempUserData.user) {
@@ -75,14 +75,14 @@
 
         setTimeout(async () => {
                 try {
-                    if(isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
+                    if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
 
                 } catch (e) {
                     console.log(e);
                 }
             }, 5000
         );
-        await user
+        await user;
         calculateProperties(user);
         loaded = true;
     });
@@ -339,7 +339,7 @@
                         <a
                             class="button-brand button mr-3"
                             href="/create-account">
-                            CREATE ACCOUNT
+                            Register email
                         </a>
                     {:else if isUserLoggedIn === 'network'}
                         <p class="text-legendary text-xl">An error occured processing the account data</p>
@@ -347,12 +347,7 @@
                         <a
                             class="button-brand button mr-3"
                             href="{apiUrl}/auth/login">
-                            CREATE ACCOUNT
-                        </a>
-                        <a
-                            class="button-brand-alternative button"
-                            href="{apiUrl}/auth/login">
-                            LOGIN
+                            Login with steam
                         </a>
                     {/if}
                 </div>

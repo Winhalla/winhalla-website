@@ -147,13 +147,8 @@
         <div class="join-us w-full text-center mt-15 lg:mt-20 pb-10">
             <h2 class="text-5xl lg:text-7xl">Ready? Start now!</h2>
             <a class="button button-brand mt-4" href="{apiUrl}/auth/login">
-                Create Account
+                Login with steam
             </a>
-            <div class="pt-1 text-light">
-                <a class="text-base" href="{apiUrl}/auth/login">
-                    Already a member? Login
-                </a>
-            </div>
         </div>
     </div>
 </div>

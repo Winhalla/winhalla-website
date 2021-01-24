@@ -1,1 +1,0 @@
-import{S as e,i as s,s as t,q as a,d as i,n as l}from"./client.b7eeee21.js";function c(e){return{c(){this.h()},l(e){a('[data-svelte="svelte-88sy1r"]',document.head).forEach(i),this.h()},h(){document.title="Privacy policy | Winhalla"},m:l,p:l,i:l,o:l,d:l}}export default class extends e{constructor(e){super(),s(this,e,null,c,t,{})}}

@@ -19,6 +19,7 @@
     let suspiciousBitches = [];
     let suspiciousUsersFound = 0;
     let bannedOnes = [];
+    let normalUsersShown;
 
     async function login() {
         isLoggedIn = true;
@@ -81,7 +82,7 @@
         users.then(result => {
             users = result;
             for (let i = 0; i < users.length * 2; i++) {
-                if (!users[i - suspiciousUsersFound]) return;
+                if (!users[i - suspiciousUsersFound]) continue;
                 users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
                 if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
                 if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
@@ -90,16 +91,17 @@
                 }
             }
             sortArrays((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
+
+            bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
+            bannedOnes.forEach((ban, i) => {
+                let { avatarURL, brawlhallaName, stats, coins } = users.find(user => user.steamId === ban);
+                let winrate = Math.round((stats.ffa.wins / stats.ffa.gamesPlayed) * 100);
+                if (isNaN(winrate)) winrate = 0;
+                bannedOnes[i] = { avatarURL, steamId: ban, brawlhallaName, stats, coins, winrate };
+                users.splice(users.findIndex(e => e.steamId === ban), 1);
+            });
+
             loadingUsers = false;
-            /* TODO: gérer les bannis dans un array comme les suspicious après avoir fait les bans en on:click
-            bannedOnes = configs.find(e=>e.name === "IDs BANNED").value
-            bannedOnes.forEach((e,i)=>{
-                let {brawlhallaName,gamesPlayed,wins,coins} = users.find(user=>user.steamId === e)
-                let winrate =  Math.round((wins / gamesPlayed) * 100)
-                if(isNaN(winrate)) winrate = 0
-                bannedOnes[i] = {steamId:e,brawlhallaName,gamesPlayed,coins,winrate}
-            })
-            */
             users = users;
             suspiciousBitches = suspiciousBitches;
         });
@@ -300,9 +302,9 @@
                                             days</strong></p>
                                 {:else if config.name === "IDs BANNED"}
                                     <div class="block">
-                                        {#each config.value as banned,ii}
-                                            <p>{banned}</p>
-                                        {/each}
+                                        {#if config.value.length !== 0}
+                                            <UsersArray users="{bannedOnes}" banned="true" color="blue" pwd={pwd} />
+                                        {/if}
                                     </div>
                                     <p class="text-3xl text-green">
                                         {config.value.length === 0 ? "No player has been banned" : ""}
@@ -343,19 +345,24 @@
                         <div class="flex">
                             <div class="block">
                                 {#if suspiciousBitches.length > 0}
-                                    <div class="mb-25">
+                                    <div class:mb-15={normalUsersShown}>
                                         <p class="text-3xl mt-5 mb-2 ml-2">
                                             <strong class="text-accent font-normal">{suspiciousUsersFound}</strong>
                                             suspicious user{suspiciousUsersFound > 1 ? "s" : ""} found
                                         </p>
-                                        <UsersArray users="{suspiciousBitches}" color="red" />
+                                        <UsersArray users="{suspiciousBitches}" color="red" pwd="{pwd}" />
                                     </div>
                                 {:else}
                                     <div class="my-5 mb-5">
                                         No suspicious player has been found
                                     </div>
                                 {/if}
-                                <UsersArray users="{users}" color="blue" />
+                                {#if normalUsersShown}
+                                    <UsersArray users="{users}" color="blue" pwd="{pwd}" />
+                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white" on:click={()=>normalUsersShown = !normalUsersShown}>Click to hide users</h2>
+                                    {:else}
+                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white" on:click={()=>normalUsersShown = !normalUsersShown}>Click to display all users</h2>
+                                {/if}
                             </div>
                             <div class="block ml-5 mt-11 ">
                                 <p class="mt-6 text-xl">

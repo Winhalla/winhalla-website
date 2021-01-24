@@ -26,8 +26,8 @@
     <!--TEXT-->
     <div class="bg-background w-full md:w-3/4  lg:w-1/2   2xl:w-2/5    h-full   md:border-l-2 border-primary">
         <div class="sm:flex sm:flex-col items-center justify-between mx-7 h-full">
-            <div class="text-center">
-                <h1 class="text-center md:text-left text-6xl   mt-8 sm:mt-13">MULTIPLY YOUR REWARDS</h1>
+            <div class="text-center md:text-left">
+                <h1 class=" text-6xl   mt-8 sm:mt-13">MULTIPLY YOUR REWARDS</h1>
                 <p class="text-3xl mt-7 lg:mt-12 max-w-md   ">Want to obtain a first <b>x5 boost</b> on the <b>coins</b>
                     you
                     will

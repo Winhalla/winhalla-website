@@ -123,10 +123,10 @@
                placeholder="Reason for the ban">
         <p></p>
         <div class="justify-center w-full flex">
-            <button class="button button-brand mt-8" style="background-color: #fc1870" on:click={()=>{isDoingAction = false;player = undefined;}}>
+            <button class="button button-brand mt-8" style="background-color: #fc1870" on:click={()=>ban(player,1)}>
                 Confirm ban
             </button>
-            <button class="button button-brand mt-8 border border-legendary ml-5" style="background-color: #17171a;" on:click={ban(player,1)}>
+            <button class="button button-brand mt-8 border border-legendary ml-5" style="background-color: #17171a;" on:click={()=>{isDoingAction = false;player = undefined;}}>
                 Cancel
             </button>
         </div>

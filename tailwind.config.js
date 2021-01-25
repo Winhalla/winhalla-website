@@ -104,6 +104,7 @@ module.exports = {
                 "screen-90": "90vh",
                 "screen-99":"99vh",
                 "screenw-99":"99vw",
+                "screenw-38":"38vw",
                 "10%": "10%",
                 "15/100":"15%",
                 "40%": "40%",

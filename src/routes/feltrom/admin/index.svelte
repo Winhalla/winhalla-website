@@ -4,14 +4,14 @@
     import { fade } from "svelte/transition";
     import Loading from "../../../components/Loading.svelte";
     import UsersArray from "../../../components/UsersArray.svelte";
+    import { config } from "../../../components/storeAdmin";
 
     let configs;
     let isAuthorizedUser = false;
     let isLoggedIn = false;
     let otp = "";
     let pwd = "";
-    let users = new Promise(() => {
-    });
+    let users;
     let newConfig;
     let goldEvent = ["", "", "", ""];
     let loadingUsers;
@@ -74,13 +74,18 @@
 
     onMount(async () => {
         isAuthorizedUser = (await callApi("get", "/feltrom/login")) === true;
-        isLoggedIn = true;
-        configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
-        newConfig = configs;
-        users = callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
-        loadingUsers = true;
-        users.then(result => {
-            users = result;
+        config.subscribe(async (value) => {
+            if (value.refresh === false) return;
+            suspiciousBitches = [];
+            suspiciousUsersFound = 0;
+            bannedOnes = [];
+            goldEvent = ["", "", "", ""];
+
+            isLoggedIn = true;
+            configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
+            newConfig = configs;
+            users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
+            loadingUsers = true;
             for (let i = 0; i < users.length * 2; i++) {
                 if (!users[i - suspiciousUsersFound]) continue;
                 users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
@@ -94,23 +99,21 @@
 
             bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
             bannedOnes.forEach((ban, i) => {
-                let { avatarURL, brawlhallaName, stats, coins } = users.find(user => user.steamId === ban);
+                let { avatarURL, brawlhallaName, stats, coins } = users.find(user => user.steamId === ban.id);
                 let winrate = Math.round((stats.ffa.wins / stats.ffa.gamesPlayed) * 100);
                 if (isNaN(winrate)) winrate = 0;
-                bannedOnes[i] = { avatarURL, steamId: ban, brawlhallaName, stats, coins, winrate };
+                bannedOnes[i] = { avatarURL, steamId: ban.id, brawlhallaName, stats, coins, winrate, reason:ban.reason };
                 users.splice(users.findIndex(e => e.steamId === ban), 1);
+
+                loadingUsers = false;
+                users = users;
+                suspiciousBitches = suspiciousBitches;
             });
 
-            loadingUsers = false;
-            users = users;
-            suspiciousBitches = suspiciousBitches;
+            goldEvent[0] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 86400);
+            goldEvent[1] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24);
+            goldEvent[2] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60);
         });
-
-
-        goldEvent[0] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 86400);
-        goldEvent[1] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24);
-        goldEvent[2] = Math.floor((configs[4].value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60);
-
     });
 
 </script>
@@ -315,15 +318,7 @@
                     {/each}
                 </div>
                 <div class="w-2/3 h-full block">
-                    {#await users}
-                        {#if !loadingUsers}
-                            <button class="button button-brand" on:click={loadUsers}>
-                                Load users
-                            </button>
-                        {:else}
-                            Loading user data...
-                        {/if}
-                    {:then users}
+                    {#if users}
                         <div class="px-4 text-2xl mb-5 flex overflow-hidden">
                             <h3 class="">Sort by:</h3>
                             <h3 class="ml-3 -mt-2px">
@@ -359,12 +354,15 @@
                                 {/if}
                                 {#if normalUsersShown}
                                     <UsersArray users="{users}" color="blue" pwd="{pwd}" />
-                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white" on:click={()=>normalUsersShown = !normalUsersShown}>Click to hide users</h2>
-                                    {:else}
-                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white" on:click={()=>normalUsersShown = !normalUsersShown}>Click to display all users</h2>
+                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white"
+                                        on:click={()=>normalUsersShown = !normalUsersShown}>Click to hide users</h2>
+                                {:else}
+                                    <h2 class="text-2xl hover:underline ml-3 mt-4 text-gray-300 hover:text-white"
+                                        on:click={()=>normalUsersShown = !normalUsersShown}>Click to display all
+                                        users</h2>
                                 {/if}
                             </div>
-                            <div class="block ml-5 mt-11 ">
+                            <div class="block ml-5 mt-11 mr-10%">
                                 <p class="mt-6 text-xl">
                                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-2"
                                          style="fill: #fc1870">
@@ -375,7 +373,7 @@
                                 </p>
                             </div>
                         </div>
-                    {/await}
+                    {/if}
                 </div>
             </div>
         </div>

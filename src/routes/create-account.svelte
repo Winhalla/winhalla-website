@@ -7,7 +7,8 @@
 
 <script>
     import { counter } from "../components/store";
-    import Error from "../components/ErrorAlert.svelte"
+    import Error from "../components/ErrorAlert.svelte";
+
     export let firstLink;
     import { callApi } from "../utils/api.js";
     import { onMount } from "svelte";
@@ -188,7 +189,7 @@
 </svelte:head>
 <div>
     {#if pushError}
-        <Error pushError={pushError} message="There was an error creating your account"  type="createAccount"/>
+        <Error pushError={pushError} message="There was an error creating your account" type="createAccount" />
     {/if}
     <div class="flex items-center justify-center md:h-screen-7">
         {#if accountCreationStep === 0}
@@ -197,7 +198,7 @@
                     <h1
                         class="text-6xl mb-6 md:mb-8 leading-snug
                         md:leading-normal">
-                        Create your account
+                        Register email
                     </h1>
                 </div>
                 <div class="md:mt-4">

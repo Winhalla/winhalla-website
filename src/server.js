@@ -27,7 +27,7 @@ express() // You can also use Express
         }
     })
     .use((req,res,next)=>{
-        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.pathname)
+        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
         next()
     })
     .use(

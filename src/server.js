@@ -27,7 +27,8 @@ express() // You can also use Express
         }
     })
     .use((req,res,next)=>{
-        if(req.)
+        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.pathname)
+        next()
     })
     .use(
         compression({ threshold: 0 }),

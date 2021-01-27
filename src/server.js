@@ -26,6 +26,9 @@ express() // You can also use Express
             next();
         }
     })
+    .use((req,res,next)=>{
+        if(req.)
+    })
     .use(
         compression({ threshold: 0 }),
         sirv("static", { dev }),

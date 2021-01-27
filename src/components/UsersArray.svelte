@@ -157,16 +157,17 @@
         </tr>
         {#if user.isDetailsOpen}
             <tr class="w-full py-5 ">
-                <td class="w-full" colspan="4">
+                <td class="w-full" colspan="2">
                     <div class="w-full">
                         {#each user.solo?.logs as quest, ii}
                             {#if ii < 5}
                                 <p class="p-4">{quest.name}</p>
+                                <p class="text-accent text-xl">{quest.time/60}: {quest.time-quest.time/60}</p>
                             {/if}
                         {/each}
                     </div>
                 </td>
-                <td class="w-full" colspan="4">
+                <td class="w-full" colspan="5">
                     <div class="w-full">
                         {#each user.lastGames as game, ii}
                             {#if ii < 5}

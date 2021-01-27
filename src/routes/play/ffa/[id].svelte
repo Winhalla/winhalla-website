@@ -1,4 +1,5 @@
 <script>
+
     import { onDestroy } from "svelte";
     import { callApi } from "../../../utils/api";
     import { goto, stores } from "@sapper/app";
@@ -45,6 +46,36 @@
     let socket;
     let adError;
     let isLoadingOpen = true;
+
+    let adVideos = 0;
+    let stop = 0;
+    let advideostate = 0;
+    let tempNb;
+    let videoSeen = 0;
+
+    function inputChange() {
+        try {
+            if (stop > 0) {
+                return stop--;
+            }
+
+            videoSeen = document.getElementById("transfer").value;
+            if (videoSeen !== advideostate) {
+                if (videoSeen !== 0) {
+                    socket.emit("advideo", videoSeen === "1" ? {
+                        state: 1,
+                        steamId: userPlayer.steamId,
+                        room: id,
+                        goal: "earnMoreFFA"
+                    } : { state: videoSeen, steamId: userPlayer.steamId });
+                }
+            }
+            advideostate = videoSeen;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     pages = page.subscribe(async value => {
         user = undefined;
         match = undefined;
@@ -54,14 +85,16 @@
         error = undefined;
         socket = undefined;
         id = value.params.id;
+
         if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
         else console.log("ffa match");
         let unsub = counter.subscribe((user1) => {
             user = user1.content;
         });
+
         unsub();
-        //await user
-        //user = user.steam
+
+
         try {
             user = await user;
             user = user.steam;
@@ -71,8 +104,8 @@
                 throw match;
             }
             isMatchEnded = match.finished;
-            //Start the countdown
 
+            //Start the countdown
             filterUsers(false);
             const d = new Date(userPlayer.joinDate);
             const endsIn = -(
@@ -116,57 +149,59 @@
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
 
-        let adVideos = 0;
-        let stop = 0;
-        let advideostate = 0;
-        let tempNb;
-        let interval = setInterval(() => {
-            try {
-                if (stop > 0) {
-                    return stop--;
-                }
 
-                tempNb = document.getElementById("transfer").value;
-                if (tempNb !== advideostate) {
-                    if (tempNb !== 0) {
-                        socket.emit("advideo", tempNb === "1" ? {
-                            state: 1,
-                            steamId: userPlayer.steamId,
-                            room: id,
-                            goal: "earnMoreFFA"
-                        } : { state: tempNb, steamId: userPlayer.steamId });
-                        console.log(tempNb);
-                    }
-                }
-                /*if(adVideos < tempNb){
 
-                console.log(info)
-            }*/
-                advideostate = tempNb;
-            } catch (e) {
 
+        /*let interval = setInterval(() => {
+        try {
+            if (stop > 0) {
+                return stop--;
             }
-        }, 1000);
+
+            tempNb = document.getElementById("transfer").value;
+            if (tempNb !== advideostate) {
+                if (tempNb !== 0) {
+                    socket.emit("advideo", tempNb === "1" ? {
+                        state: 1,
+                        steamId: userPlayer.steamId,
+                        room: id,
+                        goal: "earnMoreFFA"
+                    } : { state: tempNb, steamId: userPlayer.steamId });
+                    console.log(tempNb);
+                }
+            }
+            /*if(adVideos < tempNb){
+
+            console.log(info)
+        }
+            advideostate = tempNb;
+        } catch (e) {
+            console.log(e);
+        }
+        }, 1000);*/
 
         socket.on("advideo", (e) => {
             if (e.code === "error") {
                 console.log(e.message);
-                clearInterval(interval);
+                //clearInterval(interval);
                 advideostate = 0;
                 tempNb = 0;
                 adVideos = 0;
                 adError = e.message;
+
                 setTimeout(() => {
                     adError = undefined;
                 }, 25000);
+
             } else if (e.code === "success") {
                 stop = 5;
                 info = e.message;
                 advideostate = 0;
                 tempNb;
                 userPlayer.adsWatched++;
-                userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200:300;
+                userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
                 adVideos = 0;
+
                 setTimeout(() => {
                     info = undefined;
                 }, 5000);
@@ -195,7 +230,6 @@
     };
 
     //Function that starts a timer with a date, and refreshes it every second
-
     function startTimer(duration) {
         let timer = duration,
             hours,
@@ -217,7 +251,7 @@
         }, 1000);
     }
 
-    let videoSeen = 0;
+
 
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
@@ -236,6 +270,7 @@
         }
         isRefreshingStats = false;
     };
+
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
@@ -260,11 +295,13 @@
     b {
         @apply text-primary font-normal;
     }
-    button{
+
+    button {
         background-color: #3de488;
         cursor: pointer;
 
     }
+
     button:disabled {
         @apply bg-disabled;
         @apply text-white;
@@ -456,7 +493,7 @@
                     </div>
                 </div>
             {/if}
-            <input hidden value={videoSeen} id="transfer" />
+            <input hidden bind:value={videoSeen} on:input={() => inputChange()}  id="transfer"/>
             <!--<div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
@@ -493,7 +530,7 @@
             </div>-->
 
             <GuideCard page="ffa" />
-            <FfaWatchAd />
+            <!--<FfaWatchAd />-->
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}
@@ -507,12 +544,17 @@
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
     {/if}
     <script data-playerPro="current">
+        function testInput() {
+
+        }
+
         function playAd() {
             const init = (api) => {
                 if (api) {
 
                     api.on("AdVideoStart", function() {
                         document.getElementById("transfer").value = 1;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                         //api.setAdVolume(1);
                         document.body.onblur = function() {
                             //api.pauseAd();
@@ -523,17 +565,22 @@
                     });
                     api.on("AdVideoFirstQuartile", () => {
                         document.getElementById("transfer").value = 2;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                     api.on("AdVideoMidpoint", () => {
                         document.getElementById("transfer").value = 3;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                     api.on("AdVideoThirdQuartile", () => {
                         document.getElementById("transfer").value = 4;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                     api.on("AdVideoComplete", function() {
                         document.getElementById("transfer").value = 5;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                         setTimeout(() => {
                             document.getElementById("transfer").value = 0;
+                            document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                         }, 1200);
                         document.body.onblur = null;
                         document.body.onfocus = null;

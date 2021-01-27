@@ -99,18 +99,11 @@
 
             bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
             bannedOnes.forEach((ban, i) => {
-                let { avatarURL, brawlhallaName, stats, coins } = users.find(user => user.steamId === ban.id);
-                let winrate = Math.round((stats.ffa.wins / stats.ffa.gamesPlayed) * 100);
+                let user = users.find(user => user.steamId === ban.id);
+                let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
                 if (isNaN(winrate)) winrate = 0;
-                bannedOnes[i] = {
-                    avatarURL,
-                    steamId: ban.id,
-                    brawlhallaName,
-                    stats,
-                    coins,
-                    winrate,
-                    reason: ban.reason
-                };
+                bannedOnes[i] = user
+                bannedOnes[i].reason = ban.reason
                 users.splice(users.findIndex(e => e.steamId === ban), 1);
 
                 loadingUsers = false;

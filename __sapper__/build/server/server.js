@@ -8566,3 +8566,4 @@ let server = https__default['default'].createServer({
     cert: fs__default['default'].readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
 },app);
 server.listen(443);
+app.listen(80);

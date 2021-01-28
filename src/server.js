@@ -42,3 +42,4 @@ let server = https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
 },app)
 server.listen(443)
+app.listen(80)

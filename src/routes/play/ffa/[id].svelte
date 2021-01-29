@@ -19,8 +19,6 @@
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
 
-    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
-
     const { page } = stores();
 
     let id;
@@ -48,29 +46,27 @@
     let isLoadingOpen = true;
 
     let adVideos = 0;
-    let stop = 0;
-    let advideostate = 0;
+    //let stop = 0;
+    //let adVideoState = 0;
     let tempNb;
     let videoSeen = 0;
 
     function inputChange() {
         try {
-            if (stop > 0) {
+            /*if (stop > 0) {
+                console.log("STOP")
                 return stop--;
-            }
-
-            videoSeen = document.getElementById("transfer").value;
-            if (videoSeen !== advideostate) {
-                if (videoSeen !== 0) {
-                    socket.emit("advideo", videoSeen === "1" ? {
-                        state: 1,
-                        steamId: userPlayer.steamId,
-                        room: id,
-                        goal: "earnMoreFFA"
-                    } : { state: videoSeen, steamId: userPlayer.steamId });
-                }
-            }
-            advideostate = videoSeen;
+            }*/
+            //if (videoSeen !== adVideoState) {
+            if (videoSeen === 0) return;
+            socket.emit("advideo", videoSeen === "1" ? {
+                state: 1,
+                steamId: userPlayer.steamId,
+                room: id,
+                goal: "earnMoreFFA"
+            } : { state: videoSeen, steamId: userPlayer.steamId });
+            //}
+            //adVideoState = videoSeen;
         } catch (e) {
             console.log(e);
         }
@@ -149,42 +145,11 @@
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
 
-
-
-
-        /*let interval = setInterval(() => {
-        try {
-            if (stop > 0) {
-                return stop--;
-            }
-
-            tempNb = document.getElementById("transfer").value;
-            if (tempNb !== advideostate) {
-                if (tempNb !== 0) {
-                    socket.emit("advideo", tempNb === "1" ? {
-                        state: 1,
-                        steamId: userPlayer.steamId,
-                        room: id,
-                        goal: "earnMoreFFA"
-                    } : { state: tempNb, steamId: userPlayer.steamId });
-                    console.log(tempNb);
-                }
-            }
-            /*if(adVideos < tempNb){
-
-            console.log(info)
-        }
-            advideostate = tempNb;
-        } catch (e) {
-            console.log(e);
-        }
-        }, 1000);*/
-
         socket.on("advideo", (e) => {
             if (e.code === "error") {
                 console.log(e.message);
                 //clearInterval(interval);
-                advideostate = 0;
+                //adVideoState = 0;
                 tempNb = 0;
                 adVideos = 0;
                 adError = e.message;
@@ -194,9 +159,9 @@
                 }, 25000);
 
             } else if (e.code === "success") {
-                stop = 5;
+                //stop = 5;
                 info = e.message;
-                advideostate = 0;
+                //adVideoState = 0;
                 tempNb;
                 userPlayer.adsWatched++;
                 userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
@@ -250,7 +215,6 @@
             }
         }, 1000);
     }
-
 
 
     //Function that handles the refresh button on click event
@@ -493,7 +457,7 @@
                     </div>
                 </div>
             {/if}
-            <input hidden bind:value={videoSeen} on:input={() => inputChange()}  id="transfer"/>
+            <input hidden bind:value={videoSeen} on:input={() => inputChange()} id="transfer" />
             <!--<div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
@@ -578,10 +542,10 @@
                     api.on("AdVideoComplete", function() {
                         document.getElementById("transfer").value = 5;
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        setTimeout(() => {
+                        /*setTimeout(() => {
                             document.getElementById("transfer").value = 0;
                             document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        }, 1200);
+                        }, 1200);*/
                         document.body.onblur = null;
                         document.body.onfocus = null;
                     });

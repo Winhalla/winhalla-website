@@ -1,5 +1,4 @@
 <script>
-
     import { onDestroy } from "svelte";
     import { callApi } from "../../../utils/api";
     import { goto, stores } from "@sapper/app";
@@ -18,18 +17,13 @@
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
+    import PlayAdButton from "../../../components/PlayAdButton.svelte";
 
     const { page } = stores();
 
     let id;
 
-    /*export let user;
-    export let match;
-    export let isMatchEnded;
-    export let countDown;
 
-    export let userPlayer;
-    export let players;*/
     let pages;
     let user;
     let match;
@@ -45,32 +39,6 @@
     let adError;
     let isLoadingOpen = true;
 
-    let adVideos = 0;
-    //let stop = 0;
-    //let adVideoState = 0;
-    let tempNb;
-    let videoSeen = 0;
-
-    function inputChange() {
-        try {
-            /*if (stop > 0) {
-                console.log("STOP")
-                return stop--;
-            }*/
-            //if (videoSeen !== adVideoState) {
-            if (videoSeen === 0) return;
-            socket.emit("advideo", videoSeen === "1" ? {
-                state: 1,
-                steamId: userPlayer.steamId,
-                room: id,
-                goal: "earnMoreFFA"
-            } : { state: videoSeen, steamId: userPlayer.steamId });
-            //}
-            //adVideoState = videoSeen;
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     pages = page.subscribe(async value => {
         user = undefined;
@@ -145,33 +113,37 @@
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
 
-        socket.on("advideo", (e) => {
-            if (e.code === "error") {
-                console.log(e.message);
-                //clearInterval(interval);
-                //adVideoState = 0;
-                tempNb = 0;
-                adVideos = 0;
-                adError = e.message;
+        /*function tests() {
+            socket.on("advideo", (e) => {
+                if (e.code === "error") {
+                    console.log(e.message);
+                    //clearInterval(interval);
+                    //adVideoState = 0;
+                    tempNb = 0;
+                    adVideos = 0;
+                    adError = e.message;
 
-                setTimeout(() => {
-                    adError = undefined;
-                }, 25000);
+                    setTimeout(() => {
+                        adError = undefined;
+                    }, 25000);
 
-            } else if (e.code === "success") {
-                //stop = 5;
-                info = e.message;
-                //adVideoState = 0;
-                tempNb;
-                userPlayer.adsWatched++;
-                userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
-                adVideos = 0;
+                } else if (e.code === "success") {
+                    //stop = 5;
+                    info = e.message;
+                    //adVideoState = 0;
+                    tempNb;
+                    userPlayer.adsWatched++;
+                    userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
+                    adVideos = 0;
 
-                setTimeout(() => {
-                    info = undefined;
-                }, 5000);
-            }
-        });
+                    setTimeout(() => {
+                        info = undefined;
+                    }, 5000);
+                }
+            });
+        }
+
+        tests();*/
     });
 
     onDestroy(pages);
@@ -260,20 +232,7 @@
         @apply text-primary font-normal;
     }
 
-    button {
-        background-color: #3de488;
-        cursor: pointer;
 
-    }
-
-    button:disabled {
-        @apply bg-disabled;
-        @apply text-white;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        box-shadow: none;
-        cursor: auto;
-    }
 
     .ffa-player {
         @apply relative w-53 h-88 text-center;
@@ -370,12 +329,12 @@
                                 ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
                                 <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                             </p>
-                            <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
+                            <!--<button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                                 lg:mt-0 mb-5
                                 lg:mb-0  text-background"
                                     onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
-                            </button>
-
+                            </button>-->
+                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} id={id} />
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
@@ -457,8 +416,8 @@
                     </div>
                 </div>
             {/if}
-            <input hidden bind:value={videoSeen} on:input={() => inputChange()} id="transfer" />
-            <!--<div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
+            <!--<input hidden bind:value={videoSeen} on:input={() => inputChange()} id="transfer" />
+            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
                 <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
                     { !isInfoDropdownOpen ? "Show" : "Hide" } information
                     <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
@@ -508,9 +467,6 @@
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
     {/if}
     <script data-playerPro="current">
-        function testInput() {
-
-        }
 
         function playAd() {
             const init = (api) => {

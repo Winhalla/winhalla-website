@@ -1,5 +1,5 @@
 <script>
-    import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { callApi } from "../../../utils/api";
     import { goto, stores } from "@sapper/app";
 
@@ -18,6 +18,7 @@
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
+    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
 
     const { page } = stores();
 
@@ -37,83 +38,94 @@
     let pushError;
     let socket;
     let adError;
+    let isSpectator;
     let isLoadingOpen = true;
-
-
-    pages = page.subscribe(async value => {
-        user = undefined;
-        match = undefined;
-        isMatchEnded = undefined;
-        userPlayer = undefined;
-        players = undefined;
-        error = undefined;
-        socket = undefined;
-        id = value.params.id;
-
-        if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
-        else console.log("ffa match");
-        let unsub = counter.subscribe((user1) => {
-            user = user1.content;
+    function getJsonFromUrl(url) {
+        if(!url) url = location.search;
+        var query = url.substr(1);
+        var result = {};
+        query.split("&").forEach(function(part) {
+            var item = part.split("=");
+            result[item[0]] = decodeURIComponent(item[1]);
         });
+        return result;
+    }
+    onMount(() => {
+        pages = page.subscribe(async value => {
+            isSpectator = getJsonFromUrl(document.location.search).spectator === 'true'
+            user = undefined;
+            match = undefined;
+            isMatchEnded = undefined;
+            userPlayer = undefined;
+            players = undefined;
+            error = undefined;
+            socket = undefined;
+            id = value.params.id;
 
-        unsub();
-
-
-        try {
-            user = await user;
-            user = user.steam;
-            match = await callApi("get", `/getMatch/${id}`);
-
-            if (match instanceof Error) {
-                throw match;
-            }
-            isMatchEnded = match.finished;
-
-            //Start the countdown
-            filterUsers(false);
-            const d = new Date(userPlayer.joinDate);
-            const endsIn = -(
-                (new Date().getTime() -
-                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                1000
-            );
-            if (endsIn < 1) {
-                countDown = "Waiting for others to finish (you can start a new game from the play page)";
-            } else {
-                startTimer(endsIn);
-            }
-            counter.set({ "refresh": true });
-
-            socket = io.io(apiUrl);
-            socket.on("connection", (status) => {
-                console.log(status);
-                socket.emit("match connection", "FFA" + id);
+            if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
+            else console.log("ffa match");
+            let unsub = counter.subscribe((user1) => {
+                user = user1.content;
             });
 
-            socket.on("join match", (status) => {
-                console.log(status);
-            });
+            unsub();
 
-            socket.on("lobbyUpdate", (value) => {
-                match = value;
-                filterUsers(true);
-            });
-            isLoadingOpen = false;
-        } catch (err) {
-            if (err.response) {
-                if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+
+            try {
+                user = await user;
+                user = user.steam;
+                match = await callApi("get", `/getMatch/${id}`);
+
+                if (match instanceof Error) {
+                    throw match;
+                }
+                isMatchEnded = match.finished;
+
+                //Start the countdown
+                filterUsers(false);
+                const d = new Date(userPlayer.joinDate);
+                const endsIn = -(
+                    (new Date().getTime() -
+                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                    1000
+                );
+                if (endsIn < 1) {
+                    countDown = "Waiting for others to finish (you can start a new game from the play page)";
+                } else {
+                    startTimer(endsIn);
+                }
+                counter.set({ "refresh": true });
+
+                socket = io.io(apiUrl);
+                socket.on("connection", (status) => {
+                    console.log(status);
+                    socket.emit("match connection", "FFA" + id);
+                });
+
+                socket.on("join match", (status) => {
+                    console.log(status);
+                });
+
+                socket.on("lobbyUpdate", (value) => {
+                    match = value;
+                    filterUsers(true);
+                });
+                isLoadingOpen = false;
+            } catch (err) {
+                if (err.response) {
+                    if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                        error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                        return;
+                    } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                        error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                        return;
+                    } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
                     return;
-                } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                    return;
-                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
-                return;
+                }
+                error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
             }
-            error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
-        }
 
-        /*function tests() {
+            /*function tests() {
             socket.on("advideo", (e) => {
                 if (e.code === "error") {
                     console.log(e.message);
@@ -144,9 +156,12 @@
         }
 
         tests();*/
+        });
     });
 
-    onDestroy(pages);
+    onDestroy(() => {
+        if (pages) pages();
+    });
 
 
     const filterUsers = (isFromSocket) => {
@@ -231,7 +246,6 @@
     b {
         @apply text-primary font-normal;
     }
-
 
 
     .ffa-player {
@@ -338,7 +352,8 @@
                                 lg:mb-0  text-background"
                                     onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
                             </button>-->
-                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} id={id} />
+                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
+                                          bind:info={info} id={id} />
                             <RefreshButton
                                 on:click={() => handleRefresh()}
                                 isRefreshing={isRefreshingStats}
@@ -457,7 +472,7 @@
             </div>-->
 
             <GuideCard page="ffa" />
-            <!--<FfaWatchAd />-->
+            <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

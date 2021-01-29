@@ -15,6 +15,7 @@
     let player;
     let action;
     let reason;
+    console.log(users[0]);
 
     async function unsuspicious(id, state) {
         if (state === 0) {
@@ -158,23 +159,52 @@
         {#if user.isDetailsOpen}
             <tr class="w-full py-5 ">
                 <td class="w-full" colspan="2">
-                    <div class="w-full">
-                        {#each user.solo?.logs as quest, ii}
-                            {#if ii < 5}
-                                <p class="p-4">{quest.name}</p>
-                                <p class="text-accent text-xl">{quest.time/60}: {quest.time-quest.time/60}</p>
-                            {/if}
-                        {/each}
-                    </div>
+                    {#if user.solo?.logs.length !== 0}
+                        <div class="w-full">
+                            <h1 class="text-green text-4xl p-4">Quests History</h1>
+                            {#each user.solo?.logs as quest, ii}
+                                {#if ii < 5}
+                                    <div class="p-4">
+                                        <h3 class="text-3xl text-primary">Quest {ii + 1}:</h3>
+                                        <p class="text-xl">Type : {quest.type}</p>
+                                        <p class="text-xl">Goal : {quest.name}</p>
+                                        <p class="text-accent text-xl">Time : {Math.floor(quest.time / 60)}
+                                            h {quest.time - Math.floor(quest.time / 60) * 60}m</p>
+                                    </div>
+                                {/if}
+                            {/each}
+                        </div>
+                    {:else}
+                        <h1 class="text-4xl p-4" class:text-primary={color==="red"} class:text-legendary={color==="blue"} >No history</h1>
+                    {/if}
+
                 </td>
-                <td class="w-full" colspan="5">
-                    <div class="w-full">
-                        {#each user.lastGames as game, ii}
-                            {#if ii < 5}
-                                <a class="p-4" href="/play/ffa/{game.id}?spectator=true">{game.id}</a>
-                            {/if}
-                        {/each}
-                    </div>
+                <td class="w-full h-auto" colspan="5">
+                    {#if user.lastGames.length !== 0}
+                        <div class="w-full">
+                            <h1 class="text-green text-4xl p-4">Match History</h1>
+                            {#each user.lastGames as game, ii}
+                                {#if ii < 5}
+                                    <div class="p-4">
+                                        <h1 class="text-3xl text-primary">Game {ii + 1}:</h1>
+                                        <a class="hover:underline text-xl"
+                                           href="/play/ffa/{game.id}?spectator=true">{game.id}</a>
+                                        <p class="text-2xl">Games played:
+                                            <d class="font-normal text-accent">{game.games}</d>
+                                        </p>
+                                        <p class="text-2xl">Wins:
+                                            <d class="font-normal text-accent">{game.wins}</d>
+                                        </p>
+                                        <p class="text-2xl">Rank:
+                                            <d class="font-normal text-accent">{game.rank}</d>
+                                        </p>
+                                    </div>
+                                {/if}
+                            {/each}
+                        </div>
+                    {:else}
+                        <h1 class="text-4xl p-4" class:text-primary={color==="red"} class:text-legendary={color==="blue"}>No history</h1>
+                    {/if}
                 </td>
             </tr>
         {/if}

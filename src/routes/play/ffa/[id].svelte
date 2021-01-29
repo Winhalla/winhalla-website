@@ -18,6 +18,7 @@
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
+    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
 
     const { page } = stores();
 
@@ -453,7 +454,7 @@
             </div>-->
 
             <GuideCard page="ffa" />
-            <!--<FfaWatchAd />-->
+            <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

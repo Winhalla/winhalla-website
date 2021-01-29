@@ -4,9 +4,11 @@
     export let id;
     export let adError;
     export let info;
+    export let finished;
+    export let page;
 
-    let adVideos = 0;
     let videoSeen;
+    let started;
 
     function inputChange() {
         try {
@@ -23,10 +25,11 @@
     }
 
     socket.on("advideo", (e) => {
+        if (!started) return;
         if (e.code === "error") {
             console.log(e.message);
-            adVideos = 0;
             adError = e.message;
+            finished = true;
 
             setTimeout(() => {
                 adError = undefined;
@@ -36,40 +39,48 @@
             info = e.message;
             userPlayer.adsWatched++;
             userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
-            adVideos = 0;
-
+            finished = true;
+            started = false;
             setTimeout(() => {
                 info = undefined;
             }, 5000);
         }
     });
+
+
 </script>
 
 <style>
     button {
         background-color: #3de488;
-        cursor: pointer;
     }
 
     button:disabled {
         @apply bg-disabled text-white;
-        padding: 0 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
         box-shadow: none;
         cursor: auto;
+    }
+
+    .FfaWatchAd {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
     }
 </style>
 
 <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                             lg:mt-0 mb-5
-                            lg:mb-0  text-background"
-        onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
+                            lg:mb-0  text-background" class:FfaWatchAd={page === "FfaWatchAd"}
+        style=""
+        onclick="playAd()"
+        on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
 </button>
 
-<input hidden bind:value={videoSeen} on:input={() => inputChange()} id="transfer" />
+<input hidden bind:value={videoSeen} on:input={() => inputChange()} id={started ? 'transfer' : Math.random() * 1000} />
 
 <div>
     <script data-playerPro="current">
-
         function playAd() {
             const init = (api) => {
                 if (api) {

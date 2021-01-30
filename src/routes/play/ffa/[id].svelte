@@ -34,10 +34,22 @@
     let userPlayer;
     let players;
     let info;
+    $: if (info) {
+        setTimeout(() => {
+            info = undefined;
+        }, 5000);
+    }
+
+    let adError;
+    $: if (adError) {
+        setTimeout(() => {
+            adError = undefined;
+        }, 25000);
+    }
+
     let error;
     let pushError;
     let socket;
-    let adError;
     let isSpectator;
     let isLoadingOpen = true;
 
@@ -52,6 +64,7 @@
             error = undefined;
             socket = undefined;
             id = value.params.id;
+
 
             if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
             else console.log("ffa match");
@@ -115,38 +128,6 @@
                 }
                 error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
             }
-
-            /*function tests() {
-            socket.on("advideo", (e) => {
-                if (e.code === "error") {
-                    console.log(e.message);
-                    //clearInterval(interval);
-                    //adVideoState = 0;
-                    tempNb = 0;
-                    adVideos = 0;
-                    adError = e.message;
-
-                    setTimeout(() => {
-                        adError = undefined;
-                    }, 25000);
-
-                } else if (e.code === "success") {
-                    //stop = 5;
-                    info = e.message;
-                    //adVideoState = 0;
-                    tempNb;
-                    userPlayer.adsWatched++;
-                    userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
-                    adVideos = 0;
-
-                    setTimeout(() => {
-                        info = undefined;
-                    }, 5000);
-                }
-            });
-        }
-
-        tests();*/
         });
     });
 
@@ -288,15 +269,19 @@
 
 </style>
 
+
 <svelte:head>
     <title>Winhalla | FFA match</title>
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
+
+
 {#if isLoadingOpen}
     <div out:fade={{duration:500}} class="z-50 bg-background absolute">
         <Loading data={"Loading game data..."} />
     </div>
 {/if}
+
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
         <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
@@ -334,11 +319,7 @@
                                 ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
                                 <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                             </p>
-                            <!--<button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
-                                lg:mt-0 mb-5
-                                lg:mb-0  text-background"
-                                    onclick="playAd()">{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
-                            </button>-->
+
                             <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
                                           bind:info={info} id={id} />
                             <RefreshButton
@@ -422,41 +403,6 @@
                     </div>
                 </div>
             {/if}
-            <!--<input hidden bind:value={videoSeen} on:input={() => inputChange()} id="transfer" />
-            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
-                <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
-                    { !isInfoDropdownOpen ? "Show" : "Hide" } information
-                    <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
-                    </svg>
-                    <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
-                    </svg>
-                </button>
-                <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
-                    <div class="w-68">
-                        <p class="text-primary text-lg ">Ranked matches</p>
-                        <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p>
-                    </div>
-                    <div class="w-68 ml-12 xl:ml-0">
-                        <p class="text-primary text-lg ">Delay</p>
-                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when
-                            you click on the "REFRESH DATA" button.</p>
-                    </div>
-                    <div class="w-68 ml-12 xl:ml-0">
-                        <p class="text-primary text-lg ">Refresh data</p>
-                        <p>The other players will see your data updated when you click on the "REFRESH DATA" button.</p>
-                    </div>
-
-                    <div class="w-68 ml-12 xl:ml-0 xl:mr-40">
-                        <p class="text-primary text-lg ">Quit</p>
-                        <p>You will be able to quit the match when you click on the "QUIT" button, if you still didn't
-                            played.</p>
-                    </div>
-                </div>
-            </div>-->
 
             <GuideCard page="ffa" />
             <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />
@@ -470,58 +416,6 @@
 
 <div>
     {#if adError}
-        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
+        <ErrorAlert message="An error occurred while watching the ad" pushError={adError} />
     {/if}
-    <script data-playerPro="current">
-
-        function playAd() {
-            const init = (api) => {
-                if (api) {
-
-                    api.on("AdVideoStart", function() {
-                        document.getElementById("transfer").value = 1;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        //api.setAdVolume(1);
-                        document.body.onblur = function() {
-                            //api.pauseAd();
-                        };
-                        document.body.onfocus = function() {
-                            //api.resumeAd();
-                        };
-                    });
-                    api.on("AdVideoFirstQuartile", () => {
-                        document.getElementById("transfer").value = 2;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                    });
-                    api.on("AdVideoMidpoint", () => {
-                        document.getElementById("transfer").value = 3;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                    });
-                    api.on("AdVideoThirdQuartile", () => {
-                        document.getElementById("transfer").value = 4;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                    });
-                    api.on("AdVideoComplete", function() {
-                        document.getElementById("transfer").value = 5;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        /*setTimeout(() => {
-                            document.getElementById("transfer").value = 0;
-                            document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        }, 1200);*/
-                        document.body.onblur = null;
-                        document.body.onfocus = null;
-                    });
-                } else {
-                    console.log("blank");
-                }
-            };
-            var s = document.querySelector("script[data-playerPro=\"current\"]");
-            //s.removeAttribute("data-playerPro");
-            (playerPro = window.playerPro || []).push({
-                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
-                after: s,
-                init: init
-            });
-        }
-    </script>
 </div>

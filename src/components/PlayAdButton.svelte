@@ -7,12 +7,11 @@
     export let finished;
     export let page;
 
-    let videoSeen;
     let started;
-
-    function inputChange() {
+    let videoSeen;
+    $: if (videoSeen > 0) {
+        console.log("nn");
         try {
-            if (videoSeen === 0) return;
             socket.emit("advideo", videoSeen === "1" ? {
                 state: 1,
                 steamId: userPlayer.steamId,
@@ -30,20 +29,13 @@
             console.log(e.message);
             adError = e.message;
             finished = true;
-
-            setTimeout(() => {
-                adError = undefined;
-            }, 25000);
-
+            started = false;
         } else if (e.code === "success") {
             info = e.message;
             userPlayer.adsWatched++;
             userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
             finished = true;
             started = false;
-            setTimeout(() => {
-                info = undefined;
-            }, 5000);
         }
     });
 
@@ -69,6 +61,7 @@
     }
 </style>
 
+
 <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                             lg:mt-0 mb-5
                             lg:mb-0  text-background" class:FfaWatchAd={page === "FfaWatchAd"}
@@ -77,7 +70,7 @@
         on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
 </button>
 
-<input hidden bind:value={videoSeen} on:input={() => inputChange()} id={started ? 'transfer' : Math.random() * 1000} />
+<input hidden bind:value={videoSeen} id={started ? 'transfer' : Math.random() * 1000} />
 
 <div>
     <script data-playerPro="current">
@@ -111,10 +104,6 @@
                     api.on("AdVideoComplete", function() {
                         document.getElementById("transfer").value = 5;
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        /*setTimeout(() => {
-                            document.getElementById("transfer").value = 0;
-                            document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        }, 1200);*/
                         document.body.onblur = null;
                         document.body.onfocus = null;
                     });

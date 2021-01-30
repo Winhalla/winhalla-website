@@ -182,6 +182,14 @@
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
         seasonPacks = [...seasonPacks];
     };
+    async function buyItem (id) {
+        const itemBuyed = await callApi('post', `/buy/${id}`)
+        if(itemBuyed instanceof Error) console.log("ERR")
+        else {
+            counter.set({refresh:true})
+            console.log("SUCCESSFULLY BOUGHT")
+        }
+    }
 </script>
 
 <style>
@@ -288,7 +296,7 @@
                                     <div class="flex justify-end md:block pb-1">
                                         <button
                                             disabled={featuredItem.unBuyable}
-                                            on:click={() => callApi('post', `/buy/${featuredItem.id}`)}
+                                            on:click={() => buyItem(featuredItem.id)}
                                             class="px-4 py-1 bg-primary rounded">
                                             <p class="text-2xl">
                                                 <b

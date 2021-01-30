@@ -40,19 +40,10 @@
     let adError;
     let isSpectator;
     let isLoadingOpen = true;
-    function getJsonFromUrl(url) {
-        if(!url) url = location.search;
-        var query = url.substr(1);
-        var result = {};
-        query.split("&").forEach(function(part) {
-            var item = part.split("=");
-            result[item[0]] = decodeURIComponent(item[1]);
-        });
-        return result;
-    }
+
     onMount(() => {
         pages = page.subscribe(async value => {
-            isSpectator = getJsonFromUrl(document.location.search).spectator === 'true'
+            isSpectator = value.query.spectator === "true";
             user = undefined;
             match = undefined;
             isMatchEnded = undefined;

@@ -7,12 +7,11 @@
     export let finished;
     export let page;
 
-    let videoSeen;
     let started;
-
-    function inputChange() {
+    let videoSeen;
+    $: if (videoSeen > 0) {
+        console.log("nn");
         try {
-            if (videoSeen === 0) return;
             socket.emit("advideo", videoSeen === "1" ? {
                 state: 1,
                 steamId: userPlayer.steamId,
@@ -75,7 +74,7 @@
         on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
 </button>
 
-<input hidden bind:value={videoSeen} on:input={() => inputChange()} id={started ? 'transfer' : Math.random() * 1000} />
+<input hidden bind:value={videoSeen} id={started ? 'transfer' : Math.random() * 1000} />
 
 <div>
     <script data-playerPro="current">

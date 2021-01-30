@@ -29,11 +29,7 @@
             console.log(e.message);
             adError = e.message;
             finished = true;
-
-            setTimeout(() => {
-                adError = undefined;
-            }, 25000);
-
+            started = false;
         } else if (e.code === "success") {
             info = e.message;
             userPlayer.adsWatched++;

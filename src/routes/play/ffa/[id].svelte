@@ -40,10 +40,16 @@
         }, 5000);
     }
 
+    let adError;
+    $: if (adError) {
+        setTimeout(() => {
+            adError = undefined;
+        }, 25000);
+    }
+
     let error;
     let pushError;
     let socket;
-    let adError;
     let isSpectator;
     let isLoadingOpen = true;
 

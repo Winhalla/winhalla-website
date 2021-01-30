@@ -1,5 +1,6 @@
 <script>
     import PlayAdButton from "./PlayAdButton.svelte";
+    import { fade, fly } from "svelte/transition";
 
     let randomInfo = Math.floor(Math.random() * 2);
 
@@ -23,9 +24,11 @@
 </style>
 
 {#if !finished}
-    <div class="sm:flex    absolute top-0 bottom-0 left-0 right-0 z-10 bg-background bg-opacity-70">
+    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+
         <!--TRANSPARENT PART-->
-        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5"></div>
+        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5 bg-background bg-opacity-70"
+             out:fade={{duration: 350}}></div>
         <!--<svg class="hidden lg:block inset-y-0 h-full w-48 absolute text-primary transform translate-x-1/2 right-1/2" fill="currentColor"
              viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" xstyle="margin-right: -10.2rem">
             <polygon class="border-l border-primary" points="50,0 100,0 50,100 0,100"></polygon>
@@ -34,8 +37,10 @@
              viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <polygon class="border-l border-primary" points="50,0 100,0 50,100 0,100"></polygon>
         </svg>-->
+
         <!--TEXT-->
-        <div class="bg-background w-full md:w-3/4  lg:w-1/2   2xl:w-2/5    h-full   md:border-l-2 border-primary">
+        <div class="bg-background w-full md:w-3/4  lg:w-1/2   2xl:w-2/5    h-full   md:border-l-2 border-primary"
+             in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>
             <div class="sm:flex sm:flex-col items-center justify-between mx-7 h-full">
                 <div class="text-center md:text-left">
                     <h1 class=" text-6xl   mt-8 sm:mt-13">MULTIPLY YOUR REWARDS</h1>
@@ -91,7 +96,5 @@
             </div>
 
         </div>
-
-
     </div>
 {/if}

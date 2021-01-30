@@ -1,7 +1,7 @@
 <script>
     import { callApi } from "../../../utils/api";
     import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
     import Loading from "../../../components/Loading.svelte";
     import UsersArray from "../../../components/UsersArray.svelte";
     import { config } from "../../../components/storeAdmin";
@@ -12,14 +12,16 @@
     let otp = "";
     let pwd = "";
     let users;
+    let activePanel = "config";
     let newConfig;
-    let goldEvent = ["", "", "", ""];
+    let goldEvent = [];
     let loadingUsers;
     let sortBy = "alphabetic";
     let suspiciousBitches = [];
     let suspiciousUsersFound = 0;
     let bannedOnes = [];
     let normalUsersShown;
+    let commands;
 
     async function login() {
         isLoggedIn = true;
@@ -34,6 +36,7 @@
     function sortArrays(fx) {
         users.sort(fx);
         suspiciousBitches.sort(fx);
+        bannedOnes.sort(fx);
     }
 
     function sort(by, stats) {
@@ -54,22 +57,23 @@
     }
 
 
-    function loadUsers() {
-        users = callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
-        loadingUsers = true;
-        users.then(result => {
-            users = result;
-            users.forEach((user, i) => {
-                users[i].winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
-                if (isNaN(users[i].winrate)) {
-                    users[i].winrate = 0;
-                }
-            });
-            users.sort((a, b) => {
-                return b.winrate - a.winrate;
-            });
-            loadingUsers = false;
+    async function loadUsers() {
+        users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
+        users.forEach((user, i) => {
+            users[i].winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
+            if (isNaN(users[i].winrate)) {
+                users[i].winrate = 0;
+            }
         });
+        users.sort((a, b) => {
+            return b.winrate - a.winrate;
+        });
+        loadingUsers = false;
+    }
+
+    async function loadCommands() {
+        commands = await callApi("get", `/feltrom/commands?otp=${otp}&pwd=${pwd}`);
+        commands.sort((a,b)=>a.date-b.date)
     }
 
     onMount(async () => {
@@ -102,8 +106,8 @@
                 let user = users.find(user => user.steamId === ban.id);
                 let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
                 if (isNaN(winrate)) winrate = 0;
-                bannedOnes[i] = user
-                bannedOnes[i].reason = ban.reason
+                bannedOnes[i] = user;
+                bannedOnes[i].reason = ban.reason;
                 users.splice(users.findIndex(e => e.steamId === ban), 1);
 
                 loadingUsers = false;
@@ -207,10 +211,8 @@
                             focus:border-primary placeholder-disabled" />
                     </div>
                 </div>
-                <!-- svelte-ignore a11y-accesskey -->
                 <button
                     on:click={login}
-                    accesskey="enter"
                     class="button button-brand mt-3">
                     Login
                 </button>
@@ -226,116 +228,134 @@
     {#if configs && users}
         <div class="lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full">
             <h1 class="text-6xl mb-12">ADMIN DASHBOARD</h1>
-            <div class="flex justify-center">
-                <div class="w-1/3 mx-4 block h-full p-8">
-                    {#each newConfig as config,i}
-                        <div class="mb-16">
-                            <h1 class="text-5xl text-primary">{config.name}</h1>
-                            <div class="pl-8 pt-4">
-                                {#if config.name === "GAMEMODES STATUS"}
-                                    <h2 class="text-3xl">2vs2</h2>
-                                    <div class="flex">
-                                        <p class:text-green={config.value.FFA === true}
-                                           class:text-accent={config.value.FFA === "maintenance"}
-                                           class:text-legendary={config.value.FFA === false}>
-                                            • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
-                                        </p>
-                                    </div>
-                                    <h2 class="text-3xl">2vs2</h2>
-                                    <div class="flex">
-                                        <p class:text-green={config.value["2vs2"] === true}
-                                           class:text-accent={config.value["2vs2"] === "maintenance"}
-                                           class:text-legendary={config.value["2vs2"] === false}>
-                                            • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
-                                        </p>
-                                    </div>
-                                {:else if config.name === "FFA REWARDS CONFIG"}
-                                    <div class="block">
-                                        {#each config.value as reward,ii}
-                                            <div class="flex">
-                                                <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
-                                                : {reward}$
-                                            </div>
+            <h2 class="text-3xl mb-2">View :
+                <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "config"}
+                        class:text-4xl={activePanel === "config"} on:click={()=>activePanel = "config"}>CONFIG</strong>,
+                <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "users"}
+                        class:text-4xl={activePanel === "users"} on:click={()=>activePanel = "users"}>USERS</strong>,
+                <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "commands"}
+                        class:text-4xl={activePanel === "commands"}
+                        on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>
+            </h2>
+            <div class="w-full">
+                {#if config && activePanel === "config"}
+                    <div class="justify-evenly mx-4 w-full flex h-full flex-wrap p-8">
+                        {#each newConfig as config,i}
+                            <div class="mb-16 border-t-2 border-primary bg-variant rounded-lg mx-8 p-4">
+                                <h1 class="text-5xl text-primary">{config.name}</h1>
+                                <div class="pt-4">
+                                    {#if config.name === "GAMEMODES STATUS"}
+                                        <h2 class="text-3xl">FFA</h2>
+                                        <div class="flex">
+                                            <p class:text-green={config.value.FFA === true}
+                                               class:text-accent={config.value.FFA === "maintenance"}
+                                               class:text-legendary={config.value.FFA === false}>
+                                                • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                            </p>
+                                        </div>
+                                        <h2 class="text-3xl">2vs2</h2>
+                                        <div class="flex">
+                                            <p class:text-green={config.value["2vs2"] === true}
+                                               class:text-accent={config.value["2vs2"] === "maintenance"}
+                                               class:text-legendary={config.value["2vs2"] === false}>
+                                                • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
+                                            </p>
+                                        </div>
+                                    {:else if config.name === "FFA REWARDS CONFIG"}
+                                        <div class="block">
+                                            {#each config.value as reward,ii}
+                                                <div class="flex">
+                                                    <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
+                                                    : {reward}$
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {:else if config.name === "ADVICES"}
+                                        <div class="flex mb-5">
+                                            <p>Probability:</p>
+                                            <input type="text"
+                                                   class="text-2xl bg-variant rounded -mt-3 mx-2 text-center"
+                                                   size="3"
+                                                   bind:value={config.value.probability} />%
+                                        </div>
+                                        {#each config.value.advices as info,ii}
+                                            <h2 class="text-4xl text-accent">{ii + 1}.</h2>
+                                            <h3 class="text-3xl">Name</h3>
+                                            <input class="text-2xl bg-variant rounded" size="40" type="text"
+                                                   bind:value={info.name} />
+                                            <h3 class="text-3xl mt-3">Strong</h3>
+                                            <input class="text-xl bg-variant rounded mt-2" size="40" type="text"
+                                                   bind:value={info.strong}>
+
                                         {/each}
-                                    </div>
-                                {:else if config.name === "ADVICES"}
-                                    <div class="flex mb-5">
-                                        <p>Probability:</p>
-                                        <input type="text" class="text-2xl bg-variant rounded -mt-3 mx-2 text-center"
-                                               size="3"
-                                               bind:value={config.value.probability} />%
-                                    </div>
-                                    {#each config.value.advices as info,ii}
-                                        <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                        <h3 class="text-3xl">Name</h3>
-                                        <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                               bind:value={info.name} />
-                                        <h3 class="text-3xl mt-3">Strong</h3>
-                                        <input class="text-xl bg-variant rounded mt-2" size="40" type="text"
-                                               bind:value={info.strong}>
+                                    {:else if config.name === "INFOS"}
+                                        {#each config.value as info,ii}
+                                            <h2 class="text-4xl text-accent">{ii + 1}.</h2>
+                                            <h3 class="text-3xl">Name</h3>
+                                            <input class="text-2xl bg-variant rounded" size="40" type="text"
+                                                   bind:value={info.name} />
+                                            <h3 class="text-3xl">Strong</h3>
+                                            <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
+                                                   bind:value={info.description}>
 
-                                    {/each}
-                                {:else if config.name === "INFOS"}
-                                    {#each config.value as info,ii}
-                                        <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                        <h3 class="text-3xl">Name</h3>
-                                        <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                               bind:value={info.name} />
-                                        <h3 class="text-3xl">Strong</h3>
-                                        <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
-                                               bind:value={info.description}>
-
-                                    {/each}
-                                {:else if config.name === "GOLD EVENT"}
-                                    <h3 class="text-2xl">Boost of <strong
-                                        class="font-normal text-accent text-3xl">{config.value.percentage - 100}
-                                        %</strong></h3>
-                                    <p class="text-2xl">
-                                        Exipires in
-                                        <strong class="text-accent font-normal text-3xl">{goldEvent[0]}</strong> days,
-                                        <strong class="text-accent font-normal text-3xl">{goldEvent[1]}</strong> hours,
-                                        <strong class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
-                                        minutes,
-                                    </p>
-                                {:else if config.name === "LINKS CONFIG"}
-                                    <p class="text-2xl">Players joining via an affiliated link get
-                                        <strong class="text-accent font-normal text-3xl">{config.value.boost}%</strong>
-                                        more
-                                        coins for <strong
-                                            class="text-accent font-normal text-3xl">{config.value.duration}
-                                            days</strong></p>
-                                {:else if config.name === "IDs BANNED"}
-                                    <div class="block">
-                                        {#if config.value.length !== 0}
-                                            <UsersArray users="{bannedOnes}" banned="true" color="blue" pwd={pwd} />
-                                        {/if}
-                                    </div>
-                                    <p class="text-3xl text-green">
-                                        {config.value.length === 0 ? "No player has been banned" : ""}
-                                    </p>
-                                {/if}
+                                        {/each}
+                                    {:else if config.name === "GOLD EVENT"}
+                                        <h3 class="text-2xl">Boost of <strong
+                                            class="font-normal text-accent text-3xl">{config.value.percentage - 100}
+                                            %</strong></h3>
+                                        <p class="text-2xl">
+                                            Exipires in
+                                            <strong class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
+                                            days,
+                                            <strong class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
+                                            hours,
+                                            <strong class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
+                                            minutes,
+                                        </p>
+                                    {:else if config.name === "LINKS CONFIG"}
+                                        <div class="w-60">
+                                            <p class="text-2xl">Players joining via an affiliated link get
+                                                <strong class="text-accent font-normal text-3xl">{config.value.boost}
+                                                    %</strong>
+                                                more
+                                                coins for <strong
+                                                    class="text-accent font-normal text-3xl">{config.value.duration}
+                                                    days</strong></p>
+                                        </div>
+                                    {:else if config.name === "IDs BANNED"}
+                                        <div class="block">
+                                            {#if config.value.length !== 0}
+                                                <UsersArray users="{bannedOnes}" banned="true" color="blue" pwd={pwd} />
+                                            {/if}
+                                        </div>
+                                        <p class="text-3xl text-green">
+                                            {config.value.length === 0 ? "No player has been banned" : ""}
+                                        </p>
+                                    {/if}
+                                </div>
                             </div>
-                        </div>
-                    {/each}
-                </div>
-                <div class="w-2/3 h-full block">
-                    {#if users}
+                        {/each}
+                    </div>
+                {:else if users && activePanel === "users"}
+                    <div class="w-full h-full block">
                         {#if normalUsersShown || suspiciousBitches.length > 0}
                             <div class="px-4 text-2xl mb-5 flex overflow-hidden">
                                 <h3 class="">Sort by:</h3>
-                                <h3 class="ml-3 -mt-2px">
+                                <h3 class="ml-3 ">
                                     <strong class="font-normal cursor-pointer "
-                                            class:text-primary={sortBy === "alphabetic"}
+                                            class:text-accent={sortBy === "alphabetic"}
                                             class:text-3xl={sortBy === "alphabetic"}
                                             on:click={()=>sort("alphabetic")}>alphabetic</strong>,
-                                    <strong class="font-normal cursor-pointer" class:text-primary={sortBy === "winrate"}
+                                    <strong class="font-normal cursor-pointer"
+                                            class:text-accent={sortBy === "winrate"}
                                             class:text-3xl={sortBy === "winrate"}
                                             on:click={()=>sort("winrate")}>winrate</strong>,
-                                    <strong class="font-normal cursor-pointer" class:text-primary={sortBy === "coins"}
+                                    <strong class="font-normal cursor-pointer"
+                                            class:text-accent={sortBy === "coins"}
                                             class:text-3xl={sortBy === "coins"}
                                             on:click={()=>sort("coins")}>coins</strong>,
                                     <strong class="font-normal cursor-pointer"
-                                            class:text-primary={sortBy === "gamesPlayed"}
+                                            class:text-accent={sortBy === "gamesPlayed"}
                                             class:text-3xl={sortBy === "gamesPlayed"}
                                             on:click={()=>sort("gamesPlayed",true)}>games played</strong>
                                 </h3>
@@ -370,7 +390,8 @@
                             {#if normalUsersShown || suspiciousBitches.length > 0}
                                 <div class="block ml-5 mt-11 mr-10%">
                                     <p class="mt-6 text-xl">
-                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-2"
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                             class="w-5 h-5 mb-2"
                                              style="fill: #fc1870">
                                             <path
                                                 d="m20.46 11.992c0-.018 0-.038 0-.059 0-1.69-.507-3.261-1.376-4.571l.019.031-11.757 11.74c1.296.87 2.89 1.388 4.606 1.388h.026-.001.029c1.182 0 2.306-.25 3.321-.699l-.052.021c3.074-1.315 5.188-4.314 5.188-7.807 0-.015 0-.03 0-.045v.002zm-15.576 4.662 11.773-11.757c-1.29-.889-2.886-1.42-4.607-1.42-.025 0-.05 0-.074 0h.004c-.019 0-.041 0-.064 0-1.546 0-2.992.423-4.231 1.159l.038-.021c-2.544 1.51-4.223 4.244-4.223 7.369 0 1.736.518 3.352 1.408 4.7l-.02-.032zm19.066-4.662v.035c0 1.678-.35 3.273-.981 4.718l.03-.076c-1.842 4.36-6.082 7.363-11.024 7.363s-9.182-3.004-10.994-7.285l-.029-.078c-.601-1.379-.951-2.985-.951-4.674s.35-3.295.981-4.751l-.03.077c1.842-4.36 6.082-7.363 11.024-7.363s9.182 3.004 10.994 7.285l.029.078c.601 1.365.952 2.957.952 4.631v.041-.002z" />
@@ -378,7 +399,8 @@
                                         Click to ban user (confirmation message always shows)
                                     </p>
                                     <p class="mt-6 text-xl">
-                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-2"
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                             class="w-5 h-5 mb-2"
                                              style="fill: #3de488">
                                             <path
                                                 d="m20.46 11.992c0-.018 0-.038 0-.059 0-1.69-.507-3.261-1.376-4.571l.019.031-11.757 11.74c1.296.87 2.89 1.388 4.606 1.388h.026-.001.029c1.182 0 2.306-.25 3.321-.699l-.052.021c3.074-1.315 5.188-4.314 5.188-7.807 0-.015 0-.03 0-.045v.002zm-15.576 4.662 11.773-11.757c-1.29-.889-2.886-1.42-4.607-1.42-.025 0-.05 0-.074 0h.004c-.019 0-.041 0-.064 0-1.546 0-2.992.423-4.231 1.159l.038-.021c-2.544 1.51-4.223 4.244-4.223 7.369 0 1.736.518 3.352 1.408 4.7l-.02-.032zm19.066-4.662v.035c0 1.678-.35 3.273-.981 4.718l.03-.076c-1.842 4.36-6.082 7.363-11.024 7.363s-9.182-3.004-10.994-7.285l-.029-.078c-.601-1.379-.951-2.985-.951-4.674s.35-3.295.981-4.751l-.03.077c1.842-4.36 6.082-7.363 11.024-7.363s9.182 3.004 10.994 7.285l.029.078c.601 1.365.952 2.957.952 4.631v.041-.002z" />
@@ -388,8 +410,14 @@
                                 </div>
                             {/if}
                         </div>
-                    {/if}
-                </div>
+                    </div>
+                {:else if commands && activePanel === "commands"}
+                    <div class="content-center">
+                        <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}"/>
+                    </div>
+                {/if}
+
+
             </div>
         </div>
     {/if}

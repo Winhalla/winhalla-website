@@ -122,7 +122,7 @@
                     class="game-mode-text-container">
                     <h3
                         class="">
-                        {gameMode.name}
+                        {gameMode.displayName}
                     </h3>
                     <div class="stats">
                         <p class="desc">
@@ -152,7 +152,7 @@
                     class="game-mode-text-container">
                     <h3
                         class="">
-                        {gameMode.name}
+                        {gameMode.displayName}
                     </h3>
                     <div class="stats">
                         <p class="desc">

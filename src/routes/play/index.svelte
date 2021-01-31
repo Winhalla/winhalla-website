@@ -18,6 +18,7 @@
         gameModes = [
             {
                 name: "ffa",
+                displayName:"Solo vs All",
                 description: "Fight against <b>9</b> players!",
                 goal:
                     "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
@@ -26,6 +27,7 @@
             },
             {
                 name: "2vs2",
+                displayName:"Team",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
@@ -45,7 +47,7 @@
                     s => s.name === "GAMEMODES STATUS"
                 );
                 gameModesStatus = gameModesStatus.value;
-
+                console.log(gameModes,gameModesStatus)
                 Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
                         g => g.name === gameModeName.toLowerCase()
@@ -69,6 +71,7 @@
             }
         } catch
             (err) {
+            console.log(err)
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                     error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -83,7 +86,6 @@
             error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 
         }
-
     });
 </script>
 
@@ -96,7 +98,7 @@
     <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
-{#if !quests || (!quests.lastDaily || !quests.lastWeekly)}
+{#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
     <div out:fade={{delay:300,duration:500}} class="z-50 bg-background absolute">
         <Loading type="inline" />
     </div>

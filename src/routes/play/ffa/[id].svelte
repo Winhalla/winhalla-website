@@ -148,7 +148,7 @@
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex(p => p.steamId === parseInt(user.id)),
+            match.players.findIndex(p => p.steamId === user.id),
             1
         );
     };
@@ -276,7 +276,7 @@
 </svelte:head>
 
 
-{#if isLoadingOpen}
+{#if isLoadingOpen && !error}
     <div out:fade={{duration:500}} class="z-50 bg-background absolute">
         <Loading data={"Loading game data..."} />
     </div>

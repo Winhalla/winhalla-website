@@ -116,6 +116,7 @@
                 });
                 isLoadingOpen = false;
             } catch (err) {
+                console.log(err)
                 if (err.response) {
                     if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                         error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";

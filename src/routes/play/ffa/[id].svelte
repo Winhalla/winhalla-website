@@ -148,7 +148,7 @@
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex(p => p.steamId === parseInt(user.id)),
+            match.players.findIndex(p => p.steamId === user.id),
             1
         );
     };

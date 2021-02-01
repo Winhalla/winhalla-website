@@ -42,7 +42,7 @@
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
-            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0].id;
+            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
         user = tempUserData.steam;
         userCoins = tempUserData.user.coins;

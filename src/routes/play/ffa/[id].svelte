@@ -276,7 +276,7 @@
 </svelte:head>
 
 
-{#if isLoadingOpen}
+{#if isLoadingOpen && !error}
     <div out:fade={{duration:500}} class="z-50 bg-background absolute">
         <Loading data={"Loading game data..."} />
     </div>

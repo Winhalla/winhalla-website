@@ -139,9 +139,9 @@
     const filterUsers = (isFromSocket) => {
         //Find user's object
         if (!isFromSocket) {
-            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+            userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
             match.players[playerIndex].wins = userPlayer.wins;
             userPlayer = match.players[playerIndex];
         }

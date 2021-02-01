@@ -10,9 +10,10 @@
 
     import { apiUrl } from "../../utils/config";
     import { callApi } from "../../utils/api";
-    import { goto } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
     import { counter } from "../store.js";
 
+    const { page } = stores();
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
@@ -29,7 +30,8 @@
     let offline;
     let loaded = false;
 
-    async function calculateProperties(value) {
+    let currentMatch;
+    function calculateProperties(value) {
         const tempUserData = value;
         console.log(tempUserData);
         if (tempUserData.offline) offline = true;
@@ -40,6 +42,7 @@
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
+            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0].id;
         }
         user = tempUserData.steam;
         userCoins = tempUserData.user.coins;
@@ -104,7 +107,7 @@
     }
 
     .nav-link-container {
-        @apply pr-9 flex items-center my-3;
+        @apply pr-9 flex items-center;
     }
 </style>
 
@@ -188,7 +191,7 @@
                 class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
                 <div class="ml-7 links text-xl lg:flex">
                     <!--<a
-                            class="nav-link-container lg:hover:text-shadow-link-hover
+                            class="nav-link-container my-3 lg:hover:text-shadow-link-hover
                             border-l border-primary lg:border-none pl-3"
                             href="/profile">
                         <svg
@@ -201,7 +204,7 @@
                         PROFILE
                     </a>-->
                     <a
-                        class="nav-link-container
+                        class="nav-link-container my-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
                         href="/play">
@@ -218,7 +221,7 @@
                         PLAY
                     </a>
                     <a
-                        class="nav-link-container
+                        class="nav-link-container my-3 mb-6 lg:mb-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
                         href="/shop"
@@ -259,66 +262,26 @@
                         </svg>
                         SHOP
                     </a>
+
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
+                        <a class="lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto"
+                           href="/play/ffa/{currentMatch}">Rejoin
+                            match</a>
+                    {/if}
                 </div>
-                <!---{#if loaded && !poll}
-                    <div
-                            class="absolute top-2 "
-                            style="left: 50% ; transform: translate(-50%, 0);"
-                            transition:fly={{ y:-200, duration: 500 }}
-                    >
-                        <div class="flex items-center px-4">
-                            <p
-                                    class="text-3xl text-center px-4 md:px-0
-                                md:text-left ml-10">
-                                {poll.name}
-                            </p>
-                            <button on:click={()=>{poll.submitted = true;setTimeout(()=>{poll.submitted = false; poll = undefined},5000)}}
-                                    class="button button-brand ml-4 w-24"
-                                    style="padding: 0.5rem 0.75rem">
-                                SUBMIT
-                            </button>
-                        </div>
-                        <div class="mt-2 flex relative" style="">
-                            <div
-                                    class="z-10 h-12 w-11 bg-background
-                                rounded-bl-lg border-b-2 border-l-2 border-green"/>
-
-                            <div
-                                    class="z-20 absolute top-0 left-5 w-12
-                                bg-background rounded-bl-lg"
-                                    style="height: calc(3rem - 2px)"/>
-                            <div class="z-20">
-                                <Poll poll={poll}/>
-                            </div>
-
-                            <div
-                                    class="absolute z-10 top-1 bottom-0 left-11
-                                right-12 rounded-b-lg border-8 border-t-0
-                                border-green"/>
-                            <div
-                                    class="z-20 absolute top-0 right-5 w-12
-                                bg-background rounded-br-lg"
-                                    style="height: calc(3rem - 2px)"/>
-                            <div
-                                    class="absolute top-0 right-5 w-12 bg-background
-                                rounded-br-lg border-b-2 border-green"
-                                    style="height: calc(3rem)"/>
-                            <div
-                                    class="z-10 h-12 w-12 bg-background
-                                rounded-br-lg border-b-2 border-r-2 border-green
-                                "/>
-                        </div>
-
-                    </div>
-                {/if}-->
                 <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
+                        <a class="hidden lg:block py-1 px-3 text-xl bg-primary rounded  mb-4 lg:mb-0 lg:mr-8 w-auto"
+                           href="/play/ffa/{currentMatch}">Rejoin
+                            match</a>
+                    {/if}
                     {#if informations}
                         <div class="hidden lg:flex items-center">
                             <NavAlert data={informations} />
                         </div>
                     {/if}
                     {#if isUserLoggedIn === true}
-                        <div class="lg:flex lg:items-center">
+                        <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.displayName && user.photos}
                                 <NavAccount
                                     username={user.displayName}

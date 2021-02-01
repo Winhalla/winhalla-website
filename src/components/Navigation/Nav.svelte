@@ -10,9 +10,10 @@
 
     import { apiUrl } from "../../utils/config";
     import { callApi } from "../../utils/api";
-    import { goto } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
     import { counter } from "../store.js";
 
+    const { page } = stores();
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
@@ -29,6 +30,7 @@
     let offline;
     let loaded = false;
 
+    let currentMatch;
     function calculateProperties(value) {
         const tempUserData = value;
         console.log(tempUserData);
@@ -40,6 +42,7 @@
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
+            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0].id;
         }
         user = tempUserData.steam;
         userCoins = tempUserData.user.coins;
@@ -260,16 +263,16 @@
                         SHOP
                     </a>
 
-                    {#if notificationsObj.inGame?.filter(g => g.isFinished === false)[0]}
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
                         <a class="lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto"
-                           href="/play/ffa/{notificationsObj.inGame.filter(g => g.isFinished === false)[0].id}">Rejoin
+                           href="/play/ffa/{currentMatch}">Rejoin
                             match</a>
                     {/if}
                 </div>
                 <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
-                    {#if notificationsObj.inGame?.filter(g => g.isFinished === false)[0]}
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
                         <a class="hidden lg:block py-1 px-3 text-xl bg-primary rounded  mb-4 lg:mb-0 lg:mr-8 w-auto"
-                           href="/play/ffa/{notificationsObj.inGame.filter(g => g.isFinished === false)[0].id}">Rejoin
+                           href="/play/ffa/{currentMatch}">Rejoin
                             match</a>
                     {/if}
                     {#if informations}

@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.f27014f1.js"
+    "main": "client.9ed40ba6.js"
   },
   "css": {
     "main": [
@@ -11,68 +11,68 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.03c7257a.js",
+      "index.dd6d3182.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.dc7ea919.js",
+      "create-account.34069a08.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.81df9799.js",
+      "change-email.26df2f2f.js",
       "inject_styles.5607aec6.js",
       "change-email-7780a81f.css"
     ],
     "contact.svelte": [
-      "contact.45e33c30.js",
+      "contact.140f7c82.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin/index.svelte": [
-      "index.e3ad60ad.js",
-      "Loading.a18a1391.js",
+      "index.a94dae9a.js",
+      "Loading.6171285f.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "index-d10fd9c4.css"
     ],
     "offline.svelte": [
-      "offline.e0b4dad8.js",
+      "offline.5ba64ffd.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.df996821.js",
+      "privacy.8d8c7137.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.689246eb.js",
+      "status.cec3eb92.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.418bc1cc.js",
+      "about.382b922d.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.a2a01ff2.js",
+      "terms.3a2bb7ca.js",
       "inject_styles.5607aec6.js"
     ],
     "tests/[id].svelte": [
-      "[id].afc73aae.js",
+      "[id].d4d399fe.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.bfe644e1.js",
+      "help.41a9f975.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].aa712bb6.js",
+      "[id].4e1b9b39.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.c37be18d.js",
-      "Loading.a18a1391.js",
-      "AdblockAlert.dcc80e98.js",
-      "GuideCard.9eb834c4.js",
+      "index.9510893c.js",
+      "Loading.6171285f.js",
+      "AdblockAlert.daa48dcc.js",
+      "GuideCard.d46e789b.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "AdblockAlert-cddd02f2.css",
@@ -80,16 +80,16 @@
       "index-894423af.css"
     ],
     "play/ffa/index.svelte": [
-      "index.86f29021.js",
-      "Loading.a18a1391.js",
+      "index.a210fffa.js",
+      "Loading.6171285f.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].e31c7905.js",
-      "Loading.a18a1391.js",
-      "AdblockAlert.dcc80e98.js",
-      "GuideCard.9eb834c4.js",
+      "[id].42d0a385.js",
+      "Loading.6171285f.js",
+      "AdblockAlert.daa48dcc.js",
+      "GuideCard.d46e789b.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "AdblockAlert-cddd02f2.css",
@@ -97,18 +97,18 @@
       "[id]-ea70e8e2.css"
     ],
     "shop.svelte": [
-      "shop.2b7e488f.js",
-      "AdblockAlert.dcc80e98.js",
+      "shop.0111e7ba.js",
+      "AdblockAlert.daa48dcc.js",
       "inject_styles.5607aec6.js",
       "AdblockAlert-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.eb2c1f53.js",
+      "test.1d5755b3.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.b9e87b38.js"
+    "main": "client.7d9b0114.js"
   }
 }

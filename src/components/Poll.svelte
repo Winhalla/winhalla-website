@@ -56,9 +56,10 @@
         </button>
 
         <div class:hidden={!isPollOpen} class="px-5">
-            {#if poll.isMCQ}
-                <div class="">
-                    {#if answered === false}
+            {#if answered === false}
+                {#if poll.isMCQ}
+                    <div class="">
+
                         {#each poll.options as option, i}
                             <div on:click={()=>{handleChoose(i)}}
                                  class:border-primary={answer === i}
@@ -86,16 +87,19 @@
                             </div>
 
                         {/each}
-                        <button on:click={()=> handleSubmit()} class="button button-brand w-24 mt-2 w-full">
-                            SUBMIT
-                        </button>
-                    {:else}
-                        <p class="text-3xl text-center mx-auto rounded-lg focus:outline-none block text-primary mt-2">
-                            Thanks
-                            for your
-                            answer!</p>
-                    {/if}
-                </div>
+
+                    </div>
+                {:else}
+                    <textarea class="px-3 py-2 text-black" bind:value={answer}></textarea>
+                {/if}
+                <button on:click={()=> handleSubmit()} class="button button-brand w-24 mt-2 w-full">
+                    SUBMIT
+                </button>
+            {:else}
+                <p class="text-3xl text-center mx-auto rounded-lg focus:outline-none block text-primary mt-2">
+                    Thanks
+                    for your
+                    answer!</p>
             {/if}
         </div>
     </div>

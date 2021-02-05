@@ -414,7 +414,7 @@
                                         </div>
                                     {:else if config.name === "POLLS"}
                                         {#each config.value as poll,ii}
-                                            <div class="border-primary border-b pt-4 pb-8" >
+                                            <div class="border-primary border-b pt-4 pb-8">
                                                 <div class="flex justify-between">
                                                     <h3 class="text-primary text-3xl">Name</h3>
                                                     <button
@@ -447,15 +447,16 @@
                                                     {/each}
                                                 {:else}
                                                     <button class="button button-brand"
-                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown?'Hide':'Show'}
+                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown ? 'Hide' : 'Show'}
                                                         answers
                                                     </button>
                                                     {#if poll.areAnswersShown}
                                                         <p class="mt-8 text-accent text-3xl">Total
-                                                        answers: {poll.totalAnswers}</p>
+                                                            answers: {poll.totalAnswers}</p>
                                                         <div class="flex mt-4">
                                                             {#each poll.answers as answer, iii}
-                                                                <p> <h class="text-primary mr-1">1.</h>{answer}</p>
+                                                                <p>
+                                                                    <h class="text-primary mr-1">1.</h>{answer}</p>
                                                             {/each}
                                                         </div>
 
@@ -627,62 +628,75 @@
                     <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
                          transition:fade|local={{duration:200}}>
                         <div
-                            class="block rounded-lg border bg-background border-primary mx-auto mb-auto px-14 py-8"
+                            class="flex justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
                             style="margin-top:20vh">
-                            <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
-                            <div>
-                                <div class="overflow-auto max-h-screen-50">
-                                    {#each popup.fields as field,i}
-                                        {#if field.name === "Multiple choice question ?"}
-                                            <div class="text-3xl mt-8">
-                                                <input type="radio" id="Normal" name="type" value="false"
-                                                       bind:group={field.value}>
-                                                <label for="Normal">Normal</label><br>
-                                                <input type="radio" id="MCQ" name="type" value="true"
-                                                       bind:group={field.value}>
-                                                <label for="MCQ">MCQ</label>
-                                            </div>
+                            <div
+                                class="block ">
+                                <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
+                                <div>
+                                    <div class="overflow-auto max-h-screen-50">
+                                        {#each popup.fields as field,i}
+                                            {#if field.name === "Multiple choice question ?"}
+                                                <div class="text-3xl mt-8">
+                                                    <input type="radio" id="Normal" name="type" value="false"
+                                                           bind:group={field.value}>
+                                                    <label for="Normal">Normal</label><br>
+                                                    <input type="radio" id="MCQ" name="type" value="true"
+                                                           bind:group={field.value}>
+                                                    <label for="MCQ">MCQ</label>
+                                                </div>
 
-                                            {#if field.value == "true"}
-                                                {#each popup.fields[1].special as option,ii}
-                                                    <div class="my-4">
-                                                        <h3 class="text-3xl">Option {ii + 1}</h3>
+                                                {#if field.value == "true"}
+                                                    {#each popup.fields[1].special as option,ii}
+                                                        <div class="my-4">
+                                                            <h3 class="text-3xl">Option {ii + 1}</h3>
 
-                                                        <input class="text-black" bind:value={option} type="text" />
-                                                        <p></p>
-                                                    </div>
-                                                {/each}
-                                                <p></p>
-                                                <button class="button button-brand mt-4 ml-2" on:click={addField}>Add
-                                                    option
-                                                </button>
+                                                            <input class="text-black" bind:value={option} type="text" />
+                                                            <p></p>
+                                                        </div>
+                                                    {/each}
+                                                    <p></p>
+                                                    <button class="button button-brand mt-4 ml-2" on:click={addField}>
+                                                        Add
+                                                        option
+                                                    </button>
+                                                {/if}
+                                            {:else}
+                                                <h3 class="text-3xl mt-8">{field.name}</h3>
+                                                <input type="text" class="text-black rounded" size="25"
+                                                       placeholder="{field.name}" bind:value={field.value} />
+
                                             {/if}
-                                        {:else}
-                                            <h3 class="text-3xl mt-8">{field.name}</h3>
-                                            <input type="text" class="text-black rounded" size="25"
-                                                   placeholder="{field.name}" bind:value={field.value} />
+                                            <p></p>
+                                        {/each}
+                                    </div>
+                                    <div class="justify-center w-full flex">
+                                        <button class="button button-brand mt-8"
+                                                style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
+                                                on:click={handleConfirm}>
+                                            {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                        </button>
+                                        <button class="button button-brand mt-8 border ml-5"
+                                                class:border-primary={popup.type !== 'deletion'}
+                                                class:border-legendary={popup.type === 'deletion'}
+                                                style="background-color: #17171a;padding: -1px"
+                                                on:click={()=>popup={}}>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-15 px-5 my-auto">
+                                <button class="button button-brand" style="background-color: #ff8f0f"
+                                        on:click={()=>popup.isPreviewing = !popup.isPreviewing}}>
+                                    {popup.isPreviewing ? "Stop" : ""}Preview
+                                </button>
 
-                                        {/if}
-                                        <p></p>
-                                    {/each}
-                                </div>
-                                <div class="justify-center w-full flex">
-                                    <button class="button button-brand mt-8"
-                                            style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
-                                            on:click={handleConfirm}>
-                                        {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
-                                    </button>
-                                    <button class="button button-brand mt-8 border ml-5"
-                                            class:border-primary={popup.type !== 'deletion'}
-                                            class:border-legendary={popup.type === 'deletion'}
-                                            style="background-color: #17171a;padding: -1px"
-                                            on:click={()=>popup={}}>
-                                        Cancel
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
+                {/if}
+                {#if popup.isPreviewing}
 
                 {/if}
             </div>

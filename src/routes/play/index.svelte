@@ -99,8 +99,8 @@
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
-    <div out:fade={{delay:300,duration:500}} class="z-50 bg-background absolute">
-        <Loading type="inline" />
+    <div >
+        <Loading duration={500}/>
     </div>
 {/if}
 {#if gameModesError && error}

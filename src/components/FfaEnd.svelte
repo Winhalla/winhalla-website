@@ -4,7 +4,6 @@
     const data = winners.map(w => {
         let array = [];
         w.forEach((e, i) => {
-            //TODO: faire la même mais avec l'array winners au lieu de players
             if (e == "") return
             const winnerInPlayers = players.find(p => p.steamId == e.steamId);
             array.push({

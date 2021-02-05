@@ -76,45 +76,45 @@
 
 
             //try {
-                user = await user;
-                user = user.steam;
-                match = await callApi("get", `/getMatch/${id}`);
+            user = await user;
+            user = user.steam;
+            match = await callApi("get", `/getMatch/${id}`);
 
-                if (match instanceof Error) {
-                    throw match;
-                }
-                isMatchEnded = match.finished;
+            if (match instanceof Error) {
+                throw match;
+            }
+            isMatchEnded = match.finished;
 
-                //Start the countdown
-                filterUsers(false);
-                const d = new Date(userPlayer.joinDate);
-                const endsIn = -(
-                    (new Date().getTime() -
-                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                    1000
-                );
-                if (endsIn < 1) {
-                    countDown = "Waiting for others to finish (you can start a new game from the play page)";
-                } else {
-                    startTimer(endsIn);
-                }
-                counter.set({ "refresh": true });
+            //Start the countdown
+            filterUsers(false);
+            const d = new Date(userPlayer.joinDate);
+            const endsIn = -(
+                (new Date().getTime() -
+                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                1000
+            );
+            if (endsIn < 1) {
+                countDown = "Waiting for others to finish (you can start a new game from the play page)";
+            } else {
+                startTimer(endsIn);
+            }
+            counter.set({ "refresh": true });
 
-                socket = io.io(apiUrl);
-                socket.on("connection", (status) => {
-                    console.log(status);
-                    socket.emit("match connection", "FFA" + id);
-                });
+            socket = io.io(apiUrl);
+            socket.on("connection", (status) => {
+                console.log(status);
+                socket.emit("match connection", "FFA" + id);
+            });
 
-                socket.on("join match", (status) => {
-                    console.log(status);
-                });
+            socket.on("join match", (status) => {
+                console.log(status);
+            });
 
-                socket.on("lobbyUpdate", (value) => {
-                    match = value;
-                    filterUsers(true);
-                });
-                isLoadingOpen = false;
+            socket.on("lobbyUpdate", (value) => {
+                match = value;
+                filterUsers(true);
+            });
+            isLoadingOpen = false;
             /*} catch (err) {
                 console.log(err)
                 if (err.response) {
@@ -278,9 +278,7 @@
 
 
 {#if isLoadingOpen && !error}
-    <div out:fade={{duration:500}} class="z-50 bg-background absolute">
-        <Loading data={"Loading game data..."} />
-    </div>
+    <Loading data={"Loading game data..."} duration={500} />
 {/if}
 
 {#if error}

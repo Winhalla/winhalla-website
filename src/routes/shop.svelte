@@ -453,7 +453,7 @@
                         You will receive the item you purchased within 1 week to 1 month
                     </p>
                 </div>
-                <div class="mt-30">
+                <!--<div class="mt-30">
                     <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                         Lottery
                     </h3>
@@ -503,8 +503,7 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

@@ -2,113 +2,118 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.098ea239.js"
+    "main": "client.0d0e8f6d.js"
   },
   "css": {
     "main": [
-      "client-c7e74d46.css"
+      "client-43f65ddb.css"
     ]
   },
   "dependencies": {
     "index.svelte": [
-      "index.16ef88ad.js",
+      "index.723481d5.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.2ab94461.js",
+      "create-account.27221854.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.63f2e940.js",
+      "change-email.167d7404.js",
       "inject_styles.5607aec6.js",
       "change-email-7780a81f.css"
     ],
     "contact.svelte": [
-      "contact.91a04e46.js",
+      "contact.fb667579.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin/index.svelte": [
-      "index.627ec3c9.js",
-      "Loading.db171e9d.js",
+      "index.23ad5c37.js",
+      "Loading.0e040c0a.js",
+      "RefreshButton.ae605c51.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
-      "index-d10fd9c4.css"
+      "RefreshButton-cddd02f2.css",
+      "index-ee40e4b2.css"
     ],
     "offline.svelte": [
-      "offline.e7fda353.js",
+      "offline.bee4a5f0.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.9657aee8.js",
+      "privacy.5bc1d0ce.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.7ae0a744.js",
+      "status.5a106b80.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.6ab1a6e6.js",
+      "about.11f61e55.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.81a635c4.js",
+      "terms.715abf65.js",
       "inject_styles.5607aec6.js"
     ],
     "tests/[id].svelte": [
-      "[id].e0d693f0.js",
+      "[id].3189c5b4.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.e9064312.js",
+      "help.9f295777.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].be835a74.js",
+      "[id].a921a0ce.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.72e694aa.js",
-      "Loading.db171e9d.js",
-      "AdblockAlert.efca17bd.js",
-      "GuideCard.2b8caee8.js",
+      "index.b8e60ab6.js",
+      "Loading.0e040c0a.js",
+      "RefreshButton.ae605c51.js",
+      "AdblockAlert.a703c44c.js",
+      "GuideCard.19c50107.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
-      "AdblockAlert-cddd02f2.css",
+      "RefreshButton-cddd02f2.css",
       "GuideCard-909fbf0f.css",
-      "index-894423af.css"
+      "index-3f76a2fa.css"
     ],
     "play/ffa/index.svelte": [
-      "index.a765d75e.js",
-      "Loading.db171e9d.js",
+      "index.36f404df.js",
+      "Loading.0e040c0a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].9215932f.js",
-      "Loading.db171e9d.js",
-      "AdblockAlert.efca17bd.js",
-      "GuideCard.2b8caee8.js",
+      "[id].603dec4f.js",
+      "Loading.0e040c0a.js",
+      "RefreshButton.ae605c51.js",
+      "AdblockAlert.a703c44c.js",
+      "GuideCard.19c50107.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
-      "AdblockAlert-cddd02f2.css",
+      "RefreshButton-cddd02f2.css",
       "GuideCard-909fbf0f.css",
       "[id]-ea70e8e2.css"
     ],
     "shop.svelte": [
-      "shop.68ff11d1.js",
-      "AdblockAlert.efca17bd.js",
+      "shop.892b0b69.js",
+      "RefreshButton.ae605c51.js",
+      "AdblockAlert.a703c44c.js",
       "inject_styles.5607aec6.js",
-      "AdblockAlert-cddd02f2.css",
+      "RefreshButton-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.6057ecee.js",
+      "test.c94c83c7.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.f3df1ffc.js"
+    "main": "client.cb78abf8.js"
   }
 }

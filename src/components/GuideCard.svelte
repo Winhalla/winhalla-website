@@ -136,7 +136,7 @@
                                  alt="FFA action buttons">
                             <div class="md:ml-10">
                                 <p class="text-3xl text-legendary">Action buttons</p>
-                                <p>The <b>QUIT</b> button let's you <b>quit the lobby</b> when you still <b>haven't
+                                <p>The <b>QUIT</b> button let you <b>quit the lobby</b> when you still <b>haven't
                                     played
                                     any games</b>.
                                     <br> When you <b>click</b> the <b>REFRESH DATA</b> button, your <b>player card</b>

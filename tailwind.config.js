@@ -97,6 +97,7 @@ module.exports = {
                 98: "24.50rem",
                 99: "24.75rem",
                 100: "25rem",
+                "screen-50": "55vh",
                 "screen-60": "60vh",
                 "screen-70": "70vh",
                 "screen-80": "80vh",

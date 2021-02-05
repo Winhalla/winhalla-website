@@ -10,21 +10,22 @@
     export let pwd;
     export let banned = false;
     export let type = "full";
+    export let otp;
     let isDoingAction;
-    let otp;
     let scrollY;
     let player;
     let action;
     let reason;
-    let tempSteamId
-    let isVerifyingSteamId = {isDoing:false,steamId:null}
-    console.log(users[0]);
-    function isSteamIdValid(){
-        setTimeout(()=>{
-            isVerifyingSteamId.isValid = parseInt(isVerifyingSteamId.tempSteamId) === isVerifyingSteamId.steamId
-            console.log(isVerifyingSteamId.tempSteamId, isVerifyingSteamId.steamId)
-        },1)
+    let tempSteamId;
+    let isVerifyingSteamId = { isDoing: false, steamId: null };
+
+    function isSteamIdValid() {
+        setTimeout(() => {
+            isVerifyingSteamId.isValid = parseInt(isVerifyingSteamId.tempSteamId) === isVerifyingSteamId.steamId;
+            console.log(isVerifyingSteamId.tempSteamId, isVerifyingSteamId.steamId);
+        }, 1);
     }
+
     async function unsuspicious(id, state) {
         if (state === 0) {
             isDoingAction = true;
@@ -196,7 +197,8 @@
                 <td class="px-4 py-3 text-green" class:text-legendary={user.days>14} class:text-accent={user.days>7}>
                     {user.days} days, {user.hours} hours
                 </td>
-                <td class="px-4 py-3 text-xl cursor-pointer text-gray-400 hover:text-white" on:click={()=>isVerifyingSteamId = {isDoing:true,steamId: user.steamId}}>
+                <td class="px-4 py-3 text-xl cursor-pointer text-gray-400 hover:text-white"
+                    on:click={()=>isVerifyingSteamId = {isDoing:true,steamId: user.steamId}}>
                     {user.steamId}
                 </td>
             {/if}
@@ -269,16 +271,19 @@
 </table>
 {#if isVerifyingSteamId.isDoing === true}
     <div class="fixed w-screenw-99 h-screen bg-black opacity-90 z-50 left-0 top-0"
-    transition:fade|local={{duration:200}}></div>
-    <div class="fixed content-center block -pl-4 z-50 bg-background left-1/3 top-1/4 rounded-lg border border-primary mx-auto px-14 py-8"
-         transition:fade|local={{duration:200}}>
+         transition:fade|local={{duration:200}}></div>
+    <div
+        class="fixed content-center block -pl-4 z-50 bg-background left-1/3 top-1/4 rounded-lg border border-primary mx-auto px-14 py-8"
+        transition:fade|local={{duration:200}}>
         <h2 class="text-4xl mt-10 text-primary">Verify steamId</h2>
-        <input type="text" class="text-black px-3 py-1" placeholder="Enter steamID" on:keydown={isSteamIdValid} bind:value={isVerifyingSteamId.tempSteamId}>
+        <input type="text" class="text-black px-3 py-1" placeholder="Enter steamID" on:keydown={isSteamIdValid}
+               bind:value={isVerifyingSteamId.tempSteamId}>
         <button class="button button-brand mt-8 ml-5" style="background-color: #fc1870"
                 on:click={()=>isVerifyingSteamId = {isDoing: false,steamId: null}}>
             Close
         </button>
-        <p class:text-legendary={!isVerifyingSteamId.isValid} class:text-green={isVerifyingSteamId.isValid}>{isVerifyingSteamId.isValid?"Valid":"Invalid"}</p>
+        <p class:text-legendary={!isVerifyingSteamId.isValid}
+           class:text-green={isVerifyingSteamId.isValid}>{isVerifyingSteamId.isValid ? "Valid" : "Invalid"}</p>
     </div>
 {/if}
 {#if isDoingAction}

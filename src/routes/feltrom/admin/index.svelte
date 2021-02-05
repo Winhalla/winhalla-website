@@ -129,8 +129,8 @@
             newConfig = configs;
         }
 
-        if(thing === "poll"){
-            await callApi("post", `/feltrom/deletePoll?otp=${otp}&pwd=${pwd}`,{id:popup.options.index})
+        if (thing === "poll") {
+            await callApi("post", `/feltrom/deletePoll?otp=${otp}&pwd=${pwd}`, { id: popup.options.index });
         }
         login(true);
     }
@@ -407,43 +407,70 @@
                                             </button>
                                         {/each}
                                         <div class="flex">
-                                            <button class="m-auto button button-brand"
+                                            <button class="m-auto  button button-brand"
                                                     on:click={()=>makePopup({text:"info",goal:"create"})}>Create
                                                 info
                                             </button>
                                         </div>
                                     {:else if config.name === "POLLS"}
-                                        {#if config.value.length > 0}
-                                            {#each config.value as poll,ii}
-                                                <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                                <h3 class="text-3xl">Name</h3>
+                                        {#each config.value as poll,ii}
+                                            <div class="border-primary border-b pt-4 pb-8" >
+                                                <div class="flex justify-between">
+                                                    <h3 class="text-primary text-3xl">Name</h3>
+                                                    <button
+                                                        class="hover:bg-legendary h-6 text-legendary hover:text-white rounded"
+                                                        on:click={()=>makePopup({text:"poll",goal:"delete"},{index:poll._id})}>
+                                                        <svg class="w-4 mx-1 fill-current" viewBox="0 0 24 24"
+                                                             xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                                 <input class="text-2xl bg-variant rounded" size="40" type="text"
                                                        bind:value={poll.name} />
                                                 {#if poll.isMCQ}
-                                                    <h3 className="text-3xl">Options</h3>
-                                                    {#each poll.options as option, iii}
-                                                    <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
-                                                           bind:value={option}>
-                                                        <p></p>
-                                                        {/each}
+                                                    <h3 class="text-3xl text-primary">Options</h3>
+                                                    {#each poll.answers as option, iii}
+                                                        <div class="flex">
+                                                            <input class="text-2xl bg-variant rounded mt-2" size="60"
+                                                                   type="text"
+                                                                   bind:value={option.name}>
+                                                            <p class="text-primary text-2xl">Votes <strong
+                                                                class="font-normal text-white">{option.nb}</strong>
+                                                                Percentage <strong class="font-normal"
+                                                                                   class:text-legendary={option.nb/poll.totalAnswers<0.25}
+                                                                                   class:text-green={option.nb/poll.totalAnswers>=0.5}
+                                                                                   class:text-accent={option.nb/poll.totalAnswers>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100}
+                                                                    %</strong></p>
+                                                        </div>
+                                                    {/each}
+                                                {:else}
+                                                    <button class="button button-brand"
+                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown?'Hide':'Show'}
+                                                        answers
+                                                    </button>
+                                                    {#if poll.areAnswersShown}
+                                                        <p class="mt-8 text-accent text-3xl">Total
+                                                        answers: {poll.totalAnswers}</p>
+                                                        <div class="flex mt-4">
+                                                            {#each poll.answers as answer, iii}
+                                                                <p> <h class="text-primary mr-1">1.</h>{answer}</p>
+                                                            {/each}
+                                                        </div>
+
+                                                    {/if}
                                                 {/if}
-                                                <button
-                                                    on:click={()=>makePopup({text:"poll",goal:"delete"},{index:poll._id})}>
-                                                    <svg class="fill-current w-4" viewBox="0 0 24 24"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
-                                                    </svg>
-                                                </button>
-                                            {/each}
-                                        {:else}
-                                            <div class="flex">
-                                                <button class="m-auto button button-brand"
-                                                        on:click={()=>makePopup({text:"poll",goal:"create"})}>Create
-                                                    poll
-                                                </button>
+
+
                                             </div>
-                                        {/if}
+                                        {/each}
+                                        <div class="flex pt-4">
+                                            <button class="m-auto button button-brand"
+                                                    on:click={()=>makePopup({text:"poll",goal:"create"})}>Create new
+                                                poll
+                                            </button>
+                                        </div>
                                     {:else if config.name === "GOLD EVENT"}
                                         {#if config.value.expiration !== null }
                                             <h3 class="text-2xl">Boost of <strong

@@ -2,13 +2,8 @@
     import { callApi } from "../utils/api";
     import { fly } from "svelte/transition";
 
-    export let poll;/* = {
-        name: "Should we add a 2vs2 game mode ?",
-        isMCQ: true,
-        options: [
-            "Yes", "I don't care", "No"
-        ]
-    };*/
+    export let poll;
+    export let preview;
 
 
     let answer;
@@ -92,7 +87,7 @@
                 {:else}
                     <textarea class="px-3 py-2 text-black" bind:value={answer}></textarea>
                 {/if}
-                <button on:click={()=> handleSubmit()} class="button button-brand w-24 mt-2 w-full">
+                <button on:click={()=>{ if(!preview){handleSubmit()}}} class="button button-brand w-24 mt-2 w-full">
                     SUBMIT
                 </button>
             {:else}

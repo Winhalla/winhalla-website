@@ -1,13 +1,16 @@
 <script>
-    import { callApi } from "../../../utils/api";
+    import { callApi } from "../../utils/api";
     import { onMount } from "svelte";
     import { fade, fly } from "svelte/transition";
-    import Loading from "../../../components/Loading.svelte";
-    import UsersArray from "../../../components/UsersArray.svelte";
-    import { config } from "../../../components/storeAdmin";
+    import Loading from "../../components/Loading.svelte";
+    import UsersArray from "../../components/UsersArray.svelte";
+    import { config } from "../../components/storeAdmin";
     import { goto } from "@sapper/app";
-    import RefreshButton from "../../../components/RefreshButton.svelte";
-    import Infos from "../../../components/Infos.svelte";
+    import RefreshButton from "../../components/RefreshButton.svelte";
+    import Infos from "../../components/Infos.svelte";
+    import Poll from "../../components/Poll.svelte";
+    import { counter } from "../../components/store";
+    import NavAlert from "../../components/Navigation/NavAlert.svelte";
 
     let configs;
     let isAuthorizedUser = false;
@@ -181,12 +184,12 @@
             }, {
                 name: "Percentage of boost (20 equals all rewards to be raised by 20%)",
                 value: null
-            }, { name: "Description (additional infos)", value: null }];
+            }, { name: "description (additional infos)", value: null }];
         } else if (reason.text === "info" && reason.goal === "create") {
             popup.fields = [{ name: "Name", value: null }, {
                 name: "Duration (in hours)",
                 value: null
-            }, { name: "Description", value: null }];
+            }, { name: "description", value: null }];
         } else if (reason.text === "info" || reason.text === "event" || reason.text === "poll" && reason.goal === "delete") {
             popup.options = options;
             popup.fields = [];
@@ -214,6 +217,10 @@
     function addField() {
         popup.fields[1].special.push("");
         popup = popup;
+    }
+
+    function handlePreview() {
+        popup.isPreviewing = !popup.isPreviewing
     }
 
 </script>
@@ -414,7 +421,7 @@
                                         </div>
                                     {:else if config.name === "POLLS"}
                                         {#each config.value as poll,ii}
-                                            <div class="border-primary border-b pt-4 pb-8" >
+                                            <div class="border-primary border-b pt-4 pb-8">
                                                 <div class="flex justify-between">
                                                     <h3 class="text-primary text-3xl">Name</h3>
                                                     <button
@@ -447,15 +454,16 @@
                                                     {/each}
                                                 {:else}
                                                     <button class="button button-brand"
-                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown?'Hide':'Show'}
+                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown ? 'Hide' : 'Show'}
                                                         answers
                                                     </button>
                                                     {#if poll.areAnswersShown}
                                                         <p class="mt-8 text-accent text-3xl">Total
-                                                        answers: {poll.totalAnswers}</p>
+                                                            answers: {poll.totalAnswers}</p>
                                                         <div class="flex mt-4">
                                                             {#each poll.answers as answer, iii}
-                                                                <p> <h class="text-primary mr-1">1.</h>{answer}</p>
+                                                                <p>
+                                                                    <h class="text-primary mr-1">1.</h>{answer}</p>
                                                             {/each}
                                                         </div>
 
@@ -627,62 +635,94 @@
                     <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
                          transition:fade|local={{duration:200}}>
                         <div
-                            class="block rounded-lg border bg-background border-primary mx-auto mb-auto px-14 py-8"
+                            class="flex justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
                             style="margin-top:20vh">
-                            <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
-                            <div>
-                                <div class="overflow-auto max-h-screen-50">
-                                    {#each popup.fields as field,i}
-                                        {#if field.name === "Multiple choice question ?"}
-                                            <div class="text-3xl mt-8">
-                                                <input type="radio" id="Normal" name="type" value="false"
-                                                       bind:group={field.value}>
-                                                <label for="Normal">Normal</label><br>
-                                                <input type="radio" id="MCQ" name="type" value="true"
-                                                       bind:group={field.value}>
-                                                <label for="MCQ">MCQ</label>
-                                            </div>
+                            <div
+                                class="block ">
+                                <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
+                                <div>
+                                    <div class="overflow-auto max-h-screen-50">
+                                        {#each popup.fields as field,i}
+                                            {#if field.name === "Multiple choice question ?"}
+                                                <div class="text-3xl mt-8">
+                                                    <input type="radio" id="Normal" name="type" value="false"
+                                                           bind:group={field.value}>
+                                                    <label for="Normal">Normal</label><br>
+                                                    <input type="radio" id="MCQ" name="type" value="true"
+                                                           bind:group={field.value}>
+                                                    <label for="MCQ">MCQ</label>
+                                                </div>
 
-                                            {#if field.value == "true"}
-                                                {#each popup.fields[1].special as option,ii}
-                                                    <div class="my-4">
-                                                        <h3 class="text-3xl">Option {ii + 1}</h3>
+                                                {#if field.value == "true"}
+                                                    {#each popup.fields[1].special as option,ii}
+                                                        <div class="my-4">
+                                                            <h3 class="text-3xl">Option {ii + 1}</h3>
 
-                                                        <input class="text-black" bind:value={option} type="text" />
-                                                        <p></p>
-                                                    </div>
-                                                {/each}
-                                                <p></p>
-                                                <button class="button button-brand mt-4 ml-2" on:click={addField}>Add
-                                                    option
-                                                </button>
+                                                            <input class="text-black" bind:value={option} type="text" />
+                                                            <p></p>
+                                                        </div>
+                                                    {/each}
+                                                    <p></p>
+                                                    <button class="button button-brand mt-4 ml-2" on:click={addField}>
+                                                        Add
+                                                        option
+                                                    </button>
+                                                {/if}
+                                            {:else}
+                                                <h3 class="text-3xl mt-8">{field.name}</h3>
+                                                <textarea type="text" class="text-black rounded" rows="{field.name.includes('description')?5:1}" size="40"
+                                                       placeholder="{field.name}" bind:value={field.value} />
+
                                             {/if}
-                                        {:else}
-                                            <h3 class="text-3xl mt-8">{field.name}</h3>
-                                            <input type="text" class="text-black rounded" size="25"
-                                                   placeholder="{field.name}" bind:value={field.value} />
-
-                                        {/if}
-                                        <p></p>
-                                    {/each}
-                                </div>
-                                <div class="justify-center w-full flex">
-                                    <button class="button button-brand mt-8"
-                                            style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
-                                            on:click={handleConfirm}>
-                                        {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
-                                    </button>
-                                    <button class="button button-brand mt-8 border ml-5"
-                                            class:border-primary={popup.type !== 'deletion'}
-                                            class:border-legendary={popup.type === 'deletion'}
-                                            style="background-color: #17171a;padding: -1px"
-                                            on:click={()=>popup={}}>
-                                        Cancel
-                                    </button>
+                                            <p></p>
+                                        {/each}
+                                    </div>
+                                    <div class="justify-center w-full flex">
+                                        <button class="button button-brand mt-8"
+                                                style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
+                                                on:click={handleConfirm}>
+                                            {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                        </button>
+                                        <button class="button button-brand mt-8 border ml-5"
+                                                class:border-primary={popup.type !== 'deletion'}
+                                                class:border-legendary={popup.type === 'deletion'}
+                                                style="background-color: #17171a;padding: -1px"
+                                                on:click={()=>popup={}}>
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            {#if popup.thing === "poll" || popup.thing === "info" && popup.type === "creation"}
+                                <div class="h-15 px-5 my-auto">
+                                    <button class="button button-brand" style="background-color: #ff8f0f"
+                                            on:click={handlePreview}>
+                                        {popup.isPreviewing ? "Stop" : ""} Preview
+                                    </button>
+                                </div>
+                            {/if}
                         </div>
                     </div>
+                {/if}
+                {#if popup.isPreviewing}
+                    {#if popup.thing === "poll"}
+                        <div
+                            class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                            transition:fly={{ y:-200, duration: 500 }}>
+                            <Poll poll="{{
+                            name: popup.fields[0].value,
+                            isMCQ: popup.fields[1].value === 'true',
+                            options: popup.fields[1].special
+                        }}" isPreviewing />
+                        </div>
+                    {:else if popup.thing === "info"}
+                        <div
+                            class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                            transition:fly={{ y:-200, duration: 500 }}>
+                            <NavAlert
+                                data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]} isPreviewing/>
+                        </div>
+                    {/if}
 
                 {/if}
             </div>

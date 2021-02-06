@@ -75,7 +75,7 @@
             unsub();
 
 
-            //try {
+            try {
             user = await user;
             user = user.steam;
             match = await callApi("get", `/getMatch/${id}`);
@@ -115,7 +115,7 @@
                 filterUsers(true);
             });
             isLoadingOpen = false;
-            /*} catch (err) {
+            } catch (err) {
                 console.log(err)
                 if (err.response) {
                     if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
@@ -128,7 +128,7 @@
                     return;
                 }
                 error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
-            }*/
+            }
         });
     });
 
@@ -277,7 +277,7 @@
 </svelte:head>
 
 
-{#if isLoadingOpen && !error}
+{#if isLoadingOpen && !error }
     <Loading data={"Loading game data..."} duration={500} />
 {/if}
 

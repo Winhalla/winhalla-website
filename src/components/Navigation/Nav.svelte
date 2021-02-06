@@ -31,9 +31,10 @@
     let loaded = false;
 
     let currentMatch;
+
     function calculateProperties(value) {
         const tempUserData = value;
-        console.log(tempUserData);
+        if(!tempUserData) return isUserLoggedIn = false
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
             if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
@@ -77,14 +78,13 @@
         }
 
         setTimeout(async () => {
-                try {
-                    if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
+            try {
+                if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
 
-                } catch (e) {
-                    console.log(e);
-                }
-            }, 5000
-        );
+            } catch (e) {
+                console.log(e);
+            }
+        }, 5000);
         await user;
         calculateProperties(user);
         loaded = true;

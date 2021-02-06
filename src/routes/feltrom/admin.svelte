@@ -1,13 +1,16 @@
 <script>
-    import { callApi } from "../../../utils/api";
+    import { callApi } from "../../utils/api";
     import { onMount } from "svelte";
     import { fade, fly } from "svelte/transition";
-    import Loading from "../../../components/Loading.svelte";
-    import UsersArray from "../../../components/UsersArray.svelte";
-    import { config } from "../../../components/storeAdmin";
+    import Loading from "../../components/Loading.svelte";
+    import UsersArray from "../../components/UsersArray.svelte";
+    import { config } from "../../components/storeAdmin";
     import { goto } from "@sapper/app";
-    import RefreshButton from "../../../components/RefreshButton.svelte";
-    import Infos from "../../../components/Infos.svelte";
+    import RefreshButton from "../../components/RefreshButton.svelte";
+    import Infos from "../../components/Infos.svelte";
+    import Poll from "../../components/Poll.svelte";
+    import { counter } from "../../components/store";
+    import NavAlert from "../../components/Navigation/NavAlert.svelte";
 
     let configs;
     let isAuthorizedUser = false;
@@ -181,12 +184,12 @@
             }, {
                 name: "Percentage of boost (20 equals all rewards to be raised by 20%)",
                 value: null
-            }, { name: "Description (additional infos)", value: null }];
+            }, { name: "description (additional infos)", value: null }];
         } else if (reason.text === "info" && reason.goal === "create") {
             popup.fields = [{ name: "Name", value: null }, {
                 name: "Duration (in hours)",
                 value: null
-            }, { name: "Description", value: null }];
+            }, { name: "description", value: null }];
         } else if (reason.text === "info" || reason.text === "event" || reason.text === "poll" && reason.goal === "delete") {
             popup.options = options;
             popup.fields = [];
@@ -214,6 +217,10 @@
     function addField() {
         popup.fields[1].special.push("");
         popup = popup;
+    }
+
+    function handlePreview() {
+        popup.isPreviewing = !popup.isPreviewing
     }
 
 </script>
@@ -663,7 +670,7 @@
                                                 {/if}
                                             {:else}
                                                 <h3 class="text-3xl mt-8">{field.name}</h3>
-                                                <input type="text" class="text-black rounded" size="25"
+                                                <textarea type="text" class="text-black rounded" rows="{field.name.includes('description')?5:1}" size="40"
                                                        placeholder="{field.name}" bind:value={field.value} />
 
                                             {/if}
@@ -686,17 +693,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="h-15 px-5 my-auto">
-                                <button class="button button-brand" style="background-color: #ff8f0f"
-                                        on:click={()=>popup.isPreviewing = !popup.isPreviewing}}>
-                                    {popup.isPreviewing ? "Stop" : ""}Preview
-                                </button>
-
-                            </div>
+                            {#if popup.thing === "poll" || popup.thing === "info" && popup.type === "creation"}
+                                <div class="h-15 px-5 my-auto">
+                                    <button class="button button-brand" style="background-color: #ff8f0f"
+                                            on:click={handlePreview}>
+                                        {popup.isPreviewing ? "Stop" : ""} Preview
+                                    </button>
+                                </div>
+                            {/if}
                         </div>
                     </div>
                 {/if}
                 {#if popup.isPreviewing}
+                    {#if popup.thing === "poll"}
+                        <div
+                            class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                            transition:fly={{ y:-200, duration: 500 }}>
+                            <Poll poll="{{
+                            name: popup.fields[0].value,
+                            isMCQ: popup.fields[1].value === 'true',
+                            options: popup.fields[1].special
+                        }}" isPreviewing />
+                        </div>
+                    {:else if popup.thing === "info"}
+                        <div
+                            class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                            transition:fly={{ y:-200, duration: 500 }}>
+                            <NavAlert
+                                data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]} isPreviewing/>
+                        </div>
+                    {/if}
 
                 {/if}
             </div>

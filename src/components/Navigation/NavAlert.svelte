@@ -2,8 +2,8 @@
     import {clickOutside} from "../../utils/clickOutside";
 
     export let data;
-
-    let isDropdownOpen;
+    export let isPreviewing;
+    let isDropdownOpen = isPreviewing
     const handleClick = () => {
         isDropdownOpen = !isDropdownOpen;
     };
@@ -26,7 +26,7 @@
             <button
                     class="focus:outline-none"
                     use:clickOutside
-                    on:click_outside={() => (isDropdownOpen = false)}
+                    on:click_outside={() =>{if(!isPreviewing)isDropdownOpen = false}}
                     on:click={() => handleClick()}>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 lg:w-8 mr-2 lg:mr-4 text-legendary"
                      viewBox="0 0 576 512">

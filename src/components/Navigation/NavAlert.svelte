@@ -20,6 +20,7 @@
     }
 </style>
 {#if data !== "network"}
+    {#if data?.length > 0}
     <div class="relative">
         <div class="flex items-center h-full mr-4 lg:m-0">
             <button
@@ -60,4 +61,6 @@
             </div>
         </div>
     </div>
+
+    {/if}
 {/if}

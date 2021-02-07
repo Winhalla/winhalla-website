@@ -2,38 +2,38 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.09683f01.js"
+    "main": "client.5f2434a7.js"
   },
   "css": {
     "main": [
-      "client-0b0803d6.css"
+      "client-ab0febcd.css"
     ]
   },
   "dependencies": {
     "index.svelte": [
-      "index.77d1a865.js",
+      "index.6952bb01.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.71b83901.js",
+      "create-account.49c674d0.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.c53c3e19.js",
+      "change-email.cc6a3cd1.js",
       "inject_styles.5607aec6.js",
       "change-email-7780a81f.css"
     ],
     "contact.svelte": [
-      "contact.4fd6df58.js",
+      "contact.0014569e.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin.svelte": [
-      "admin.be9e58a2.js",
-      "Loading.62a5da58.js",
+      "admin.84849c6b.js",
+      "Loading.244aff53.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.9d5b3cc8.js",
+      "RefreshButton.c3172ac7.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -41,44 +41,44 @@
       "admin-a78356ae.css"
     ],
     "offline.svelte": [
-      "offline.ce2470e3.js",
+      "offline.dd0c8fbc.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.ffa4ba53.js",
+      "privacy.9cd75bf0.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.162a154e.js",
+      "status.3614a72d.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.2ee8c195.js",
+      "about.96b074c6.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.f5a5a28c.js",
+      "terms.2b5f8d50.js",
       "inject_styles.5607aec6.js"
     ],
     "tests/[id].svelte": [
-      "[id].b8c1277d.js",
+      "[id].347da16d.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.e9828d54.js",
+      "help.b69f05d5.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].4cdc8084.js",
+      "[id].9f90bad8.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.b557affd.js",
-      "Loading.62a5da58.js",
+      "index.4ca92ec9.js",
+      "Loading.244aff53.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.9d5b3cc8.js",
-      "AdblockAlert.8ab3637a.js",
-      "GuideCard.cc8c7f93.js",
+      "RefreshButton.c3172ac7.js",
+      "AdblockAlert.573aaf47.js",
+      "GuideCard.dc3656f4.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -87,39 +87,39 @@
       "index-3f76a2fa.css"
     ],
     "play/ffa/index.svelte": [
-      "index.f101e17f.js",
-      "Loading.62a5da58.js",
+      "index.1d81cad6.js",
+      "Loading.244aff53.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].8b5de028.js",
-      "Loading.62a5da58.js",
+      "[id].94744e4b.js",
+      "Loading.244aff53.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.9d5b3cc8.js",
-      "AdblockAlert.8ab3637a.js",
-      "GuideCard.cc8c7f93.js",
+      "RefreshButton.c3172ac7.js",
+      "AdblockAlert.573aaf47.js",
+      "GuideCard.dc3656f4.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
       "RefreshButton-1f5efa03.css",
       "GuideCard-909fbf0f.css",
-      "[id]-ea70e8e2.css"
+      "[id]-c973b23b.css"
     ],
     "shop.svelte": [
-      "shop.fcf4268d.js",
+      "shop.1819c13d.js",
       "RefreshButton.f056091e.js",
-      "AdblockAlert.8ab3637a.js",
+      "AdblockAlert.573aaf47.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.8c55ec62.js",
+      "test.847e78c6.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.6194ffca.js"
+    "main": "client.25d1369a.js"
   }
 }

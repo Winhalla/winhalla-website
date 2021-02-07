@@ -117,7 +117,7 @@
         callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`);
         goto("/");
     }
-
+    //TODO:JSON.PARSE TOUT
     async function delThing(thing) {
         if (thing === "event") {
             let eventIndex = configs.findIndex(e => e.name === "GOLD EVENT");

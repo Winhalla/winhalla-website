@@ -1,5 +1,12 @@
 <script>
 
+    import RefreshButton from "../components/RefreshButton.svelte";
+
+    let featuredItem;
+    let seasonPacks;
+    let packs;
+    let error;
+
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
@@ -10,11 +17,6 @@
     import { callApi } from "../utils/api";
     import { counter } from "../components/store";
     import { fly } from "svelte/transition";
-
-    let featuredItem;
-    let seasonPacks;
-    let packs;
-    let error;
 
     let adError;
     let info;
@@ -221,14 +223,6 @@
             @apply mt-7 -mb-14;
         }
     }*/
-
-    .mask::after {
-        position: absolute;
-        content: "";
-        top: 0;
-        left: 0;
-        background: #1a1a21;
-    }
 </style>
 
 <svelte:head>
@@ -285,12 +279,11 @@
                             Battle pass
                         </h1>
                         <div
-                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item      mask">
+                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                             <img
                                 class="w-full h-full block object-cover"
                                 src="assets/ShopItems/{featuredItem.name}.jpg"
                                 alt={featuredItem.name} />
-
                             <div
                                 class="absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full">
                                 <div
@@ -324,7 +317,7 @@
                             {#if seasonPacks.forEach}
                                 {#each seasonPacks as seasonPack, i}
                                     <div
-                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12  shop-item xl:w-shopItemLarge 2xl:w-shopItem      mask">
+                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
                                         <img
                                             class="w-full h-full block "
                                             src="assets/ShopItems/{seasonPack.name}.jpg"
@@ -386,7 +379,7 @@
                             {#if packs.forEach}
                                 {#each packs as pack}
                                     <div
-                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item       mask">
+                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
                                         <img
                                             class="w-full h-full block object-cover"
                                             src="assets/ShopItems/{pack.name}.jpg"

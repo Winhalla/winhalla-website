@@ -12,6 +12,8 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
+    import { fade } from "svelte/transition";
+
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
@@ -74,47 +76,47 @@
 
 
             try {
-                user = await user;
-                user = user.steam;
-                match = await callApi("get", `/getMatch/${id}`);
+            user = await user;
+            user = user.steam;
+            match = await callApi("get", `/getMatch/${id}`);
 
-                if (match instanceof Error) {
-                    throw match;
-                }
-                isMatchEnded = match.finished;
+            if (match instanceof Error) {
+                throw match;
+            }
+            isMatchEnded = match.finished;
 
-                //Start the countdown
-                filterUsers(false);
-                const d = new Date(userPlayer.joinDate);
-                const endsIn = -(
-                    (new Date().getTime() -
-                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                    1000
-                );
-                if (endsIn < 1) {
-                    countDown = "Waiting for others to finish (you can start a new game from the play page)";
-                } else {
-                    startTimer(endsIn);
-                }
-                counter.set({ "refresh": true });
+            //Start the countdown
+            filterUsers(false);
+            const d = new Date(userPlayer.joinDate);
+            const endsIn = -(
+                (new Date().getTime() -
+                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                1000
+            );
+            if (endsIn < 1) {
+                countDown = "Waiting for others to finish (you can start a new game from the play page)";
+            } else {
+                startTimer(endsIn);
+            }
+            counter.set({ "refresh": true });
 
-                socket = io.io(apiUrl);
-                socket.on("connection", (status) => {
-                    console.log(status);
-                    socket.emit("match connection", "FFA" + id);
-                });
+            socket = io.io(apiUrl);
+            socket.on("connection", (status) => {
+                console.log(status);
+                socket.emit("match connection", "FFA" + id);
+            });
 
-                socket.on("join match", (status) => {
-                    console.log(status);
-                });
+            socket.on("join match", (status) => {
+                console.log(status);
+            });
 
-                socket.on("lobbyUpdate", (value) => {
-                    match = value;
-                    filterUsers(true);
-                });
-                isLoadingOpen = false;
+            socket.on("lobbyUpdate", (value) => {
+                match = value;
+                filterUsers(true);
+            });
+            isLoadingOpen = false;
             } catch (err) {
-                console.log(err);
+                console.log(err)
                 if (err.response) {
                     if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                         error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -136,28 +138,20 @@
 
 
     const filterUsers = (isFromSocket) => {
-
-
         //Find user's object
         if (!isFromSocket) {
-            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+            userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
             match.players[playerIndex].wins = userPlayer.wins;
             userPlayer = match.players[playerIndex];
         }
         //Delete user's object from array.
         players = [...match.players];
-        for (let player in players) {
-            const gradientList = [["", ""]];
-
-        }
-
         players.splice(
             match.players.findIndex(p => p.steamId === user.id),
             1
         );
-
     };
 
     //Function that starts a timer with a date, and refreshes it every second
@@ -213,11 +207,17 @@
             }, 8000);
         }
     };
+
+    let isInfoDropdownOpen = false;
+
+    function handleInfoDropdown() {
+        isInfoDropdownOpen = !isInfoDropdownOpen;
+    }
 </script>
 
 <style>
     b {
-        @apply text-variant font-normal;
+        @apply text-primary font-normal;
     }
 
 
@@ -233,11 +233,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-                to bottom right,
-                rgba(23, 23, 26, 0.08) 0%,
-                rgba(23, 23, 26, 0.12),
-                rgba(23, 23, 26, 0.18) 75%,
-                rgba(23, 23, 26, 0.23) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.68) 0%,
+                rgba(23, 23, 26, 0.88),
+                rgba(23, 23, 26, 0.95) 75%,
+                rgba(23, 23, 26, 0.98) 100%
         );
     }
 
@@ -250,19 +250,19 @@
         @apply absolute left-0 right-0 z-10;
     }
 
-    /*.user {
+    .user {
         @apply w-60 h-100;
     }
 
     .user::after {
         background: linear-gradient(
                 to bottom,
-                rgba(23, 23, 26, 0.25) 0%,
-                rgba(23, 23, 26, 0.35),
-                rgba(23, 23, 26, 0.40) 75%,
-                rgba(23, 23, 26, 0.55) 100%
+                rgba(23, 23, 26, 0.55) 0%,
+                rgba(23, 23, 26, 0.75),
+                rgba(23, 23, 26, 0.85) 75%,
+                rgba(23, 23, 26, 0.93) 100%
         );
-    }*/
+    }
 
     .timer {
         margin-bottom: 0.35rem;
@@ -277,7 +277,7 @@
 </svelte:head>
 
 
-{#if isLoadingOpen && !error}
+{#if isLoadingOpen && !error }
     <Loading data={"Loading game data..."} duration={500} />
 {/if}
 
@@ -296,7 +296,7 @@
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
                     <div
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
@@ -343,40 +343,15 @@
 
                     <div
                         class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full lg:mt-6 lg:mb-24">
+                    h-full lg:mt-6">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <!--<div class="mt-8 lg:mt-25 ffa-player card user">
-                                <div class="max-w-full h-full" style="background-color: #fc1870"></div>
+                            <div class="mt-8 lg:mt-25 ffa-player card user">
                                 <img
                                     src="/assets/CharactersBanners/{userPlayer.legends}.png"
                                     alt={userPlayer.legends}
                                     class="block" />
 
-                                <p class="player-name text-4xl">
-                                    {userPlayer.username}
-                                </p>
-                                <div
-                                    class="stats text-2xl bottom-5 text-ultra-light">
-                                    <p>
-                                        Games played:
-                                        <b>{userPlayer.gamesPlayed}</b>
-                                        /8
-                                    </p>
-                                    <p>
-                                        Games won:
-                                        <b>{userPlayer.wins}</b>
-                                        /8
-                                    </p>
-                                </div>
-                            </div>-->
-                            <div class="mt-25 text-center relative border rounded outline-none w-60 h-100" style="">
-                                <div class="max-w-full h-full "
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"> <!--style="background-color: #E5E5F7;
-                                        filter: blur(0px);
-opacity: 0.8;
-background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);">--></div>
-                                <!--<img class="block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" style="filter: blur(3px)" src="{userPlayer.avatarURL}" alt="">-->
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
@@ -400,17 +375,13 @@ background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E
                         {#if players}
                             <div
                                 class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12 lg:mb-0">
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
                                 {#each players as player}
-                                    <div class="ffa-player card lg:mr-12 mb-8 border">
-                                        <div class="max-w-full h-full "
-                                             style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"></div>
-                                        <!--<img class="block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" style="filter: blur(3px)" src="{player.avatarURL}" alt="">-->
-
-                                        <!--<img
+                                    <div class="ffa-player card lg:mr-12 mb-8">
+                                        <img
                                             src="/assets/CharactersBanners/{player.legends}.png"
                                             alt={player.legends}
-                                            class="block" />-->
+                                            class="block" />
 
                                         <p class="player-name text-3xl">
                                             {player.username}

@@ -81,7 +81,7 @@ self.addEventListener("fetch", event => {
                 let response;
                 let asset = false;
                 // Test if this is an asset
-                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js", ".png", ".jpg", "api.winhalla.app/shop", "api.winhalla.app/status"].forEach(e => {
+                ["assets", "sitemap.xml", "manifest.json", "robots.txt", ".css", ".js", ".png", ".jpg"].forEach(e => {
                     if (url.href.includes(e)) asset = true;
                 });
                 // If request is an asset then search for it in cache

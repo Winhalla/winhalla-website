@@ -29,6 +29,7 @@
     let normalUsersShown;
     let commands;
     let popup = {};
+    let isSavingConfig;
 
     async function loadUsers() {
         loadingUsers = true;
@@ -82,6 +83,7 @@
         let polls = await callApi("get", `/feltrom/getAllPolls?otp=${otp}&pwd=${pwd}`);
         configs.push({ name: "POLLS", value: polls });
         newConfig = configs;
+        configs = JSON.stringify(configs);
         if (refresh) {
             loadUsers();
             loadCommands();
@@ -220,9 +222,22 @@
     }
 
     function handlePreview() {
-        popup.isPreviewing = !popup.isPreviewing
+        popup.isPreviewing = !popup.isPreviewing;
     }
 
+    function resetConfig() {
+        newConfig = JSON.parse(configs);
+    }
+
+    async function saveConfig() {
+        isSavingConfig = true;
+        await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
+        configs = JSON.stringify(newConfig);
+        newConfig.forEach((e,i)=>{
+            newConfig[i].isEditing = false
+        })
+        isSavingConfig = false;
+    }
 </script>
 <style>
     input[type=text] {
@@ -345,37 +360,100 @@
                         on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>
             </h2>
             <div class="w-full">
-                {#if config && activePanel === "config"}
+                {#if configs && activePanel === "config"}
                     <div class="justify-evenly mx-4 w-full flex h-full flex-wrap p-8">
                         {#each newConfig as config,i}
                             <div class="mb-16 border-t-2 border-primary bg-variant rounded-lg mx-8 p-4">
-                                <h1 class="text-5xl text-primary">{config.name}</h1>
-                                <div class="pt-4">
+                                <div class="flex flex-justify">
+                                    <h1 class="text-5xl text-primary w-full">{config.name}</h1>
+                                    {#if config.name !== "IDs BANNED"}
+                                        <div>
+                                            <button
+                                                class="flex m-3 mt-1.5 p-2 pt-1 focus:outline-none text-gray-500 hover:text-white"
+                                                on:click={()=>config.isEditing = !config.isEditing}>
+                                                <svg version="1.1" class="w-5 h-5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000"
+                                                     xml:space="preserve">
+                                                    <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
+                                                    <g><g class="fill-current" transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)"><path d="M7681.7,4992.8c-223.8-57.1-328.5-138.1-840.3-649.9c-278.5-276.1-507-514.2-507-528.5c0-30.9,2337.6-2368.5,2370.9-2368.5c11.9,0,254.7,233.3,535.6,518.9c552.2,557,599.8,623.7,647.5,902.2c31,178.5,0,376.1-90.4,571.3c-50,111.9-164.3,240.4-626.1,704.6c-645.1,649.9-737.9,730.8-926,802.2C8088.7,5004.7,7819.8,5026.1,7681.7,4992.8z"/><path
+                                                        d="M3704,1207.9L1299.7-1196.4l285.6-285.7c157.1-157.1,295.2-285.7,309.5-285.7c11.9,0,1099.8,1076,2416.1,2392.3L6703.3,3017l-297.5,297.6l-297.6,297.6L3704,1207.9z" /><path
+                                                        d="M4418.1,493.7L2013.9-1910.5l483.2-480.8l480.9-483.2L5382.2-470.4l2404.2,2404.2l-483.2,483.2L6822.4,2898L4418.1,493.7z" /><path
+                                                        d="M5506-584.6c-1311.6-1311.6-2385.2-2397.1-2385.2-2409c0-14.3,128.5-152.4,285.7-309.5l285.6-285.6l2404.3,2404.2l2404.2,2404.2l-290.4,290.4C8048.3,1672,7912.6,1803,7905.5,1803C7898.3,1803,6820,729.4,5506-584.6z" /><path
+                                                        d="M959.3-2284.2C826-2700.8,716.5-3053.1,716.5-3065c0-33.3,1078.3-1106.9,1111.7-1106.9c30.9,0,1511.6,476.1,1530.6,492.8c9.5,9.5-2121,2149.5-2142.4,2149.5C1209.3-1529.6,1092.6-1870,959.3-2284.2z" /><path
+                                                        d="M588-3429.2c-7.1-11.9-66.7-173.8-133.3-359.5c-64.3-185.7-171.4-485.6-235.7-666.5l-119-333.3l290.4,104.7c159.5,57.1,461.8,164.3,671.3,238c209.5,73.8,388,142.8,397.5,152.4c9.5,9.5-178.5,211.8-419,452.3C799.8-3600.6,597.5-3415,588-3429.2z" /></g></g>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    {/if}
+                                </div>
+                                <div class="pt-4 block">
                                     {#if config.name === "GAMEMODES STATUS"}
                                         <h2 class="text-3xl">FFA</h2>
-                                        <div class="flex">
-                                            <p class:text-green={config.value.FFA === true}
-                                               class:text-accent={config.value.FFA === "maintenance"}
-                                               class:text-legendary={config.value.FFA === false}>
-                                                • {config.value.FFA === true ? "Active" : config.value.FFA === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
-                                            </p>
+                                        <div class:flex={!config.isEditing}>
+                                            {#if config.isEditing}
+                                                <input type="radio" id="FFAActivatedTrue" name="FFAActivated"
+                                                       value={true}
+                                                       bind:group={config.value.FFA}>
+                                                <label for="FFAActivatedTrue" class="text-green">Activated</label><br>
+                                                <input type="radio" id="FFAActivatedMaintenance" name="FFAActivated"
+                                                       value="maintenance" bind:group={config.value.FFA}>
+                                                <label for="FFAActivatedMaintenance"
+                                                       class="text-accent">Maintenance</label><br>
+                                                <input type="radio" id="FFAActivatedFalse" name="FFAActivated"
+                                                       value={false} bind:group={config.value.FFA}>
+                                                <label for="FFAActivatedFalse" class="text-legendary">Disabled</label>
+                                            {:else}
+                                                <p class:text-green={config.value.FFA === true}
+                                                   class:text-accent={config.value.FFA === "maintenance"}
+                                                   class:text-legendary={config.value.FFA === false}>
+                                                    • {config.value.FFA === true ? 'Active' : config.value.FFA === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}
+                                                </p>
+                                            {/if}
+
                                         </div>
                                         <h2 class="text-3xl">2vs2</h2>
-                                        <div class="flex">
-                                            <p class:text-green={config.value["2vs2"] === true}
-                                               class:text-accent={config.value["2vs2"] === "maintenance"}
-                                               class:text-legendary={config.value["2vs2"] === false}>
-                                                • {config.value["2vs2"] === true ? "Active" : config.value["2vs2"] === "maintenance" ? "Maintenance in progress" : "Inactive (Coming soon)"}
-                                            </p>
+                                        <div class:flex={!config.isEditing}>
+                                            {#if config.isEditing}
+                                                <input type="radio" id="2vs2ActivatedTrue" name="2vs2Activated"
+                                                       value={true}
+                                                       bind:group={config.value['2vs2']}>
+                                                <label for="2vs2ActivatedTrue" class="text-green">Activated</label><br>
+                                                <input type="radio" id="2vs2ActivatedMaintenance" name="2vs2Activated"
+                                                       value="maintenance" bind:group={config.value['2vs2']}>
+                                                <label for="2vs2ActivatedMaintenance"
+                                                       class="text-accent">Maintenance</label><br>
+                                                <input type="radio" id="2vs2ActivatedFalse" name="2vs2Activated"
+                                                       value={false} bind:group={config.value['2vs2']}>
+                                                <label for="2vs2ActivatedFalse" class="text-legendary">Disabled</label>
+                                            {:else}
+                                                <p class:text-green={config.value["2vs2"] === true}
+                                                   class:text-accent={config.value["2vs2"] === "maintenance"}
+                                                   class:text-legendary={config.value["2vs2"] === false}>
+                                                    • {config.value['2vs2'] === true ? 'Active' : config.value['2vs2'] === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}
+                                                </p>
+                                            {/if}
+
+
                                         </div>
                                     {:else if config.name === "FFA REWARDS CONFIG"}
                                         <div class="block">
-                                            {#each config.value as reward,ii}
-                                                <div class="flex">
-                                                    <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
-                                                    : {reward}$
-                                                </div>
-                                            {/each}
+                                            {#if config.isEditing}
+                                                {#each config.value as reward,ii}
+                                                    <div class="flex my-2px">
+                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>:
+                                                        <input bind:value={reward} class="bg-gray-200 ml-1 text-black px-2" size="{reward.length+3}">
+                                                    </div>
+                                                {/each}
+                                            {:else}
+                                                {#each config.value as reward,ii}
+                                                    <div class="flex my-2px">
+                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
+                                                        : {reward}$
+                                                    </div>
+                                                {/each}
+                                            {/if}
                                         </div>
                                     {:else if config.name === "ADVICES"}
                                         <div class="flex mb-5">
@@ -405,7 +483,8 @@
                                             <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
                                                    bind:value={info.description}>
                                             <!--TODO: date d'expiration-->
-                                            <button on:click={()=>makePopup({text:"info",goal:"delete"},{index:ii})}>
+                                            <button
+                                                on:click={()=>makePopup({text:"info",goal:"delete"},{index:ii})}>
                                                 <svg class="fill-current w-4" viewBox="0 0 24 24"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -440,7 +519,8 @@
                                                     <h3 class="text-3xl text-primary">Options</h3>
                                                     {#each poll.answers as option, iii}
                                                         <div class="flex">
-                                                            <input class="text-2xl bg-variant rounded mt-2" size="60"
+                                                            <input class="text-2xl bg-variant rounded mt-2"
+                                                                   size="60"
                                                                    type="text"
                                                                    bind:value={option.name}>
                                                             <p class="text-primary text-2xl">Votes <strong
@@ -492,11 +572,14 @@
                                             <p class="text-2xl">
 
                                                 Exipires in
-                                                <strong class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
+                                                <strong
+                                                    class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
                                                 days,
-                                                <strong class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
+                                                <strong
+                                                    class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
                                                 hours,
-                                                <strong class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
+                                                <strong
+                                                    class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
                                                 minutes,
 
                                             </p>
@@ -506,7 +589,6 @@
                                                 event
                                             </button>
                                         {:else}
-                                            <h3 class="text-3xl text-green">Boost disabled</h3>
                                             <div class="flex">
                                                 <button class="button m-auto button-brand"
                                                         on:click={()=>makePopup({text:"event",goal:"create"})}>
@@ -518,7 +600,8 @@
                                     {:else if config.name === "LINKS CONFIG"}
                                         <div class="w-60">
                                             <p class="text-2xl">Players joining via an affiliated link get
-                                                <strong class="text-accent font-normal text-3xl">{config.value.boost}
+                                                <strong
+                                                    class="text-accent font-normal text-3xl">{config.value.boost}
                                                     %</strong>
                                                 more
                                                 coins for <strong
@@ -528,7 +611,8 @@
                                     {:else if config.name === "IDs BANNED"}
                                         <div class="block">
                                             {#if config.value.length !== 0}
-                                                <UsersArray users="{bannedOnes}" banned="true" color="blue" otp={otp}
+                                                <UsersArray users="{bannedOnes}" banned="true" color="blue"
+                                                            otp={otp}
                                                             pwd={pwd} />
                                             {/if}
                                         </div>
@@ -628,6 +712,7 @@
                         </div>
                     {/if}
                 {/if}
+
                 {#if popup.type}
                     <div class="fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"
                          transition:fade|local={{duration:200}}>
@@ -670,7 +755,8 @@
                                                 {/if}
                                             {:else}
                                                 <h3 class="text-3xl mt-8">{field.name}</h3>
-                                                <textarea type="text" class="text-black rounded" rows="{field.name.includes('description')?5:1}" size="40"
+                                                <input type="text" class="text-black rounded"
+                                                       rows="{field.name.includes('description')?5:1}" size="40"
                                                        placeholder="{field.name}" bind:value={field.value} />
 
                                             {/if}
@@ -720,14 +806,36 @@
                             class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
                             transition:fly={{ y:-200, duration: 500 }}>
                             <NavAlert
-                                data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]} isPreviewing/>
+                                data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]}
+                                isPreviewing />
                         </div>
                     {/if}
-
                 {/if}
+
             </div>
         </div>
+        {#if typeof configs === "string" && newConfig}
+            {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(JSON.parse(configs).map(e => e.value))}
+                <div
+                    class="fixed top-screen-85 w-full">
+                    <div transition:fly|local={{y:150, duration:500}}
+                         class="flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%">
+                        <p class="my-auto">You have made changes to the config</p>
+                        <div class="flex">
+                            <button class="button button-brand border border-primary mr-2"
+                                    style="background-color: #000000;padding: -1px"
+                                    on:click={resetConfig}>
+                                Reset changes
+                            </button>
+                            <RefreshButton on:click={saveConfig} refreshMessage="Save changes"
+                                           onRefreshMessage="Saving..." isRefreshing={isSavingConfig} />
+                        </div>
+                    </div>
+                </div>
+            {/if}
+        {/if     }
     {/if}
+
 {:else}
     <!--<h1 class="h1">404</h1>
     <p class="p">Not found</p>-->

@@ -2,38 +2,38 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.2e07a473.js"
+    "main": "client.09683f01.js"
   },
   "css": {
     "main": [
-      "client-45750c89.css"
+      "client-0b0803d6.css"
     ]
   },
   "dependencies": {
     "index.svelte": [
-      "index.b00aba0c.js",
+      "index.77d1a865.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.a92fc85e.js",
+      "create-account.71b83901.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.cb8e9529.js",
+      "change-email.c53c3e19.js",
       "inject_styles.5607aec6.js",
       "change-email-7780a81f.css"
     ],
     "contact.svelte": [
-      "contact.98d2e52c.js",
+      "contact.4fd6df58.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin.svelte": [
-      "admin.d8c4766e.js",
-      "Loading.109551d3.js",
+      "admin.be9e58a2.js",
+      "Loading.62a5da58.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.34cd9ebb.js",
+      "RefreshButton.9d5b3cc8.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -41,44 +41,44 @@
       "admin-a78356ae.css"
     ],
     "offline.svelte": [
-      "offline.8f609227.js",
+      "offline.ce2470e3.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.6f10f26c.js",
+      "privacy.ffa4ba53.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.1b930de5.js",
+      "status.162a154e.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.83ecfafe.js",
+      "about.2ee8c195.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.cb881880.js",
+      "terms.f5a5a28c.js",
       "inject_styles.5607aec6.js"
     ],
     "tests/[id].svelte": [
-      "[id].eeff315e.js",
+      "[id].b8c1277d.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.6eb1c10d.js",
+      "help.e9828d54.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].503796f7.js",
+      "[id].4cdc8084.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.8293af43.js",
-      "Loading.109551d3.js",
+      "index.b557affd.js",
+      "Loading.62a5da58.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.34cd9ebb.js",
-      "AdblockAlert.7c2b90d2.js",
-      "GuideCard.9ceace76.js",
+      "RefreshButton.9d5b3cc8.js",
+      "AdblockAlert.8ab3637a.js",
+      "GuideCard.cc8c7f93.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -87,18 +87,18 @@
       "index-3f76a2fa.css"
     ],
     "play/ffa/index.svelte": [
-      "index.05b430e7.js",
-      "Loading.109551d3.js",
+      "index.f101e17f.js",
+      "Loading.62a5da58.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].a1e8ff52.js",
-      "Loading.109551d3.js",
+      "[id].8b5de028.js",
+      "Loading.62a5da58.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.34cd9ebb.js",
-      "AdblockAlert.7c2b90d2.js",
-      "GuideCard.9ceace76.js",
+      "RefreshButton.9d5b3cc8.js",
+      "AdblockAlert.8ab3637a.js",
+      "GuideCard.cc8c7f93.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -107,19 +107,19 @@
       "[id]-ea70e8e2.css"
     ],
     "shop.svelte": [
-      "shop.d5cc712d.js",
+      "shop.fcf4268d.js",
       "RefreshButton.f056091e.js",
-      "AdblockAlert.7c2b90d2.js",
+      "AdblockAlert.8ab3637a.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.fd0b4f94.js",
+      "test.8c55ec62.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.438fc3b0.js"
+    "main": "client.6194ffca.js"
   }
 }

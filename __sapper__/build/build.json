@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.5f2434a7.js"
+    "main": "client.cf441884.js"
   },
   "css": {
     "main": [
@@ -11,29 +11,29 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.6952bb01.js",
+      "index.2b7438ea.js",
       "inject_styles.5607aec6.js",
       "index-05a5af07.css"
     ],
     "create-account.svelte": [
-      "create-account.49c674d0.js",
+      "create-account.d4a37022.js",
       "inject_styles.5607aec6.js",
       "create-account-bfc049a0.css"
     ],
     "change-email.svelte": [
-      "change-email.cc6a3cd1.js",
+      "change-email.fbf858f4.js",
       "inject_styles.5607aec6.js",
       "change-email-7780a81f.css"
     ],
     "contact.svelte": [
-      "contact.0014569e.js",
+      "contact.99126a96.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin.svelte": [
-      "admin.84849c6b.js",
-      "Loading.244aff53.js",
+      "admin.cb8f7e27.js",
+      "Loading.237d45d7.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.c3172ac7.js",
+      "RefreshButton.ef5a55b9.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -41,44 +41,44 @@
       "admin-a78356ae.css"
     ],
     "offline.svelte": [
-      "offline.dd0c8fbc.js",
+      "offline.22bd08b0.js",
       "inject_styles.5607aec6.js"
     ],
     "privacy.svelte": [
-      "privacy.9cd75bf0.js",
+      "privacy.45356e6e.js",
       "inject_styles.5607aec6.js"
     ],
     "status.svelte": [
-      "status.3614a72d.js",
+      "status.2d7a8ea3.js",
       "inject_styles.5607aec6.js"
     ],
     "about.svelte": [
-      "about.96b074c6.js",
+      "about.8fdcfd3c.js",
       "inject_styles.5607aec6.js"
     ],
     "terms.svelte": [
-      "terms.2b5f8d50.js",
+      "terms.c5aa5dbe.js",
       "inject_styles.5607aec6.js"
     ],
     "tests/[id].svelte": [
-      "[id].347da16d.js",
+      "[id].30996266.js",
       "inject_styles.5607aec6.js"
     ],
     "help.svelte": [
-      "help.b69f05d5.js",
+      "help.fa4c0d21.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].9f90bad8.js",
+      "[id].a9b7f863.js",
       "inject_styles.5607aec6.js"
     ],
     "play/index.svelte": [
-      "index.4ca92ec9.js",
-      "Loading.244aff53.js",
+      "index.a18e1d11.js",
+      "Loading.237d45d7.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.c3172ac7.js",
-      "AdblockAlert.573aaf47.js",
-      "GuideCard.dc3656f4.js",
+      "RefreshButton.ef5a55b9.js",
+      "AdblockAlert.fc965752.js",
+      "GuideCard.5706703a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -87,18 +87,18 @@
       "index-3f76a2fa.css"
     ],
     "play/ffa/index.svelte": [
-      "index.1d81cad6.js",
-      "Loading.244aff53.js",
+      "index.172749a4.js",
+      "Loading.237d45d7.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].94744e4b.js",
-      "Loading.244aff53.js",
+      "[id].cbaa4c43.js",
+      "Loading.237d45d7.js",
       "RefreshButton.f056091e.js",
-      "RefreshButton.c3172ac7.js",
-      "AdblockAlert.573aaf47.js",
-      "GuideCard.dc3656f4.js",
+      "RefreshButton.ef5a55b9.js",
+      "AdblockAlert.fc965752.js",
+      "GuideCard.5706703a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-cddd02f2.css",
@@ -107,19 +107,19 @@
       "[id]-c973b23b.css"
     ],
     "shop.svelte": [
-      "shop.1819c13d.js",
+      "shop.039410cb.js",
       "RefreshButton.f056091e.js",
-      "AdblockAlert.573aaf47.js",
+      "AdblockAlert.fc965752.js",
       "inject_styles.5607aec6.js",
       "RefreshButton-cddd02f2.css",
       "shop-948a85e0.css"
     ],
     "test.svelte": [
-      "test.847e78c6.js",
+      "test.11f8a768.js",
       "inject_styles.5607aec6.js"
     ]
   },
   "legacy_assets": {
-    "main": "client.25d1369a.js"
+    "main": "client.982972da.js"
   }
 }

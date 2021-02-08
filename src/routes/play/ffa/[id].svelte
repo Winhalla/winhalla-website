@@ -12,6 +12,8 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
+    import { fade } from "svelte/transition";
+
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
@@ -140,9 +142,9 @@
 
         //Find user's object
         if (!isFromSocket) {
-            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+            userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
             match.players[playerIndex].wins = userPlayer.wins;
             userPlayer = match.players[playerIndex];
         }

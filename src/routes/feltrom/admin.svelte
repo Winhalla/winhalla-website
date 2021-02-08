@@ -84,9 +84,9 @@
         newConfig = configs;
         configs = JSON.stringify(configs);
         configs = JSON.parse(configs);
-        newConfig[3].value.forEach((e,i)=>{
-            infoDates[i] = new Date(e.expiration)
-        })
+        newConfig[3].value.forEach((e, i) => {
+            infoDates[i] = new Date(e.expiration);
+        });
         if (refresh) {
             loadUsers();
             loadCommands();
@@ -145,7 +145,7 @@
         login(true);
     }
 
-    async function createThing(thing) { 
+    async function createThing(thing) {
         if (thing === "event") {
             let { duration, description, percentage, name } = {
                 name: popup.fields[0].value,
@@ -242,15 +242,15 @@
         isSavingConfig = true;
         //Handle event changes
         if (newConfig[4].value.expTime) {
-            let expiration = Date.parse(newConfig[4].value.expDate+"T"+newConfig[4].value.expTime);
+            let expiration = Date.parse(newConfig[4].value.expDate + "T" + newConfig[4].value.expTime);
             delete newConfig[4].value.expTime;
             delete newConfig[4].value.expDate;
-            newConfig[4].value.expiration = expiration
-            newConfig[3].value[newConfig[3].value.findIndex(e=>e.type === "event")].expiration = expiration
+            newConfig[4].value.expiration = expiration;
+            newConfig[3].value[newConfig[3].value.findIndex(e => e.type === "event")].expiration = expiration;
             console.log(expiration);
         }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
-        login(true)
+        login(true);
         isSavingConfig = false;
     }
 </script>
@@ -645,7 +645,7 @@
                                                 </p>
                                             {/if}
                                             <div class="flex">
-                                                <button class="button button-brand mx-auto"
+                                                <button class="button button-brand mx-auto mt-4"
                                                         style="background-color: #fc1870"
                                                         on:click={()=>makePopup({text:"event",goal:"delete"})}>Stop
                                                     event
@@ -663,13 +663,25 @@
                                     {:else if config.name === "LINKS CONFIG"}
                                         <div class="w-60">
                                             <p class="text-2xl">Players joining via an affiliated link get
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{config.value.boost}
-                                                    %</strong>
-                                                more
-                                                coins for <strong
+                                                {#if config.isEditing}
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">
+                                                        <input type="text" class="bg-background" size="4" bind:value={config.value.boost}>%</strong>
+                                                    more coins for
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">
+                                                        <input type="text" class="bg-background" size="4" bind:value={config.value.duration}>days</strong>
+
+                                                {:else}
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">{config.value.boost}
+                                                        %</strong>
+                                                    more
+                                                    coins for <strong
                                                     class="text-accent font-normal text-3xl">{config.value.duration}
-                                                    days</strong></p>
+                                                    days</strong>
+                                                {/if}
+                                            </p>
                                         </div>
                                     {:else if config.name === "IDs BANNED"}
                                         <div class="block">

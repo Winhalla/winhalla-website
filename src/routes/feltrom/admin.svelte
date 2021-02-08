@@ -30,6 +30,7 @@
     let commands;
     let popup = {};
     let isSavingConfig;
+    let infoDates = [];
 
     async function loadUsers() {
         loadingUsers = true;
@@ -78,12 +79,14 @@
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
         otp = configs.tempKey;
         configs = configs.configs;
-        newConfig = configs;
-
         let polls = await callApi("get", `/feltrom/getAllPolls?otp=${otp}&pwd=${pwd}`);
         configs.push({ name: "POLLS", value: polls });
         newConfig = configs;
         configs = JSON.stringify(configs);
+        configs = JSON.parse(configs);
+        newConfig[3].value.forEach((e,i)=>{
+            infoDates[i] = new Date(e.expiration)
+        })
         if (refresh) {
             loadUsers();
             loadCommands();
@@ -117,7 +120,7 @@
         callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`);
         goto("/");
     }
-    //TODO:JSON.PARSE TOUT
+
     async function delThing(thing) {
         if (thing === "event") {
             let eventIndex = configs.findIndex(e => e.name === "GOLD EVENT");
@@ -132,6 +135,8 @@
             configs[infosIndex].value.splice(popup.options.index, 1);
             await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, configs.filter(e => e.name === "INFOS"));
             newConfig = configs;
+            configs = JSON.stringify(configs);
+            configs = JSON.parse(configs);
         }
 
         if (thing === "poll") {
@@ -140,7 +145,7 @@
         login(true);
     }
 
-    async function createThing(thing) {
+    async function createThing(thing) { 
         if (thing === "event") {
             let { duration, description, percentage, name } = {
                 name: popup.fields[0].value,
@@ -226,22 +231,32 @@
     }
 
     function resetConfig() {
-        newConfig = JSON.parse(configs);
+        newConfig = configs;
+        console.log(configs);
+        configs = JSON.stringify(configs);
+        configs = JSON.parse(configs);
+        console.log(configs);
     }
 
     async function saveConfig() {
         isSavingConfig = true;
+        //Handle event changes
+        if (newConfig[4].value.expTime) {
+            let expiration = Date.parse(newConfig[4].value.expDate+"T"+newConfig[4].value.expTime);
+            delete newConfig[4].value.expTime;
+            delete newConfig[4].value.expDate;
+            newConfig[4].value.expiration = expiration
+            newConfig[3].value[newConfig[3].value.findIndex(e=>e.type === "event")].expiration = expiration
+            console.log(expiration);
+        }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
-        configs = JSON.stringify(newConfig);
-        newConfig.forEach((e,i)=>{
-            newConfig[i].isEditing = false
-        })
+        login(true)
         isSavingConfig = false;
     }
 </script>
 <style>
     input[type=text] {
-        @apply py-2 px-4;
+        @apply py-1 px-2;
     }
 
     .input {
@@ -342,7 +357,7 @@
             <Loading data="Entering super secret page..." />
         </div>
     {/if}
-    {#if configs}
+    {#if newConfig}
         <div class="lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full">
             <div class="flex justify-between mb-12">
                 <h1 class="text-6xl">ADMIN DASHBOARD</h1>
@@ -442,8 +457,11 @@
                                             {#if config.isEditing}
                                                 {#each config.value as reward,ii}
                                                     <div class="flex my-2px">
-                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>:
-                                                        <input bind:value={reward} class="bg-gray-200 ml-1 text-black px-2" size="{reward.length+3}">
+                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
+                                                        :
+                                                        <input bind:value={reward}
+                                                               class="bg-gray-200 ml-1 text-black px-2"
+                                                               size="{reward.length+3}">
                                                     </div>
                                                 {/each}
                                             {:else}
@@ -475,22 +493,41 @@
                                         {/each}
                                     {:else if config.name === "INFOS"}
                                         {#each config.value as info,ii}
-                                            <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                            <h3 class="text-3xl">Name</h3>
-                                            <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                                   bind:value={info.name} />
-                                            <h3 class="text-3xl">Description</h3>
-                                            <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
-                                                   bind:value={info.description}>
-                                            <!--TODO: date d'expiration-->
-                                            <button
-                                                on:click={()=>makePopup({text:"info",goal:"delete"},{index:ii})}>
-                                                <svg class="fill-current w-4" viewBox="0 0 24 24"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
-                                                </svg>
-                                            </button>
+                                            <div class="border-primary border-b pb-8 mb-6">
+                                                <div class="flex justify-between">
+                                                    <h2 class="text-4xl text-accent">{ii + 1}.</h2>
+                                                    <button
+                                                        class="hover:bg-legendary h-6 text-legendary hover:text-white rounded"
+                                                        on:click={()=>makePopup({text:"info",goal:"delete"},{index:ii})}>
+                                                        <svg class="w-4 mx-1 fill-current" viewBox="0 0 24 24"
+                                                             xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <h3 class="text-3xl text-primary">Name</h3>
+                                                {#if config.isEditing === true}
+                                                <textarea class="text-xl px-3 py-2 bg-background rounded" type="text"
+                                                          cols="40" rows="3"
+                                                          bind:value={info.name} />
+                                                {:else}
+                                                    <p class="text-2xl mb-4">{info.name}</p>
+                                                {/if}
+                                                <h3 class="text-3xl text-primary">Description</h3>
+                                                {#if config.isEditing === true}
+                                            <textarea class="text-xl px-3 py-2 bg-background rounded mt-2" type="text"
+                                                      bind:value={info.description} cols="40" rows="3" />
+                                                {:else}
+                                                    <p class="text-xl mb-4">{info.description}</p>
+                                                {/if}
+                                                <h3 class="text-3xl text-primary">Expires</h3>
+                                                <p>{infoDates[ii].getDate() + 1 < 10 ? "0" + infoDates[ii].getDate() : infoDates[ii].getDate()}
+                                                    / {infoDates[ii].getMonth() + 1 < 10 ? "0" + infoDates[ii].getMonth() : infoDates[ii].getMonth()}
+                                                    / {infoDates[ii].getFullYear() + 1 < 10 ? "0" + infoDates[ii].getFullYear() : infoDates[ii].getFullYear()}
+                                                <p>{infoDates[ii].getHours() + 1 < 10 ? "0" + infoDates[ii].getHours() : infoDates[ii].getHours()}
+                                                    : {infoDates[ii].getMinutes() + 1 < 10 ? "0" + infoDates[ii].getMinutes() : infoDates[ii].getMinutes()}</p>
+                                            </div>
                                         {/each}
                                         <div class="flex">
                                             <button class="m-auto  button button-brand"
@@ -513,8 +550,13 @@
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                                       bind:value={poll.name} />
+                                                {#if config.isEditing === true}
+                                                <textarea class="text-xl px-3 py-2 bg-background rounded" type="text"
+                                                          cols="40" rows="3"
+                                                          bind:value={poll.name} />
+                                                {:else}
+                                                    <p class="text-2xl ml-4 mb-4">{poll.name}</p>
+                                                {/if}
                                                 {#if poll.isMCQ}
                                                     <h3 class="text-3xl text-primary">Options</h3>
                                                     {#each poll.answers as option, iii}
@@ -526,9 +568,9 @@
                                                             <p class="text-primary text-2xl">Votes <strong
                                                                 class="font-normal text-white">{option.nb}</strong>
                                                                 Percentage <strong class="font-normal"
-                                                                                   class:text-legendary={option.nb/poll.totalAnswers<0.25}
-                                                                                   class:text-green={option.nb/poll.totalAnswers>=0.5}
-                                                                                   class:text-accent={option.nb/poll.totalAnswers>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100}
+                                                                                   class:text-legendary={(option.nb/poll.totalAnswers ||0)<0.25}
+                                                                                   class:text-green={(option.nb/poll.totalAnswers ||0)>=0.5}
+                                                                                   class:text-accent={(option.nb/poll.totalAnswers ||0)>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100 || 0}
                                                                     %</strong></p>
                                                         </div>
                                                     {/each}
@@ -561,33 +603,54 @@
                                         </div>
                                     {:else if config.name === "GOLD EVENT"}
                                         {#if config.value.expiration !== null }
-                                            <h3 class="text-2xl">Boost of <strong
-                                                class="font-normal text-accent text-3xl">{config.value.percentage - 100}
-                                                %</strong></h3>
-                                            <div class="hidden">
-                                                {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}
-                                                {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
-                                                {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
+
+                                            {#if config.isEditing}
+                                                <div class="block">
+                                                    <label>
+                                                        Boost of:
+                                                        <input type="text" class="text-black" size="4"
+                                                               bind:value={config.value.percentage}>
+
+                                                    </label><br>
+                                                    <p class="text-accent">Example : 120 equals all rewards to be raised
+                                                        by 20%</p><br>
+                                                    <label>
+                                                        Expiration:<br>
+                                                        <input type="date" class="text-black"
+                                                               bind:value={config.value.expDate}><br>
+                                                        <input type="time" class="text-black my-2"
+                                                               bind:value={config.value.expTime}><br>
+                                                    </label>
+                                                </div>
+                                            {:else}
+                                                <h3 class="text-2xl">Boost of <strong
+                                                    class="font-normal text-accent text-3xl">{config.value.percentage - 100}
+                                                    %</strong></h3>
+                                                <div class="hidden">
+                                                    {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}
+                                                    {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
+                                                    {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
+                                                </div>
+                                                <p class="text-2xl">
+                                                    Expires in
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
+                                                    days,
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
+                                                    hours,
+                                                    <strong
+                                                        class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
+                                                    minutes,
+                                                </p>
+                                            {/if}
+                                            <div class="flex">
+                                                <button class="button button-brand mx-auto"
+                                                        style="background-color: #fc1870"
+                                                        on:click={()=>makePopup({text:"event",goal:"delete"})}>Stop
+                                                    event
+                                                </button>
                                             </div>
-                                            <p class="text-2xl">
-
-                                                Exipires in
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
-                                                days,
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
-                                                hours,
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
-                                                minutes,
-
-                                            </p>
-                                            <!--TODO: confirmation pour chaque action-->
-                                            <button class="button button-brand " style="background-color: #fc1870"
-                                                    on:click={()=>makePopup({text:"event",goal:"delete"})}>Stop
-                                                event
-                                            </button>
                                         {:else}
                                             <div class="flex">
                                                 <button class="button m-auto button-brand"
@@ -720,74 +783,70 @@
                     <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
                          transition:fade|local={{duration:200}}>
                         <div
-                            class="flex justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
+                            class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
                             style="margin-top:20vh">
-                            <div
-                                class="block ">
-                                <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
-                                <div>
-                                    <div class="overflow-auto max-h-screen-50">
-                                        {#each popup.fields as field,i}
-                                            {#if field.name === "Multiple choice question ?"}
-                                                <div class="text-3xl mt-8">
-                                                    <input type="radio" id="Normal" name="type" value="false"
-                                                           bind:group={field.value}>
-                                                    <label for="Normal">Normal</label><br>
-                                                    <input type="radio" id="MCQ" name="type" value="true"
-                                                           bind:group={field.value}>
-                                                    <label for="MCQ">MCQ</label>
-                                                </div>
+                            <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
+                            <div>
+                                <div class="overflow-auto max-h-screen-50">
+                                    {#each popup.fields as field,i}
+                                        {#if field.name === "Multiple choice question ?"}
+                                            <div class="text-3xl mt-8">
+                                                <input type="radio" id="Normal" name="type" value="false"
+                                                       bind:group={field.value}>
+                                                <label for="Normal">Normal</label><br>
+                                                <input type="radio" id="MCQ" name="type" value="true"
+                                                       bind:group={field.value}>
+                                                <label for="MCQ">MCQ</label>
+                                            </div>
 
-                                                {#if field.value == "true"}
-                                                    {#each popup.fields[1].special as option,ii}
-                                                        <div class="my-4">
-                                                            <h3 class="text-3xl">Option {ii + 1}</h3>
+                                            {#if field.value == "true"}
+                                                {#each popup.fields[1].special as option,ii}
+                                                    <div class="my-4">
+                                                        <h3 class="text-3xl">Option {ii + 1}</h3>
 
-                                                            <input class="text-black" bind:value={option} type="text" />
-                                                            <p></p>
-                                                        </div>
-                                                    {/each}
-                                                    <p></p>
-                                                    <button class="button button-brand mt-4 ml-2" on:click={addField}>
-                                                        Add
-                                                        option
-                                                    </button>
-                                                {/if}
-                                            {:else}
-                                                <h3 class="text-3xl mt-8">{field.name}</h3>
-                                                <input type="text" class="text-black rounded"
-                                                       rows="{field.name.includes('description')?5:1}" size="40"
-                                                       placeholder="{field.name}" bind:value={field.value} />
-
+                                                        <input class="text-black" bind:value={option} type="text" />
+                                                        <p></p>
+                                                    </div>
+                                                {/each}
+                                                <p></p>
+                                                <button class="button button-brand mt-4 ml-2" on:click={addField}>
+                                                    Add
+                                                    option
+                                                </button>
                                             {/if}
-                                            <p></p>
-                                        {/each}
-                                    </div>
-                                    <div class="justify-center w-full flex">
-                                        <button class="button button-brand mt-8"
-                                                style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
-                                                on:click={handleConfirm}>
-                                            {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                        {:else}
+                                            <h3 class="text-3xl mt-8">{field.name}</h3>
+                                            <input type="text" class="text-black rounded"
+                                                   rows="{field.name.includes('description')?5:1}" size="40"
+                                                   placeholder="{field.name}" bind:value={field.value} />
+
+                                        {/if}
+                                        <p></p>
+                                    {/each}
+                                </div>
+                                <div class="justify-center w-full flex">
+                                    <button class="button button-brand mt-8"
+                                            style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
+                                            on:click={handleConfirm}>
+                                        {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                    </button>
+                                    <button class="button button-brand mt-8 border ml-5"
+                                            class:border-primary={popup.type !== 'deletion'}
+                                            class:border-legendary={popup.type === 'deletion'}
+                                            style="background-color: #17171a;padding: -1px"
+                                            on:click={()=>popup={}}>
+                                        Cancel
+                                    </button>
+                                    {#if (popup.thing === "poll" || popup.thing === "info") && popup.type === "creation"}
+                                        <button class="button button-brand mt-8 ml-5" style="background-color: #ff8f0f"
+                                                on:click={handlePreview}>
+                                            {popup.isPreviewing ? "Stop" : ""} Preview
                                         </button>
-                                        <button class="button button-brand mt-8 border ml-5"
-                                                class:border-primary={popup.type !== 'deletion'}
-                                                class:border-legendary={popup.type === 'deletion'}
-                                                style="background-color: #17171a;padding: -1px"
-                                                on:click={()=>popup={}}>
-                                            Cancel
-                                        </button>
-                                    </div>
+                                    {/if}
                                 </div>
                             </div>
-                            {#if popup.thing === "poll" || popup.thing === "info" && popup.type === "creation"}
-                                <div class="h-15 px-5 my-auto">
-                                    <button class="button button-brand" style="background-color: #ff8f0f"
-                                            on:click={handlePreview}>
-                                        {popup.isPreviewing ? "Stop" : ""} Preview
-                                    </button>
-                                </div>
-                            {/if}
                         </div>
+
                     </div>
                 {/if}
                 {#if popup.isPreviewing}
@@ -814,26 +873,24 @@
 
             </div>
         </div>
-        {#if typeof configs === "string" && newConfig}
-            {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(JSON.parse(configs).map(e => e.value))}
-                <div
-                    class="fixed top-screen-85 w-full">
-                    <div transition:fly|local={{y:150, duration:500}}
-                         class="flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%">
-                        <p class="my-auto">You have made changes to the config</p>
-                        <div class="flex">
-                            <button class="button button-brand border border-primary mr-2"
-                                    style="background-color: #000000;padding: -1px"
-                                    on:click={resetConfig}>
-                                Reset changes
-                            </button>
-                            <RefreshButton on:click={saveConfig} refreshMessage="Save changes"
-                                           onRefreshMessage="Saving..." isRefreshing={isSavingConfig} />
-                        </div>
+        {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(configs.map(e => e.value))}
+            <div
+                class="fixed top-screen-90 w-full">
+                <div transition:fly|local={{y:150, duration:500}}
+                     class="flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%">
+                    <p class="my-auto">Carefully, you have unsaved changes</p>
+                    <div class="flex">
+                        <button class="button button-brand border border-primary mr-2"
+                                style="background-color: #000000;padding: -1px"
+                                on:click={resetConfig}>
+                            Reset changes
+                        </button>
+                        <RefreshButton on:click={saveConfig} refreshMessage="Save changes"
+                                       onRefreshMessage="Saving..." isRefreshing={isSavingConfig} />
                     </div>
                 </div>
-            {/if}
-        {/if     }
+            </div>
+        {/if}
     {/if}
 
 {:else}

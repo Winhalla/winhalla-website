@@ -277,6 +277,18 @@
         margin-bottom: 0.35rem;
     }
 
+    /*Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
     /*.check {
         margin-top: 0.15rem;
         margin-right: 0.4rem;
@@ -459,9 +471,9 @@
                                                     <div class="flex my-2px">
                                                         <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
                                                         :
-                                                        <input bind:value={reward}
+                                                        <input bind:value={reward} type="number"
                                                                class="bg-gray-200 ml-1 text-black px-2"
-                                                               size="{reward.length+3}">
+                                                               size="4">
                                                     </div>
                                                 {/each}
                                             {:else}
@@ -522,11 +534,15 @@
                                                     <p class="text-xl mb-4">{info.description}</p>
                                                 {/if}
                                                 <h3 class="text-3xl text-primary">Expires</h3>
-                                                <p>{infoDates[ii].getDate() + 1 < 10 ? "0" + infoDates[ii].getDate() : infoDates[ii].getDate()}
-                                                    / {infoDates[ii].getMonth() + 1 < 10 ? "0" + infoDates[ii].getMonth() : infoDates[ii].getMonth()}
-                                                    / {infoDates[ii].getFullYear() + 1 < 10 ? "0" + infoDates[ii].getFullYear() : infoDates[ii].getFullYear()}
-                                                <p>{infoDates[ii].getHours() + 1 < 10 ? "0" + infoDates[ii].getHours() : infoDates[ii].getHours()}
-                                                    : {infoDates[ii].getMinutes() + 1 < 10 ? "0" + infoDates[ii].getMinutes() : infoDates[ii].getMinutes()}</p>
+                                                {#if info.expiration < Date.now()}
+                                                    <h3 class="text-2xl text-legendary">Expired</h3>
+                                                {:else}
+                                                    <p>{infoDates[ii].getDate() < 10 ? "0" + infoDates[ii].getDate() : infoDates[ii].getDate()}
+                                                        / {infoDates[ii].getMonth() + 1 < 10 ? "0" + (infoDates[ii].getMonth() + 1) : infoDates[ii].getMonth() + 1}
+                                                        / {infoDates[ii].getFullYear()}
+                                                    <p>{infoDates[ii].getHours() < 10 ? "0" + infoDates[ii].getHours() : infoDates[ii].getHours()}
+                                                        : {infoDates[ii].getMinutes() < 10 ? "0" + infoDates[ii].getMinutes() : infoDates[ii].getMinutes()}</p>
+                                                {/if}
                                             </div>
                                         {/each}
                                         <div class="flex">
@@ -602,13 +618,18 @@
                                             </button>
                                         </div>
                                     {:else if config.name === "GOLD EVENT"}
-                                        {#if config.value.expiration !== null }
+                                        <div class="hidden">
+                                            {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}
+                                            {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
+                                            {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
+                                        </div>
+                                        {#if config.value.expiration !== null && goldEvent[0] > 0}
 
                                             {#if config.isEditing}
                                                 <div class="block">
                                                     <label>
                                                         Boost of:
-                                                        <input type="text" class="text-black" size="4"
+                                                        <input type="number" class="text-black" size="4"
                                                                bind:value={config.value.percentage}>
 
                                                     </label><br>
@@ -626,11 +647,7 @@
                                                 <h3 class="text-2xl">Boost of <strong
                                                     class="font-normal text-accent text-3xl">{config.value.percentage - 100}
                                                     %</strong></h3>
-                                                <div class="hidden">
-                                                    {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}
-                                                    {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
-                                                    {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
-                                                </div>
+
                                                 <p class="text-2xl">
                                                     Expires in
                                                     <strong
@@ -666,11 +683,13 @@
                                                 {#if config.isEditing}
                                                     <strong
                                                         class="text-accent font-normal text-3xl">
-                                                        <input type="text" class="bg-background" size="4" bind:value={config.value.boost}>%</strong>
+                                                        <input type="number" class="bg-background" size="4"
+                                                               bind:value|number={config.value.boost}>%</strong>
                                                     more coins for
                                                     <strong
                                                         class="text-accent font-normal text-3xl">
-                                                        <input type="text" class="bg-background" size="4" bind:value={config.value.duration}>days</strong>
+                                                        <input type="number" class="bg-background" size="4"
+                                                               bind:value={config.value.duration}>days</strong>
 
                                                 {:else}
                                                     <strong

@@ -7,10 +7,9 @@
     import { config } from "../../components/storeAdmin";
     import { goto } from "@sapper/app";
     import RefreshButton from "../../components/RefreshButton.svelte";
-    import Infos from "../../components/Infos.svelte";
     import Poll from "../../components/Poll.svelte";
-    import { counter } from "../../components/store";
     import NavAlert from "../../components/Navigation/NavAlert.svelte";
+    import ConfigEditor from "../../components/configEditor.svelte";
 
     let configs;
     let isAuthorizedUser = false;
@@ -30,6 +29,8 @@
     let commands;
     let popup = {};
     let isSavingConfig;
+    let infoDates = [];
+    let totalCoins = 0;
 
     async function loadUsers() {
         loadingUsers = true;
@@ -39,6 +40,7 @@
         users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
         for (let i = 0; i < users.length * 2; i++) {
             if (!users[i - suspiciousUsersFound]) continue;
+            totalCoins += users[i - suspiciousUsersFound].coins;
             users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
             if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
             if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
@@ -78,12 +80,14 @@
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
         otp = configs.tempKey;
         configs = configs.configs;
-        newConfig = configs;
-
         let polls = await callApi("get", `/feltrom/getAllPolls?otp=${otp}&pwd=${pwd}`);
         configs.push({ name: "POLLS", value: polls });
         newConfig = configs;
         configs = JSON.stringify(configs);
+        configs = JSON.parse(configs);
+        newConfig[3].value.forEach((e, i) => {
+            infoDates[i] = new Date(e.expiration);
+        });
         if (refresh) {
             loadUsers();
             loadCommands();
@@ -117,7 +121,7 @@
         callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`);
         goto("/");
     }
-    //TODO:JSON.PARSE TOUT
+
     async function delThing(thing) {
         if (thing === "event") {
             let eventIndex = configs.findIndex(e => e.name === "GOLD EVENT");
@@ -132,6 +136,8 @@
             configs[infosIndex].value.splice(popup.options.index, 1);
             await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, configs.filter(e => e.name === "INFOS"));
             newConfig = configs;
+            configs = JSON.stringify(configs);
+            configs = JSON.parse(configs);
         }
 
         if (thing === "poll") {
@@ -176,34 +182,6 @@
         login(true);
     }
 
-    function makePopup(reason, options) {
-        popup.type = reason.goal === "create" ? "creation" : "deletion";
-        popup.thing = reason.text;
-        if (reason.text === "event" && reason.goal === "create") {
-            popup.fields = [{ name: "Name (reason of the event)", value: null }, {
-                name: "Duration (in days)",
-                value: null
-            }, {
-                name: "Percentage of boost (20 equals all rewards to be raised by 20%)",
-                value: null
-            }, { name: "description (additional infos)", value: null }];
-        } else if (reason.text === "info" && reason.goal === "create") {
-            popup.fields = [{ name: "Name", value: null }, {
-                name: "Duration (in hours)",
-                value: null
-            }, { name: "description", value: null }];
-        } else if (reason.text === "info" || reason.text === "event" || reason.text === "poll" && reason.goal === "delete") {
-            popup.options = options;
-            popup.fields = [];
-        } else if (reason.text === "poll") {
-            popup.fields = [{ name: "name", value: null }, {
-                name: "Multiple choice question ?",
-                value: null,
-                special: []
-            }];
-            popup.special = "poll";
-        }
-    }
 
     function handleConfirm() {
         if (popup.type === "creation") createThing(popup.thing);
@@ -226,22 +204,32 @@
     }
 
     function resetConfig() {
-        newConfig = JSON.parse(configs);
+        newConfig = configs;
+        console.log(configs);
+        configs = JSON.stringify(configs);
+        configs = JSON.parse(configs);
+        console.log(configs);
     }
 
     async function saveConfig() {
         isSavingConfig = true;
+        //Handle event changes
+        if (newConfig[4].value.expTime) {
+            let expiration = Date.parse(newConfig[4].value.expDate + "T" + newConfig[4].value.expTime);
+            delete newConfig[4].value.expTime;
+            delete newConfig[4].value.expDate;
+            newConfig[4].value.expiration = expiration;
+            newConfig[3].value[newConfig[3].value.findIndex(e => e.type === "event")].expiration = expiration;
+            console.log(expiration);
+        }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
-        configs = JSON.stringify(newConfig);
-        newConfig.forEach((e,i)=>{
-            newConfig[i].isEditing = false
-        })
+        login(true);
         isSavingConfig = false;
     }
 </script>
 <style>
     input[type=text] {
-        @apply py-2 px-4;
+        @apply py-1 px-2;
     }
 
     .input {
@@ -342,7 +330,7 @@
             <Loading data="Entering super secret page..." />
         </div>
     {/if}
-    {#if configs}
+    {#if newConfig}
         <div class="lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full">
             <div class="flex justify-between mb-12">
                 <h1 class="text-6xl">ADMIN DASHBOARD</h1>
@@ -361,269 +349,8 @@
             </h2>
             <div class="w-full">
                 {#if configs && activePanel === "config"}
-                    <div class="justify-evenly mx-4 w-full flex h-full flex-wrap p-8">
-                        {#each newConfig as config,i}
-                            <div class="mb-16 border-t-2 border-primary bg-variant rounded-lg mx-8 p-4">
-                                <div class="flex flex-justify">
-                                    <h1 class="text-5xl text-primary w-full">{config.name}</h1>
-                                    {#if config.name !== "IDs BANNED"}
-                                        <div>
-                                            <button
-                                                class="flex m-3 mt-1.5 p-2 pt-1 focus:outline-none text-gray-500 hover:text-white"
-                                                on:click={()=>config.isEditing = !config.isEditing}>
-                                                <svg version="1.1" class="w-5 h-5"
-                                                     xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                     viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000"
-                                                     xml:space="preserve">
-                                                    <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
-                                                    <g><g class="fill-current" transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)"><path d="M7681.7,4992.8c-223.8-57.1-328.5-138.1-840.3-649.9c-278.5-276.1-507-514.2-507-528.5c0-30.9,2337.6-2368.5,2370.9-2368.5c11.9,0,254.7,233.3,535.6,518.9c552.2,557,599.8,623.7,647.5,902.2c31,178.5,0,376.1-90.4,571.3c-50,111.9-164.3,240.4-626.1,704.6c-645.1,649.9-737.9,730.8-926,802.2C8088.7,5004.7,7819.8,5026.1,7681.7,4992.8z"/><path
-                                                        d="M3704,1207.9L1299.7-1196.4l285.6-285.7c157.1-157.1,295.2-285.7,309.5-285.7c11.9,0,1099.8,1076,2416.1,2392.3L6703.3,3017l-297.5,297.6l-297.6,297.6L3704,1207.9z" /><path
-                                                        d="M4418.1,493.7L2013.9-1910.5l483.2-480.8l480.9-483.2L5382.2-470.4l2404.2,2404.2l-483.2,483.2L6822.4,2898L4418.1,493.7z" /><path
-                                                        d="M5506-584.6c-1311.6-1311.6-2385.2-2397.1-2385.2-2409c0-14.3,128.5-152.4,285.7-309.5l285.6-285.6l2404.3,2404.2l2404.2,2404.2l-290.4,290.4C8048.3,1672,7912.6,1803,7905.5,1803C7898.3,1803,6820,729.4,5506-584.6z" /><path
-                                                        d="M959.3-2284.2C826-2700.8,716.5-3053.1,716.5-3065c0-33.3,1078.3-1106.9,1111.7-1106.9c30.9,0,1511.6,476.1,1530.6,492.8c9.5,9.5-2121,2149.5-2142.4,2149.5C1209.3-1529.6,1092.6-1870,959.3-2284.2z" /><path
-                                                        d="M588-3429.2c-7.1-11.9-66.7-173.8-133.3-359.5c-64.3-185.7-171.4-485.6-235.7-666.5l-119-333.3l290.4,104.7c159.5,57.1,461.8,164.3,671.3,238c209.5,73.8,388,142.8,397.5,152.4c9.5,9.5-178.5,211.8-419,452.3C799.8-3600.6,597.5-3415,588-3429.2z" /></g></g>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    {/if}
-                                </div>
-                                <div class="pt-4 block">
-                                    {#if config.name === "GAMEMODES STATUS"}
-                                        <h2 class="text-3xl">FFA</h2>
-                                        <div class:flex={!config.isEditing}>
-                                            {#if config.isEditing}
-                                                <input type="radio" id="FFAActivatedTrue" name="FFAActivated"
-                                                       value={true}
-                                                       bind:group={config.value.FFA}>
-                                                <label for="FFAActivatedTrue" class="text-green">Activated</label><br>
-                                                <input type="radio" id="FFAActivatedMaintenance" name="FFAActivated"
-                                                       value="maintenance" bind:group={config.value.FFA}>
-                                                <label for="FFAActivatedMaintenance"
-                                                       class="text-accent">Maintenance</label><br>
-                                                <input type="radio" id="FFAActivatedFalse" name="FFAActivated"
-                                                       value={false} bind:group={config.value.FFA}>
-                                                <label for="FFAActivatedFalse" class="text-legendary">Disabled</label>
-                                            {:else}
-                                                <p class:text-green={config.value.FFA === true}
-                                                   class:text-accent={config.value.FFA === "maintenance"}
-                                                   class:text-legendary={config.value.FFA === false}>
-                                                    • {config.value.FFA === true ? 'Active' : config.value.FFA === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}
-                                                </p>
-                                            {/if}
-
-                                        </div>
-                                        <h2 class="text-3xl">2vs2</h2>
-                                        <div class:flex={!config.isEditing}>
-                                            {#if config.isEditing}
-                                                <input type="radio" id="2vs2ActivatedTrue" name="2vs2Activated"
-                                                       value={true}
-                                                       bind:group={config.value['2vs2']}>
-                                                <label for="2vs2ActivatedTrue" class="text-green">Activated</label><br>
-                                                <input type="radio" id="2vs2ActivatedMaintenance" name="2vs2Activated"
-                                                       value="maintenance" bind:group={config.value['2vs2']}>
-                                                <label for="2vs2ActivatedMaintenance"
-                                                       class="text-accent">Maintenance</label><br>
-                                                <input type="radio" id="2vs2ActivatedFalse" name="2vs2Activated"
-                                                       value={false} bind:group={config.value['2vs2']}>
-                                                <label for="2vs2ActivatedFalse" class="text-legendary">Disabled</label>
-                                            {:else}
-                                                <p class:text-green={config.value["2vs2"] === true}
-                                                   class:text-accent={config.value["2vs2"] === "maintenance"}
-                                                   class:text-legendary={config.value["2vs2"] === false}>
-                                                    • {config.value['2vs2'] === true ? 'Active' : config.value['2vs2'] === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}
-                                                </p>
-                                            {/if}
-
-
-                                        </div>
-                                    {:else if config.name === "FFA REWARDS CONFIG"}
-                                        <div class="block">
-                                            {#if config.isEditing}
-                                                {#each config.value as reward,ii}
-                                                    <div class="flex my-2px">
-                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>:
-                                                        <input bind:value={reward} class="bg-gray-200 ml-1 text-black px-2" size="{reward.length+3}">
-                                                    </div>
-                                                {/each}
-                                            {:else}
-                                                {#each config.value as reward,ii}
-                                                    <div class="flex my-2px">
-                                                        <p class="text-accent">{ii + 1}{ii === 0 ? "st" : ii === 1 ? "nd" : ii === 2 ? "rd" : "th"}</p>
-                                                        : {reward}$
-                                                    </div>
-                                                {/each}
-                                            {/if}
-                                        </div>
-                                    {:else if config.name === "ADVICES"}
-                                        <div class="flex mb-5">
-                                            <p>Probability:</p>
-                                            <input type="text"
-                                                   class="text-2xl bg-variant rounded -mt-3 mx-2 text-center"
-                                                   size="3"
-                                                   bind:value={config.value.probability} />%
-                                        </div>
-                                        {#each config.value.advices as info,ii}
-                                            <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                            <h3 class="text-3xl">Name</h3>
-                                            <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                                   bind:value={info.name} />
-                                            <h3 class="text-3xl mt-3">Strong</h3>
-                                            <input class="text-xl bg-variant rounded mt-2" size="40" type="text"
-                                                   bind:value={info.strong}>
-
-                                        {/each}
-                                    {:else if config.name === "INFOS"}
-                                        {#each config.value as info,ii}
-                                            <h2 class="text-4xl text-accent">{ii + 1}.</h2>
-                                            <h3 class="text-3xl">Name</h3>
-                                            <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                                   bind:value={info.name} />
-                                            <h3 class="text-3xl">Description</h3>
-                                            <input class="text-xl bg-variant rounded mt-2" size="60" type="text"
-                                                   bind:value={info.description}>
-                                            <!--TODO: date d'expiration-->
-                                            <button
-                                                on:click={()=>makePopup({text:"info",goal:"delete"},{index:ii})}>
-                                                <svg class="fill-current w-4" viewBox="0 0 24 24"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
-                                                </svg>
-                                            </button>
-                                        {/each}
-                                        <div class="flex">
-                                            <button class="m-auto  button button-brand"
-                                                    on:click={()=>makePopup({text:"info",goal:"create"})}>Create
-                                                info
-                                            </button>
-                                        </div>
-                                    {:else if config.name === "POLLS"}
-                                        {#each config.value as poll,ii}
-                                            <div class="border-primary border-b pt-4 pb-8">
-                                                <div class="flex justify-between">
-                                                    <h3 class="text-primary text-3xl">Name</h3>
-                                                    <button
-                                                        class="hover:bg-legendary h-6 text-legendary hover:text-white rounded"
-                                                        on:click={()=>makePopup({text:"poll",goal:"delete"},{index:poll._id})}>
-                                                        <svg class="w-4 mx-1 fill-current" viewBox="0 0 24 24"
-                                                             xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                <input class="text-2xl bg-variant rounded" size="40" type="text"
-                                                       bind:value={poll.name} />
-                                                {#if poll.isMCQ}
-                                                    <h3 class="text-3xl text-primary">Options</h3>
-                                                    {#each poll.answers as option, iii}
-                                                        <div class="flex">
-                                                            <input class="text-2xl bg-variant rounded mt-2"
-                                                                   size="60"
-                                                                   type="text"
-                                                                   bind:value={option.name}>
-                                                            <p class="text-primary text-2xl">Votes <strong
-                                                                class="font-normal text-white">{option.nb}</strong>
-                                                                Percentage <strong class="font-normal"
-                                                                                   class:text-legendary={option.nb/poll.totalAnswers<0.25}
-                                                                                   class:text-green={option.nb/poll.totalAnswers>=0.5}
-                                                                                   class:text-accent={option.nb/poll.totalAnswers>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100}
-                                                                    %</strong></p>
-                                                        </div>
-                                                    {/each}
-                                                {:else}
-                                                    <button class="button button-brand"
-                                                            on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown ? 'Hide' : 'Show'}
-                                                        answers
-                                                    </button>
-                                                    {#if poll.areAnswersShown}
-                                                        <p class="mt-8 text-accent text-3xl">Total
-                                                            answers: {poll.totalAnswers}</p>
-                                                        <div class="flex mt-4">
-                                                            {#each poll.answers as answer, iii}
-                                                                <p>
-                                                                    <h class="text-primary mr-1">1.</h>{answer}</p>
-                                                            {/each}
-                                                        </div>
-
-                                                    {/if}
-                                                {/if}
-
-
-                                            </div>
-                                        {/each}
-                                        <div class="flex pt-4">
-                                            <button class="m-auto button button-brand"
-                                                    on:click={()=>makePopup({text:"poll",goal:"create"})}>Create new
-                                                poll
-                                            </button>
-                                        </div>
-                                    {:else if config.name === "GOLD EVENT"}
-                                        {#if config.value.expiration !== null }
-                                            <h3 class="text-2xl">Boost of <strong
-                                                class="font-normal text-accent text-3xl">{config.value.percentage - 100}
-                                                %</strong></h3>
-                                            <div class="hidden">
-                                                {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}
-                                                {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
-                                                {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
-                                            </div>
-                                            <p class="text-2xl">
-
-                                                Exipires in
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[0]}</strong>
-                                                days,
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[1]}</strong>
-                                                hours,
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
-                                                minutes,
-
-                                            </p>
-                                            <!--TODO: confirmation pour chaque action-->
-                                            <button class="button button-brand " style="background-color: #fc1870"
-                                                    on:click={()=>makePopup({text:"event",goal:"delete"})}>Stop
-                                                event
-                                            </button>
-                                        {:else}
-                                            <div class="flex">
-                                                <button class="button m-auto button-brand"
-                                                        on:click={()=>makePopup({text:"event",goal:"create"})}>
-                                                    Create event
-                                                </button>
-                                            </div>
-                                        {/if}
-
-                                    {:else if config.name === "LINKS CONFIG"}
-                                        <div class="w-60">
-                                            <p class="text-2xl">Players joining via an affiliated link get
-                                                <strong
-                                                    class="text-accent font-normal text-3xl">{config.value.boost}
-                                                    %</strong>
-                                                more
-                                                coins for <strong
-                                                    class="text-accent font-normal text-3xl">{config.value.duration}
-                                                    days</strong></p>
-                                        </div>
-                                    {:else if config.name === "IDs BANNED"}
-                                        <div class="block">
-                                            {#if config.value.length !== 0}
-                                                <UsersArray users="{bannedOnes}" banned="true" color="blue"
-                                                            otp={otp}
-                                                            pwd={pwd} />
-                                            {/if}
-                                        </div>
-                                        <p class="text-3xl text-green">
-                                            {config.value.length === 0 ? "No player has been banned" : ""}
-                                        </p>
-                                    {/if}
-                                </div>
-                            </div>
-                        {/each}
-                    </div>
+                    <ConfigEditor bind:popup={popup} bind:newConfig={newConfig} bind:goldEvent={goldEvent}
+                                  bind:bannedOnes={bannedOnes} otp={otp} pwd={pwd} bind:infoDates={infoDates} />
                 {:else if activePanel === "users"}
                     {#if !loadingUsers}
                         <div class="w-full h-full block">
@@ -652,6 +379,12 @@
                             {/if}
                             <div class="flex">
                                 <div class="block">
+                                    <p class="text-3xl mt-5 mb-2 ml-2">
+                                        <d class="text-accent">{totalCoins}</d>
+                                        W In circulation equals
+                                        <d class="text-accent">{parseFloat((totalCoins / 10750).toFixed(4))}</d>
+                                        $
+                                    </p>
                                     {#if suspiciousBitches.length > 0}
                                         <div class:mb-15={normalUsersShown}>
                                             <p class="text-3xl mt-5 mb-2 ml-2">
@@ -720,74 +453,70 @@
                     <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
                          transition:fade|local={{duration:200}}>
                         <div
-                            class="flex justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
+                            class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
                             style="margin-top:20vh">
-                            <div
-                                class="block ">
-                                <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
-                                <div>
-                                    <div class="overflow-auto max-h-screen-50">
-                                        {#each popup.fields as field,i}
-                                            {#if field.name === "Multiple choice question ?"}
-                                                <div class="text-3xl mt-8">
-                                                    <input type="radio" id="Normal" name="type" value="false"
-                                                           bind:group={field.value}>
-                                                    <label for="Normal">Normal</label><br>
-                                                    <input type="radio" id="MCQ" name="type" value="true"
-                                                           bind:group={field.value}>
-                                                    <label for="MCQ">MCQ</label>
-                                                </div>
+                            <h1 class="text-5xl text-primary">{popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}</h1>
+                            <div>
+                                <div class="overflow-auto max-h-screen-50">
+                                    {#each popup.fields as field,i}
+                                        {#if field.name === "Multiple choice question ?"}
+                                            <div class="text-3xl mt-8">
+                                                <input type="radio" id="Normal" name="type" value="false"
+                                                       bind:group={field.value}>
+                                                <label for="Normal">Normal</label><br>
+                                                <input type="radio" id="MCQ" name="type" value="true"
+                                                       bind:group={field.value}>
+                                                <label for="MCQ">MCQ</label>
+                                            </div>
 
-                                                {#if field.value == "true"}
-                                                    {#each popup.fields[1].special as option,ii}
-                                                        <div class="my-4">
-                                                            <h3 class="text-3xl">Option {ii + 1}</h3>
+                                            {#if field.value == "true"}
+                                                {#each popup.fields[1].special as option,ii}
+                                                    <div class="my-4">
+                                                        <h3 class="text-3xl">Option {ii + 1}</h3>
 
-                                                            <input class="text-black" bind:value={option} type="text" />
-                                                            <p></p>
-                                                        </div>
-                                                    {/each}
-                                                    <p></p>
-                                                    <button class="button button-brand mt-4 ml-2" on:click={addField}>
-                                                        Add
-                                                        option
-                                                    </button>
-                                                {/if}
-                                            {:else}
-                                                <h3 class="text-3xl mt-8">{field.name}</h3>
-                                                <input type="text" class="text-black rounded"
-                                                       rows="{field.name.includes('description')?5:1}" size="40"
-                                                       placeholder="{field.name}" bind:value={field.value} />
-
+                                                        <input class="text-black" bind:value={option} type="text" />
+                                                        <p></p>
+                                                    </div>
+                                                {/each}
+                                                <p></p>
+                                                <button class="button button-brand mt-4 ml-2" on:click={addField}>
+                                                    Add
+                                                    option
+                                                </button>
                                             {/if}
-                                            <p></p>
-                                        {/each}
-                                    </div>
-                                    <div class="justify-center w-full flex">
-                                        <button class="button button-brand mt-8"
-                                                style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
-                                                on:click={handleConfirm}>
-                                            {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                        {:else}
+                                            <h3 class="text-3xl mt-8">{field.name}</h3>
+                                            <input type="text" class="text-black rounded"
+                                                   rows="{field.name.includes('description')?5:1}" size="40"
+                                                   placeholder="{field.name}" bind:value={field.value} />
+
+                                        {/if}
+                                        <p></p>
+                                    {/each}
+                                </div>
+                                <div class="justify-center w-full flex">
+                                    <button class="button button-brand mt-8"
+                                            style="background-color:#{popup.type === 'deletion'?'fc1870':'3d72e4'}"
+                                            on:click={handleConfirm}>
+                                        {popup.type === "creation" ? `Create ${popup.thing}` : `Confirm delete ${popup.thing}`}
+                                    </button>
+                                    <button class="button button-brand mt-8 border ml-5"
+                                            class:border-primary={popup.type !== 'deletion'}
+                                            class:border-legendary={popup.type === 'deletion'}
+                                            style="background-color: #17171a;padding: -1px"
+                                            on:click={()=>popup={}}>
+                                        Cancel
+                                    </button>
+                                    {#if (popup.thing === "poll" || popup.thing === "info") && popup.type === "creation"}
+                                        <button class="button button-brand mt-8 ml-5" style="background-color: #ff8f0f"
+                                                on:click={handlePreview}>
+                                            {popup.isPreviewing ? "Stop" : ""} Preview
                                         </button>
-                                        <button class="button button-brand mt-8 border ml-5"
-                                                class:border-primary={popup.type !== 'deletion'}
-                                                class:border-legendary={popup.type === 'deletion'}
-                                                style="background-color: #17171a;padding: -1px"
-                                                on:click={()=>popup={}}>
-                                            Cancel
-                                        </button>
-                                    </div>
+                                    {/if}
                                 </div>
                             </div>
-                            {#if popup.thing === "poll" || popup.thing === "info" && popup.type === "creation"}
-                                <div class="h-15 px-5 my-auto">
-                                    <button class="button button-brand" style="background-color: #ff8f0f"
-                                            on:click={handlePreview}>
-                                        {popup.isPreviewing ? "Stop" : ""} Preview
-                                    </button>
-                                </div>
-                            {/if}
                         </div>
+
                     </div>
                 {/if}
                 {#if popup.isPreviewing}
@@ -814,26 +543,24 @@
 
             </div>
         </div>
-        {#if typeof configs === "string" && newConfig}
-            {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(JSON.parse(configs).map(e => e.value))}
-                <div
-                    class="fixed top-screen-85 w-full">
-                    <div transition:fly|local={{y:150, duration:500}}
-                         class="flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%">
-                        <p class="my-auto">You have made changes to the config</p>
-                        <div class="flex">
-                            <button class="button button-brand border border-primary mr-2"
-                                    style="background-color: #000000;padding: -1px"
-                                    on:click={resetConfig}>
-                                Reset changes
-                            </button>
-                            <RefreshButton on:click={saveConfig} refreshMessage="Save changes"
-                                           onRefreshMessage="Saving..." isRefreshing={isSavingConfig} />
-                        </div>
+        {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(configs.map(e => e.value))}
+            <div
+                class="fixed top-screen-90 w-full">
+                <div transition:fly|local={{y:150, duration:500}}
+                     class="flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%">
+                    <p class="my-auto">Carefully, you have unsaved changes</p>
+                    <div class="flex">
+                        <button class="button button-brand border border-primary mr-2"
+                                style="background-color: #000000;padding: -1px"
+                                on:click={resetConfig}>
+                            Reset changes
+                        </button>
+                        <RefreshButton on:click={saveConfig} refreshMessage="Save changes"
+                                       onRefreshMessage="Saving..." isRefreshing={isSavingConfig} />
                     </div>
                 </div>
-            {/if}
-        {/if     }
+            </div>
+        {/if}
     {/if}
 
 {:else}

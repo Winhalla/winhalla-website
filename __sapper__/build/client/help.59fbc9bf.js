@@ -1,0 +1,1 @@
+import{S as t,i as s,s as a,q as e,d as o,n as c}from"./client.c9aade9b.js";function i(t){return{c(){this.h()},l(t){e('[data-svelte="svelte-chgju"]',document.head).forEach(o),this.h()},h(){document.title="How it works | Winhalla"},m:c,p:c,i:c,o:c,d:c}}export default class extends t{constructor(t){super(),s(this,t,null,i,a,{})}}

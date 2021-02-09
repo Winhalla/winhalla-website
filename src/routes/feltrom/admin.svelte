@@ -31,7 +31,7 @@
     let popup = {};
     let isSavingConfig;
     let infoDates = [];
-
+    let totalCoins = 0
     async function loadUsers() {
         loadingUsers = true;
         suspiciousBitches = [];
@@ -40,6 +40,7 @@
         users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
         for (let i = 0; i < users.length * 2; i++) {
             if (!users[i - suspiciousUsersFound]) continue;
+            totalCoins += users[i- suspiciousUsersFound].coins
             users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
             if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
             if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
@@ -746,6 +747,7 @@
                             {/if}
                             <div class="flex">
                                 <div class="block">
+                                    <p class="text-3xl mt-5 mb-2 ml-2"><d class="text-accent">{totalCoins}</d>W In circulation equals <d class="text-accent">{parseFloat((totalCoins/10750).toFixed(4))}</d>$</p>
                                     {#if suspiciousBitches.length > 0}
                                         <div class:mb-15={normalUsersShown}>
                                             <p class="text-3xl mt-5 mb-2 ml-2">

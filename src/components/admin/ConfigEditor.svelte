@@ -1,5 +1,6 @@
 <script>
     import UsersArray from "./UsersArray.svelte";
+
     export let newConfig;
     export let goldEvent;
     export let popup;
@@ -7,6 +8,7 @@
     export let otp;
     export let pwd;
     export let infoDates;
+
     function makePopup(reason, options) {
         popup.type = reason.goal === "create" ? "creation" : "deletion";
         popup.thing = reason.text;
@@ -284,7 +286,7 @@
                         {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}
                         {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}
                     </div>
-                    {#if config.value.expiration !== null && goldEvent[0] > 0}
+                    {#if config.value.expiration !== null && goldEvent[0] >= 0}
 
                         {#if config.isEditing}
                             <div class="block">

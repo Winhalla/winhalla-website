@@ -1,6 +1,6 @@
 <script>
 
-    import { callApi } from "../utils/api";
+    import { callApi } from "../../utils/api";
     import { fade } from "svelte/transition";
     import { onMount } from "svelte";
     import { config } from "./storeAdmin";
@@ -34,13 +34,14 @@
         }
         if (state === 1) {
             await callApi("post", `/feltrom/unsuspicious?otp=${otp}&pwd=${pwd}&user=${id}`);
-            config.set({ refresh: true });
+            config.set({ users: true });
             isDoingAction = false;
             player = undefined;
         }
     }
 
     async function ban(id, state, ban) {
+        console.log(id,state,ban)
         if (state === 0) {
             isDoingAction = true;
             player = id;
@@ -48,7 +49,7 @@
         }
         if (state === 1) {
             await callApi("post", `/feltrom/ban?otp=${otp}&pwd=${pwd}`, { ban: ban === "ban", id, reason });
-            config.set({ refresh: true });
+            config.set({ users: true });
             isDoingAction = false;
             player = undefined;
         }

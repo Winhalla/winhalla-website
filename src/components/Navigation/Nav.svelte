@@ -77,14 +77,14 @@
             informations = "network";
         }
 
-        setTimeout(async () => {
+        /*setTimeout(async () => {
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
 
             } catch (e) {
                 console.log(e);
             }
-        }, 5000);
+        }, 5000);*/
         await user;
         calculateProperties(user);
         loaded = true;
@@ -146,7 +146,7 @@
             </div>
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
-                    {#if informations}
+                    {#if loaded && window.innerWidth < 1024}
                         <NavAlert data={informations} />
                     {/if}
 
@@ -275,7 +275,7 @@
                            href="/play/ffa/{currentMatch}">Rejoin
                             match</a>
                     {/if}
-                    {#if informations}
+                    {#if informations && window.innerWidth >= 1024}
                         <div class="hidden lg:flex items-center">
                             <NavAlert data={informations} />
                         </div>

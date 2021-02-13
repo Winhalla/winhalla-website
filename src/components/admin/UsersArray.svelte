@@ -27,6 +27,9 @@
     }
 
     async function unsuspicious(id, state) {
+        setTimeout(() => {
+            users[users.findIndex(e=>e.steamId === id)].isDetailsOpen = false
+        },1)
         if (state === 0) {
             isDoingAction = true;
             player = id;
@@ -41,14 +44,17 @@
     }
 
     async function ban(id, state, ban) {
-        console.log(id,state,ban)
+
+        setTimeout(() => {
+            users[users.findIndex(e=>e.steamId === id)].isDetailsOpen = false
+        },1)
         if (state === 0) {
             isDoingAction = true;
             player = id;
             action = ban === true ? "ban" : "unban";
         }
         if (state === 1) {
-            await callApi("post", `/feltrom/ban?otp=${otp}&pwd=${pwd}`, { ban: ban === "ban", id, reason });
+            await callApi("post", `/feltrom/ban?otp=${otp}&pwd=${pwd}`, { ban: ban === "ban", id : id, reason });
             config.set({ users: true });
             isDoingAction = false;
             player = undefined;
@@ -89,6 +95,9 @@
             </td>
         {/if}
         {#if type !== "simple"}
+            <td class="px-4 py-3">
+                Join date
+            </td>
             <td class="px-4 py-3">
                 Actions
             </td>
@@ -156,6 +165,12 @@
                 </td>
             {/if}
             {#if !banned && type !== "simple"}
+                <td>
+                    <p hidden>{user.date = new Date(user.joinDate)}</p>
+                    {user.date?.getDate() < 10 ? "0" + user.date?.getDate() : user.date?.getDate()}
+                    /{user.date?.getMonth() + 1 < 10 ? "0" + (user.date?.getMonth() + 1) : user.date?.getMonth() + 1}
+                    /{user.date?.getFullYear()}
+                </td>
                 <td class="px-2 py-2 block w-15">
                     <div class="flex items-center">
                         <button on:click={ban(user.steamId,0,true)} class="cursor-pointer mr-2">
@@ -177,6 +192,12 @@
                     </div>
                 </td>
             {:else if type !== "simple"}
+                <td>
+                    <p hidden>{user.date = new Date(user.joinDate)}</p>
+                    {user.date?.getDate() < 10 ? "0" + user.date?.getDate() : user.date?.getDate()}
+                    / {user.date?.getMonth() + 1 < 10 ? "0" + (user.date?.getMonth() + 1) : user.date?.getMonth() + 1}
+                    / {user.date?.getFullYear()}
+                </td>
                 <td class="px-2 py-2">
                     <div on:click={ban(user.steamId,0,false)} class="cursor-pointer">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
@@ -205,8 +226,10 @@
             {/if}
         </tr>
         {#if user.isDetailsOpen}
+
             <tr class="w-full py-5 ">
-                <td class="w-full" colspan="2">
+                <td></td>
+                <td class="w-full" colspan="4">
                     {#if user.solo?.logs.length !== 0}
                         <div class="w-full">
                             <h1 class="text-green text-4xl p-4">Quests History</h1>
@@ -232,7 +255,7 @@
                     {/if}
 
                 </td>
-                <td class="w-full h-auto" colspan="5">
+                <td class="w-full h-auto" colspan="3">
                     {#if user.lastGames.length !== 0}
                         <div class="w-full">
                             <h1 class="text-green text-4xl p-4">Match History</h1>
@@ -296,14 +319,7 @@
         <h2 class="text-4xl mt-10 text-primary">
             Confirm {action}:
         </h2>
-        <h1 class="text-2xl mt-10 text-accent">
-            Enter google authenticator OTP
-        </h1>
-        <input type="text"
-               class="px-4 py-1 text-black rounded-sm"
-               maxlength="6"
-               placeholder="Google authenticator OTP"
-               bind:value={otp} /><br>
+
         {#if action === "ban"}
             <h1 class="text-2xl mt-10 text-accent">
                 Reason

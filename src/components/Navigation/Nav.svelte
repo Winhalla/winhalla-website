@@ -77,14 +77,14 @@
             informations = "network";
         }
 
-        /*setTimeout(async () => {
+        setTimeout(async () => {
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
 
             } catch (e) {
                 console.log(e);
             }
-        }, 5000);*/
+        }, 5000);
         await user;
         calculateProperties(user);
         loaded = true;

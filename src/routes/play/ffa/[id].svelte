@@ -94,7 +94,7 @@
                 1000
             );
             if (endsIn < 1) {
-                countDown = "Waiting for others to finish (you can start a new game from the play page)";
+                countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
             } else {
                 startTimer(endsIn);
             }
@@ -301,12 +301,12 @@
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                            class="mode-timer flex justify-center lg:justify-start
-                        items-end w-52 ">
+                            class="flex justify-center lg:justify-start
+                        items-end ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
                                 class="timer text-primary ml-5 text-3xl leading-none">
-                                {#if countDown}{countDown}{:else}Loading...{/if}
+                                {#if countDown}{@html countDown}{:else}Loading...{/if}
                             </p>
                         </div>
                         <AdblockAlert user="{userPlayer}" />

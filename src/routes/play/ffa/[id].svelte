@@ -67,7 +67,6 @@
 
 
             if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
-            else console.log("ffa match");
             let unsub = counter.subscribe((user1) => {
                 user = user1.content;
             });
@@ -76,47 +75,47 @@
 
 
             try {
-            user = await user;
-            user = user.steam;
-            match = await callApi("get", `/getMatch/${id}`);
+                user = await user;
+                user = user.steam;
+                match = await callApi("get", `/getMatch/${id}`);
 
-            if (match instanceof Error) {
-                throw match;
-            }
-            isMatchEnded = match.finished;
+                if (match instanceof Error) {
+                    throw match;
+                }
+                isMatchEnded = match.finished;
 
-            //Start the countdown
-            filterUsers(false);
-            const d = new Date(userPlayer.joinDate);
-            const endsIn = -(
-                (new Date().getTime() -
-                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                1000
-            );
-            if (endsIn < 1) {
-                countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
-            } else {
-                startTimer(endsIn);
-            }
-            counter.set({ "refresh": true });
+                //Start the countdown
+                filterUsers(false);
+                const d = new Date(userPlayer.joinDate);
+                const endsIn = -(
+                    (new Date().getTime() -
+                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                    1000
+                );
+                if (endsIn < 1) {
+                    countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
+                } else {
+                    startTimer(endsIn);
+                }
+                counter.set({ "refresh": true });
 
-            socket = io.io(apiUrl);
-            socket.on("connection", (status) => {
-                console.log(status);
-                socket.emit("match connection", "FFA" + id);
-            });
+                socket = io.io(apiUrl);
+                socket.on("connection", (status) => {
+                    console.log(status);
+                    socket.emit("match connection", "FFA" + id);
+                });
 
-            socket.on("join match", (status) => {
-                console.log(status);
-            });
+                socket.on("join match", (status) => {
+                    console.log(status);
+                });
 
-            socket.on("lobbyUpdate", (value) => {
-                match = value;
-                filterUsers(true);
-            });
-            isLoadingOpen = false;
+                socket.on("lobbyUpdate", (value) => {
+                    match = value;
+                    filterUsers(true);
+                });
+                isLoadingOpen = false;
             } catch (err) {
-                console.log(err)
+                console.log(err);
                 if (err.response) {
                     if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                         error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -139,17 +138,22 @@
 
     const filterUsers = (isFromSocket) => {
         //Find user's object
+        if (isSpectator === true) {
+            players = [...match.players];
+            userPlayer = players.splice(0, 1)[0];
+            return;
+        }
         if (!isFromSocket) {
-            userPlayer = match.players.find(p => p.steamId === user.id );
+            userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === user.id );
+            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
             match.players[playerIndex].wins = userPlayer.wins;
             userPlayer = match.players[playerIndex];
         }
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex(p => p.steamId === user.id ),
+            match.players.findIndex(p => p.steamId === user.id),
             1
         );
     };
@@ -310,35 +314,39 @@
                             </p>
                         </div>
                         <AdblockAlert user="{userPlayer}" />
-                        <div
-                            class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                        {#if !isSpectator}
+                            <div
+                                class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                            <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
-                                class="text-green font-normal text-3xl">{userPlayer.adsWatched}
-                                ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
-                                <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
-                            </p>
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
+                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                    ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
+                                    <strong
+                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                </p>
 
-                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
-                                          bind:info={info} id={id} />
-                            <RefreshButton
-                                on:click={() => handleRefresh()}
-                                isRefreshing={isRefreshingStats}
-                                refreshMessage={'Refresh data'} />
-                            {#if userPlayer.gamesPlayed == 0}
-                                <button
-                                    class="button button-brand quit lg:ml-4 mt-3
+                                <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
+                                              bind:info={info} id={id} />
+                                <RefreshButton
+                                    on:click={() => handleRefresh()}
+                                    isRefreshing={isRefreshingStats}
+                                    refreshMessage={'Refresh data'} />
+                                {#if userPlayer.gamesPlayed == 0}
+                                    <button
+                                        class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
 
-                                    on:click={() => handleQuit()}>
-                                    Quit lobby
-                                </button>
-                                {#if pushError}
-                                    <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
+                                        on:click={() => handleQuit()}>
+                                        Quit lobby
+                                    </button>
+                                    {#if pushError}
+                                        <ErrorAlert message="There was an error exiting the match"
+                                                    pushError={pushError} />
+                                    {/if}
                                 {/if}
-                            {/if}
 
-                        </div>
+                            </div>
+                        {/if}
                     </div>
 
                     <div
@@ -404,7 +412,10 @@
             {/if}
 
             <GuideCard page="ffa" />
-            <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />
+            {#if !isSpectator}
+                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
+                            bind:info={info} />
+            {/if}
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

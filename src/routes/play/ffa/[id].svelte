@@ -12,13 +12,14 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
-    import { fade } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
 
     import { counter } from "../../../components/store";
     import io from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
+    import Quests from "../../../components/Quests.svelte";
 
     const { page } = stores();
 
@@ -28,6 +29,7 @@
     let pages;
     let user;
     let match;
+    let quests;
     let isMatchEnded;
     let countDown;
 
@@ -64,7 +66,7 @@
             error = undefined;
             socket = undefined;
             id = value.params.id;
-
+            quests = undefined;
 
             if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
             let unsub = counter.subscribe((user1) => {
@@ -75,6 +77,7 @@
 
 
             try {
+
                 user = await user;
                 user = user.steam;
                 match = await callApi("get", `/getMatch/${id}`);
@@ -113,6 +116,9 @@
                     match = value;
                     filterUsers(true);
                 });
+                quests = await callApi("get", "/getSolo");
+                quests = quests.solo;
+                console.log(quests);
                 isLoadingOpen = false;
             } catch (err) {
                 console.log(err);
@@ -212,10 +218,10 @@
         }
     };
 
-    let isInfoDropdownOpen = false;
+    let isQuestsPanelOpen = false;
 
-    function handleInfoDropdown() {
-        isInfoDropdownOpen = !isInfoDropdownOpen;
+    function handleQuestsPanel() {
+        isQuestsPanelOpen = !isQuestsPanelOpen;
     }
 </script>
 
@@ -416,6 +422,44 @@
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
                             bind:info={info} />
             {/if}
+            {#if quests}
+                {#if isQuestsPanelOpen}
+                    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+
+                        <!--TRANSPARENT PART-->
+                        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
+                             out:fade={{duration: 350}}></div>
+                        <div
+                            class="bg-background w-full md:w-3/4  lg:w-auto min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
+                            in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>
+                            <div class="-mt-32 flex items-center">
+                                <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
+                                    <svg class="w-6 fill-current text-font ml-10" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                                    </svg>
+                                </button>
+                                <div class="pl-14 pr-24">
+                                    <Quests data={quests} />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {:else}
+                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
+                        <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
+                            <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                            </svg>
+                        </button>
+                    </div>
+                {/if}
+
+            {/if}
+
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

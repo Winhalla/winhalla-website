@@ -2,7 +2,7 @@
     import { callApi, getUser } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
-    import { onMount, onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import Infos from "./Infos.svelte";
@@ -10,6 +10,7 @@
 
     let countDown = [{}, {}];
     export let data;
+    console.log(data);
     let error;
     let socket;
     let adError;

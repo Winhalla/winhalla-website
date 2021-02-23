@@ -46,10 +46,10 @@
             </div>
         </div>
         <div class="mt-10 flex justify-between items-center w-full">
-            <div class="flex items-end">
-                <div class="text-logo">
-                    <a class="logo leading-0" href="/"> WINHALLA </a>
-                </div>
+            <div class="flex items-end text-sm text-gray-400 w-100">
+                Winhalla isn't endorsed by Blue Mammoth Games and doesn't reflect the views or opinions of Blue Mammoth Games or anyone
+                officially involved in producing or managing Brawlhalla. Brawlhalla and Blue Mammoth Games are
+                trademarks or registered trademarks of Blue Mammoth games. Brawlhalla © Blue Mammoth Games.
             </div>
 
             <div class="flex items-center">

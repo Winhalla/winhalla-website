@@ -34,7 +34,7 @@
          transition:fly={{ x:200, duration: 300 }}>
         <button class="flex justify-between cursor-pointer focus:outline-none w-full" on:click={() => handleClick()}>
             <p class="text-xl pl-3 pt-1.5 text-gray-400">POLL</p>
-            <p class:pb-4={!isPollOpen} class="pl-5 pt-5">{poll.name}</p>
+            <p class:pb-4={!isPollOpen} class="pl-2 pt-5">{poll.name}</p>
             <!--Svg icon-->
             <div class="ml-5 mr-3 mt-6">
                 <svg class:hidden={isPollOpen} class="fill-current w-5" style="margin-bottom: 0.14rem;"

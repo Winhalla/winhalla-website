@@ -165,10 +165,6 @@
         cursor: not-allowed;
     }
 
-    .info {
-        @apply text-lg mt-1;
-    }
-
     .input-header {
         @apply text-primary text-3xl;
         margin-bottom: 0.35rem;

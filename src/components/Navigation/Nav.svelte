@@ -280,7 +280,7 @@
                             <NavAlert data={informations} />
                         </div>
                     {/if}
-                    {#if isUserLoggedIn === true}
+                    {#if isUserLoggedIn}
                         <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.displayName && user.photos}
                                 <NavAccount
@@ -298,12 +298,6 @@
                                 $
                             </a>
                         </div>
-                    {:else if isUserLoggedIn == 'steam'}
-                        <a
-                            class="button-brand button mr-3"
-                            href="/create-account">
-                            Register email
-                        </a>
                     {:else if isUserLoggedIn === 'network'}
                         <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}

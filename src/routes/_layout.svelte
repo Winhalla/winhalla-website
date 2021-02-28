@@ -8,6 +8,7 @@
     import { onMount } from "svelte";
     import PollTest from "../components/Poll.svelte";
 
+    let disabledCookies = false;
     let error;
     onMount(() => {
         eventEmitter.subscribe(async e => {
@@ -85,6 +86,22 @@
 <svelte:head>
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
+    <!-- Global site tag (gtag.js) - Google Analytics -
+    {#if !disabledCookies}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BQWBRYTGC6"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag("js", new Date());
+
+            gtag("config", "G-BQWBRYTGC6");
+        </script>
+    {/if}
+    -->
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />

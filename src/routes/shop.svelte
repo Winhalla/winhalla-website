@@ -6,17 +6,61 @@
     let seasonPacks;
     let packs;
     let error;
+    let isBuying;
+    let userPlayer;
+    import { fly, fade } from "svelte/transition";
+    import { counter } from "../components/store";
+    import { callApi } from "../utils/api";
+    import { onMount } from "svelte";
 
+    onMount(async () => {
+        let unsub;
+        let items;
+        try {
+            items = await callApi("get", "/shop");
+            if (items instanceof Error) {
+                throw items;
+            }
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+            }
+            error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
+        }
+        let player;
+        unsub = counter.subscribe(async (value) => {
+            if (value.refresh === true) return;
+            player = await value.content;
+            console.log(player);
+            if (player.user) {
+                player = player.user.coins;
+            } else {
+                player = 0;
+            }
+            items.forEach((item, i) => {
+                items[i].isDescriptionToggled = false;
+
+                items[i].unBuyable = false;
+                item.name = item.name.toLowerCase().replace(/\s/g, "-");
+                if (item.cost > player) items[i].unBuyable = true;
+            });
+
+            featuredItem = items.find((i) => i.state === 0);
+            seasonPacks = items.filter((i) => i.state === 1);
+            packs = items.filter((i) => i.state === 2);
+            if (value.refresh === true) return;
+            userPlayer = await value.content;
+        });
+    });
     //* Required for videoAd
-    import ErrorAlert from "../components/ErrorAlert.svelte";
+    /*import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
-    import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import AdblockAlert from "../components/AdblockAlert.svelte";
-    import { callApi } from "../utils/api";
-    import { counter } from "../components/store";
-    import { fly } from "svelte/transition";
+
+
+
 
     let adError;
     let info;
@@ -101,7 +145,7 @@
             }
             loaded = true;
         });
-        socket = io.io(apiUrl);
+        // socket = io.io(apiUrl);
         let stop = 0;
         let advideostate = 0;
         let tempNb;
@@ -159,11 +203,11 @@
     });
     onDestroy(() => {
         if (unsub) unsub();
-    });
+    });*/
 
     //* End of required for videoAd
 
-    async function buyTickets() {
+    /*async function buyTickets() {
         try {
             isLoadingTicket = true;
             const { won, coins } = await callApi("post", `/lottery/enter?nb=${ticketsNb}&id=${0}`);
@@ -176,18 +220,32 @@
         } catch (e) {
 
         }
-    }
-
+    }*/
+    const onKeyPressEmail = () => {
+        if(!isBuying.email) return
+        setTimeout(() => {
+            if (isBuying.email.length > 0) {
+                let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gm;
+                let exec = regex.exec(isBuying.email);
+                if (exec) isBuying.valid = true;
+                else isBuying.valid = false;
+            } else {
+                isBuying.valid = null;
+            }
+        }, 1);
+    };
     const handleDescriptionToggle = (seasonPack) => {
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
         seasonPacks = [...seasonPacks];
     };
-    async function buyItem (id) {
-        const itemBuyed = await callApi('post', `/buy/${id}`)
-        if(itemBuyed instanceof Error) console.log("ERR")
+
+    async function buyItem(id, name, step) {
+        if (!step) return isBuying = { id, name };
+        const itemBuyed = await callApi("post", `/buy/${id}?email=${isBuying.email}`);
+        if (itemBuyed instanceof Error) console.log("ERR");
         else {
-            counter.set({refresh:true})
-            console.log("SUCCESSFULLY BOUGHT")
+            counter.set({ refresh: true });
+            isBuying = false;
         }
     }
 </script>
@@ -196,7 +254,10 @@
     .shop-item {
         position: relative;
     }
-
+    .check {
+        margin-top: 0.15rem;
+        margin-right: 0.4rem;
+    }
     .shop-item::after {
         position: absolute;
         content: "";
@@ -218,6 +279,10 @@
         cursor: not-allowed;
     }
 
+
+    .info {
+        @apply text-lg mt-1;
+    }
     /*@media (min-width: 450px) {
         .receive {
             @apply mt-7 -mb-14;
@@ -233,7 +298,7 @@
         Battle Pass and Season packs| Exchange here your coins into rewards |
         Winhalla Shop page " />
     <link rel="canonical" href="https://winhalla.app/shop" />
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
+    <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
 </svelte:head>
 <!--
 {#if bottomItems}
@@ -268,9 +333,9 @@
     </div>
 {:else}
     <div class="xl:flex xl:relative pb-16" out:fly={{ y: -450, duration: 400 }}>
-        {#if info}
-            <Infos message="Thanks for watching a video" pushError={info} />
-        {/if}
+        <!-- {#if info}
+             <Infos message="Thanks for watching a video" pushError={info} />
+         {/if}-->
         <div>
             {#if packs}
                 <div class="mt-7 lg:mt-12 lg:ml-24">
@@ -296,7 +361,7 @@
                                     <div class="flex justify-end md:block pb-1">
                                         <button
                                             disabled={featuredItem.unBuyable}
-                                            on:click={() => buyItem(featuredItem.id)}
+                                            on:click={() => buyItem(featuredItem.id,featuredItem.name)}
                                             class="px-4 py-1 bg-primary rounded">
                                             <p class="text-2xl">
                                                 <b
@@ -358,7 +423,7 @@
                                                 </div>
                                                 <button
                                                     disabled={seasonPack.unBuyable}
-                                                    on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
+                                                    on:click={() => buyItem(seasonPack.id,seasonPack.name)}
                                                     class="px-4 py-1 bg-primary rounded">
                                                     <p class="text-2xl">
                                                         <b
@@ -403,7 +468,7 @@
                                                 </div>
                                                 <button
                                                     disabled={pack.unBuyable}
-                                                    on:click={() => callApi('post', `/buy/${pack.id}`)}
+                                                    on:click={() => buyItem(pack.id,pack.name)}
                                                     class="px-4 py-1 bg-primary rounded">
                                                     <p class="text-2xl">
                                                         <b
@@ -422,9 +487,6 @@
         </div>
         <div
             class="mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3">
-            {#if userPlayer}
-                <AdblockAlert class="lg:mr-12 text-center lg:text-left" user="{userPlayer.user}" />
-            {/if}
             <h3 class="text-5xl lg:mr-12 text-center lg:text-left">
                 How does it works ?
             </h3>
@@ -508,7 +570,60 @@
         </div>
     </div>
 {/if}
-<div>
+{#if isBuying}
+    <div class="fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"
+         transition:fade={{duration:200}}>
+    </div>
+    <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
+         transition:fade={{duration:200}}>
+        <div
+            class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
+            style="margin-top:20vh">
+            <h1 class="text-5xl">Confirm buying <m class="text-accent">{isBuying.name.toLowerCase()
+                .replace(/\-/g, ' ')}</m></h1>
+            <div>
+                <div class="overflow-auto max-h-screen-50">
+
+                    <h3 class="text-3xl mt-8">Your email</h3>
+                    <input type="text" class="text-black rounded text-base px-4 py-2"
+                           size="40" on:keydown={onKeyPressEmail}
+                           placeholder="Put your email here" bind:value={isBuying.email} style="font-family: Calibri, sans-serif" />
+                    <p class="text-xl text-legendary mt-4">Be careful when entering your email, as it is your only chance to get your reward</p>
+                </div>
+                <div>
+                {#if isBuying.valid}
+                    <div class="flex items-center">
+                        <svg
+                            class="fill-current text-green w-4 check"
+                            viewBox="0 0 33 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="m0 10.909 4.364-4.364 8.727 8.727
+                                        15.273-15.273 4.364 4.364-19.636 19.636z" />
+                        </svg>
+                        <p class="text-green info">VALID EMAIL</p>
+                    </div>
+                {:else if isBuying.valid == false}
+                    <p class="text-legendary info ">INVALID EMAIL</p>
+                {/if}
+                    </div>
+                <div class="justify-center w-full flex">
+                    <button class="button mt-8" class:button-brand={isBuying.valid}
+                            on:click={buyItem(isBuying.id,isBuying.name,1)}
+                            disabled={!isBuying.valid}>
+                        Buy
+                    </button>
+                    <button class="button button-brand mt-8 border ml-5 border-primary"
+                            style="background-color: #17171a;padding: -1px"
+                            on:click={()=>isBuying=undefined}>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
+<!--<div>
     <input id="transfer" value="0" hidden />
     {#if adError}
         <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
@@ -557,4 +672,4 @@
             });
         }
     </script>
-</div>
+</div>-->

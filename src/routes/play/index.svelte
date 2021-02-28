@@ -18,16 +18,16 @@
         gameModes = [
             {
                 name: "ffa",
-                displayName:"Solo vs All",
+                displayName:"Solo",
                 description: "Fight against <b>9</b> players!",
                 goal:
-                    "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
+                    "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
                 available: true
             },
             {
                 name: "2vs2",
-                displayName:"Team",
+                displayName:"Duos",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",

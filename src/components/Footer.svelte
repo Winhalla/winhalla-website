@@ -37,7 +37,7 @@
                 <div class="mt-8 lg:mt-0 lg:ml-8">
                     <h3 class="text-primary">Company</h3>
                     <a
-                        href="/contact"
+                        href="mailto:contact@winhalla.app"
                         class="block hover:text-shadow-link-hover">Contact us</a>
                     <a
                         href="/about"

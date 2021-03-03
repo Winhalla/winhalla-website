@@ -1,12 +1,13 @@
 <script>
-    import { callApi, getUser } from "../utils/api";
+    import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
     import { onDestroy, onMount } from "svelte";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import Infos from "./Infos.svelte";
     import ErrorAlert from "./ErrorAlert.svelte";
+    import PlayAdButton from "./PlayAdButton.svelte";
 
     let countDown = [{}, {}];
     export let data;
@@ -15,7 +16,6 @@
     let socket;
     let adError;
     let info;
-    let user;
     let waitingAd;
     let waitingAdAccept = false;
     let interval;
@@ -102,64 +102,11 @@
         error = e;
     }
     onMount(async () => {
-        user = await getUser();
-        socket = io.io(apiUrl);
-        let stop = 0;
-        let advideostate = 0;
-        let tempNb;
-        let goal;
-        interval = setInterval(() => {
-            try {
-                if (stop > 0) {
-                    return stop--;
-                }
-                tempNb = JSON.parse(document.getElementById("transfer").value);
-                goal = tempNb.goal ? tempNb.goal : goal;
-                tempNb = tempNb.state;
-                if (tempNb !== advideostate) {
-                    socket.emit("advideo", tempNb === 1 ? {
-                        state: 1,
-                        steamId: user.steam.id,
-                        shopItemId: 0,
-                        goal: goal
-                    } : { state: tempNb, steamId: user.steam.id });
-                }
-                advideostate = tempNb;
-            } catch (e) {
-                
-            }
-        }, 1200);
-        socket.on("advideo", async (e) => {
-            console.log(e);
-            if (e.code === "error") {
-                console.log(e.message);
-                stop = 2;
-                advideostate = 0;
-                tempNb = 0;
-                adError = e.message;
-                setTimeout(() => {
-                    adError = undefined;
-                }, 12000);
-            } else if (e.code === "success") {
-                stop = 2;
-                info = e.message;
-                advideostate = 0;
-                tempNb;
-                setTimeout(() => {
-                    info = undefined;
-                }, 5000);
-                counter.set({ refresh: true });
-                if (waitingAd) {
-                    collect(waitingAd.type, waitingAd.index, false);
-                }
-            } else {
-                console.log("code not supported");
-            }
-        });
+        socket = io(apiUrl);
     });
-    onDestroy(()=>{
+    onDestroy(() => {
         if (interval) clearInterval(interval);
-    })
+    });
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -223,6 +170,8 @@
             console.log("waitingAdAccept");
         } else {
             await callApi("post", `solo/collect?type=${type}&index=${index}`);
+            waitingAd = undefined;
+            waitingAdAccept = undefined
             counter.set({ "refresh": true });
             data.collected[type].push(...data.finished[type].splice(index, 1));
             data = data;
@@ -270,29 +219,33 @@
     .text-light {
         color: #e2e2ea;
     }
-
+    .button-alternative {
+        display: inline-block;
+        padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
+        border-radius: 0.125rem;
+        border-width: 1px;
+        border-color: #3d72e4;
+        font-size: 1.25rem;
+    }
 </style>
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
-
+<svelte:head>
+    <!--Video ads-->
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
+</svelte:head>
 
 <div>
-    {#if waitingAdAccept}
-        <div class="absolute top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
-            <style>
-                .button-alternative {
-                    display: inline-block;
-                    padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
-                    border-radius: 0.125rem;
-                    border-width: 1px;
-                    border-color: #3d72e4;
-                    font-size: 1.25rem;
-                }
-            </style>
+    {#if waitingAdAccept && socket }
+        <div class="fixed top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
             <h1 class="text-2xl">Watch an ad to earn x2 coins for your next quest</h1>
-            <button on:click={()=>acceptAd(true)} class="button button-brand">Play ad</button>
-            <button on:click={()=>acceptAd(false)} class="bg-background button-alternative button-brand">No thanks
-            </button>
+            <div class="flex justify-center" >
+                <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
+                              bind:info={info} collect={collect} goal="earnMoreQuests" color="base"
+                              bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
+                <button on:click={()=>acceptAd(false)} class="bg-background ml-3 button-alternative button-brand">No thanks
+                </button>
+            </div>
         </div>
     {/if}
     {#if error}
@@ -545,57 +498,4 @@
             </p>
         </div>
     </div>
-</div>
-<div>
-    <input id="transfer" value="0" hidden />
-    {#if info}
-        <Infos message="Thanks for watching a video" pushError={info} />
-    {/if}
-    {#if adError}
-        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
-    {/if}
-    <script data-playerPro="current">
-        function playAd(goal) {
-            const init = (api) => {
-                if (api) {
-                    api.on("AdVideoStart", function() {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
-                        //api.setAdVolume(1);
-                        document.body.onblur = function() {
-                            //api.pauseAd();
-                        };
-                        document.body.onfocus = function() {
-                            //api.resumeAd();
-                        };
-                    });
-                    api.on("AdVideoFirstQuartile", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
-                    });
-                    api.on("AdVideoMidpoint", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
-                    });
-                    api.on("AdVideoThirdQuartile", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
-                    });
-                    api.on("AdVideoComplete", function() {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
-                        setTimeout(() => {
-                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
-                        }, 1200);
-                        document.body.onblur = null;
-                        document.body.onfocus = null;
-                    });
-                } else {
-                    console.log("blank");
-                }
-            };
-            var s = document.querySelector("script[data-playerPro=\"current\"]");
-            //s.removeAttribute("data-playerPro");
-            (playerPro = window.playerPro || []).push({
-                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
-                after: s,
-                init: init
-            });
-        }
-    </script>
 </div>

@@ -95,8 +95,6 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
-    <!--Video ads-->
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
     <div >

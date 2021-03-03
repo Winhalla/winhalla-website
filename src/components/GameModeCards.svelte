@@ -56,7 +56,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        @apply z-40;
+        @apply z-30;
     }
 
 

@@ -101,12 +101,6 @@
     } catch (e) {
         error = e;
     }
-    onMount(async () => {
-        socket = io(apiUrl);
-    });
-    onDestroy(() => {
-        if (interval) clearInterval(interval);
-    });
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -165,13 +159,13 @@
         let probability;
         if (possibleAd) probability = Math.floor(Math.random() * 3);
         if (probability === 2) {
+            socket = io(apiUrl);
             waitingAdAccept = true;
             waitingAd = { type, index };
-            console.log("waitingAdAccept");
         } else {
             await callApi("post", `solo/collect?type=${type}&index=${index}`);
             waitingAd = undefined;
-            waitingAdAccept = undefined
+            waitingAdAccept = undefined;
             counter.set({ "refresh": true });
             data.collected[type].push(...data.finished[type].splice(index, 1));
             data = data;
@@ -219,6 +213,7 @@
     .text-light {
         color: #e2e2ea;
     }
+
     .button-alternative {
         display: inline-block;
         padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
@@ -232,18 +227,21 @@
 <!--TODO: Afficher reward des quêtes sur mobile-->
 <svelte:head>
     <!--Video ads-->
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
+    {#if waitingAd}
+        <script async src="https://cdn.stat-rock.com/player.js"></script>
+    {/if}
 </svelte:head>
 
 <div>
     {#if waitingAdAccept && socket }
         <div class="fixed top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
             <h1 class="text-2xl">Watch an ad to earn x2 coins for your next quest</h1>
-            <div class="flex justify-center" >
+            <div class="flex justify-center">
                 <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
                               bind:info={info} collect={collect} goal="earnMoreQuests" color="base"
                               bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
-                <button on:click={()=>acceptAd(false)} class="bg-background ml-3 button-alternative button-brand">No thanks
+                <button on:click={()=>acceptAd(false)} class="bg-background ml-3 button-alternative button-brand">No
+                    thanks
                 </button>
             </div>
         </div>

@@ -116,9 +116,10 @@
                     match = value;
                     filterUsers(true);
                 });
-                quests = await callApi("get", "/getSolo");
-                quests = quests.solo;
-                console.log(quests);
+                if (!isMatchEnded) {
+                    quests = await callApi("get", "/getSolo");
+                    quests = quests.solo;
+                }
                 isLoadingOpen = false;
             } catch (err) {
                 console.log(err);
@@ -357,7 +358,7 @@
 
                     <div
                         class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full lg:mt-6">
+                    h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">
@@ -389,7 +390,7 @@
                         {#if players}
                             <div
                                 class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
                                         <img
@@ -432,9 +433,9 @@
                         <div
                             class="bg-background w-full md:w-3/4  lg:w-auto min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
                             in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>
-                            <div class="-mt-32 flex items-center">
-                                <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
-                                    <svg class="w-6 fill-current text-font ml-10" viewBox="0 0 24 24"
+                            <div class="-mt-32 flex items-center h-full">
+                                <button class="focus:outline-none h-full" on:click={() => handleQuestsPanel()}>
+                                    <svg class="w-6 fill-current text-font ml-8" viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
                                     </svg>

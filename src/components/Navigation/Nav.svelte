@@ -12,6 +12,7 @@
     import { callApi } from "../../utils/api";
     import { goto, stores } from "@sapper/app";
     import { counter } from "../store.js";
+    import CoinIcon from "../CoinIcon.svelte";
 
     const { page } = stores();
     export let isScrolling;
@@ -34,7 +35,7 @@
 
     function calculateProperties(value) {
         const tempUserData = value;
-        if(!tempUserData) return isUserLoggedIn = false
+        if (!tempUserData) return isUserLoggedIn = false;
         if (tempUserData.offline) offline = true;
         if (tempUserData instanceof Error) {
             if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
@@ -141,8 +142,26 @@
         <div
             class="w-full lg:w-auto flex justify-between items-center py-3
             relative">
-            <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">
-                <a class="logo" href="/">WINHALLA</a>
+            <div class="pl-7 lg:pl-24 lg:pr-34">
+                <a class="" href="/">
+                    <svg class="fill-current w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
+                        <g id="Calque_2" data-name="Calque 2">
+                            <g id="Calque_1-2" data-name="Calque 1">
+                                <polygon
+                                    points="70.17 0 70.17 98.57 60.28 0 38.29 0 28.76 98.57 19.42 0 0 0 13.01 128.25 39.76 128.25 48.92 41.77 58.44 128.25 87.04 128.25 87.04 13.56 162.74 13.56 162.74 24.1 162.74 86.44 146.52 24.1 125.99 24.1 125.99 128.25 140.57 128.25 140.57 52.22 160.5 128.25 177.31 128.25 177.31 24.1 177.31 13.56 177.31 0 87.04 0 70.17 0" />
+                                <rect x="97.54" y="24" width="16.38" height="104.25" />
+                                <path
+                                    d="M265.84,107.87l18.6-.32,3,20.7h16.36l-17-104.15H264.64L247.7,128.25h15.18Zm9.37-66.45,7.3,51.48H267.79Z" />
+                                <path
+                                    d="M448.13,24.1H426L409,128.25H424.2l3-20.38,18.6-.32,3,20.7v10.31H204.88V81.38h17.55v46.87H238.8V24.1H222.43V66.5H204.88V24.1H188.51V128.25h0v23.86H465.1V128.25Zm-19,68.8,7.42-51.48,7.31,51.48Z" />
+                                <polygon
+                                    points="354.39 113.37 327.46 113.37 327.46 24.1 311.1 24.1 311.1 128.25 354.39 128.25 354.39 113.37" />
+                                <polygon
+                                    points="405.78 113.37 378.85 113.37 378.85 24.1 362.49 24.1 362.49 128.25 405.78 128.25 405.78 113.37" />
+                            </g>
+                        </g>
+                    </svg>
+                </a>
             </div>
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
@@ -293,9 +312,11 @@
                                 </div>
                             {/if}
 
-                            <a class="lg:mt-0 lg:ml-8 text-2xl text-primary" href="/shop">
+                            <a class="lg:mt-0 lg:ml-9 text-2xl text-primary  flex items-center  pt-1" href="/shop">
                                 <b class="font-normal ">{userCoins}</b>
-                                $
+                                <div class="w-7" style="margin-bottom: 0.18rem; margin-left: 0.40rem">
+                                    <CoinIcon />
+                                </div>
                             </a>
                         </div>
                     {:else if isUserLoggedIn == 'steam'}

@@ -1,12 +1,5 @@
 <script>
 
-    import RefreshButton from "../components/RefreshButton.svelte";
-
-    let featuredItem;
-    let seasonPacks;
-    let packs;
-    let error;
-
     //* Required for videoAd
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
@@ -17,6 +10,12 @@
     import { callApi } from "../utils/api";
     import { counter } from "../components/store";
     import { fly } from "svelte/transition";
+    import CoinIcon from "../components/CoinIcon.svelte";
+
+    let featuredItem;
+    let seasonPacks;
+    let packs;
+    let error;
 
     let adError;
     let info;
@@ -67,7 +66,7 @@
         }
         let player;
         unsub = counter.subscribe(async (value) => {
-            if(value.refresh === true ) return
+            if (value.refresh === true) return;
             player = await value.content;
             console.log(player);
             if (player.user) {
@@ -107,7 +106,7 @@
         let tempNb;
         let goal;
         interval = setInterval(() => {
-            console.log("interval")
+            console.log("interval");
             try {
                 if (stop > 0) {
                     return stop--;
@@ -116,7 +115,7 @@
                 goal = tempNb.goal ? tempNb.goal : goal;
                 tempNb = tempNb.state;
                 if (tempNb !== advideostate) {
-                    console.log(tempNb)
+                    console.log(tempNb);
                     socket.emit("advideo", tempNb === 1 ? {
                         state: 1,
                         steamId: userPlayer.steam.id,
@@ -182,12 +181,13 @@
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
         seasonPacks = [...seasonPacks];
     };
-    async function buyItem (id) {
-        const itemBuyed = await callApi('post', `/buy/${id}`)
-        if(itemBuyed instanceof Error) console.log("ERR")
+
+    async function buyItem(id) {
+        const itemBuyed = await callApi("post", `/buy/${id}`);
+        if (itemBuyed instanceof Error) console.log("ERR");
         else {
-            counter.set({refresh:true})
-            console.log("SUCCESSFULLY BOUGHT")
+            counter.set({ refresh: true });
+            console.log("SUCCESSFULLY BOUGHT");
         }
     }
 </script>
@@ -298,10 +298,15 @@
                                             disabled={featuredItem.unBuyable}
                                             on:click={() => buyItem(featuredItem.id)}
                                             class="px-4 py-1 bg-primary rounded">
-                                            <p class="text-2xl">
+                                            <div class="flex  items-center  text-2xl">
                                                 <b
-                                                    class="mr-1 font-normal">{featuredItem.cost}</b>$
-                                            </p>
+                                                    class="mr-2 font-normal"
+                                                    style="padding-top: 0.12rem">{featuredItem.cost}</b>
+                                                <div class="w-8 mt-1 text-font"
+                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                    <CoinIcon />
+                                                </div>
+                                            </div>
                                         </button>
                                     </div>
                                 </div>
@@ -359,11 +364,16 @@
                                                 <button
                                                     disabled={seasonPack.unBuyable}
                                                     on:click={() => callApi('post', `/buy/${seasonPack.id}`)}
-                                                    class="px-4 py-1 bg-primary rounded">
-                                                    <p class="text-2xl">
+                                                    class="px-3 py-1 bg-primary rounded">
+                                                    <div class="flex  items-center  text-2xl">
                                                         <b
-                                                            class="mr-1 font-normal">{seasonPack.cost}</b>$
-                                                    </p>
+                                                            class="mr-2 font-normal"
+                                                            style="padding-top: 0.12rem">{seasonPack.cost}</b>
+                                                        <div class="w-8 mt-1 text-font"
+                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                            <CoinIcon />
+                                                        </div>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </div>
@@ -405,10 +415,15 @@
                                                     disabled={pack.unBuyable}
                                                     on:click={() => callApi('post', `/buy/${pack.id}`)}
                                                     class="px-4 py-1 bg-primary rounded">
-                                                    <p class="text-2xl">
+                                                    <div class="flex  items-center  text-2xl">
                                                         <b
-                                                            class="mr-1 font-normal">{pack.cost}</b>$
-                                                    </p>
+                                                            class="mr-2 font-normal"
+                                                            style="padding-top: 0.12rem">{pack.cost}</b>
+                                                        <div class="w-8 mt-1 text-font"
+                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                            <CoinIcon />
+                                                        </div>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </div>

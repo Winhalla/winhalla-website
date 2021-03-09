@@ -6,6 +6,8 @@
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
     import AdblockAlert from "../../components/AdblockAlert.svelte";
+    import { goto } from "@sapper/app";
+    import { apiUrl } from "../../utils/config";
 
     let quests;
     let error;
@@ -57,8 +59,8 @@
 
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) throw quests;
-            if (quests instanceof Error && quests.response.status === 403) return;
+            if (quests instanceof Error && quests.response.status !== 403) await goto(`${apiUrl}/auth/login`);
+            if (quests instanceof Error && quests.response.status === 403) await goto(`${apiUrl}/auth/login`);
 
             if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");

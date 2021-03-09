@@ -2,12 +2,11 @@
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
-    import GameModeCards from "../components/GameModeCards.svelte";
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
-    import PollTest from "../components/Poll.svelte";
 
+    let disabledCookies = false;
     let error;
     onMount(() => {
         eventEmitter.subscribe(async e => {
@@ -21,6 +20,16 @@
             }
         });
     });
+
+    function closePopup(accepted) {
+        // Si le mec clique sur i agree
+        if (accepted === true) return window.yett.unblock();
+        // Si y'a que certains cookies qu'il accepte tu met toute les urls (en regex comme dans window.yett.blacklist en dessous) dans un array
+        else if (accepted instanceof Array) {
+            window.yett.unblock(accepted);
+        }
+        // Si il clique sur i disagree tout reste kéblo
+    }
 
     let scrollY = 0;
     //export let segment;
@@ -83,8 +92,29 @@
 <Tailwindcss />
 
 <svelte:head>
+    <script>
+        window.YETT_BLACKLIST = [
+            /www\.googletagmanager\.com/
+        ];
+    </script>
+    <script src="https://unpkg.com/yett"></script>
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script type="text/javascript" async src="https://www.googletagmanager.com/gtag/js?id=G-BQWBRYTGC6"></script>
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+
+        gtag("config", "G-BQWBRYTGC6");
+    </script>
+
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />

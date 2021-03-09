@@ -333,7 +333,7 @@
                                 </p>
 
                                 <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
-                                              bind:info={info} id={id} />
+                                              bind:info={info} />
                                 <RefreshButton
                                     on:click={() => handleRefresh()}
                                     isRefreshing={isRefreshingStats}

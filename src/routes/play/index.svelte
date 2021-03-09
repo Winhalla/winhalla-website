@@ -5,9 +5,7 @@
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
-    import Infos from "../../components/Infos.svelte";
     import AdblockAlert from "../../components/AdblockAlert.svelte";
-    import { fade } from "svelte/transition";
 
     let quests;
     let error;
@@ -18,16 +16,16 @@
         gameModes = [
             {
                 name: "ffa",
-                displayName:"Solo vs All",
+                displayName: "Solo",
                 description: "Fight against <b>9</b> players!",
                 goal:
-                    "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
+                    "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
                 available: true
             },
             {
                 name: "2vs2",
-                displayName:"Team",
+                displayName: "Duos",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
@@ -95,8 +93,6 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
-    <!--Video ads-->
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
     <div >

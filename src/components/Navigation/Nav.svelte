@@ -140,7 +140,7 @@
         class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div
-            class="w-full lg:w-auto flex justify-between items-center py-3
+            class="w-full lg:w-auto flex justify-between items-center py-4
             relative">
             <div class="pl-7 lg:pl-24 lg:pr-34">
                 <a class="" href="/">
@@ -299,7 +299,7 @@
                             <NavAlert data={informations} />
                         </div>
                     {/if}
-                    {#if isUserLoggedIn === true}
+                    {#if isUserLoggedIn}
                         <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.displayName && user.photos}
                                 <NavAccount
@@ -319,12 +319,6 @@
                                 </div>
                             </a>
                         </div>
-                    {:else if isUserLoggedIn == 'steam'}
-                        <a
-                            class="button-brand button mr-3"
-                            href="/create-account">
-                            Register email
-                        </a>
                     {:else if isUserLoggedIn === 'network'}
                         <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}

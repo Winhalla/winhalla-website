@@ -2,11 +2,9 @@
     import Tailwindcss from "../components/Tailwindcss.svelte";
     import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
-    import GameModeCards from "../components/GameModeCards.svelte";
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
-    import PollTest from "../components/Poll.svelte";
 
     let disabledCookies = false;
     let error;

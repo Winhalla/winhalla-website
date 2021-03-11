@@ -1,5 +1,6 @@
 <script>
     import { counter } from "./store";
+
     export let waitingAdAccept;
     export let socket;
     export let userPlayer;
@@ -17,7 +18,7 @@
     if (goal === "earnMoreQuests") {
         counter.subscribe(async (value) => {
             userPlayer = await value.content;
-            userPlayer = userPlayer.user
+            userPlayer = userPlayer.user;
         });
 
     }

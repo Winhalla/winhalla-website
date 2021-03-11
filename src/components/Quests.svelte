@@ -2,12 +2,10 @@
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
-    import { onDestroy, onMount } from "svelte";
     import { io } from "socket.io-client";
     import { apiUrl } from "../utils/config";
-    import Infos from "./Infos.svelte";
-    import ErrorAlert from "./ErrorAlert.svelte";
     import PlayAdButton from "./PlayAdButton.svelte";
+    import CoinIcon from "./CoinIcon.svelte";
 
     let countDown = [{}, {}];
     export let data;
@@ -303,8 +301,12 @@
                             <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
-                                        class="text-{calculateRarity(quest.reward, true)}">
-                                        {quest.reward}$
+                                        class="text-3xl text-{calculateRarity(quest.reward, true)}">
+                                        {quest.reward}
+                                        <div class="w-9 ml-2 mt-1"
+                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem; margin-left: 0.35rem">
+                                            <CoinIcon />
+                                        </div>
                                     </span>
                                     <div class="progress-container">
                                         <svg
@@ -323,7 +325,7 @@
                                 </div>
                                 <div
                                     class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}"
-                                    style="width:{calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                    style="width:{calculateProgressBarWidth(quest.progress, quest.goal)}%"></div>
                             </div>
                         {/each}
                     </div>
@@ -405,9 +407,12 @@
                         {#each data.weeklyQuests as quest}
                             <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
-                                    <span
-                                        class="text-{calculateRarity(quest.reward, false)}">
-                                        {quest.reward}$
+                                    <span class="text-3xl text-{calculateRarity(quest.reward, false)}">
+                                        {quest.reward}
+                                        <div class="w-9 ml-2 mt-1"
+                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem; margin-left: 0.35rem">
+                                            <CoinIcon />
+                                        </div>
                                     </span>
                                     <div class="progress-container">
                                         <svg
@@ -426,7 +431,7 @@
                                 </div>
                                 <div
                                     class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}"
-                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%"></div>
                             </div>
                         {/each}
                     </div>

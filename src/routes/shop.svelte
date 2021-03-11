@@ -1,17 +1,18 @@
 <script>
-
-    import RefreshButton from "../components/RefreshButton.svelte";
+    import { fade, fly } from "svelte/transition";
+    import { counter } from "../components/store";
+    import { callApi } from "../utils/api";
+    import { onMount } from "svelte";
+    import CoinIcon from "../components/CoinIcon.svelte";
 
     let featuredItem;
     let seasonPacks;
     let packs;
     let error;
+
     let isBuying;
     let userPlayer;
-    import { fly, fade } from "svelte/transition";
-    import { counter } from "../components/store";
-    import { callApi } from "../utils/api";
-    import { onMount } from "svelte";
+
 
     onMount(async () => {
         let unsub;
@@ -55,6 +56,7 @@
     //* Required for videoAd
     /*import ErrorAlert from "../components/ErrorAlert.svelte";
     import Infos from "../components/Infos.svelte";
+    import { onDestroy, onMount } from "svelte";
     import io from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import AdblockAlert from "../components/AdblockAlert.svelte";
@@ -151,7 +153,7 @@
         let tempNb;
         let goal;
         interval = setInterval(() => {
-            console.log("interval")
+            console.log("interval");
             try {
                 if (stop > 0) {
                     return stop--;
@@ -160,7 +162,7 @@
                 goal = tempNb.goal ? tempNb.goal : goal;
                 tempNb = tempNb.state;
                 if (tempNb !== advideostate) {
-                    console.log(tempNb)
+                    console.log(tempNb);
                     socket.emit("advideo", tempNb === 1 ? {
                         state: 1,
                         steamId: userPlayer.steam.id,
@@ -222,7 +224,7 @@
         }
     }*/
     const onKeyPressEmail = () => {
-        if(!isBuying.email) return
+        if (!isBuying.email) return;
         setTimeout(() => {
             if (isBuying.email.length > 0) {
                 let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gm;
@@ -254,10 +256,12 @@
     .shop-item {
         position: relative;
     }
+
     .check {
         margin-top: 0.15rem;
         margin-right: 0.4rem;
     }
+
     .shop-item::after {
         position: absolute;
         content: "";
@@ -283,6 +287,7 @@
     .info {
         @apply text-lg mt-1;
     }
+
     /*@media (min-width: 450px) {
         .receive {
             @apply mt-7 -mb-14;
@@ -361,12 +366,17 @@
                                     <div class="flex justify-end md:block pb-1">
                                         <button
                                             disabled={featuredItem.unBuyable}
-                                            on:click={() => buyItem(featuredItem.id,featuredItem.name)}
+                                            on:click={() => buyItem(featuredItem.id, featuredItem.name)}
                                             class="px-4 py-1 bg-primary rounded">
-                                            <p class="text-2xl">
+                                            <div class="flex  items-center  text-2xl">
                                                 <b
-                                                    class="mr-1 font-normal">{featuredItem.cost}</b>$
-                                            </p>
+                                                    class="mr-2 font-normal"
+                                                    style="padding-top: 0.12rem">{featuredItem.cost}</b>
+                                                <div class="w-8 mt-1 text-font"
+                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                    <CoinIcon />
+                                                </div>
+                                            </div>
                                         </button>
                                     </div>
                                 </div>
@@ -425,10 +435,15 @@
                                                     disabled={seasonPack.unBuyable}
                                                     on:click={() => buyItem(seasonPack.id,seasonPack.name)}
                                                     class="px-4 py-1 bg-primary rounded">
-                                                    <p class="text-2xl">
+                                                    <div class="flex  items-center  text-2xl">
                                                         <b
-                                                            class="mr-1 font-normal">{seasonPack.cost}</b>$
-                                                    </p>
+                                                            class="mr-2 font-normal"
+                                                            style="padding-top: 0.12rem">{seasonPack.cost}</b>
+                                                        <div class="w-8 mt-1 text-font"
+                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                            <CoinIcon />
+                                                        </div>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </div>
@@ -470,10 +485,15 @@
                                                     disabled={pack.unBuyable}
                                                     on:click={() => buyItem(pack.id,pack.name)}
                                                     class="px-4 py-1 bg-primary rounded">
-                                                    <p class="text-2xl">
+                                                    <div class="flex  items-center  text-2xl">
                                                         <b
-                                                            class="mr-1 font-normal">{pack.cost}</b>$
-                                                    </p>
+                                                            class="mr-2 font-normal"
+                                                            style="padding-top: 0.12rem">{pack.cost}</b>
+                                                        <div class="w-8 mt-1 text-font"
+                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                            <CoinIcon />
+                                                        </div>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </div>
@@ -579,34 +599,38 @@
         <div
             class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
             style="margin-top:20vh">
-            <h1 class="text-5xl">Confirm buying <m class="text-accent">{isBuying.name.toLowerCase()
-                .replace(/\-/g, ' ')}</m></h1>
+            <h1 class="text-5xl">Confirm buying
+                <m class="text-accent">{isBuying.name.toLowerCase()
+                    .replace(/\-/g, ' ')}</m>
+            </h1>
             <div>
                 <div class="overflow-auto max-h-screen-50">
 
                     <h3 class="text-3xl mt-8">Your email</h3>
                     <input type="text" class="text-black rounded text-base px-4 py-2"
                            size="40" on:keydown={onKeyPressEmail}
-                           placeholder="Put your email here" bind:value={isBuying.email} style="font-family: Calibri, sans-serif" />
-                    <p class="text-xl text-legendary mt-4">Be careful when entering your email, as it is your only chance to get your reward</p>
+                           placeholder="Put your email here" bind:value={isBuying.email}
+                           style="font-family: Calibri, sans-serif" />
+                    <p class="text-xl text-legendary mt-4">Be careful when entering your email, as it is your only
+                        chance to get your reward</p>
                 </div>
                 <div>
-                {#if isBuying.valid}
-                    <div class="flex items-center">
-                        <svg
-                            class="fill-current text-green w-4 check"
-                            viewBox="0 0 33 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="m0 10.909 4.364-4.364 8.727 8.727
+                    {#if isBuying.valid}
+                        <div class="flex items-center">
+                            <svg
+                                class="fill-current text-green w-4 check"
+                                viewBox="0 0 33 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m0 10.909 4.364-4.364 8.727 8.727
                                         15.273-15.273 4.364 4.364-19.636 19.636z" />
-                        </svg>
-                        <p class="text-green info">VALID EMAIL</p>
-                    </div>
-                {:else if isBuying.valid == false}
-                    <p class="text-legendary info ">INVALID EMAIL</p>
-                {/if}
-                    </div>
+                            </svg>
+                            <p class="text-green info">VALID EMAIL</p>
+                        </div>
+                    {:else if isBuying.valid == false}
+                        <p class="text-legendary info ">INVALID EMAIL</p>
+                    {/if}
+                </div>
                 <div class="justify-center w-full flex">
                     <button class="button mt-8" class:button-brand={isBuying.valid}
                             on:click={buyItem(isBuying.id,isBuying.name,1)}

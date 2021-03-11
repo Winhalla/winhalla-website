@@ -5,9 +5,9 @@
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
-    import Infos from "../../components/Infos.svelte";
     import AdblockAlert from "../../components/AdblockAlert.svelte";
-    import { fade } from "svelte/transition";
+    import { goto } from "@sapper/app";
+    import { apiUrl } from "../../utils/config";
 
     let quests;
     let error;
@@ -18,7 +18,7 @@
         gameModes = [
             {
                 name: "ffa",
-                displayName:"Solo",
+                displayName: "Solo",
                 description: "Fight against <b>9</b> players!",
                 goal:
                     "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
@@ -27,7 +27,7 @@
             },
             {
                 name: "2vs2",
-                displayName:"Duos",
+                displayName: "Duos",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
@@ -59,8 +59,8 @@
 
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) throw quests;
-            if (quests instanceof Error && quests.response.status === 403) return;
+            if (quests instanceof Error && quests.response.status !== 403) await goto(`${apiUrl}/auth/login`);
+            if (quests instanceof Error && quests.response.status === 403) await goto(`${apiUrl}/auth/login`);
 
             if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");

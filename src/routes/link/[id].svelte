@@ -1,7 +1,7 @@
 <script context="module">
     export async function preload({ params, query }) {
 
-        return { link : params.id };
+        return { link: params.id };
     }
 </script>
 <script>
@@ -22,4 +22,4 @@
 <svelte:head>
     <title>Redirecting...</title>
 </svelte:head>
-<Loading data="Redirecting..."/>
+<Loading data="Redirecting..." />

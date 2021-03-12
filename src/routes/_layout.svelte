@@ -5,6 +5,7 @@
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
+    import CookiePopup from "../components/CookiePopup.svelte";
 
     let disabledCookies = false;
     let error;
@@ -119,6 +120,7 @@
 
 <svelte:window bind:scrollY={scrollY} />
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
+    <CookiePopup />
     <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
@@ -137,4 +139,7 @@
 
     <!--Footer-->
     <Footer />
+</div>
+<div class="relative">
+
 </div>

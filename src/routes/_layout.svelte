@@ -6,8 +6,9 @@
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
     import CookiePopup from "../components/CookiePopup.svelte";
+    import { getCookie } from "../utils/getCookie";
 
-    let disabledCookies = false;
+    //Show error to the user if there is one from an api request
     let error;
     onMount(() => {
         eventEmitter.subscribe(async e => {
@@ -20,17 +21,14 @@
                 }, 8000);
             }
         });
-    });
 
-    function closePopup(accepted) {
-        // Si le mec clique sur i agree
-        if (accepted === true) return window.yett.unblock();
-        // Si y'a que certains cookies qu'il accepte tu met toute les urls (en regex comme dans window.yett.blacklist en dessous) dans un array
-        else if (accepted instanceof Array) {
-            window.yett.unblock(accepted);
+        const acceptedCookieList = getCookie("acceptedCookieList");
+        if (acceptedCookieList === "true") {
+            window.yett.unblock();
+        } else if (getCookie("hideCookiePopup")) {
+            window.yett.unblock(JSON.parse(decodeURI(acceptedCookieList).replace(/%2C/g, ",").replace(/%2F/g, "/")));
         }
-        // Si il clique sur i disagree tout reste kéblo
-    }
+    });
 
     let scrollY = 0;
     //export let segment;

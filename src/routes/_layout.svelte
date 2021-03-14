@@ -91,12 +91,7 @@
 <Tailwindcss />
 
 <svelte:head>
-    <script>
-        window.YETT_BLACKLIST = [
-            /www\.googletagmanager\.com/
-        ];
-    </script>
-    <script src="https://unpkg.com/yett"></script>
+
     <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
     <!--Adsense-->
 

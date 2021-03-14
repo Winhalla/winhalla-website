@@ -14,9 +14,9 @@
 
     let settings = {
         necessary: {
-            description: "Necessary cookies help make the website usable by enabling user authentication and other useful features. The website may not function properly without these cookies.",
+            description: "Necessary cookies make the website usable by enabling user authentication and other useful features. The website may not function properly without these cookies.",
             opened: false,
-            accepted: false,
+            accepted: true,
             urls: []
         },
         analytics: {
@@ -25,7 +25,7 @@
             accepted: false,
             urls: ["/www\\.googletagmanager\\.com/"]
         },
-        marketing: {
+        "ads personalization": {
             description: "These cookies are used to display ads that are relevant and engaging for the user.",
             opened: false,
             accepted: false,
@@ -147,10 +147,11 @@
                     <h1 class="text-6xl text-center text-font">This website uses cookies</h1>
                     <div class="mt-7 px-1 md:px-6">
                         {#each Object.entries(settings) as [key, value]}
-                            <div class="w-full pl-2 py-1 text-2xl text-font flex justify-between items-center">
+                            <div class="w-full pl-1 md:pl-2 py-1 text-2xl text-font flex justify-between items-center">
 
                                 <!--Checkbox-->
-                                <button class="hover:text-primary p-1    focus:outline-none"
+                                <button disabled={key === 'necessary'}
+                                        class="{key !== 'necessary' ? 'hover:text-primary' : ''} p-1    focus:outline-none"
                                         on:click={() => settings[key].accepted = !value.accepted}>
                                     {#if value.accepted}
                                         <svg
@@ -179,7 +180,7 @@
                                 <!--Text + arrow-->
                                 <div class="w-full">
                                     <button
-                                        class="w-full flex justify-between items-center  ml-2 px-2  pr-4 md:pr-6  focus:outline-none"
+                                        class="w-full flex justify-between items-center  ml-2 p-2  pr-3 md:pr-6  focus:outline-none"
                                         on:click={() => settings[key].opened = !settings[key].opened}>
 
                                         {key}

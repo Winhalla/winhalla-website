@@ -36,11 +36,11 @@
 
     function handleClose(accepted) {
         let acceptedCookieCount = 0;
-
+        let setNecessaryCookiesParam;
         if (accepted === true) {
             //Unblock all cookies
             window.yett.unblock();
-            setNecessaryCookies(true);
+            setNecessaryCookiesParam = true;
 
         } else if (accepted instanceof Array) {
             //Unblock only the accepted cookies
@@ -57,14 +57,15 @@
             if (acceptedCookieCount === Object.keys(settings).length) {
                 //Avoid setting array to acceptedCookieList if all checkbox are checked
                 window.yett.unblock();
-                setNecessaryCookies(true);
+                //setNecessaryCookies(true);
+                setNecessaryCookiesParam = true;
 
             } else {
-                if (settings.necessary.accepted) setNecessaryCookies();
+                //if (settings.necessary.accepted) setNecessaryCookies();
                 window.yett.unblock(acceptedCookieList);
             }
         }
-
+        setNecessaryCookies(setNecessaryCookiesParam);
         isPopupOpened = false;
     }
 

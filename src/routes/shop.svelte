@@ -253,13 +253,10 @@
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
     .shop-item {
         position: relative;
-    }
-
-    .check {
-        margin-top: 0.15rem;
-        margin-right: 0.4rem;
     }
 
     .shop-item::after {
@@ -288,11 +285,14 @@
         @apply text-lg mt-1;
     }
 
-    /*@media (min-width: 450px) {
-        .receive {
-            @apply mt-7 -mb-14;
-        }
-    }*/
+    button:disabled {
+        @apply bg-disabled;
+        cursor: not-allowed;
+    }
+
+    .email-input::placeholder {
+        font-family: "Bebas Neue", sans-serif;
+    }
 </style>
 
 <svelte:head>
@@ -591,56 +591,105 @@
     </div>
 {/if}
 {#if isBuying}
-    <div class="fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"
-         transition:fade={{duration:200}}>
-    </div>
-    <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
-         transition:fade={{duration:200}}>
-        <div
-            class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
-            style="margin-top:20vh">
-            <h1 class="text-5xl">Confirm buying
-                <m class="text-accent">{isBuying.name.toLowerCase()
-                    .replace(/\-/g, ' ')}</m>
-            </h1>
-            <div>
-                <div class="overflow-auto max-h-screen-50">
+    <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+         style="z-index: 100"
+         in:fade={{duration: 200}}
+         out:fade={{duration: 350}}>
 
-                    <h3 class="text-3xl mt-8">Your email</h3>
-                    <input type="text" class="text-black rounded text-base px-4 py-2"
-                           size="40" on:keydown={onKeyPressEmail}
-                           placeholder="Put your email here" bind:value={isBuying.email}
-                           style="font-family: Calibri, sans-serif" />
-                    <p class="text-xl text-legendary mt-4">Be careful when entering your email, as it is your only
-                        chance to get your reward</p>
-                </div>
-                <div>
-                    {#if isBuying.valid}
-                        <div class="flex items-center">
+        <div
+            class="max-w-xl    mx-5 my-1 md:mx-0  px-8 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
+            style="max-height: 95vh;"
+            transition:fly={{ y: 300, duration: 350 }}>
+            <h1 class="text-4xl md:text-5xl">Where should we send
+            </h1>
+
+            <p class="text-accent text-5xl md:text-6xl">{isBuying.name.toLowerCase().replace(/\-/g, ' ')}</p>
+            <div>
+                <div class="max-h-screen-50">
+                    <div>
+                        <p class="mt-7 text-font text-3xl" style="margin-bottom: 0.35rem;">Email</p>
+                        <div>
+                            <input
+                                on:keydown={onKeyPressEmail}
+                                type="email"
+                                placeholder="Your email goes here"
+                                bind:value={isBuying.email}
+                                class:border-legendary={isBuying.valid === false}
+                                class="w-full text-background bg-font py-3 px-4 rounded focus:outline-none
+                            focus:border-primary placeholder-disabled email-input"
+                                style="font-family: 'Roboto', sans-serif;" />
+
+                            {#if isBuying.valid}
+                                <div class="flex items-center">
+                                    <svg
+                                        class="fill-current text-green w-4"
+                                        style="margin-top: 0.15rem; margin-right: 0.4rem;"
+                                        viewBox="0 0 33 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m0 10.909 4.364-4.364 8.727 8.727
+                                        15.273-15.273 4.364 4.364-19.636 19.636z" />
+                                    </svg>
+                                    <p class="text-green info">VALID EMAIL</p>
+                                </div>
+                            {:else if isBuying.valid === false}
+                                <p class="text-legendary info ">INVALID EMAIL</p>
+                            {/if}
+                        </div>
+                    </div>
+                    <div
+                        class="text-legendary flex items-center {isBuying.valid || isBuying.valid === false ? 'mt-5' : 'mt-8' }">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-full"
+                            style="max-width: 2.25rem;"
+                            viewBox="0 0 576 512">
+                            <path
+                                fill="currentColor"
+                                d="M569.517 440.013C587.975 472.007 564.806 512 527.94
+                                512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423
+                                23.985c18.467-32.009 64.72-31.951 83.154 0l239.94
+                                416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46
+                                46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418
+                                136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0
+                                11.635-4.982
+                                11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884
+                                0-12.356 5.78-11.981 12.654z" />
+                        </svg>
+                        <p class="text-xl ml-4">
+                            No refund will be possible after clicking the BUY button. Please make sure it's the proper
+                            email!
+                        </p>
+                    </div>
+                    <div class="text-font flex items-center mt-4 lg:mt-3">
+                        <div class="rounded-full bg-primary mb-1" style="padding: 0.65rem;">
                             <svg
-                                class="fill-current text-green w-4 check"
-                                viewBox="0 0 33 24"
+                                class="w-full h-full fill-current"
+                                style="max-width: 0.95rem; max-height: 0.95rem;"
+                                viewBox="0 0 17 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
-                                    d="m0 10.909 4.364-4.364 8.727 8.727
-                                        15.273-15.273 4.364 4.364-19.636 19.636z" />
+                                    d="m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z" />
                             </svg>
-                            <p class="text-green info">VALID EMAIL</p>
                         </div>
-                    {:else if isBuying.valid == false}
-                        <p class="text-legendary info ">INVALID EMAIL</p>
-                    {/if}
+
+
+                        <p class="text-primary text-xl ml-4">
+                            Your email will not be saved <br>
+                            Delay to receive: 1 week to 1 month
+                        </p>
+                    </div>
                 </div>
-                <div class="justify-center w-full flex">
-                    <button class="button mt-8" class:button-brand={isBuying.valid}
-                            on:click={buyItem(isBuying.id,isBuying.name,1)}
-                            disabled={!isBuying.valid}>
-                        Buy
-                    </button>
-                    <button class="button button-brand mt-8 border ml-5 border-primary"
+                <div class="justify-center w-full flex mt-8 ">
+                    <button class="button button-brand-alternative w-32"
                             style="background-color: #17171a;padding: -1px"
                             on:click={()=>isBuying=undefined}>
                         Cancel
+                    </button>
+                    <button class="button ml-5 w-32" class:button-brand={isBuying.valid}
+                            on:click={buyItem(isBuying.id,isBuying.name,1)}
+                            disabled={!isBuying.valid}>
+                        Buy
                     </button>
                 </div>
             </div>

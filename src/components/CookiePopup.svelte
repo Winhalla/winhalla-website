@@ -2,6 +2,7 @@
     import cookie from "cookie";
     import { getCookie } from "../utils/getCookie";
     import { onMount } from "svelte";
+    import { fade, fly } from "svelte/transition";
 
     let isPopupOpened;
     let areSettingsOpened;
@@ -101,11 +102,14 @@
 {#if isPopupOpened}
     <!--Dark background-->
     <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
-         style="z-index: 100">
+         style="z-index: 100"
+         in:fade={{duration: 200}}
+         out:fade={{duration: 350}}>
 
         <div
             class="max-w-xl    mx-5 my-1 md:mx-0  px-8 pt-10 pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
-            style="max-height: 95vh;">
+            style="max-height: 95vh;"
+            transition:fly={{ y: 300, duration: 350 }}>
             {#if !areSettingsOpened}
                 <div>
                     <h1 class="text-5xl md:text-6xl text-center text-font">This website uses cookies</h1>

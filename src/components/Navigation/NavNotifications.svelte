@@ -85,9 +85,9 @@
         if (id === 2) return "match";
     };
 
-    function delNotif(i) {
-        callApi("post", "/deleteNotification/" + i);
-        data.notifications.splice(i, 1);
+    function delNotif(id,index) {
+        callApi("post", "/deleteNotification/" + id);
+        data.notifications.splice(index, 1);
         data = data;
     }
 </script>
@@ -249,7 +249,7 @@
                                     {idToType(notification.id)}
                                 </span>
                                 <button
-                                    on:click={() => delNotif(i)}
+                                    on:click={() => delNotif(notification._id,i)}
                                     class="p-2 absolute top-0 right-0 text-light
                                     hover:text-font">
                                     <svg

@@ -153,19 +153,19 @@
         waitingAdAccept = false;
     }
 
-    async function collect(type, index, possibleAd) {
+    async function collect(type, id, possibleAd) {
         let probability;
         if (possibleAd) probability = Math.floor(Math.random() * 3);
         if (probability === 2) {
             socket = io(apiUrl);
             waitingAdAccept = true;
-            waitingAd = { type, index };
+            waitingAd = { type, index: id };
         } else {
-            await callApi("post", `solo/collect?type=${type}&index=${index}`);
+            await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;
             waitingAdAccept = undefined;
             counter.set({ "refresh": true });
-            data.collected[type].push(...data.finished[type].splice(index, 1));
+            data.collected[type].push(...data.finished[type].splice(id, 1));
             data = data;
         }
     }
@@ -265,7 +265,7 @@
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
-                                on:click={() => collect('daily', i, true)}
+                                on:click={() => collect('daily', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
                                 max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
@@ -370,7 +370,7 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
                             <button
-                                on:click={() => collect('weekly', i)}
+                                on:click={() => collect('weekly', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)}
                                 max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">

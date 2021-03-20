@@ -149,7 +149,11 @@
 
     function acceptAd(accepted) {
         if (accepted) document.getElementById("playAd").onclick("earnMoreQuests");
-        if (!accepted) waitingAd = undefined;
+        if (!accepted) {
+            collect(waitingAd.type, waitingAd.index, false)
+            waitingAd = undefined;
+        }
+
         waitingAdAccept = false;
     }
 

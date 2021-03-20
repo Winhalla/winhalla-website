@@ -147,21 +147,15 @@
         }
     };
 
-    function acceptAd(accepted) {
-        if (accepted) document.getElementById("playAd").onclick("earnMoreQuests");
-        if (!accepted) {
-            collect(waitingAd.type, waitingAd.index, false)
-            waitingAd = undefined;
-        }
-
+    function denyAd() {
+        collect(waitingAd.type, waitingAd.index, false);
+        waitingAd = undefined;
         waitingAdAccept = false;
     }
 
     async function collect(type, id, possibleAd) {
-        let probability;
-        if (possibleAd) probability = Math.floor(Math.random() * 3);
-        if (probability === 2) {
-            socket = io(apiUrl);
+        if (possibleAd) {
+            if (!socket) socket = io(apiUrl);
             waitingAdAccept = true;
             waitingAd = { type, index: id };
         } else {
@@ -242,7 +236,7 @@
                 <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
                               bind:info={info} collect={collect} goal="earnMoreQuests" color="base"
                               bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
-                <button on:click={()=>acceptAd(false)} class="bg-background ml-3 button-alternative button-brand">No
+                <button on:click={denyAd} class="bg-background ml-3 button-alternative button-brand">No
                     thanks
                 </button>
             </div>

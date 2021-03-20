@@ -16,9 +16,9 @@
         }, 7000);
     });
 </script>
-<div>
-    <script src="/adblocker.js"></script>
-</div>
+<svelte:head>
+    <script src="/ad-blocker.js" type="text/javascript"></script>
+</svelte:head>
 {#if adblocker}
     <div class="text-legendary">Please disable your adblocker, we use ads revenue to gift you free items :)</div>
 {/if}

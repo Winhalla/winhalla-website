@@ -265,18 +265,12 @@
         @apply w-60 h-100;
     }
 
-    /*.user::after {
-        background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.55) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.85) 75%,
-                rgba(23, 23, 26, 0.93) 100%
-        );
-    }*/
-
     .timer {
         margin-bottom: 0.35rem;
+    }
+
+    .ppMask {
+        opacity: 0.05;
     }
 
 </style>
@@ -361,14 +355,16 @@
                     h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                            <div class="mt-8 lg:mt-25 ffa-player card user"
+                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
                                 <div class="max-w-full h-full "
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"> <!--style="background-color: #E5E5F7;
-                                        filter: blur(0px);
-opacity: 0.8;
-background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);">--></div>
-                                <div class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black opacity-10"></div>
-                                <img class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" src="{userPlayer.avatarURL}" alt="">
+
+                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                                <div
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
+                                <img
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{userPlayer.avatarURL}" alt="">
 
 
                                 <p class="player-name text-4xl">
@@ -397,6 +393,13 @@ background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
+                                        <div class="max-w-full h-full "
+                                             style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"></div>
+                                        <div
+                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
+                                        <img
+                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                            src="{player.avatarURL}" alt="">
 
 
                                         <p class="player-name text-3xl">

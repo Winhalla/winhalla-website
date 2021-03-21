@@ -15,7 +15,7 @@
     import { fade, fly } from "svelte/transition";
 
     import { counter } from "../../../components/store";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
@@ -102,7 +102,7 @@
                 }
                 counter.set({ "refresh": true });
 
-                socket = io.io(apiUrl);
+                socket = io(apiUrl);
                 socket.on("connection", (status) => {
                     console.log(status);
                     socket.emit("match connection", "FFA" + id);

@@ -8,7 +8,7 @@
         //Adblock detector
         setTimeout(() => {
             if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
-                if (!document.getElementById("vdngZEmaYJWQ")) {
+                if (!window.hasAdblockerDisabled) {
                     //Is blocking ads
                     adblocker = true;
                 }

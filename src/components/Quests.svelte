@@ -12,11 +12,11 @@
     export let data;
     console.log(data);
     let error;
-    let socket = io(apiUrl);
+    let socket;
     let adError;
     let info;
     let waitingAd;
-    let waitingAdAccept = true;
+    let waitingAdAccept = false;
     let interval;
 
     const calculateRarity = (reward, daily) => {
@@ -148,25 +148,23 @@
         }
     };
 
-    function acceptAd(accepted) {
-        if (accepted) document.getElementById("playAd").onclick("earnMoreQuests");
-        if (!accepted) waitingAd = undefined;
+    function denyAd() {
+        collect(waitingAd.type, waitingAd.index, false);
+        waitingAd = undefined;
         waitingAdAccept = false;
     }
 
-    async function collect(type, index, possibleAd) {
-        let probability;
-        if (possibleAd) probability = Math.floor(Math.random() * 3);
-        if (probability === 2) {
-            socket = io(apiUrl);
+    async function collect(type, id, possibleAd) {
+        if (possibleAd) {
+            if (!socket) socket = io(apiUrl);
             waitingAdAccept = true;
-            waitingAd = { type, index };
+            waitingAd = { type, index: id };
         } else {
-            await callApi("post", `solo/collect?type=${type}&index=${index}`);
+            await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;
             waitingAdAccept = undefined;
             counter.set({ "refresh": true });
-            data.collected[type].push(...data.finished[type].splice(index, 1));
+            data.collected[type].push(...data.finished[type].splice(id, 1));
             data = data;
         }
     }
@@ -236,7 +234,7 @@
 </svelte:head>
 
 <div>
-    {#if waitingAdAccept} <!--&& socket-->
+    {#if waitingAdAccept && socket }
         <div
             class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
             style="z-index: 100"
@@ -257,7 +255,7 @@
                     <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
                                   bind:info={info} collect={collect} goal="earnMoreQuests" color="green"
                                   bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
-                    <button on:click={()=>acceptAd(false)}
+                    <button on:click={()=>denyAd()}
                             class="w-38 mt-4 md:mt-0 md:ml-4    button button-brand-alternative ">No
                         thanks
                     </button>
@@ -286,7 +284,7 @@
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
-                                on:click={() => collect('daily', i, true)}
+                                on:click={() => collect('daily', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
                                 max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
@@ -391,7 +389,7 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
                             <button
-                                on:click={() => collect('weekly', i)}
+                                on:click={() => collect('weekly', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)}
                                 max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">

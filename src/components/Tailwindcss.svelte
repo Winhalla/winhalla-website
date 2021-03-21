@@ -3,6 +3,10 @@
     @tailwind components;
     @tailwind utilities;
 
+    .ppMask {
+        opacity: 0.05;
+    }
+
     .button {
         display: inline-block;
         padding: 0.75rem 2.5rem;

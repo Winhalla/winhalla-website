@@ -6,7 +6,6 @@ const ASSETS = `cache${timestamp}`;
 // `files` is an array of everything in the `static` directory
 const to_cache_all = shell.concat(files);
 const to_cache = to_cache_all.filter(url => !(url.includes("CharactersBanners") ||  url.includes("admin") || url.includes("brawlhalla-gameplay")));
-to_cache.push("/offline")   
 const cached = new Set(to_cache);
 self.addEventListener("install", event => {
     event.waitUntil(
@@ -106,7 +105,6 @@ self.addEventListener("fetch", event => {
                         const cacheTest = await caches.match(event.request);
                         // If the request isn't in the cache then display an simple html page that warns the user it is offline
 
-                        if (!cacheTest) return await caches.match("/offline");
                         //console.log("cache offline " + url.pathname);
                         //This permits the nav component to display an offline warning by catching and editing response data from cache
                         if (url.href === "http://localhost:4000/account") {

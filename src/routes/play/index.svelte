@@ -38,14 +38,11 @@
 
         try {
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
-            let gameModesStatus = await callApi("get", "/status");
+            let gameModesStatus = await callApi("get", "/GMStatus");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
                 gameModesError = `<p class="text-accent">Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class="text-2xl text-light">${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
-                gameModesStatus = gameModesStatus.find(
-                    s => s.name === "GAMEMODES STATUS"
-                );
                 gameModesStatus = gameModesStatus.value;
                 console.log(gameModes,gameModesStatus)
                 Object.keys(gameModesStatus).forEach(gameModeName => {

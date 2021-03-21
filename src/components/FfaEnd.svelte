@@ -91,11 +91,15 @@
             {#each data[0] as winner,i}
                 <div class:lg:ml-10={i>0}>
                     <div>
-                        <div class="ffa-player card user">
+                        <div class="ffa-player card user"
+                             style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
+                            <div class="max-w-full h-full"
+                                 style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                            <div
+                                class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                             <img
-                                src="/assets/CharactersBanners/{winner.legends}.png"
-                                alt={winner.legends}
-                                class="block" />
+                                class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                src="{winner.avatarURL}" alt="">
 
                             <p class="player-name text-4xl">{winner.username}</p>
                             <div class="stats text-2xl bottom-5 text-ultra-light">
@@ -114,11 +118,15 @@
                 {#each data[1] as winner,i}
                     <div class="mt-10 lg:ml-10">
                         <div>
-                            <div class="ffa-player card user">
+                            <div class="ffa-player card user"
+                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
+                                <div class="max-w-full h-full"
+                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                                <div
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
-                                    src="/assets/CharactersBanners/{winner.legends}.png"
-                                    alt={winner.legends}
-                                    class="block" />
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{winner.avatarURL}" alt="">
 
                                 <p class="player-name text-4xl">{winner.username}</p>
                                 <div class="stats text-2xl bottom-5 text-ultra-light">
@@ -138,11 +146,15 @@
                 {#each data[2] as winner,i}
                     <div class="mt-10 lg:mt-20 lg:ml-10">
                         <div>
-                            <div class="ffa-player card user">
+                            <div class="ffa-player card user"
+                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
+                                <div class="max-w-full h-full"
+                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                                <div
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
-                                    src="/assets/CharactersBanners/{winner.legends}.png"
-                                    alt={winner.legends}
-                                    class="block" />
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{winner.avatarURL}" alt="">
 
                                 <p class="player-name text-4xl">{winner.username}</p>
                                 <div class="stats text-2xl bottom-5 text-ultra-light">

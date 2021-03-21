@@ -15,7 +15,7 @@
     import { fade, fly } from "svelte/transition";
 
     import { counter } from "../../../components/store";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
@@ -102,7 +102,7 @@
                 }
                 counter.set({ "refresh": true });
 
-                socket = io.io(apiUrl);
+                socket = io(apiUrl);
                 socket.on("connection", (status) => {
                     console.log(status);
                     socket.emit("match connection", "FFA" + id);
@@ -245,10 +245,10 @@
         left: 0;
         background: linear-gradient(
                 to bottom,
-                rgba(23, 23, 26, 0.68) 0%,
-                rgba(23, 23, 26, 0.88),
-                rgba(23, 23, 26, 0.95) 75%,
-                rgba(23, 23, 26, 0.98) 100%
+                rgba(23, 23, 26, 0.58) 0%,
+                rgba(23, 23, 26, 0.78),
+                rgba(23, 23, 26, 0.93) 75%,
+                rgba(23, 23, 26, 0.95) 100%
         );
     }
 
@@ -263,16 +263,6 @@
 
     .user {
         @apply w-60 h-100;
-    }
-
-    .user::after {
-        background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.55) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.85) 75%,
-                rgba(23, 23, 26, 0.93) 100%
-        );
     }
 
     .timer {
@@ -361,11 +351,16 @@
                     h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                            <div class="mt-8 lg:mt-25 ffa-player card user"
+                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
+                                <div class="max-w-full h-full"
+                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                                <div
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
-                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                    alt={userPlayer.legends}
-                                    class="block" />
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{userPlayer.avatarURL}" alt="">
+
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
@@ -393,10 +388,14 @@
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
+                                        <div class="max-w-full h-full "
+                                             style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"></div>
+                                        <div
+                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
                                         <img
-                                            src="/assets/CharactersBanners/{player.legends}.png"
-                                            alt={player.legends}
-                                            class="block" />
+                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                            src="{player.avatarURL}" alt="">
+
 
                                         <p class="player-name text-3xl">
                                             {player.username}
@@ -419,7 +418,7 @@
             {/if}
 
             <GuideCard page="ffa" />
-            {#if !isSpectator}
+            {#if !isSpectator && !isMatchEnded}
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
                             bind:info={info} />
             {/if}

@@ -6,16 +6,17 @@
     import { apiUrl } from "../utils/config";
     import PlayAdButton from "./PlayAdButton.svelte";
     import CoinIcon from "./CoinIcon.svelte";
+    import { fade, fly } from "svelte/transition";
 
     let countDown = [{}, {}];
     export let data;
     console.log(data);
     let error;
-    let socket;
+    let socket = io(apiUrl);
     let adError;
     let info;
     let waitingAd;
-    let waitingAdAccept = false;
+    let waitingAdAccept = true;
     let interval;
 
     const calculateRarity = (reward, daily) => {
@@ -172,6 +173,10 @@
 </script>
 
 <style>
+    b {
+        @apply font-normal text-primary;
+    }
+
     .quest {
         border-radius: 10px;
         @apply relative overflow-hidden w-full my-4;
@@ -231,16 +236,32 @@
 </svelte:head>
 
 <div>
-    {#if waitingAdAccept && socket }
-        <div class="fixed top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
-            <h1 class="text-2xl">Watch an ad to earn x2 coins for your next quest</h1>
-            <div class="flex justify-center">
-                <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
-                              bind:info={info} collect={collect} goal="earnMoreQuests" color="base"
-                              bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
-                <button on:click={()=>acceptAd(false)} class="bg-background ml-3 button-alternative button-brand">No
-                    thanks
-                </button>
+    {#if waitingAdAccept} <!--&& socket-->
+        <div
+            class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+            style="z-index: 100"
+            in:fade={{duration: 200}}
+            out:fade={{duration: 350}}>
+            <div
+                class="mx-5 my-1 md:mx-0  rounded-lg   px-8 py-8 md:p-12 pb-8  z-30 border-primary border-2 bg-background text-center    max-w-xl   overflow-y-scroll md:overflow-y-auto"
+                transition:fly={{ y: 300, duration: 350 }}>
+                <h2 class=" text-6xl ">MULTIPLY YOUR REWARDS</h2>
+                <p class="mt-8  mx-1    text-3xl">Want to obtain a <b>x2 boost</b> on the
+                    <b>coins</b>
+                    you
+                    will
+                    <b>earn</b> on this quest?</p>
+                <p class="text-2xl mt-3 text-mid-light italic">Watch a short video by clicking the button below!</p>
+
+                <div class="mt-6 md:mt-8  md:flex justify-center">
+                    <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
+                                  bind:info={info} collect={collect} goal="earnMoreQuests" color="green"
+                                  bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
+                    <button on:click={()=>acceptAd(false)}
+                            class="w-38 mt-4 md:mt-0 md:ml-4    button button-brand-alternative ">No
+                        thanks
+                    </button>
+                </div>
             </div>
         </div>
     {/if}

@@ -600,8 +600,8 @@
             class="max-w-xl    mx-5 my-1 md:mx-0  px-8 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
             style="max-height: 95vh;"
             transition:fly={{ y: 300, duration: 350 }}>
-            <h1 class="text-4xl md:text-5xl">Where should we send
-            </h1>
+            <h2 class="text-4xl md:text-5xl">Where should we send
+            </h2>
 
             <p class="text-accent text-5xl md:text-6xl">{isBuying.name.toLowerCase().replace(/\-/g, ' ')}</p>
             <div>

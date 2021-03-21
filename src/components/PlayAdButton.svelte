@@ -65,6 +65,7 @@
 <style>
     .button-green {
         background-color: #3de488;
+        @apply text-background;
     }
 
     button:disabled {
@@ -91,7 +92,8 @@
             on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
     </button>
 {:else}
-    <button class="button button-brand" class:button-green={color==="green"} class:FfaWatchAd={page === "FfaWatchAd"}
+    <button class="button button-brand w-38" class:button-green={color==="green"}
+            class:FfaWatchAd={page === "FfaWatchAd"}
             style=""
             onclick="playAd()"
             on:click={() => started = true}>Play Ad

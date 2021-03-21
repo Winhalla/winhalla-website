@@ -245,10 +245,10 @@
         left: 0;
         background: linear-gradient(
                 to bottom,
-                rgba(23, 23, 26, 0.68) 0%,
-                rgba(23, 23, 26, 0.88),
-                rgba(23, 23, 26, 0.95) 75%,
-                rgba(23, 23, 26, 0.98) 100%
+                rgba(23, 23, 26, 0.58) 0%,
+                rgba(23, 23, 26, 0.78),
+                rgba(23, 23, 26, 0.93) 75%,
+                rgba(23, 23, 26, 0.95) 100%
         );
     }
 
@@ -265,7 +265,7 @@
         @apply w-60 h-100;
     }
 
-    .user::after {
+    /*.user::after {
         background: linear-gradient(
                 to bottom,
                 rgba(23, 23, 26, 0.55) 0%,
@@ -273,7 +273,7 @@
                 rgba(23, 23, 26, 0.85) 75%,
                 rgba(23, 23, 26, 0.93) 100%
         );
-    }
+    }*/
 
     .timer {
         margin-bottom: 0.35rem;
@@ -367,8 +367,8 @@
                                         filter: blur(0px);
 opacity: 0.8;
 background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);">--></div>
-                                <div class="block w-32 h-32 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black opacity-10"></div>
-                                <img class="block w-32 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" src="{userPlayer.avatarURL}" alt="">
+                                <div class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black opacity-10"></div>
+                                <img class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" src="{userPlayer.avatarURL}" alt="">
 
 
                                 <p class="player-name text-4xl">
@@ -397,10 +397,7 @@ background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
                                 {#each players as player}
                                     <div class="ffa-player card lg:mr-12 mb-8">
-                                        <img
-                                            src="/assets/CharactersBanners/{player.legends}.png"
-                                            alt={player.legends}
-                                            class="block" />
+
 
                                         <p class="player-name text-3xl">
                                             {player.username}

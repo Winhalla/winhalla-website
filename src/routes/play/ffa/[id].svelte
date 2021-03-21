@@ -362,10 +362,14 @@
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">
-                                <img
-                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                    alt={userPlayer.legends}
-                                    class="block" />
+                                <div class="max-w-full h-full "
+                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"> <!--style="background-color: #E5E5F7;
+                                        filter: blur(0px);
+opacity: 0.8;
+background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);">--></div>
+                                <div class="block w-32 h-32 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black opacity-10"></div>
+                                <img class="block w-32 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" src="{userPlayer.avatarURL}" alt="">
+
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}

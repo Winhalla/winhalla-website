@@ -269,10 +269,6 @@
         margin-bottom: 0.35rem;
     }
 
-    .ppMask {
-        opacity: 0.05;
-    }
-
 </style>
 
 
@@ -357,8 +353,7 @@
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user"
                                  style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
-                                <div class="max-w-full h-full "
-
+                                <div class="max-w-full h-full"
                                      style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
                                 <div
                                     class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
@@ -423,7 +418,7 @@
             {/if}
 
             <GuideCard page="ffa" />
-            {#if !isSpectator}
+            {#if !isSpectator && !isMatchEnded}
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
                             bind:info={info} />
             {/if}

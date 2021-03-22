@@ -114,24 +114,24 @@
 
 <div class="h-auto w-full fixed z-50">
     {#if offline}
-        <div class="bg-legendary w-full flex text-white text-center lg:text-xl">
-            <p class="text-center w-99%">
+        <div class="bg-legendary w-full flex justify-between items-center text-white text-center lg:text-xl">
+            <p class="text-center w-full">
                 You are offline or our services are down, you may experience
                 bugs on the website.
             </p>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                on:click={() => (offline = false)}>
-                <path
-                    class="heroicon-ui"
-                    d="M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1
-                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12
-                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z"
-                    fill="#FFFFFF" />
-            </svg>
+            <button class="mr-1" on:click={() => offline = false}>
+                <svg
+                    class="w-5 h-5 fill-current "
+                    viewBox="0 0 28 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24 2.4-2.4-2.4-9.6
+                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
+                                            2.4 2.4 9.6-9.6 9.6 9.6
+                                            2.4-2.4-9.6-9.6z" />
+                </svg>
+            </button>
+
         </div>
     {/if}
     <nav
@@ -143,6 +143,7 @@
             class="w-full lg:w-auto flex justify-between items-center py-4
             relative">
             <div class="pl-7 lg:pl-24 lg:pr-34">
+                <!--LOGO-->
                 <a class="" href="/">
                     <svg class="fill-current w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
                         <g id="Calque_2" data-name="Calque 2">

@@ -135,6 +135,3 @@
     <!--Footer-->
     <Footer />
 </div>
-<div class="relative">
-
-</div>

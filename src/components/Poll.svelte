@@ -3,7 +3,7 @@
     import { fly } from "svelte/transition";
 
     export let poll;
-    export let preview = false
+    export let preview = false;
 
 
     let answer;
@@ -29,7 +29,7 @@
 </script>
 
 
-{#if poll}
+{#if poll && poll !== "network err"}
     <div class:pb-4={isPollOpen} class="bg-background rounded-lg border border-primary"
          transition:fly={{ x:200, duration: 300 }}>
         <button class="flex justify-between cursor-pointer focus:outline-none w-full" on:click={() => handleClick()}>

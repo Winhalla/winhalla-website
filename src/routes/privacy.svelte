@@ -22,7 +22,7 @@
         @apply underline;
     }
 </style>
-<div class="h-full px-100 pt-30 " style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
+<div class="h-full lg:px-100 px-5 lg:pt-30 pt-8 " style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
     <h1 class="text-5xl underline mb-4">Privacy Policy</h1>
     <p>Winhalla operates the https://winhalla.app website ("Site"), which provides the SERVICE.</p>
 

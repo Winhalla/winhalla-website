@@ -20,7 +20,7 @@
     let isUserLoggedIn;
 
 
-    let informations;
+    let information;
     let poll;
     let notificationsObj = {};
 
@@ -31,6 +31,7 @@
     let offline;
     let loaded = false;
 
+    let isEventBannerOpen = true;
     let currentMatch;
 
     function calculateProperties(value) {
@@ -68,14 +69,13 @@
 
     onMount(async () => {
         try {
-            informations = await callApi("get", "/informations");
+            information = await callApi("get", "/informations");
 
-
-            if (informations instanceof Error) {
-                throw informations;
+            if (information instanceof Error) {
+                throw information;
             }
         } catch (e) {
-            informations = "network";
+            information = "network";
         }
 
         setTimeout(async () => {
@@ -110,16 +110,59 @@
     .nav-link-container {
         @apply pr-9 flex items-center;
     }
+
+    .gradient {
+        background-image: linear-gradient(to right, #3d72e4, #ee38ff, #3d72e4, #ee38ff);
+        background-size: 300%;
+        animation: gradient-animation 4.5s linear infinite;
+    }
+
+    @keyframes gradient-animation {
+
+        0% {
+            background-position: right;
+        }
+        100% {
+            background-position: left;
+        }
+    }
 </style>
 
 <div class="h-auto w-full fixed z-50">
-    {#if offline}
-        <div class="bg-legendary w-full flex justify-between items-center text-white text-center lg:text-xl">
-            <p class="text-center w-full">
-                You are offline or our services are down, you may experience
-                bugs on the website.
+    {#if offline || isEventBannerOpen}
+        <div class="bg-legendary w-full flex  items-center lg:text-xl text-white  relative"
+             class:gradient={isEventBannerOpen && !offline}>
+            <p class="text-center w-full text-3xl px-12">
+                {#if offline}
+                    You are offline or our services are down, you may experience
+                    bugs on the website.
+                {:else if isEventBannerOpen}
+                    Obtain a <u>20%</u> reward boost until MONDAY!
+                {/if}
+
             </p>
-            <button class="mr-1" on:click={() => offline = false}>
+            <button class="p-1 absolute right-0" on:click={() => offline ? offline = false : isEventBannerOpen = false}>
+                <svg
+                    class="w-8 h-8 md:w-6 md:h-6 fill-current "
+                    viewBox="0 0 28 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24 2.4-2.4-2.4-9.6
+                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
+                                            2.4 2.4 9.6-9.6 9.6 9.6
+                                            2.4-2.4-9.6-9.6z" />
+                </svg>
+            </button>
+
+        </div>
+    {/if}
+    <!--{#if user}
+        <div class="py-1 bg-primary w-full flex  items-center lg:text-xl text-white  relative   gradient">
+            <p class="text-center w-full text-3xl">
+                &lt;!&ndash;<b class="text-white mr-2 font-normal text-3xl">EVENT:</b>&ndash;&gt;
+
+            </p>
+            <button class="p-1 absolute right-0" on:click={() => isEventBannerOpen = false}>
                 <svg
                     class="w-5 h-5 fill-current "
                     viewBox="0 0 28 24"
@@ -133,7 +176,7 @@
             </button>
 
         </div>
-    {/if}
+    {/if}-->
     <nav
         class:border-primary={isScrolling}
         class:border-b-2={isScrolling}
@@ -167,7 +210,7 @@
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
                     {#if loaded && window.innerWidth < 1024}
-                        <NavAlert data={informations} />
+                        <NavAlert data={information} />
                     {/if}
 
                     <Notifications data={notificationsObj} />
@@ -295,9 +338,9 @@
                            href="/play/ffa/{currentMatch}">Rejoin
                             match</a>
                     {/if}
-                    {#if informations && window.innerWidth >= 1024}
+                    {#if information && window.innerWidth >= 1024}
                         <div class="hidden lg:flex items-center">
-                            <NavAlert data={informations} />
+                            <NavAlert data={information} />
                         </div>
                     {/if}
                     {#if isUserLoggedIn}

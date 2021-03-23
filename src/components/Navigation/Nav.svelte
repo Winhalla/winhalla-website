@@ -81,7 +81,7 @@
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
                 if (poll instanceof Error) {
-                    throw informations;
+                    throw information;
                 }
             } catch (e) {
                 poll = "network err"

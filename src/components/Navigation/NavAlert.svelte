@@ -1,8 +1,7 @@
 <script>
     import { clickOutside } from "../../utils/clickOutside";
     import cookie from "cookie";
-    import { fade } from "svelte/transition";
-    import { onDestroy, onMount } from "svelte";
+    import { onMount } from "svelte";
 
     export let data;
     export let isPreviewing;
@@ -74,7 +73,6 @@
                                     {information.description}
                                 </p>
                             </div>
-
                         </div>
                     {/each}
                 </div>

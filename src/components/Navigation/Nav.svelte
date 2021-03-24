@@ -31,6 +31,7 @@
     let offline;
     let loaded = false;
 
+    let currEvent;
     let isEventBannerOpen = false;
     let currentMatch;
 
@@ -79,10 +80,11 @@
     }
     onMount(async () => {
         try {
-            information = await callApi("get", "/informations")
-            console.log(information);
-            let eventIndex = information.findIndex(e => e.type === "event");
-            if (eventIndex !== -1) eventInfo = information.splice(eventIndex, 1)[0].name;
+            information = await callApi("get", "/informations");
+
+            currEvent = information.filter(i => i.type === "event")[0];
+            isEventBannerOpen = true;
+            notificationsObj.event = currEvent;
 
             if (information instanceof Error) {
                 throw information;
@@ -151,8 +153,8 @@
                 {#if offline}
                     You are offline or our services are down, you may experience
                     bugs on the website.
-                {:else if isEventBannerOpen}
-                    {eventInfo}
+                {:else if currEvent}
+                    {@html currEvent.description}
                 {/if}
             </p>
             <button class="p-1 absolute right-0" on:click={handlePopupClose}>

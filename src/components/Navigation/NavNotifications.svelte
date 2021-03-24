@@ -109,6 +109,22 @@
         border-radius: 10px;
         @apply flex justify-between px-4 py-3 mt-3 mb-1 relative overflow-hidden w-full;
     }
+
+    .gradient {
+        background-image: linear-gradient(to right, #3d72e4, #ee38ff, #3d72e4, #ee38ff);
+        background-size: 300%;
+        animation: gradient-animation 4.5s linear infinite;
+    }
+
+    @keyframes gradient-animation {
+
+        0% {
+            background-position: right;
+        }
+        100% {
+            background-position: left;
+        }
+    }
 </style>
 
 <div class="relative">
@@ -189,10 +205,10 @@
                     <span class="flex">
                         <span
                             class="inline-flex animate-ping absolute top-0
-                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75" />
+                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75"></span>
                         <span
                             class="inline-flex absolute top-0 right-0 w-2 h-2
-                            rounded-full bg-legendary" />
+                            rounded-full bg-legendary"></span>
                     </span>
                 {/if}
             </div>
@@ -207,8 +223,29 @@
         use:clickOutside
         on:click_outside={() => (isDropdownOpen = false)}>
         <div>
+            {#if data.event}
+                <div class="">
+                    <p class="ml-1">EVENTS</p>
+                    <div class="card notification flex items-center gradient">
+
+                        <div class="">
+                            {#if data.event.name}
+                                <p class="ml-2 mr-6 lg:mr-12 text-3xl text-extra-light">
+                                    {data.event.name}
+                                </p>
+                            {/if}
+                            <p
+                                class="ml-2 mr-6 lg:mr-12
+                                text-default">
+                                {@html data.event.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {/if}
             {#if data.notifications}
                 <div
+                    class="mt-5"
                     on:click={() => {
                         setTimeout(() => {
                             if (opened === true) {
@@ -229,7 +266,7 @@
                     <div>
                         {#each data.notifications as notification, i}
                             <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
-                                class="card notification flex items-center
+                               class="card notification flex items-center
                                 relative" class:cursor-default={notification.id === 2}>
                                 <div class="progress-container">
                                     <p class="mr-6 lg:mr-12 text-2xl">

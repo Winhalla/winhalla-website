@@ -20,7 +20,7 @@
     let isUserLoggedIn;
 
 
-    let information;
+    let infos;
     let poll;
     let notificationsObj = {};
 
@@ -34,8 +34,6 @@
     let currEvent;
     let isEventBannerOpen = false;
     let currentMatch;
-
-    let eventInfo;
 
     function calculateProperties(value) {
         const tempUserData = value;
@@ -74,23 +72,31 @@
             offline = false;
         }
         if(isEventBannerOpen){
-            notificationsObj.push({id:"event",message:"Event",description:eventInfo, type:"event"})
+            notificationsObj.event = {id:"event",name:currEvent.name,descParts:currEvent.descParts,percentage:currEvent.percentage, type:"event"}
             isEventBannerOpen = false
         }
     }
     onMount(async () => {
         try {
-            information = await callApi("get", "/informations");
+            infos = await callApi("get", "/informations");
 
-            currEvent = information.filter(i => i.type === "event")[0];
+            /*currEvent = information.filter(i => i.type === "event")[0];
             isEventBannerOpen = true;
-            notificationsObj.event = currEvent;
-
-            if (information instanceof Error) {
-                throw information;
+            notificationsObj.event = currEvent;*/
+            if(Date.now() <= infos.event.expiration){
+                console.log(isEventBannerOpen)
+                let {name,description,percentage} = infos.event
+                let descParts = description.split("%%")
+                currEvent = {name,descParts,percentage}
+                console.log(currEvent)
+                isEventBannerOpen = true
+            }
+            infos = infos.information
+            if (infos instanceof Error) {
+                throw infos;
             }
         } catch (e) {
-            information = "network";
+            infos = "network";
         }
 
         setTimeout(async () => {
@@ -154,7 +160,7 @@
                     You are offline or our services are down, you may experience
                     bugs on the website.
                 {:else if currEvent}
-                    {@html currEvent.description}
+                    {currEvent.descParts[0]}{currEvent.percentage-100}%{currEvent.descParts[1]}
                 {/if}
             </p>
             <button class="p-1 absolute right-0" on:click={handlePopupClose}>
@@ -226,7 +232,7 @@
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
                     {#if loaded && window.innerWidth < 1024}
-                        <NavAlert data={information} />
+                        <NavAlert data={infos} />
                     {/if}
 
                     <Notifications data={notificationsObj} />
@@ -354,9 +360,9 @@
                            href="/play/ffa/{currentMatch}">Rejoin
                             match</a>
                     {/if}
-                    {#if information && window.innerWidth >= 1024}
+                    {#if infos && window.innerWidth >= 1024}
                         <div class="hidden lg:flex items-center">
-                            <NavAlert data={information} />
+                            <NavAlert data={infos} />
                         </div>
                     {/if}
                     {#if isUserLoggedIn}

@@ -3,7 +3,7 @@
     import Poll from "../Poll.svelte";
     import { fade, fly } from "svelte/transition";
     import { callApi } from "../../utils/api";
-    import { config } from "./storeAdmin"
+    import { config } from "./storeAdmin";
 
     export let popup;
     export let configs;
@@ -48,7 +48,7 @@
         if (thing === "poll") {
             await callApi("post", `/feltrom/deletePoll?otp=${otp}&pwd=${pwd}`, { id: popup.options.index });
         }
-        config.set({})
+        config.set({});
     }
 
     async function createThing(thing) {
@@ -62,7 +62,8 @@
             await callApi("post", `/feltrom/newEvent?otp=${otp}&pwd=${pwd}`, {
                 percentage: parseInt(percentage) + 100,
                 expiration: Date.now() + parseFloat(duration) * 86400 * 1000,
-                informationsContent: { type: "event", name, description, percentage:parseInt(percentage) }
+                name,
+                description
             });
         } else if (thing === "info") {
             let { duration, description, name } = {
@@ -84,7 +85,7 @@
             };
             await callApi("post", `/feltrom/createPoll?otp=${otp}&pwd=${pwd}`, { name, options, isMCQ });
         }
-        config.set({})
+        config.set({});
     }
 </script>
 {#if popup.type}
@@ -177,6 +178,6 @@
                     data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]}
                     isPreviewing />
             </div>
-        {/if}
+            {/if}
     {/if}
 {/if}

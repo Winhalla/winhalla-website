@@ -50,6 +50,11 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+    .gradient {
+        background-image: linear-gradient(to right, #3d72e4, #ee38ff, #3d72e4, #ee38ff);
+        background-size: 300%;
+        animation: gradient-animation 4.5s linear infinite;
+    }
 </style>
 <div class="justify-evenly mx-4 w-full flex h-full flex-wrap p-8">
     {#each newConfig as config,i}
@@ -323,6 +328,12 @@
                                     class="text-accent font-normal text-3xl">{goldEvent[2]}</strong>
                                 minutes,
                             </p>
+                            <h3 class="text-2xl">Name: <strong
+                                class="font-normal text-accent text-3xl">{config.value.name}
+                                </strong></h3>
+                            <h3 class="text-2xl">Description: <strong
+                                class="font-normal text-accent text-xl">{config.value.description}
+                                </strong></h3>
                         {/if}
                         <div class="flex">
                             <button class="button button-brand mx-auto mt-4"

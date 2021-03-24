@@ -15,10 +15,12 @@
             e = e.error;
             if (!e) return;
             if (e instanceof Error) {
-                error = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
-                setTimeout(() => {
-                    error = undefined;
-                }, 8000);
+                if (e.response) {
+                    error = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
+                    setTimeout(() => {
+                        error = undefined;
+                    }, 8000);
+                }
             }
         });
 

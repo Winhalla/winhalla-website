@@ -86,11 +86,13 @@
         setTimeout(async () => {
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
-
+                if (poll instanceof Error) {
+                    throw information;
+                }
             } catch (e) {
-                console.log(e);
+                poll = "network err"
             }
-        }, 5000);
+        }, 1);
         await user;
         calculateProperties(user);
         loaded = true;

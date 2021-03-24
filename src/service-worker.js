@@ -57,7 +57,7 @@ self.addEventListener("fetch", event => {
     if (url.pathname.includes("/play/ffa")) return
 
     // This specify to ignore API responses that are dynamic
-    if (url.host === "localhost:4000" && (url.pathname !== "/shop")) return;
+    if (url.host === "localhost:4000" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return;
     // for pages, you might want to serve a shell `service-worker-index.html` file,
     // which Sapper has generated for you. It's not right for every
     // app, but if it's right for yours then uncomment this section

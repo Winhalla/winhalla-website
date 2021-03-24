@@ -85,7 +85,7 @@
         if (id === 2) return "match";
     };
 
-    function delNotif(id,index) {
+    function delNotif(id, index) {
         callApi("post", "/deleteNotification/" + id);
         data.notifications.splice(index, 1);
         data = data;
@@ -262,74 +262,80 @@
                             }
                         }, 10);
                     }}>
-                    <p class="ml-1">Notifications</p>
-                    <div>
-                        {#each data.notifications as notification, i}
-                            <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
-                               class="card notification flex items-center
+                    {#if data.notifications.length > 0}
+                        <p class="ml-1">Notifications</p>
+                        <div>
+                            {#each data.notifications as notification, i}
+                                <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
+                                   class="card notification flex items-center
                                 relative" class:cursor-default={notification.id === 2}>
-                                <div class="progress-container">
-                                    <p class="mr-6 lg:mr-12 text-2xl">
-                                        {notification.message}
-                                    </p>
-                                    {#if notification.tip}
-                                        <p
-                                            class=" mr-6 lg:mr-12 text-light
-                                            text-lg">
-                                            {notification.tip}
+                                    <div class="progress-container">
+                                        <p class="mr-6 lg:mr-12 text-2xl">
+                                            {notification.message}
                                         </p>
-                                    {/if}
-                                </div>
-                                <span
-                                    class="quest-goal text-sm text-font px-2
+                                        {#if notification.tip}
+                                            <p
+                                                class=" mr-6 lg:mr-12 text-light
+                                            text-lg">
+                                                {notification.tip}
+                                            </p>
+                                        {/if}
+                                    </div>
+                                    <span
+                                        class="quest-goal text-sm text-font px-2
                                     py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
-                                <button
-                                    on:click={() => delNotif(notification._id,i)}
-                                    class="p-2 absolute top-0 right-0 text-light
+                                    <button
+                                        on:click={() => delNotif(notification._id,i)}
+                                        class="p-2 absolute top-0 right-0 text-light
                                     hover:text-font">
-                                    <svg
-                                        class="w-3 h-3 fill-current "
-                                        viewBox="0 0 28 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m24 2.4-2.4-2.4-9.6
+                                        <svg
+                                            class="w-3 h-3 fill-current "
+                                            viewBox="0 0 28 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m24 2.4-2.4-2.4-9.6
                                             9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
                                             2.4 2.4 9.6-9.6 9.6 9.6
                                             2.4-2.4-9.6-9.6z" />
-                                    </svg>
-                                </button>
-                            </a>
-                        {/each}
-                    </div>
+                                        </svg>
+                                    </button>
+                                </a>
+                            {/each}
+                        </div>
+                    {:else}
+                        <p class="ml-1 text-center mt-4 text-green text-3xl">No new notifications</p>
+                    {/if}
                 </div>
             {/if}
             {#if data.inGame}
                 <div class="mt-5">
-                    <p class="ml-1">Matchs in progress</p>
-                    <div>
-                        {#each data.inGame as match}
-                            <a
-                                class="card notification flex items-center"
-                                href="/play/ffa/{match.id}">
-                                <div class="progress-container">
-                                    <p class="ml-2 mr-6 lg:mr-12 text-2xl">
-                                        {match.type}
-                                    </p>
-                                    <p
-                                        class="ml-2 mr-6 lg:mr-12 text-light
+                    {#if data.inGame.length > 0}
+                        <p class="ml-1">Matchs in progress</p>
+                        <div>
+                            {#each data.inGame as match}
+                                <a
+                                    class="card notification flex items-center"
+                                    href="/play/ffa/{match.id}">
+                                    <div class="progress-container">
+                                        <p class="ml-2 mr-6 lg:mr-12 text-2xl">
+                                            {match.type}
+                                        </p>
+                                        <p
+                                            class="ml-2 mr-6 lg:mr-12 text-light
                                         text-lg">
-                                        {match.timer}
+                                            {match.timer}
+                                        </p>
+                                    </div>
+                                    <p class="quest-goal text-xl text-primary">
+                                        <!--{#if match.hasStarted}{/if}-->
+                                        {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}
                                     </p>
-                                </div>
-                                <p class="quest-goal text-xl text-primary">
-                                    <!--{#if match.hasStarted}{/if}-->
-                                    {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}
-                                </p>
-                            </a>
-                        {/each}
-                    </div>
+                                </a>
+                            {/each}
+                        </div>
+                    {/if}
                 </div>
             {/if}
         </div>

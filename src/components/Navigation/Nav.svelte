@@ -31,7 +31,8 @@
     let offline;
     let loaded = false;
 
-    let isEventBannerOpen = true;
+    let currEvent;
+    let isEventBannerOpen = false;
     let currentMatch;
 
     function calculateProperties(value) {
@@ -70,6 +71,10 @@
     onMount(async () => {
         try {
             information = await callApi("get", "/informations");
+
+            currEvent = information.filter(i => i.type === "event")[0];
+            isEventBannerOpen = true;
+            notificationsObj.event = currEvent;
 
             if (information instanceof Error) {
                 throw information;
@@ -136,8 +141,8 @@
                 {#if offline}
                     You are offline or our services are down, you may experience
                     bugs on the website.
-                {:else if isEventBannerOpen}
-                    Obtain a <u>20%</u> reward boost until MONDAY!
+                {:else if currEvent}
+                    {@html currEvent.description}
                 {/if}
 
             </p>

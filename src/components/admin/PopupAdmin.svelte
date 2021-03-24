@@ -62,7 +62,7 @@
             await callApi("post", `/feltrom/newEvent?otp=${otp}&pwd=${pwd}`, {
                 percentage: parseInt(percentage) + 100,
                 expiration: Date.now() + parseFloat(duration) * 86400 * 1000,
-                informationsContent: { type: "event", name, description }
+                informationsContent: { type: "event", name, description, percentage:parseInt(percentage) }
             });
         } else if (thing === "info") {
             let { duration, description, name } = {

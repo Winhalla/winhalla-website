@@ -31,8 +31,10 @@
     let offline;
     let loaded = false;
 
-    let isEventBannerOpen = true;
+    let isEventBannerOpen = false;
     let currentMatch;
+
+    let eventInfo;
 
     function calculateProperties(value) {
         const tempUserData = value;
@@ -66,10 +68,22 @@
 
     const unsubscribe = counter.subscribe(resetNav);
     onDestroy(unsubscribe);
-
+    function handlePopupClose(){
+        if (offline) {
+            offline = false;
+        }
+        if(isEventBannerOpen){
+            notificationsObj.push({id:"event",message:"Event",description:eventInfo, type:"event"})
+            isEventBannerOpen = false
+        }
+    }
     onMount(async () => {
         try {
-            information = await callApi("get", "/informations");
+            information = await callApi("get", "/informations")
+            console.log(information);
+            let eventIndex = information.findIndex(e => e.type === "event");
+            if (eventIndex !== -1) eventInfo = information.splice(eventIndex, 1)[0].name;
+
             if (information instanceof Error) {
                 throw information;
             }
@@ -81,10 +95,10 @@
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
                 if (poll instanceof Error) {
-                    throw information;
+                    throw poll;
                 }
             } catch (e) {
-                poll = "network err"
+                poll = "network err";
             }
         }, 1);
         await user;
@@ -138,11 +152,10 @@
                     You are offline or our services are down, you may experience
                     bugs on the website.
                 {:else if isEventBannerOpen}
-                    Obtain a <u>20%</u> reward boost until MONDAY!
+                    {eventInfo}
                 {/if}
-
             </p>
-            <button class="p-1 absolute right-0" on:click={() => offline ? offline = false : isEventBannerOpen = false}>
+            <button class="p-1 absolute right-0" on:click={handlePopupClose}>
                 <svg
                     class="w-8 h-8 md:w-6 md:h-6 fill-current "
                     viewBox="0 0 28 24"

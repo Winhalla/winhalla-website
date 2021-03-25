@@ -1,7 +1,8 @@
 <script>
-    import { callApi, getUser } from "../utils/api";
+    import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
     import { fade } from "svelte/transition";
+    import {apiUrl} from "../utils/config"
 
     let isEditingConsent = false;
     let confirmationPopupOpen;
@@ -39,10 +40,6 @@
             pushError = undefined;
             message = undefined;
         }, 10000);
-    }
-
-    async function downloadData() {
-        const user = await getUser();
     }
 </script>
 <svelte:head>
@@ -157,12 +154,12 @@
             consent
         </button>
         <button class="btn px-2 py-1 mx-6" on:click={()=>makePopup("delete account")}>Delete Account</button>
-        <button class="btn px-2 py-1 mx-6" on:click={downloadData}>Download Data</button>
+        <a class="btn px-2 py-2 mx-6" style="text-decoration: none" href="{apiUrl}/auth/downloadData" download >Download Data</a>
         <button class="btn px-2 py-1 mx-6" on:click={() =>makePopup('restrict processing')}>Restrict Processing</button>
         (Restrict processing
         will make your account unusable but we still keep your data)
     </div>
-    <h3 class="text-2xl">Other RGPD-related user rights can be claimed via email <a href="mailto:contact@winhalla.app">here</a>
+    <h3 class="text-2xl">Other GDPR-related user rights can be claimed via email <a href="mailto:contact@winhalla.app">here</a>
     </h3>
 
     <h2>VI. Changes to This Privacy Policy</h2>

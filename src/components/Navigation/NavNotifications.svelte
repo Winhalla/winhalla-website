@@ -237,7 +237,7 @@
                             <p
                                 class="ml-2 mr-6 lg:mr-12
                                 text-default">
-                                {data.event.descParts[0]}{data.event.percentage-100}%{data.event.descParts[1]}
+                                {data.event.descParts[0]}<u>{data.event.percentage-100}%</u>{data.event.descParts[1]}
                             </p>
                         </div>
                     </div>

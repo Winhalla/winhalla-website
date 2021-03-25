@@ -160,7 +160,7 @@
                     You are offline or our services are down, you may experience
                     bugs on the website.
                 {:else if currEvent}
-                    {currEvent.descParts[0]}{currEvent.percentage-100}%{currEvent.descParts[1]}
+                    {currEvent.descParts[0]}<u>{currEvent.percentage-100}%</u>{currEvent.descParts[1]}
                 {/if}
             </p>
             <button class="p-1 absolute right-0" on:click={handlePopupClose}>

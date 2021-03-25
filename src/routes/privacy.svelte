@@ -2,7 +2,7 @@
     import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
     import { fade } from "svelte/transition";
-    import {apiUrl} from "../utils/config"
+    import { apiUrl } from "../utils/config";
 
     let isEditingConsent = false;
     let confirmationPopupOpen;
@@ -102,19 +102,21 @@
         href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) to track your progress in the game and give
         you coins according to your performance</p>
     <p>Other account data will not be sent, sold, rented, or traded to any third-party.</p>
-    <p>All your account data is kept until you <a href="https://winhalla.app/deleteAccount">delete your account</a> and
+    <p id="analytical">All your account data is kept until you <a href="https://winhalla.app/deleteAccount">delete your
+        account</a> and
         may be processed by our servers to provide the Service in its entirety</p>
 
-    <h2 id="analytical">II. Analytical software</h2>
+    <h2>II. Analytical software</h2>
     <p>We are using - like any other website - an analytical software. This software helps us to understand our traffic
         and its fluctuations</p>
     <p>Upon your first visit on the Site, we will ask for your consent regarding (among others) analytical software. You
         can edit your consent following <a href="/privacy#edit_consent">this</a> instructions</p>
-    <p>This analytical software can deposits cookies and collect data ; this data is kept strictly anonymous. However
+    <p id="advertising">This analytical software can deposits cookies and collect data ; this data is kept strictly
+        anonymous. However
         this data is sent to Google Analytics which will process the data (and may process it outside the EEE) in order
         to allow us to use this data </p>
 
-    <h2 id="advertizing">III. Advertising</h2>
+    <h2>III. Advertising</h2>
     <p>We are using ads, because a website doesn't update and hosts itself!</p>
     <p>You can choose to enable or disable ad personalization via cookies on your first visit (you can always edit your
         consent <a href="/privacy#edit_consent">here</a>). Disabling ad personalisation still deposits cookies, but
@@ -154,7 +156,8 @@
             consent
         </button>
         <button class="btn px-2 py-1 mx-6" on:click={()=>makePopup("delete account")}>Delete Account</button>
-        <a class="btn px-2 py-2 mx-6" style="text-decoration: none" href="{apiUrl}/auth/downloadData" download >Download Data</a>
+        <a class="btn px-2 py-2 mx-6" style="text-decoration: none" href="{apiUrl}/auth/downloadData" download>Download
+            Data</a>
         <button class="btn px-2 py-1 mx-6" on:click={() =>makePopup('restrict processing')}>Restrict Processing</button>
         (Restrict processing
         will make your account unusable but we still keep your data)

@@ -67,15 +67,23 @@
 
     const unsubscribe = counter.subscribe(resetNav);
     onDestroy(unsubscribe);
-    function handlePopupClose(){
+
+    function handlePopupClose() {
         if (offline) {
             offline = false;
         }
-        if(isEventBannerOpen){
-            notificationsObj.event = {id:"event",name:currEvent.name,descParts:currEvent.descParts,percentage:currEvent.percentage, type:"event"}
-            isEventBannerOpen = false
+        if (isEventBannerOpen) {
+            notificationsObj.event = {
+                id: "event",
+                name: currEvent.name,
+                descParts: currEvent.descParts,
+                percentage: currEvent.percentage,
+                type: "event"
+            };
+            isEventBannerOpen = false;
         }
     }
+
     onMount(async () => {
         try {
             infos = await callApi("get", "/informations");
@@ -83,15 +91,15 @@
             /*currEvent = information.filter(i => i.type === "event")[0];
             isEventBannerOpen = true;
             notificationsObj.event = currEvent;*/
-            if(Date.now() <= infos.event.expiration){
-                console.log(isEventBannerOpen)
-                let {name,description,percentage} = infos.event
-                let descParts = description.split("%%")
-                currEvent = {name,descParts,percentage}
-                console.log(currEvent)
-                isEventBannerOpen = true
+            if (Date.now() <= infos.event.expiration) {
+                console.log(isEventBannerOpen);
+                let { name, description, percentage } = infos.event;
+                let descParts = description.split("%%");
+                currEvent = { name, descParts, percentage };
+                console.log("currevent", currEvent);
+                isEventBannerOpen = true;
             }
-            infos = infos.information
+            infos = infos.information;
             if (infos instanceof Error) {
                 throw infos;
             }
@@ -160,7 +168,7 @@
                     You are offline or our services are down, you may experience
                     bugs on the website.
                 {:else if currEvent}
-                    {currEvent.descParts[0]}<u>{currEvent.percentage-100}%</u>{currEvent.descParts[1]}
+                    {currEvent.descParts[0]}<u>{currEvent.percentage - 100}%</u>{currEvent.descParts[1]}
                 {/if}
             </p>
             <button class="p-1 absolute right-0" on:click={handlePopupClose}>

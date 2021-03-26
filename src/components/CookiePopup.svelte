@@ -3,13 +3,22 @@
     import { getCookie } from "../utils/getCookie";
     import { onMount } from "svelte";
     import { fade, fly } from "svelte/transition";
-
+    export let isForEdit = false
     let isPopupOpened;
     let areSettingsOpened;
     let acceptedCookieList = [];
 
     onMount(() => {
         isPopupOpened = !getCookie("hideCookiePopup");
+        if(isPopupOpened || isForEdit){
+                let cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i];
+                    let eqPos = cookie.indexOf("=");
+                    let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+        }
     });
 
 
@@ -100,7 +109,7 @@
 <style>
 </style>
 
-{#if isPopupOpened}
+{#if isPopupOpened || isForEdit}
     <!--Dark background-->
     <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
          style="z-index: 100"

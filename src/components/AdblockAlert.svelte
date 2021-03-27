@@ -19,14 +19,15 @@ Component that detects if the adblock popup needs to be shown and if it has been
     let adblocker = false;
     onMount(() => {
         //Adblock detector
-        setTimeout(() => {
+        setTimeout(()=>{
             if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
                 if (!window.hasAdblockerDisabled) {
                     //Is blocking ads
                     adblocker = true;
                 }
             }
-        }, 5000);
+        },5000)
+
     });
 </script>
 

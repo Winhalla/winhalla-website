@@ -5,10 +5,14 @@
     export let isVisible = false;
     export let hasBeenDestroyed;
     onMount(() => {
-        setInterval(() => {
-            //check if elements exists
-            hasBeenDestroyed = !document.getElementById("ampfaPde15Sq532maJs");
-        }, 5010);
+        setTimeout(() => {
+            if (isVisible === true) {
+                setInterval(() => {
+                    //check if elements exists
+                    hasBeenDestroyed = !document.getElementById("ampfaPde15Sq532maJs");
+                }, 1000);
+            }
+        }, 5001);
     });
 
     let guides = {

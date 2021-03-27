@@ -382,7 +382,7 @@
                             {/if}
                             {#if notificationsObj}
                                 <div class="hidden lg:flex items-center">
-                                    <Notifications data={notificationsObj} />
+                                    <Notifications data={notificationsObj} page="{$page.path}" />
                                 </div>
                             {/if}
 

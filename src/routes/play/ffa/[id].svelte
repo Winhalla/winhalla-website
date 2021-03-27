@@ -431,7 +431,7 @@
                              out:fade={{duration: 350}}></div>
                         <div
                             class="bg-background w-full md:w-3/4  lg:w-auto min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
-                            in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>
+                            in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
                             <div class="-mt-32 flex items-center h-full">
                                 <button class="focus:outline-none h-full" on:click={() => handleQuestsPanel()}>
                                     <svg class="w-6 fill-current text-font ml-8" viewBox="0 0 24 24"

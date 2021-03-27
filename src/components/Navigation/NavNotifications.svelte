@@ -5,6 +5,7 @@
     import cookie from "cookie";
     import { counter } from "../store";
 
+    export let page;
     export let data;
     let newNotifications = false;
     let opened = false;
@@ -237,7 +238,7 @@
                             <p
                                 class="ml-2 mr-6 lg:mr-12
                                 text-default">
-                                {data.event.descParts[0]}<u>{data.event.percentage-100}%</u>{data.event.descParts[1]}
+                                {data.event.descParts[0]}<u>{data.event.percentage - 100}%</u>{data.event.descParts[1]}
                             </p>
                         </div>
                     </div>
@@ -286,9 +287,9 @@
                                     py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
-                                    <button
-                                        on:click={() => delNotif(notification._id,i)}
-                                        class="p-2 absolute top-0 right-0 text-light
+                                    <a href="{page}"
+                                       on:click={() => delNotif(notification._id,i)}
+                                       class="p-2 absolute top-0 right-0 text-light
                                     hover:text-font">
                                         <svg
                                             class="w-3 h-3 fill-current "
@@ -300,7 +301,7 @@
                                             2.4 2.4 9.6-9.6 9.6 9.6
                                             2.4-2.4-9.6-9.6z" />
                                         </svg>
-                                    </button>
+                                    </a>
                                 </a>
                             {/each}
                         </div>

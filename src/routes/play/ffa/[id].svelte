@@ -291,6 +291,7 @@
     {#if info}
         <Infos message="Thanks for watching a video" pushError={info} />
     {/if}
+    <AdblockAlert user="{userPlayer}" />
     <div class="h-full  ">
 
         {#if match}
@@ -310,7 +311,6 @@
                                 {#if countDown}{@html countDown}{:else}Loading...{/if}
                             </p>
                         </div>
-                        <AdblockAlert user="{userPlayer}" />
                         {#if !isSpectator}
                             <div
                                 class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row

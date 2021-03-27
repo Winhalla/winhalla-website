@@ -116,13 +116,14 @@
         <p class:hidden={!errorDetailsOpen} class="text-light">{@html error} <br><br> {@html gameModesError}</p>
     </div>
 {:else}
+    <AdblockAlert quests={quests} />
     <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
         <div class="text-center lg:text-left">
             <h1 class="text-6xl leading-snug lg:leading-normal">
                 Choose a game mode
             </h1>
         </div>
-        <AdblockAlert quests={quests} />
+
         <div
             class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">

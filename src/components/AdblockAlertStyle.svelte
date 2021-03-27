@@ -6,9 +6,8 @@
     export let hasBeenDestroyed;
     onMount(() => {
         setInterval(() => {
+            //check if elements exists
             hasBeenDestroyed = !document.getElementById("ampfaPde15Sq532maJs");
-            console.log("tt", hasBeenDestroyed);
-
         }, 5010);
     });
 

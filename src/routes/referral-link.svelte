@@ -56,7 +56,7 @@
                 <h1
                     class="text-6xl mb-8 lg:mb-8 leading-snug
                         lg:leading-normal">
-                    Share your affiliate link
+                    Share your referral link
                 </h1>
             </div>
             <div class="flex flex-col md:flex-row items-center">

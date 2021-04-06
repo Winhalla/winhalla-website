@@ -10,7 +10,7 @@
     .button {
         display: inline-block;
         padding: 0.75rem 2.5rem;
-        border-radius: 0.125rem;
+        border-radius: 0.25rem;
         font-size: 1.25rem;
         background-color: #3d72e4;
     }

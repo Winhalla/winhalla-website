@@ -34,9 +34,8 @@
 
     .card {
         -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-
-        @apply bg-variant rounded;
+        box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 8px;
+        @apply bg-variant rounded-2xl;
     }
 
     .scrollbar::-webkit-scrollbar {

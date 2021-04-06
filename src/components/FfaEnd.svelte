@@ -28,6 +28,10 @@
         @apply text-primary font-normal;
     }
 
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.55) 5px 5px 8px;
+    }
+
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -71,24 +75,6 @@
         );
     }
 
-    .tooltiptext {
-        width: 120px;
-        background-color: rgb(17, 17, 17);
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        position: absolute;
-        z-index: 50;
-        bottom: 150%;
-        left: 50%;
-        margin-left: -60px;
-    }
-
-    .tooltiptext {
-        visibility: visible;
-    }
-
     .tooltip::after {
         content: "";
         position: absolute;
@@ -120,10 +106,8 @@
             {#each data[0] as winner,i}
                 <div class:lg:ml-10={i>0}>
                     <div>
-                        <div class="ffa-player card user"
-                             style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
-                            <div class="max-w-full h-full"
-                                 style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                        <div class="ffa-player card user">
+                            <div class="max-w-full h-full bg-gradient-to-b from-primary to-legendary rounded-lg"></div>
                             <div
                                 class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                             <img
@@ -147,10 +131,8 @@
                 {#each data[1] as winner,i}
                     <div class="mt-10 lg:ml-10">
                         <div>
-                            <div class="ffa-player card user"
-                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
-                                <div class="max-w-full h-full"
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                            <div class="ffa-player card user">
+                                <div class="max-w-full h-full bg-gradient-to-b from-primary to-epic  rounded-lg"></div>
                                 <div
                                     class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
@@ -175,10 +157,8 @@
                 {#each data[2] as winner,i}
                     <div class="mt-10 lg:mt-20 lg:ml-10">
                         <div>
-                            <div class="ffa-player card user"
-                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
-                                <div class="max-w-full h-full"
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                            <div class="ffa-player card user">
+                                <div class="max-w-full h-full bg-gradient-to-b from-primary to-green  rounded-lg"></div>
                                 <div
                                     class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img

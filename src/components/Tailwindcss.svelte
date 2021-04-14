@@ -10,7 +10,7 @@
     .button {
         display: inline-block;
         padding: 0.75rem 2.5rem;
-        border-radius: 0.125rem;
+        border-radius: 0.25rem;
         font-size: 1.25rem;
         background-color: #3d72e4;
     }
@@ -34,9 +34,8 @@
 
     .card {
         -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-
-        @apply bg-variant rounded;
+        box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 8px;
+        @apply bg-variant rounded-2xl;
     }
 
     .scrollbar::-webkit-scrollbar {

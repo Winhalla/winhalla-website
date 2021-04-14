@@ -20,6 +20,7 @@
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
+    import gradientGenerator from "../../../utils/gradientGenerator";
 
     const { page } = stores();
 
@@ -55,6 +56,7 @@
     let isSpectator;
     let isLoadingOpen = true;
 
+    let gradientList;
     onMount(() => {
         pages = page.subscribe(async value => {
             isSpectator = value.query.spectator === "true";
@@ -77,6 +79,8 @@
 
 
             try {
+                //Generate gradients
+                gradientList = gradientGenerator(8);
 
                 user = await user;
                 user = user.steam;
@@ -135,6 +139,8 @@
                 }
                 error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
             }
+
+
         });
     });
 
@@ -224,14 +230,17 @@
     function handleQuestsPanel() {
         isQuestsPanelOpen = !isQuestsPanelOpen;
     }
+
 </script>
 
 <style>
     b {
-        @apply text-primary font-normal;
+        @apply text-variant font-normal;
     }
 
-
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.55) 5px 5px 8px;
+    }
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -246,9 +255,9 @@
         background: linear-gradient(
                 to bottom,
                 rgba(23, 23, 26, 0.25) 0%,
-                rgba(23, 23, 26, 0.35),
-                rgba(23, 23, 26, 0.45) 75%,
-                rgba(23, 23, 26, 0.5) 100%
+                rgba(23, 23, 26, 0.39),
+                rgba(23, 23, 26, 0.33) 75%,
+                rgba(23, 23, 26, 0.38) 100%
         );
     }
 
@@ -351,10 +360,8 @@
                     h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <div class="mt-8 lg:mt-25 ffa-player card user"
-                                 style="background: linear-gradient(to bottom,rgba(23, 23, 26, 0.55) 0%,rgba(23, 23, 26, 0.75),rgba(23, 23, 26, 0.85) 75%,rgba(23, 23, 26, 0.93) 100%);">
-                                <div class="max-w-full h-full"
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"></div>
+                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                                <div class="max-w-full h-full bg-gradient-to-b {gradientList[0]} rounded-lg"></div>
                                 <div
                                     class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
@@ -386,10 +393,10 @@
                             <div
                                 class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
-                                {#each players as player}
+                                {#each players as player, i}
                                     <div class="ffa-player card lg:mr-12 mb-8">
-                                        <div class="max-w-full h-full "
-                                             style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"></div>
+                                        <div class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                             ></div>
                                         <div
                                             class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
                                         <img

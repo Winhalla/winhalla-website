@@ -18,7 +18,7 @@
         @apply underline;
     }
 </style>
-<div class="px-100 pt-20">
+<div class="lg:px-100 lg:pt-20 px-8 py-4">
     <h1 class="text-5xl text-primary pb-1">Legal</h1>
     <h2>Host provider info</h2>
     <p>Google Cloud Platform (Google LLC)</p>

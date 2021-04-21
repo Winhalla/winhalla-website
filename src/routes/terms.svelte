@@ -19,7 +19,7 @@
         @apply underline;
     }
 </style>
-<div class="h-full px-100 pt-30"
+<div class="h-full lg:px-100 px-5 lg:pt-30 pb-30 pt-8 "
      style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
     <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the https://winhalla.app
         website (the "Service") operated by winhalla.app ("us", "we", or "our").
@@ -100,5 +100,5 @@
 
     <h2>Contact Us</h2>
 
-    <p class="mb-40">If you have any questions about these Terms, please <a href="mailto:contact@winhalla.app">contact us</a>.</p>
+    <p>If you have any questions about these Terms, please <a href="mailto:contact@winhalla.app">contact us</a>.</p>
 </div>

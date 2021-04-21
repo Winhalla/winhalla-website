@@ -15,26 +15,34 @@
     import { apiUrl } from "../utils/config";
 
     export let isVisible;
+    let waitingTermsAcceptations;
     let generatedLink;
     onMount(async () => {
-        let cookies = cookie.parse(document.cookie);
+
         const user = await callApi("get", "/account");
         if (!user || (user.user && !isVisible)) {
             console.log("lol");
             return goto("/play");
         }
         if (!user.user) {
-            console.log("NNOO", await callApi("post", "/auth/createAccount?linkId=" + cookies.affiliateLinkId));
-            console.log("tki", await callApi("post", "/auth/createAccount?linkId=" + cookies.affiliateLinkId));
-            generatedLink = cookies.affiliateLinkId;
-            document.cookie = cookie.serialize("affiliateLinkId", 0, { maxAge: 1 });
-            isVisible = true;
+            waitingTermsAcceptations = true;
         } else {
             generatedLink = user.user.linkId;
         }
-        generatedLink = `${apiUrl}/link/${generatedLink}`;
+        generatedLink = `http://localhost:3000/link/${generatedLink}`;
         counter.set({ refresh: true });
     });
+    async function createAccount(){
+        let cookies = cookie.parse(document.cookie);
+        await callApi("post", "/auth/createAccount?linkId=" + cookies.affiliateLinkId);
+        await callApi("post", "/auth/createAccount?linkId=" + cookies.affiliateLinkId);
+        generatedLink = cookies.affiliateLinkId;
+        document.cookie = cookie.serialize("affiliateLinkId", 0, { maxAge: 1 });
+        isVisible = true;
+        waitingTermsAcceptations = false
+        generatedLink = `http://localhost:3000/link/${generatedLink}`;
+        counter.set({ refresh: true })
+    }
 </script>
 <!--
 <Loading data="Logging in..." />
@@ -161,6 +169,14 @@
                 Finish
             </a>
         </div>
+    </div>
+
+{:else if waitingTermsAcceptations}
+    <div class="flex items-center justify-center mt-30 flex-col">
+            <p class="text-3xl">By clicking the button below you accept our <a href="/terms" class="underline text-primary">terms
+                and conditions </a>,
+                 our <a href="/privacy" class="underline text-primary">Privacy policy</a> and the creation of an account</p>
+            <button on:click={createAccount} class="button button-brand mt-10">Create account</button>
     </div>
 {:else}
     <Loading data="Logging in..." />

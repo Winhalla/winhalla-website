@@ -6,11 +6,6 @@
         @apply text-4xl mt-6 mb-3 underline;
     }
 
-    ul {
-        list-style-type: disc;
-        @apply ml-6 my-3;
-    }
-
     div {
         background-color: #FFFFFF;
         color: #000000
@@ -24,7 +19,7 @@
         @apply underline;
     }
 </style>
-<div class="h-full px-100 pt-30 "
+<div class="h-full px-100 pt-30"
      style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
     <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the https://winhalla.app
         website (the "Service") operated by winhalla.app ("us", "we", or "our").
@@ -101,9 +96,9 @@
         your right to access the site, causing you to loose all data associated with your account, including but not limited to Coins.</p>
     <p><strong>Rewards. </strong> Rewards are given only if you have enough Coins AND if you have earned them without
         cheat or abuse of any kind. After buying an item in our Store, you will recieve an email in the adress you
-        specified when buying the item. The Service is not responsible if the email you entered is not correct.</p>
+        specified when buying the item. The Service is not responsible if the email you entered is not correct or is not yours.</p>
 
     <h2>Contact Us</h2>
 
-    <p>If you have any questions about these Terms, please contact us.</p>
+    <p class="mb-40">If you have any questions about these Terms, please <a href="mailto:contact@winhalla.app">contact us</a>.</p>
 </div>

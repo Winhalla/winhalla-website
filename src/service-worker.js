@@ -46,11 +46,19 @@ self.addEventListener("fetch", event => {
 
     if (url.port === self.location.port && url.host === self.location.host && cached.has(url.pathname)) {
         const asset = caches.match(event.request);
-        if (asset) {
+        if (asset instanceof Response) {
             event.respondWith(asset);
-            //console.log("cache classic " + url.pathname);
-            return;
+        } else {
+            event.waitUntil(
+                caches
+                    .open(ASSETS)
+                    .then(cache => cache.addAll(to_cache))
+                    .then(() => {
+                        self.skipWaiting();
+                    })
+            );
         }
+        return
     }
 
     // This specify to ignore lobby pages (because they are too much dynamical)

@@ -27,8 +27,6 @@
                     </div>
                     <div class="ml-8 lg:mx-8">
                         <h3 class="text-primary">Info</h3>
-                        <a href="/help" class="block hover:text-shadow-link-hover">How
-                            does it work</a>
                         <a
                             href="/terms"
                             class="block hover:text-shadow-link-hover">Terms of use</a>
@@ -39,9 +37,6 @@
                     <a
                         href="mailto:contact@winhalla.app"
                         class="block hover:text-shadow-link-hover">Contact us</a>
-                    <a
-                        href="/about"
-                        class="block hover:text-shadow-link-hover">About</a>
                 </div>
             </div>
         </div>

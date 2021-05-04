@@ -18,7 +18,7 @@
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
-
+    let isAdmin;
 
     let infos;
     let poll;
@@ -49,6 +49,9 @@
             currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
         user = tempUserData.steam;
+        if (user._json.steamid === "76561198417157310" || user._json.steamid === "76561198417157310") {
+            isAdmin = true;
+        }
         userCoins = tempUserData.user.coins;
 
         isUserLoggedIn = tempUserData.user
@@ -60,6 +63,7 @@
 
     const resetNav = async value => {
         if (value.refresh === true) return;
+        if (isAdmin) return onMountFx(value.preview);
         user = await value.content;
         if (firstLoad === true) return (firstLoad = false);
         calculateProperties(user);
@@ -84,20 +88,33 @@
         }
     }
 
-    onMount(async () => {
+    async function onMountFx(adminData) {
         try {
-            infos = await callApi("get", "/informations");
+            if (!adminData)
+                infos = await callApi("get", "/informations");
+            else {
+                infos = { event: adminData };
+            }
 
             /*currEvent = information.filter(i => i.type === "event")[0];
             isEventBannerOpen = true;
             notificationsObj.event = currEvent;*/
             if (Date.now() <= infos.event.expiration) {
-                console.log(isEventBannerOpen);
                 let { name, description, percentage } = infos.event;
                 let descParts = description.split("%%");
                 currEvent = { name, descParts, percentage };
-                console.log("currevent", currEvent);
+                console.log(descParts);
                 isEventBannerOpen = true;
+                if (isAdmin) {
+                    notificationsObj.event = {
+                        id: "event",
+                        name: currEvent.name,
+                        descParts: currEvent.descParts,
+                        percentage: currEvent.percentage,
+                        type: "event",
+                        autoShow: true
+                    };
+                }
             }
             infos = infos.information;
             if (infos instanceof Error) {
@@ -106,7 +123,7 @@
         } catch (e) {
             infos = "network";
         }
-
+        if (adminData) return;
         setTimeout(async () => {
             try {
                 if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
@@ -120,7 +137,10 @@
         await user;
         calculateProperties(user);
         loaded = true;
-    });
+    }
+
+    onMount(onMountFx);
+
 </script>
 
 <style>

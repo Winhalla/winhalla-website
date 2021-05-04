@@ -4,6 +4,7 @@
     import { fade, fly } from "svelte/transition";
     import { callApi } from "../../utils/api";
     import { config } from "./storeAdmin";
+    import { counter } from "../store";
 
     export let popup;
     export let configs;
@@ -19,6 +20,28 @@
 
     function handlePreview() {
         popup.isPreviewing = !popup.isPreviewing;
+        if(popup.thing === "event" && popup.isPreviewing) handleKeyDown()
+        else if (popup.thing === "event") counter.set({content:user,refresh:false})
+    }
+    let user
+    function handleKeyDown(){
+        setTimeout(() => {
+            if (popup.thing === "event" && popup.isPreviewing) {
+
+                let unsub = counter.subscribe((v) => {
+                    user = v
+                })
+                unsub()
+                let event = {
+                    name: popup.fields[0].value,
+                    duration: popup.fields[1].value,
+                    percentage: parseInt(popup.fields[2].value) + 100,
+                    description: popup.fields[3].value,
+                    expiration: 999999999999999 // never expires
+                };
+                counter.set({ refresh: false, content: user, preview: event })
+            }
+        },1)
     }
 
     function handleConfirm() {
@@ -89,10 +112,10 @@
     }
 </script>
 {#if popup.type}
-    <div class="fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"
+    <div class="fixed flex w-screen h-screen bg-black opacity-90 z-30 left-0 top-0"
          transition:fade={{duration:200}}>
     </div>
-    <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
+    <div class="fixed flex w-screen h-screen z-40 left-0 top-0"
          transition:fade={{duration:200}}>
         <div
             class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
@@ -128,8 +151,7 @@
                             {/if}
                         {:else}
                             <h3 class="text-3xl mt-8">{field.name}</h3>
-                            <input type="text" class="text-black rounded"
-                                   rows="{field.name.includes('description')?5:1}" size="40"
+                            <input type="text" class="text-black rounded" on:keydown={handleKeyDown} size="40"
                                    placeholder="{field.name}" bind:value={field.value} />
 
                         {/if}
@@ -149,7 +171,7 @@
                             on:click={()=>popup={}}>
                         Cancel
                     </button>
-                    {#if (popup.thing === "poll" || popup.thing === "info") && popup.type === "creation"}
+                    {#if (popup.thing === "poll" || popup.thing === "info" || popup.thing === "event") && popup.type === "creation"}
                         <button class="button button-brand mt-8 ml-5" style="background-color: #ff8f0f"
                                 on:click={handlePreview}>
                             {popup.isPreviewing ? "Stop" : ""} Preview
@@ -178,6 +200,12 @@
                     data={[{name: popup.fields[0].value, duration: popup.fields[1].value, description: popup.fields[2].value }]}
                     isPreviewing />
             </div>
-            {/if}
+        {:else if popup.thing === "event"}
+            <div
+                class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                transition:fly={{ y:-200, duration: 500 }}>
+
+            </div>
+        {/if}
     {/if}
 {/if}

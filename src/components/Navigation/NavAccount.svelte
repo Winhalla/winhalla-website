@@ -49,7 +49,7 @@
             dropdown z-50 lg:border lg:border-primary">
         <a class="block text-lg border-l border-red-600 py-3
                 lg:hover:bg-primary lg:hover:text-font px-3 rounded-sm
-                lg:border-none" href="/referral-link?visible=true">Referral link</a>
+                lg:border-none" href="/referral-link?visible=true">Invite friends and earn rewards</a>
         <a
             class="block text-red-500 text-lg border-l border-red-600 py-3
                 lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm

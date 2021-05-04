@@ -245,7 +245,7 @@
                                             <li><b>BASE REWARD:</b>  {winner.coinsEarned ? Math.round(((winner.coinsEarned / winner.adMultiplier) * (1 - (winner.linkMultiplier / 100)) * (1 - (winner.eventMultiplier / 100))) * 10) / 10 : 0 }</li>
                                             <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier + 1}</li>
 
-                                            <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">REFERRAL LINK:</b> +{winner.linkMultiplier}
+                                            <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">FRIENDS INVITED:</b> +{winner.linkMultiplier}
                                                 %</li>
 
                                             <li class:line-through={!winner.eventMultiplier}><b style="color: #ee38ff">EVENT:</b> +{winner.eventMultiplier}

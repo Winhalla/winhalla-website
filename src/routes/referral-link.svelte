@@ -66,7 +66,7 @@
                     <h1
                         class="text-6xl mb-8 lg:mb-8 leading-snug
                         lg:leading-normal">
-                        Share your referral link
+                        Invite friends and earn rewards
                     </h1>
                 </div>
                 <div class="flex flex-col md:flex-row items-center">

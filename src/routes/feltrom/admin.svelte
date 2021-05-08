@@ -51,7 +51,7 @@
 
         bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
         bannedOnes.forEach((ban, i) => {
-            let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0]
+            let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0];
             let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
             if (isNaN(winrate)) winrate = 0;
             bannedOnes[i] = user;
@@ -122,7 +122,7 @@
             console.log(expiration);
         }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
-        login({ users:true,commands:false });
+        login({ users: true, commands: false });
         isSavingConfig = false;
     }
 </script>
@@ -230,10 +230,13 @@
         </div>
     {/if}
     {#if newConfig }
-        <div class="lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full">
-            <div class="flex justify-between mb-12">
-                <h1 class="text-6xl">ADMIN DASHBOARD</h1>
-                <button class="button button-brand" on:click={logout}>Logout</button>
+        <div class="lg:block px-4 lg:px-24 mt-7 lg:mt-12 h-full w-full">
+            <div class="lg:flex lg:justify-between mb-12">
+                <div class="flex">
+                    <h1 class="text-6xl mx-auto">ADMIN DASHBOARD</h1></div>
+                <div class="flex">
+                    <button class="button button-brand mx-auto" on:click={logout}>Logout</button>
+                </div>
             </div>
 
             <h2 class="text-3xl mb-2">View :

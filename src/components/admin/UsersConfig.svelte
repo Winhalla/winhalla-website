@@ -28,7 +28,7 @@
         users = users;
     }
 </script>
-<div class="w-full h-full block">
+<div class="w-full h-full block bg-background">
     {#if normalUsersShown || suspiciousBitches.length > 0}
         <div class="text-2xl mb-5 flex overflow-hidden">
             <h3 class="">Sort by:</h3>

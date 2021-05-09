@@ -5,6 +5,7 @@
     import cookie from "cookie";
     import { counter } from "../store";
 
+    export let page;
     export let data;
     let newNotifications = false;
     let opened = false;
@@ -85,9 +86,9 @@
         if (id === 2) return "match";
     };
 
-    function delNotif(i) {
-        callApi("post", "/deleteNotification/" + i);
-        data.notifications.splice(i, 1);
+    function delNotif(id, index) {
+        callApi("post", "/deleteNotification/" + id);
+        data.notifications.splice(index, 1);
         data = data;
     }
 </script>
@@ -108,6 +109,22 @@
     .notification {
         border-radius: 10px;
         @apply flex justify-between px-4 py-3 mt-3 mb-1 relative overflow-hidden w-full;
+    }
+
+    .gradient {
+        background-image: linear-gradient(to right, #3d72e4, #ee38ff, #3d72e4, #ee38ff);
+        background-size: 300%;
+        animation: gradient-animation 4.5s linear infinite;
+    }
+
+    @keyframes gradient-animation {
+
+        0% {
+            background-position: right;
+        }
+        100% {
+            background-position: left;
+        }
     }
 </style>
 
@@ -189,27 +206,48 @@
                     <span class="flex">
                         <span
                             class="inline-flex animate-ping absolute top-0
-                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75" />
+                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75"></span>
                         <span
                             class="inline-flex absolute top-0 right-0 w-2 h-2
-                            rounded-full bg-legendary" />
+                            rounded-full bg-legendary"></span>
                     </span>
                 {/if}
             </div>
         </div>
     </div>
-
-    <div
-        class:hidden={!isDropdownOpen}
-        class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
+    {#if isDropdownOpen || data?.event?.autoShow}
+        <div
+            class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
         border-primary overflow-y-auto max-h-screen-60 scrollbar"
-        use:clickOutside
-        on:click_outside={() => (isDropdownOpen = false)}>
-        <div>
-            {#if data.notifications}
-                <div
-                    on:click={() => {
+            use:clickOutside
+            on:click_outside={() => (isDropdownOpen = false)}>
+            <div>
+                {#if data.event}
+                    <div class="">
+                        <p class="ml-1">EVENTS</p>
+                        <div class="card notification flex items-center gradient">
+
+                            <div class="">
+                                {#if data.event.name}
+                                    <p class="ml-2 mr-6 lg:mr-12 text-3xl text-extra-light">
+                                        {data.event.name}
+                                    </p>
+                                {/if}
+                                <p
+                                    class="ml-2 mr-6 lg:mr-12
+                                text-default">
+                                    {data.event.descParts[0]}<u>{data.event.percentage - 100}
+                                    %</u>{data.event.descParts[1]}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+                {#if data.notifications}
+                    <div
+                        class="mt-5"
+                        on:click={() => {
                         setTimeout(() => {
                             if (opened === true) {
                                 document.cookie = cookie.serialize(
@@ -225,76 +263,83 @@
                             }
                         }, 10);
                     }}>
-                    <p class="ml-1">Notifications</p>
-                    <div>
-                        {#each data.notifications as notification, i}
-                            <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
-                                class="card notification flex items-center
+                        {#if data.notifications.length > 0}
+                            <p class="ml-1">Notifications</p>
+                            <div>
+                                {#each data.notifications as notification, i}
+                                    <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
+                                       class="card notification flex items-center
                                 relative" class:cursor-default={notification.id === 2}>
-                                <div class="progress-container">
-                                    <p class="mr-6 lg:mr-12 text-2xl">
-                                        {notification.message}
-                                    </p>
-                                    {#if notification.tip}
-                                        <p
-                                            class=" mr-6 lg:mr-12 text-light
+                                        <div class="progress-container">
+                                            <p class="mr-6 lg:mr-12 text-2xl">
+                                                {notification.message}
+                                            </p>
+                                            {#if notification.tip}
+                                                <p
+                                                    class=" mr-6 lg:mr-12 text-light
                                             text-lg">
-                                            {notification.tip}
-                                        </p>
-                                    {/if}
-                                </div>
-                                <span
-                                    class="quest-goal text-sm text-font px-2
+                                                    {notification.tip}
+                                                </p>
+                                            {/if}
+                                        </div>
+                                        <span
+                                            class="quest-goal text-sm text-font px-2
                                     py-1 bg-legendary rounded-lg b">
                                     {idToType(notification.id)}
                                 </span>
-                                <button
-                                    on:click={() => delNotif(i)}
-                                    class="p-2 absolute top-0 right-0 text-light
+                                        <a href="{page}"
+                                           on:click={() => delNotif(notification._id,i)}
+                                           class="p-2 absolute top-0 right-0 text-light
                                     hover:text-font">
-                                    <svg
-                                        class="w-3 h-3 fill-current "
-                                        viewBox="0 0 28 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m24 2.4-2.4-2.4-9.6
+                                            <svg
+                                                class="w-3 h-3 fill-current "
+                                                viewBox="0 0 28 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="m24 2.4-2.4-2.4-9.6
                                             9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
                                             2.4 2.4 9.6-9.6 9.6 9.6
                                             2.4-2.4-9.6-9.6z" />
-                                    </svg>
-                                </button>
-                            </a>
-                        {/each}
+                                            </svg>
+                                        </a>
+                                    </a>
+                                {/each}
+                            </div>
+                        {:else}
+                            <p class="ml-1 text-center mt-4 text-green text-3xl">No new notifications</p>
+                        {/if}
                     </div>
-                </div>
-            {/if}
-            {#if data.inGame}
-                <div class="mt-5">
-                    <p class="ml-1">Matchs in progress</p>
-                    <div>
-                        {#each data.inGame as match}
-                            <a
-                                class="card notification flex items-center"
-                                href="/play/ffa/{match.id}">
-                                <div class="progress-container">
-                                    <p class="ml-2 mr-6 lg:mr-12 text-2xl">
-                                        {match.type}
-                                    </p>
-                                    <p
-                                        class="ml-2 mr-6 lg:mr-12 text-light
+                {/if}
+                {#if data.inGame}
+                    <div class="mt-5">
+                        {#if data.inGame.length > 0}
+                            <p class="ml-1">Matchs in progress</p>
+                            <div>
+                                {#each data.inGame as match}
+                                    <a
+                                        class="card notification flex items-center"
+                                        href="/play/ffa/{match.id}">
+                                        <div class="progress-container">
+                                            <p class="ml-2 mr-6 lg:mr-12 text-2xl">
+                                                {match.type}
+                                            </p>
+                                            <p
+                                                class="ml-2 mr-6 lg:mr-12 text-light
                                         text-lg">
-                                        {match.timer}
-                                    </p>
-                                </div>
-                                <p class="quest-goal text-xl text-primary">
-                                    <!--{#if match.hasStarted}{/if}-->
-                                    {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}
-                                </p>
-                            </a>
-                        {/each}
+                                                {match.timer}
+                                            </p>
+                                        </div>
+                                        <p class="quest-goal text-xl text-primary">
+                                            <!--{#if match.hasStarted}{/if}-->
+                                            {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}
+                                        </p>
+                                    </a>
+                                {/each}
+                            </div>
+                        {/if}
                     </div>
-                </div>
-            {/if}
+                {/if}
+            </div>
         </div>
-    </div>
+    {/if}
 </div>

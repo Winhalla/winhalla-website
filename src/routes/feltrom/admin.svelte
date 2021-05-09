@@ -10,6 +10,7 @@
     import ConfigEditor from "../../components/admin/ConfigEditor.svelte";
     import UsersConfig from "../../components/admin/UsersConfig.svelte";
     import PopupAdmin from "../../components/admin/PopupAdmin.svelte";
+    import StatsPanel from "../../components/admin/StatsPanel.svelte";
 
     let configs;
     let isAuthorizedUser = false;
@@ -17,7 +18,7 @@
     let otp = "";
     let pwd = "a";
     let users;
-    let activePanel = "config";
+    let activePanel = "stats";
     let newConfig;
     let goldEvent = [];
     let loadingUsers;
@@ -51,7 +52,7 @@
 
         bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
         bannedOnes.forEach((ban, i) => {
-            let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0]
+            let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0];
             let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
             if (isNaN(winrate)) winrate = 0;
             bannedOnes[i] = user;
@@ -122,7 +123,7 @@
             console.log(expiration);
         }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
-        login({ users:true,commands:false });
+        login({ users: true, commands: false });
         isSavingConfig = false;
     }
 </script>
@@ -230,10 +231,13 @@
         </div>
     {/if}
     {#if newConfig }
-        <div class="lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full">
-            <div class="flex justify-between mb-12">
-                <h1 class="text-6xl">ADMIN DASHBOARD</h1>
-                <button class="button button-brand" on:click={logout}>Logout</button>
+        <div class="lg:block px-4 lg:px-24 mt-7 lg:mt-12 h-full w-full">
+            <div class="lg:flex lg:justify-between mb-12">
+                <div class="flex">
+                    <h1 class="text-6xl mx-auto">ADMIN DASHBOARD</h1></div>
+                <div class="flex">
+                    <button class="button button-brand mx-auto" on:click={logout}>Logout</button>
+                </div>
             </div>
 
             <h2 class="text-3xl mb-2">View :
@@ -245,6 +249,9 @@
                 <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "commands"}
                         class:text-4xl={activePanel === "commands"}
                         on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>
+                <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "stats"}
+                        class:text-4xl={activePanel === "stats"}
+                        on:click={()=>{activePanel = "stats";if(!commands)loadCommands()}}>STATS</strong>
             </h2>
             <div class="w-full">
                 {#if configs && activePanel === "config"}
@@ -265,6 +272,8 @@
                             <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}" otp={otp} />
                         </div>
                     {/if}
+                    {:else if activePanel === "stats"}
+                    <StatsPanel pwd="{pwd}" otp={otp}/>
                 {/if}
 
 

@@ -28,7 +28,7 @@
         users = users;
     }
 </script>
-<div class="w-full h-full block">
+<div class="w-full h-full block bg-background">
     {#if normalUsersShown || suspiciousBitches.length > 0}
         <div class="text-2xl mb-5 flex overflow-hidden">
             <h3 class="">Sort by:</h3>
@@ -57,7 +57,7 @@
             <p class="text-3xl mt-5 mb-2 ml-2">
                 <d class="text-accent">{totalCoins}</d>
                 W In circulation equals
-                <d class="text-accent">{parseFloat((totalCoins / 10750).toFixed(4))}</d>
+                <d class="text-accent">{parseFloat((totalCoins / 5000).toFixed(4))}</d>
                 €
             </p>
             {#if suspiciousBitches.length > 0}

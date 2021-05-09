@@ -1,2 +1,20 @@
-[config]
-SCM_DO_BUILD_DURING_DEPLOYMENT=true
+<div class="static flex">
+            <div class="fixed flex w-screen h-screen bg-black opacity-80 z-40 left-0 top-0"
+                 transition:fade={{duration:200}}>
+            </div>
+            <div class="fixed top-0 left-0 flex w-screen h-screen z-50">
+                <div class="mx-auto rounded-lg p-16 my-auto border-primary border bg-background text-center"
+                     transition:fade={{duration:200}}>
+
+                    <h1 class=" text-6xl   mt-8 sm:mt-13">MULTIPLY YOUR REWARDS</h1>
+                    <p class="text-3xl mt-7 lg:mt-12 max-w-">Want to obtain <b>x2 coins</b> for this <b>quest</b> ?</p>
+                    <p class="text-2xl mt-4 text-mid-light italic">Watch a short video by clicking the button below!</p>
+                    <div class="flex justify-center text-background mt-4">
+                        <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
+                                      bind:info={info} collect={collect} goal="earnMoreQuests"
+                                      bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
+                        <button on:click={denyAd} class="button button-brand text-font ml-4 px-1" style="padding-left: 1.25rem;padding-right: 1.25rem">No
+                            thanks
+                        </button>
+                    </div>
+                </div>

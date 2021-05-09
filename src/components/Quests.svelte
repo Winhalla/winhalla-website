@@ -1,33 +1,33 @@
 <script>
-    import { callApi, getUser } from "../utils/api";
+    import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
     import { counter } from "./store";
-    import { onMount, onDestroy } from "svelte";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../utils/config";
-    import Infos from "./Infos.svelte";
-    import ErrorAlert from "./ErrorAlert.svelte";
+    import PlayAdButton from "./PlayAdButton.svelte";
+    import CoinIcon from "./CoinIcon.svelte";
+    import { fade, fly } from "svelte/transition";
 
     let countDown = [{}, {}];
     export let data;
+    console.log(data);
     let error;
     let socket;
     let adError;
     let info;
-    let user;
     let waitingAd;
     let waitingAdAccept = false;
     let interval;
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
-            if (reward == 100) return "primary";
-            if (reward == 200) return "epic";
-            if (reward == 400) return "legendary";
+            if (reward === 20) return "primary";
+            if (reward === 40) return "epic";
+            if (reward === 60) return "legendary";
         } else {
-            if (reward == 300) return "primary";
-            if (reward == 500) return "epic";
-            if (reward == 1000) return "legendary";
+            if (reward === 100) return "primary";
+            if (reward === 200) return "epic";
+            if (reward === 400) return "legendary";
         }
     };
 
@@ -100,62 +100,6 @@
     } catch (e) {
         error = e;
     }
-    onMount(async () => {
-        user = await getUser();
-        socket = io.io(apiUrl);
-        let stop = 0;
-        let advideostate = 0;
-        let tempNb;
-        let goal;
-        interval = setInterval(() => {
-            try {
-                if (stop > 0) {
-                    return stop--;
-                }
-                tempNb = JSON.parse(document.getElementById("transfer").value);
-                goal = tempNb.goal ? tempNb.goal : goal;
-                tempNb = tempNb.state;
-                if (tempNb !== advideostate) {
-                    socket.emit("advideo", tempNb === 1 ? {
-                        state: 1,
-                        steamId: user.steam.id,
-                        shopItemId: 0,
-                        goal: goal
-                    } : { state: tempNb, steamId: user.steam.id });
-                }
-                advideostate = tempNb;
-            } catch (e) {
-                
-            }
-        }, 1200);
-        socket.on("advideo", async (e) => {
-            console.log(e);
-            if (e.code === "error") {
-                console.log(e.message);
-                stop = 2;
-                advideostate = 0;
-                tempNb = 0;
-                adError = e.message;
-                setTimeout(() => {
-                    adError = undefined;
-                }, 12000);
-            } else if (e.code === "success") {
-                stop = 2;
-                info = e.message;
-                advideostate = 0;
-                tempNb;
-                setTimeout(() => {
-                    info = undefined;
-                }, 5000);
-                counter.set({ refresh: true });
-                if (waitingAd) {
-                    collect(waitingAd.type, waitingAd.index, false);
-                }
-            } else {
-                console.log("code not supported");
-            }
-        });
-    });
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -204,31 +148,33 @@
         }
     };
 
-    function acceptAd(accepted) {
-        if (accepted) document.getElementById("playAd").onclick("earnMoreQuests");
-        if (!accepted) {
-            collect(waitingAd.type,waitingAd.index,false)
-        }
+    function denyAd() {
+        collect(waitingAd.type, waitingAd.index, false);
+        waitingAd = undefined;
         waitingAdAccept = false;
     }
 
-    async function collect(type, index, possibleAd) {
-        let probability;
-        if (possibleAd) probability = Math.floor(Math.random() * 3);
-        if (probability === 2) {
+    async function collect(type, id, possibleAd) {
+        if (possibleAd) {
+            if (!socket) socket = io(apiUrl);
             waitingAdAccept = true;
-            waitingAd = { type, index };
-            console.log("waitingAdAccept");
+            waitingAd = { type, index: id };
         } else {
-            await callApi("post", `solo/collect?type=${type}&index=${index}`);
+            await callApi("post", `solo/collect?type=${type}&id=${id}`);
+            waitingAd = undefined;
+            waitingAdAccept = undefined;
             counter.set({ "refresh": true });
-            data.collected[type].push(...data.finished[type].splice(index, 1));
+            data.collected[type].push(...data.finished[type].splice(id, 1));
             data = data;
         }
     }
 </script>
 
 <style>
+    b {
+        @apply font-normal text-primary;
+    }
+
     .quest {
         border-radius: 10px;
         @apply relative overflow-hidden w-full my-4;
@@ -269,28 +215,52 @@
         color: #e2e2ea;
     }
 
+    .button-alternative {
+        display: inline-block;
+        padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
+        border-radius: 0.125rem;
+        border-width: 1px;
+        border-color: #3d72e4;
+        font-size: 1.25rem;
+    }
 </style>
 
 <!--TODO: Afficher reward des quêtes sur mobile-->
-
+<svelte:head>
+    <!--Video ads-->
+    {#if waitingAd}
+        <script async src="https://cdn.stat-rock.com/player.js"></script>
+    {/if}
+</svelte:head>
 
 <div>
-    {#if waitingAdAccept}
-        <div class="absolute top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center">
-            <style>
-                .button-alternative {
-                    display: inline-block;
-                    padding: calc(0.5rem - 1px) calc(2.25rem - 1px);
-                    border-radius: 0.125rem;
-                    border-width: 1px;
-                    border-color: #3d72e4;
-                    font-size: 1.25rem;
-                }
-            </style>
-            <h1 class="text-2xl">Watch an ad to earn x2 coins for your next quest</h1>
-            <button on:click={()=>acceptAd(true)} class="button button-brand">Play ad</button>
-            <button on:click={()=>acceptAd(false)} class="bg-background button-alternative button-brand">No thanks
-            </button>
+    {#if waitingAdAccept && socket }
+        <div
+            class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+            style="z-index: 100"
+            in:fade={{duration: 200}}
+            out:fade={{duration: 350}}>
+            <div
+                class="mx-5 my-1 md:mx-0  rounded-lg   px-8 py-8 md:p-12 pb-8  z-30 border-primary border-2 bg-background text-center    max-w-xl   overflow-y-scroll md:overflow-y-auto"
+                transition:fly={{ y: 300, duration: 350 }}>
+                <h2 class=" text-6xl ">MULTIPLY YOUR REWARDS</h2>
+                <p class="mt-8  mx-1    text-3xl">Want to obtain a <b>x2 boost</b> on the
+                    <b>coins</b>
+                    you
+                    will
+                    <b>earn</b> on this quest?</p>
+                <p class="text-2xl mt-3 text-mid-light italic">Watch a short video by clicking the button below!</p>
+
+                <div class="mt-6 md:mt-8  md:flex justify-center">
+                    <PlayAdButton socket={socket} bind:data={data} bind:adError={adError}
+                                  bind:info={info} collect={collect} goal="earnMoreQuests" color="green"
+                                  bind:waitingAd={waitingAd} bind:waitingAdAccept={waitingAdAccept} />
+                    <button on:click={()=>denyAd()}
+                            class="w-38 mt-4 md:mt-0 md:ml-4    button button-brand-alternative ">No
+                        thanks
+                    </button>
+                </div>
+            </div>
         </div>
     {/if}
     {#if error}
@@ -314,7 +284,7 @@
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
                             <button
-                                on:click={() => collect('daily', i, true)}
+                                on:click={() => collect('daily', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, true)}
                                 max-w-sm mx-auto lg:mx-0 block">
                                 <div class="quest-infos">
@@ -350,8 +320,12 @@
                             <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
                                     <span
-                                        class="text-{calculateRarity(quest.reward, true)}">
-                                        {quest.reward}$
+                                        class="text-3xl text-{calculateRarity(quest.reward, true)}">
+                                        {quest.reward}
+                                        <div class="w-9 ml-2 mt-1"
+                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem; margin-left: 0.35rem">
+                                            <CoinIcon />
+                                        </div>
                                     </span>
                                     <div class="progress-container">
                                         <svg
@@ -370,7 +344,7 @@
                                 </div>
                                 <div
                                     class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}"
-                                    style="width:{calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                    style="width:{calculateProgressBarWidth(quest.progress, quest.goal)}%"></div>
                             </div>
                         {/each}
                     </div>
@@ -415,7 +389,7 @@
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
                             <button
-                                on:click={() => collect('weekly', i)}
+                                on:click={() => collect('weekly', quest.id, true)}
                                 class="card quest finished border-2 border-{calculateRarity(quest.reward, false)}
                                 max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
@@ -452,9 +426,12 @@
                         {#each data.weeklyQuests as quest}
                             <div class="relative card quest max-w-sm mx-auto lg:mx-0">
                                 <div class="quest-infos">
-                                    <span
-                                        class="text-{calculateRarity(quest.reward, false)}">
-                                        {quest.reward}$
+                                    <span class="text-3xl text-{calculateRarity(quest.reward, false)}">
+                                        {quest.reward}
+                                        <div class="w-9 ml-2 mt-1"
+                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem; margin-left: 0.35rem">
+                                            <CoinIcon />
+                                        </div>
                                     </span>
                                     <div class="progress-container">
                                         <svg
@@ -473,7 +450,7 @@
                                 </div>
                                 <div
                                     class="absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}"
-                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%" />
+                                    style="width: {calculateProgressBarWidth(quest.progress, quest.goal)}%"></div>
                             </div>
                         {/each}
                     </div>
@@ -544,57 +521,3 @@
         </div>
     </div>
 </div>
-<div>
-    <input id="transfer" value="0" hidden />
-    {#if info}
-        <Infos message="Thanks for watching a video" pushError={info} />
-    {/if}
-    {#if adError}
-        <ErrorAlert message="An error occured while watching the ad" pushError={adError} />
-    {/if}
-    <script data-playerPro="current">
-        function playAd(goal) {
-            const init = (api) => {
-                if (api) {
-                    api.on("AdVideoStart", function() {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
-                        //api.setAdVolume(1);
-                        document.body.onblur = function() {
-                            //api.pauseAd();
-                        };
-                        document.body.onfocus = function() {
-                            //api.resumeAd();
-                        };
-                    });
-                    api.on("AdVideoFirstQuartile", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
-                    });
-                    api.on("AdVideoMidpoint", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
-                    });
-                    api.on("AdVideoThirdQuartile", () => {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
-                    });
-                    api.on("AdVideoComplete", function() {
-                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
-                        setTimeout(() => {
-                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
-                        }, 1200);
-                        document.body.onblur = null;
-                        document.body.onfocus = null;
-                    });
-                } else {
-                    console.log("blank");
-                }
-            };
-            var s = document.querySelector("script[data-playerPro=\"current\"]");
-            //s.removeAttribute("data-playerPro");
-            (playerPro = window.playerPro || []).push({
-                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
-                after: s,
-                init: init
-            });
-        }
-    </script>
-</div>
-<div hidden class="bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90"></div>

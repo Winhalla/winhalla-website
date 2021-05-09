@@ -3,10 +3,14 @@
     @tailwind components;
     @tailwind utilities;
 
+    .ppMask {
+        opacity: 0.05;
+    }
+
     .button {
         display: inline-block;
-        padding: 0.5rem 2.75rem;
-        border-radius: 0.125rem;
+        padding: 0.75rem 2.5rem;
+        border-radius: 0.25rem;
         font-size: 1.25rem;
         background-color: #3d72e4;
     }
@@ -30,9 +34,8 @@
 
     .card {
         -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;
-
-        @apply bg-variant rounded;
+        box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 8px;
+        @apply bg-variant rounded-2xl;
     }
 
     .scrollbar::-webkit-scrollbar {
@@ -49,7 +52,7 @@
         border: 6px solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
         -webkit-border-radius: 15px;
-        background-color: #1C1C2C;
+        background-color: #2a2a36;
         -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
         /*outline: 1px solid slategrey;*/
     }

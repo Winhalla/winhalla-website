@@ -5,9 +5,9 @@
     import { onMount } from "svelte";
     import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
-    import Infos from "../../components/Infos.svelte";
     import AdblockAlert from "../../components/AdblockAlert.svelte";
-    import { fade } from "svelte/transition";
+    import { goto } from "@sapper/app";
+    import { apiUrl } from "../../utils/config";
 
     let quests;
     let error;
@@ -18,16 +18,16 @@
         gameModes = [
             {
                 name: "ffa",
-                displayName:"Solo vs All",
-                description: "Fight against <b>9</b> players!",
+                displayName: "Solo",
+                description: "Fight against <b>7</b> players!",
                 goal:
-                    "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
+                    "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
                 available: true
             },
             {
                 name: "2vs2",
-                displayName:"Team",
+                displayName: "Duos",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
@@ -38,14 +38,11 @@
 
         try {
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
-            let gameModesStatus = await callApi("get", "/status");
+            let gameModesStatus = await callApi("get", "/GMStatus");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
                 gameModesError = `<p class="text-accent">Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class="text-2xl text-light">${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
-                gameModesStatus = gameModesStatus.find(
-                    s => s.name === "GAMEMODES STATUS"
-                );
                 gameModesStatus = gameModesStatus.value;
                 console.log(gameModes,gameModesStatus)
                 Object.keys(gameModesStatus).forEach(gameModeName => {
@@ -59,8 +56,8 @@
 
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) throw quests;
-            if (quests instanceof Error && quests.response.status === 403) return;
+            if (quests instanceof Error && quests.response.status !== 403) await goto(`${apiUrl}/auth/login`);
+            if (quests instanceof Error && quests.response.status === 403) await goto(`${apiUrl}/auth/login`);
 
             if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");
@@ -93,7 +90,7 @@
     <title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>
     <meta
         name="description"
-        content="Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!
+        content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
     <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
@@ -124,13 +121,14 @@
         <p class:hidden={!errorDetailsOpen} class="text-light">{@html error} <br><br> {@html gameModesError}</p>
     </div>
 {:else}
+    <AdblockAlert quests={quests} />
     <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
         <div class="text-center lg:text-left">
             <h1 class="text-6xl leading-snug lg:leading-normal">
                 Choose a game mode
             </h1>
         </div>
-        <AdblockAlert quests={quests} />
+
         <div
             class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">

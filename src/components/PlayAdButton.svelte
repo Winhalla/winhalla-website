@@ -1,4 +1,7 @@
 <script>
+    import { counter } from "./store";
+
+    export let waitingAdAccept;
     export let socket;
     export let userPlayer;
     export let id;
@@ -6,7 +9,19 @@
     export let info;
     export let finished;
     export let page;
+    export let goal = "earnMoreFFA";
+    export let collect;
+    export let waitingAd;
+    export let data;
+    export let color = "green";
+    //TODO: reste une erreur cheloue "userPlayer is undefined"
+    if (goal === "earnMoreQuests") {
+        counter.subscribe(async (value) => {
+            userPlayer = await value.content;
+            userPlayer = userPlayer.user;
+        });
 
+    }
     let started;
     let videoSeen;
     $: if (videoSeen > 0) {
@@ -16,13 +31,12 @@
                 state: 1,
                 steamId: userPlayer.steamId,
                 room: id,
-                goal: "earnMoreFFA"
+                goal
             } : { state: videoSeen, steamId: userPlayer.steamId });
         } catch (e) {
             console.log(e);
         }
     }
-
     socket.on("advideo", (e) => {
         if (!started) return;
         if (e.code === "error") {
@@ -30,21 +44,28 @@
             adError = e.message;
             finished = true;
             started = false;
-        } else if (e.code === "success") {
+        } else if (e.code === "success" && goal === "earnMoreFFA") {
             info = e.message;
             userPlayer.adsWatched++;
             userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
             finished = true;
             started = false;
+        } else if (e.code === "success" && goal === "earnMoreQuests") {
+            info = e.message;
+            collect(waitingAd.type, waitingAd.index, false);
+            setTimeout(() => {
+                info = undefined;
+            }, 5000);
+
         }
     });
-
 
 </script>
 
 <style>
-    button {
+    .button-green {
         background-color: #3de488;
+        @apply text-background;
     }
 
     button:disabled {
@@ -61,14 +82,23 @@
     }
 </style>
 
-
-<button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
+{#if goal === "earnMoreFFA"}
+    <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                             lg:mt-0 mb-5
-                            lg:mb-0  text-background" class:FfaWatchAd={page === "FfaWatchAd"}
-        style=""
-        onclick="playAd()"
-        on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
-</button>
+                            lg:mb-0  text-background" class:button-green={color==="green"}
+            class:FfaWatchAd={page === "FfaWatchAd"}
+            style=""
+            onclick="playAd()"
+            on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
+    </button>
+{:else}
+    <button class="button button-brand w-38" class:button-green={color==="green"}
+            class:FfaWatchAd={page === "FfaWatchAd"}
+            style=""
+            onclick="playAd()"
+            on:click={() => started = true}>Play Ad
+    </button>
+{/if}
 
 <input hidden bind:value={videoSeen} id={started ? 'transfer' : Math.random() * 1000} />
 

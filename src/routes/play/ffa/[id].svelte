@@ -12,11 +12,15 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
+    import { fade, fly } from "svelte/transition";
+
     import { counter } from "../../../components/store";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
+    import Quests from "../../../components/Quests.svelte";
+    import gradientGenerator from "../../../utils/gradientGenerator";
 
     const { page } = stores();
 
@@ -26,6 +30,7 @@
     let pages;
     let user;
     let match;
+    let quests;
     let isMatchEnded;
     let countDown;
 
@@ -51,6 +56,7 @@
     let isSpectator;
     let isLoadingOpen = true;
 
+    let gradientList;
     onMount(() => {
         pages = page.subscribe(async value => {
             isSpectator = value.query.spectator === "true";
@@ -62,10 +68,9 @@
             error = undefined;
             socket = undefined;
             id = value.params.id;
-
+            quests = undefined;
 
             if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
-            else console.log("ffa match");
             let unsub = counter.subscribe((user1) => {
                 user = user1.content;
             });
@@ -74,6 +79,9 @@
 
 
             try {
+                //Generate gradients
+                gradientList = gradientGenerator(8);
+
                 user = await user;
                 user = user.steam;
                 match = await callApi("get", `/getMatch/${id}`);
@@ -92,13 +100,13 @@
                     1000
                 );
                 if (endsIn < 1) {
-                    countDown = "Waiting for others to finish (you can start a new game from the play page)";
+                    countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
                 } else {
                     startTimer(endsIn);
                 }
                 counter.set({ "refresh": true });
 
-                socket = io.io(apiUrl);
+                socket = io(apiUrl);
                 socket.on("connection", (status) => {
                     console.log(status);
                     socket.emit("match connection", "FFA" + id);
@@ -112,6 +120,10 @@
                     match = value;
                     filterUsers(true);
                 });
+                if (!isMatchEnded) {
+                    quests = await callApi("get", "/getSolo");
+                    quests = quests.solo;
+                }
                 isLoadingOpen = false;
             } catch (err) {
                 console.log(err);
@@ -127,6 +139,8 @@
                 }
                 error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
             }
+
+
         });
     });
 
@@ -136,9 +150,12 @@
 
 
     const filterUsers = (isFromSocket) => {
-
-
         //Find user's object
+        if (isSpectator === true) {
+            players = [...match.players];
+            userPlayer = players.splice(0, 1)[0];
+            return;
+        }
         if (!isFromSocket) {
             userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
@@ -148,16 +165,10 @@
         }
         //Delete user's object from array.
         players = [...match.players];
-        for (let player in players) {
-            const gradientList = [["", ""]];
-
-        }
-
         players.splice(
             match.players.findIndex(p => p.steamId === user.id),
             1
         );
-
     };
 
     //Function that starts a timer with a date, and refreshes it every second
@@ -213,6 +224,13 @@
             }, 8000);
         }
     };
+
+    let isQuestsPanelOpen = false;
+
+    function handleQuestsPanel() {
+        isQuestsPanelOpen = !isQuestsPanelOpen;
+    }
+
 </script>
 
 <style>
@@ -220,7 +238,9 @@
         @apply text-variant font-normal;
     }
 
-
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.55) 5px 5px 8px;
+    }
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -233,11 +253,11 @@
         top: 0;
         left: 0;
         background: linear-gradient(
-                to bottom right,
-                rgba(23, 23, 26, 0.08) 0%,
-                rgba(23, 23, 26, 0.12),
-                rgba(23, 23, 26, 0.18) 75%,
-                rgba(23, 23, 26, 0.23) 100%
+                to bottom,
+                rgba(23, 23, 26, 0.25) 0%,
+                rgba(23, 23, 26, 0.39),
+                rgba(23, 23, 26, 0.33) 75%,
+                rgba(23, 23, 26, 0.38) 100%
         );
     }
 
@@ -250,19 +270,9 @@
         @apply absolute left-0 right-0 z-10;
     }
 
-    /*.user {
+    .user {
         @apply w-60 h-100;
     }
-
-    .user::after {
-        background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.25) 0%,
-                rgba(23, 23, 26, 0.35),
-                rgba(23, 23, 26, 0.40) 75%,
-                rgba(23, 23, 26, 0.55) 100%
-        );
-    }*/
 
     .timer {
         margin-bottom: 0.35rem;
@@ -277,7 +287,7 @@
 </svelte:head>
 
 
-{#if isLoadingOpen && !error}
+{#if isLoadingOpen && !error }
     <Loading data={"Loading game data..."} duration={500} />
 {/if}
 
@@ -290,93 +300,75 @@
     {#if info}
         <Infos message="Thanks for watching a video" pushError={info} />
     {/if}
+    <AdblockAlert user="{userPlayer}" />
     <div class="h-full  ">
 
         {#if match}
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
                     <div
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                            class="mode-timer flex justify-center lg:justify-start
-                        items-end w-52 ">
+                            class="flex justify-center lg:justify-start
+                        items-end ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
                                 class="timer text-primary ml-5 text-3xl leading-none">
-                                {#if countDown}{countDown}{:else}Loading...{/if}
+                                {#if countDown}{@html countDown}{:else}Loading...{/if}
                             </p>
                         </div>
-                        <AdblockAlert user="{userPlayer}" />
-                        <div
-                            class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                        {#if !isSpectator}
+                            <div
+                                class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                            <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
-                                class="text-green font-normal text-3xl">{userPlayer.adsWatched}
-                                ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
-                                <strong class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
-                            </p>
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
+                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                    ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
+                                    <strong
+                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                </p>
 
-                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
-                                          bind:info={info} id={id} />
-                            <RefreshButton
-                                on:click={() => handleRefresh()}
-                                isRefreshing={isRefreshingStats}
-                                refreshMessage={'Refresh data'} />
-                            {#if userPlayer.gamesPlayed == 0}
-                                <button
-                                    class="button button-brand quit lg:ml-4 mt-3
+                                <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
+                                              bind:info={info} />
+                                <RefreshButton
+                                    on:click={() => handleRefresh()}
+                                    isRefreshing={isRefreshingStats}
+                                    refreshMessage={'Refresh data'} />
+                                {#if userPlayer.gamesPlayed == 0}
+                                    <button
+                                        class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
 
-                                    on:click={() => handleQuit()}>
-                                    Quit lobby
-                                </button>
-                                {#if pushError}
-                                    <ErrorAlert message="There was an error exiting the match" pushError={pushError} />
+                                        on:click={() => handleQuit()}>
+                                        Quit lobby
+                                    </button>
+                                    {#if pushError}
+                                        <ErrorAlert message="There was an error exiting the match"
+                                                    pushError={pushError} />
+                                    {/if}
                                 {/if}
-                            {/if}
 
-                        </div>
+                            </div>
+                        {/if}
                     </div>
 
                     <div
                         class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full lg:mt-6 lg:mb-24">
+                    h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <!--<div class="mt-8 lg:mt-25 ffa-player card user">
-                                <div class="max-w-full h-full" style="background-color: #fc1870"></div>
-                                <img
-                                    src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                    alt={userPlayer.legends}
-                                    class="block" />
-
-                                <p class="player-name text-4xl">
-                                    {userPlayer.username}
-                                </p>
+                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                                <div class="max-w-full h-full bg-gradient-to-b {gradientList[0]} rounded-lg"></div>
                                 <div
-                                    class="stats text-2xl bottom-5 text-ultra-light">
-                                    <p>
-                                        Games played:
-                                        <b>{userPlayer.gamesPlayed}</b>
-                                        /8
-                                    </p>
-                                    <p>
-                                        Games won:
-                                        <b>{userPlayer.wins}</b>
-                                        /8
-                                    </p>
-                                </div>
-                            </div>-->
-                            <div class="mt-25 text-center relative border rounded outline-none w-60 h-100" style="">
-                                <div class="max-w-full h-full "
-                                     style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"> <!--style="background-color: #E5E5F7;
-                                        filter: blur(0px);
-opacity: 0.8;
-background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);">--></div>
-                                <!--<img class="block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" style="filter: blur(3px)" src="{userPlayer.avatarURL}" alt="">-->
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
+                                <img
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{userPlayer.avatarURL}" alt="">
+
+
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
@@ -400,17 +392,17 @@ background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E
                         {#if players}
                             <div
                                 class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12 lg:mb-0">
-                                {#each players as player}
-                                    <div class="ffa-player card lg:mr-12 mb-8 border">
-                                        <div class="max-w-full h-full "
-                                             style="background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"></div>
-                                        <!--<img class="block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary" style="filter: blur(3px)" src="{player.avatarURL}" alt="">-->
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
+                                {#each players as player, i}
+                                    <div class="ffa-player card lg:mr-12 mb-8">
+                                        <div class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                             ></div>
+                                        <div
+                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
+                                        <img
+                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                            src="{player.avatarURL}" alt="">
 
-                                        <!--<img
-                                            src="/assets/CharactersBanners/{player.legends}.png"
-                                            alt={player.legends}
-                                            class="block" />-->
 
                                         <p class="player-name text-3xl">
                                             {player.username}
@@ -433,7 +425,48 @@ background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E
             {/if}
 
             <GuideCard page="ffa" />
-            <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />
+            {#if !isSpectator && !isMatchEnded}
+                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
+                            bind:info={info} />
+            {/if}
+            {#if quests}
+                {#if isQuestsPanelOpen}
+                    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+
+                        <!--TRANSPARENT PART-->
+                        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
+                             out:fade={{duration: 350}}></div>
+                        <div
+                            class="bg-background w-full md:w-3/4  lg:w-auto min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
+                            in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
+                            <div class="-mt-32 flex items-center h-full">
+                                <button class="focus:outline-none h-full" on:click={() => handleQuestsPanel()}>
+                                    <svg class="w-6 fill-current text-font ml-8" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                                    </svg>
+                                </button>
+                                <div class="pl-14 pr-24">
+                                    <Quests data={quests} />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {:else}
+                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
+                        <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
+                            <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                            </svg>
+                        </button>
+                    </div>
+                {/if}
+
+            {/if}
+
         {:else}
             <Loading data={"Loading game data..."} />
         {/if}

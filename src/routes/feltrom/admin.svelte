@@ -10,6 +10,7 @@
     import ConfigEditor from "../../components/admin/ConfigEditor.svelte";
     import UsersConfig from "../../components/admin/UsersConfig.svelte";
     import PopupAdmin from "../../components/admin/PopupAdmin.svelte";
+    import StatsPanel from "../../components/admin/StatsPanel.svelte";
 
     let configs;
     let isAuthorizedUser = false;
@@ -17,7 +18,7 @@
     let otp = "";
     let pwd = "a";
     let users;
-    let activePanel = "config";
+    let activePanel = "stats";
     let newConfig;
     let goldEvent = [];
     let loadingUsers;
@@ -248,6 +249,9 @@
                 <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "commands"}
                         class:text-4xl={activePanel === "commands"}
                         on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>
+                <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "stats"}
+                        class:text-4xl={activePanel === "stats"}
+                        on:click={()=>{activePanel = "stats";if(!commands)loadCommands()}}>STATS</strong>
             </h2>
             <div class="w-full">
                 {#if configs && activePanel === "config"}
@@ -268,6 +272,8 @@
                             <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}" otp={otp} />
                         </div>
                     {/if}
+                    {:else if activePanel === "stats"}
+                    <StatsPanel pwd="{pwd}" otp={otp}/>
                 {/if}
 
 

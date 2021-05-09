@@ -48,6 +48,9 @@
 <!--
 <Loading data="Logging in..." />
 -->
+<svelte:head>
+    <title>Invite friends and earn rewards | Winhalla, Play Brawlhalla. Earn rewards.</title>
+</svelte:head>
 <style>
     b {
         @apply text-primary font-normal leading-none;

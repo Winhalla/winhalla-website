@@ -60,7 +60,7 @@
 <div class="lg:justify-evenly w-full lg:flex h-full lg:flex-wrap ">
     {#each newConfig as config,i}
         {#if config.name !== "ADVICES"}
-            <div class="mb-16 border-t-2 border-primary bg-variant rounded-lg mx-4 p-4">
+            <div class="mb-16 border-t-2 border-primary bg-variant rounded-lg mx-5 p-4">
                 <div class="flex flex-justify">
                     <h1 class="text-5xl text-primary w-full">{config.name}</h1>
                     {#if config.name !== "IDs BANNED"}

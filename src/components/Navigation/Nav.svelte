@@ -43,6 +43,7 @@
             if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
             return isUserLoggedIn = "network";
         }
+        console.log(tempUserData);
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
@@ -63,7 +64,7 @@
 
     const resetNav = async value => {
         if (value.refresh === true) return;
-        if (isAdmin) return onMountFx(value.preview);
+        if (isAdmin && value.preview) return onMountFx(value.preview);
         user = await value.content;
         if (firstLoad === true) return (firstLoad = false);
         calculateProperties(user);

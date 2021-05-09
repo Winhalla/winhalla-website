@@ -30,7 +30,7 @@
         } else {
             generatedLink = user.user.linkId;
         }
-        generatedLink = `http://localhost:3000/link/${generatedLink}`;
+        generatedLink = `https://winhalla.app/link/${generatedLink}`;
         counter.set({ refresh: true });
     });
 
@@ -41,7 +41,7 @@
         if (generatedLink instanceof Error) return { error, isVisible } = { error: true, isVisible: true };
         document.cookie = cookie.serialize("affiliateLinkId", 0, { maxAge: 1 });
         isVisible = true;
-        generatedLink = `http://localhost:3000/link/${generatedLink}`;
+        generatedLink = `https://winhalla.app/link/${generatedLink}`;
         counter.set({ refresh: true });
     }
 </script>

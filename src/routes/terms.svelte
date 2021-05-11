@@ -28,18 +28,18 @@
         These Terms apply to all visitors, users and others who access or use the Service.</p>
     <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the
         terms then you may not access the Service.</p>
-    <h2>Links To Other Web Sites</h2>
+    <h2>Links To Other Websites</h2>
 
-    <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by
+    <p>Our Service may contain links to third-party websites or services that are not owned or controlled by
         winhalla.app.</p>
 
     <p>winhalla.app has no control over, and assumes no responsibility for, the content, privacy policies, or practices
-        of any third party web sites or services. You further acknowledge and agree that winhalla.app shall not be
+        of any third party websites or services. You further acknowledge and agree that winhalla.app shall not be
         responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in
-        connection with use of or reliance on any such content, goods or services available on or through any such web
-        sites or services.</p>
+        connection with use of or reliance on any such content, goods or services available on or through any such
+        websites or services.</p>
 
-    <p>We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or
+    <p>We strongly advise you to read the terms and conditions and privacy policies of any third-party websites or
         services that you visit.</p>
     <h2>Limitations</h2>
 
@@ -63,7 +63,7 @@
     <p>Subject to applicable law, under no circumstances, including negligence, will winhalla.app, its directors,
         employees or agents be liable for any loss of profits, direct or indirect losses including punitive, exemplary,
         special or consequential damages that result from the access to, use of, or the inability to use, the materials
-        in this Web Site, even if winhalla.app or a winhalla.app authorised representative has been advised of the
+        in this website, even if winhalla.app or a winhalla.app authorised representative has been advised of the
         possibility of such damages.</p>
     <h2>Governing Law</h2>
 
@@ -83,22 +83,31 @@
     <p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the
         revised terms. If you do not agree to the new terms, please stop using the Service.</p>
     <h2>Account</h2>
-    <p>In order to use the Site, you will have to login with an already existing Steam account. By logging in with your
-        Steam account, you agree that we will create your Account in the Site, using the data Steam transmitted to the
-        Site by logging in (STEAMID64 and profile picture URI).</p>
+    <p>In order to use the website, you will have to login with an already existing Steam account. By logging in with
+        your
+        Steam account, you agree that we will create your Account in the website, using the data Steam transmitted to
+        the
+        website by logging in (STEAMID64 and profile picture URI).</p>
     <p></p>
-    <p>We may transmit this data to the Brawlhalla API (<a href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) in order to process your Brawlhalla statistics.</p>
+    <p>We may transmit this data to the Brawlhalla API (<a
+        href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) in order to process your Brawlhalla
+        statistics.</p>
 
     <h2>Coins and rewards</h2>
-    <p><strong>Coins. </strong> Coins in this Site are fictional money, they can only be exchanged in our <a
-        href="/shop" class="underline">Shop</a>. This is a currency only limited to this Site and selling this currency and/or Accounts for real money is forbidden</p>
-    <p>If we suspect you of cheating, abusing bugs or abnormal earning of Coins , we may terminate your Account and
-        your right to access the site, causing you to loose all data associated with your account, including but not limited to Coins.</p>
+    <p><strong>Coins. </strong> Coins in this website are fictional money, they can only be exchanged in our <a
+        href="/shop" class="underline">Shop</a>. This is a currency only limited to this website and selling this
+        currency and/or Accounts for real money is forbidden.</p>
+    <p>If we suspect you of cheating, abusing bugs or abnormal earning of Coins, we may terminate your Account and
+        your right to access the website, causing you to loose all data associated with your account, including but not
+        limited to Coins.</p>
     <p><strong>Rewards. </strong> Rewards are given only if you have enough Coins AND if you have earned them without
-        cheat or abuse of any kind. After buying an item in our Store, you will recieve an email in the adress you
-        specified when buying the item. The Service is not responsible if the email you entered is not correct or is not yours.</p>
+        cheating or abuse of any kind. After buying an item in our Store, you will receive an email in the e-mail
+        address you
+        specified when buying the item. The Service is not responsible if the e-mail address you entered is not correct
+        or is not yours.</p>
 
     <h2>Contact Us</h2>
 
-    <p>If you have any questions about these Terms, please <a href="mailto:contact@winhalla.app">contact us</a>.</p>
+    <p>If you have any questions about these Terms or about the website, please <a href="mailto:contact@winhalla.app">contact
+        us</a>.</p>
 </div>

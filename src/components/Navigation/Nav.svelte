@@ -1,69 +1,147 @@
 <script>
-    import { onMount, onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { clickOutside } from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
     import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
+    import { fly } from "svelte/transition";
 
     import { apiUrl } from "../../utils/config";
     import { callApi } from "../../utils/api";
-    import { goto } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
     import { counter } from "../store.js";
+    import CoinIcon from "../CoinIcon.svelte";
 
+    const { page } = stores();
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
-    let userCoins;
-    let informations;
+    let isAdmin;
+
+    let infos;
+    let poll;
     let notificationsObj = {};
+
     let user;
+    let userCoins;
+
     let firstLoad = true;
     let offline;
-    async function calculateProperties(value) {
-        const tempUserData = await value;
+    let loaded = false;
+
+    let currEvent;
+    let isEventBannerOpen = false;
+    let currentMatch;
+
+    function calculateProperties(value) {
+        const tempUserData = value;
+        if (!tempUserData) return isUserLoggedIn = false;
         if (tempUserData.offline) offline = true;
-        if(tempUserData instanceof Error){
-            if(tempUserData.response) if(tempUserData.response.status === 503) goto("/status")
-            return isUserLoggedIn = "network"
+        if (tempUserData instanceof Error) {
+            if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
+            return isUserLoggedIn = "network";
         }
+        console.log(tempUserData);
         if (tempUserData.user) {
             notificationsObj.notifications = tempUserData.user.notifications;
             notificationsObj.inGame = tempUserData.user.inGame;
+            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
         user = tempUserData.steam;
+        if (user._json.steamid === "76561198417157310" || user._json.steamid === "76561198417157310") {
+            isAdmin = true;
+        }
         userCoins = tempUserData.user.coins;
 
         isUserLoggedIn = tempUserData.user
             ? true
             : tempUserData.steam
-            ? "steam"
-            : false;
+                ? "steam"
+                : false;
     }
 
     const resetNav = async value => {
-        user = value.content;
-        if (firstLoad === true) return (firstLoad = false);
         if (value.refresh === true) return;
-
-        await calculateProperties(user);
+        if (isAdmin && value.preview) return onMountFx(value.preview);
+        user = await value.content;
+        if (firstLoad === true) return (firstLoad = false);
+        calculateProperties(user);
     };
+
     const unsubscribe = counter.subscribe(resetNav);
     onDestroy(unsubscribe);
-    onMount(async () => {
+
+    function handlePopupClose() {
+        if (offline) {
+            offline = false;
+        }
+        if (isEventBannerOpen) {
+            notificationsObj.event = {
+                id: "event",
+                name: currEvent.name,
+                descParts: currEvent.descParts,
+                percentage: currEvent.percentage,
+                type: "event"
+            };
+            isEventBannerOpen = false;
+        }
+    }
+
+    async function onMountFx(adminData) {
         try {
-            informations = await callApi("get", "/informations");
-            if(informations instanceof Error){
-               throw informations
+            if (!adminData)
+                infos = await callApi("get", "/informations");
+            else {
+                infos = { event: adminData };
+            }
+
+            /*currEvent = information.filter(i => i.type === "event")[0];
+            isEventBannerOpen = true;
+            notificationsObj.event = currEvent;*/
+            if (Date.now() <= infos.event.expiration) {
+                let { name, description, percentage } = infos.event;
+                let descParts = description.split("%%");
+                currEvent = { name, descParts, percentage };
+                console.log(descParts);
+                isEventBannerOpen = true;
+                if (isAdmin) {
+                    notificationsObj.event = {
+                        id: "event",
+                        name: currEvent.name,
+                        descParts: currEvent.descParts,
+                        percentage: currEvent.percentage,
+                        type: "event",
+                        autoShow: true
+                    };
+                }
+            }
+            infos = infos.information;
+            if (infos instanceof Error) {
+                throw infos;
             }
         } catch (e) {
-            informations = "network"
+            infos = "network";
         }
-        await calculateProperties(user);
-    });
+        if (adminData) return;
+        setTimeout(async () => {
+            try {
+                if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
+                if (poll instanceof Error) {
+                    throw poll;
+                }
+            } catch (e) {
+                poll = "network err";
+            }
+        }, 1);
+        await user;
+        calculateProperties(user);
+        loaded = true;
+    }
 
-    let isShowingPoll = false;
+    onMount(onMountFx);
+
 </script>
 
 <style>
@@ -80,48 +158,110 @@
         width: 1.05rem;
         height: 1.05rem;
     }
+
     .nav-link-container {
-        @apply pr-9 flex items-center my-3;
+        @apply pr-9 flex items-center;
+    }
+
+    .gradient {
+        background-image: linear-gradient(to right, #3d72e4, #ee38ff, #3d72e4, #ee38ff);
+        background-size: 300%;
+        animation: gradient-animation 4.5s linear infinite;
+    }
+
+    @keyframes gradient-animation {
+
+        0% {
+            background-position: right;
+        }
+        100% {
+            background-position: left;
+        }
     }
 </style>
 
 <div class="h-auto w-full fixed z-50">
-    {#if offline}
-        <div class="bg-legendary w-full flex text-white text-center lg:text-xl">
-            <p class="text-center w-99%">
-                You are offline or our services are down, you may experience
-                bugs on the website.
+    {#if offline || isEventBannerOpen}
+        <div class="bg-legendary w-full flex  items-center lg:text-xl text-white  relative"
+             class:gradient={isEventBannerOpen && !offline}>
+            <p class="text-center w-full text-3xl px-12">
+                {#if offline}
+                    You are offline or our services are down, you may experience
+                    bugs on the website.
+                {:else if currEvent}
+                    {currEvent.descParts[0]}<u>{currEvent.percentage - 100}%</u>{currEvent.descParts[1]}
+                {/if}
             </p>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                on:click={() => (offline = false)}>
-                <path
-                    class="heroicon-ui"
-                    d="M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1
-                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12
-                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z"
-                    fill="#FFFFFF" />
-            </svg>
+            <button class="p-1 absolute right-0" on:click={handlePopupClose}>
+                <svg
+                    class="w-8 h-8 md:w-6 md:h-6 fill-current "
+                    viewBox="0 0 28 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24 2.4-2.4-2.4-9.6
+                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
+                                            2.4 2.4 9.6-9.6 9.6 9.6
+                                            2.4-2.4-9.6-9.6z" />
+                </svg>
+            </button>
+
         </div>
     {/if}
+    <!--{#if user}
+        <div class="py-1 bg-primary w-full flex  items-center lg:text-xl text-white  relative   gradient">
+            <p class="text-center w-full text-3xl">
+                &lt;!&ndash;<b class="text-white mr-2 font-normal text-3xl">EVENT:</b>&ndash;&gt;
+
+            </p>
+            <button class="p-1 absolute right-0" on:click={() => isEventBannerOpen = false}>
+                <svg
+                    class="w-5 h-5 fill-current "
+                    viewBox="0 0 28 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24 2.4-2.4-2.4-9.6
+                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
+                                            2.4 2.4 9.6-9.6 9.6 9.6
+                                            2.4-2.4-9.6-9.6z" />
+                </svg>
+            </button>
+
+        </div>
+    {/if}-->
     <nav
-        class:border-green={isScrolling || isShowingPoll}
-        class:border-b-2={isShowingPoll}
+        class:border-primary={isScrolling}
+        class:border-b-2={isScrolling}
         class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div
-            class="w-full lg:w-auto flex justify-between items-center py-3
+            class="w-full lg:w-auto flex justify-between items-center py-4
             relative">
-            <div class="pl-7 lg:pl-24 lg:pr-34 text-logo">
-                <a class="logo" href="/">WINHALLA</a>
+            <div class="pl-7 lg:pl-24 lg:pr-34">
+                <!--LOGO-->
+                <a class="" href="/">
+                    <svg class="fill-current w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
+                        <g id="Calque_2" data-name="Calque 2">
+                            <g id="Calque_1-2" data-name="Calque 1">
+                                <polygon
+                                    points="70.17 0 70.17 98.57 60.28 0 38.29 0 28.76 98.57 19.42 0 0 0 13.01 128.25 39.76 128.25 48.92 41.77 58.44 128.25 87.04 128.25 87.04 13.56 162.74 13.56 162.74 24.1 162.74 86.44 146.52 24.1 125.99 24.1 125.99 128.25 140.57 128.25 140.57 52.22 160.5 128.25 177.31 128.25 177.31 24.1 177.31 13.56 177.31 0 87.04 0 70.17 0" />
+                                <rect x="97.54" y="24" width="16.38" height="104.25" />
+                                <path
+                                    d="M265.84,107.87l18.6-.32,3,20.7h16.36l-17-104.15H264.64L247.7,128.25h15.18Zm9.37-66.45,7.3,51.48H267.79Z" />
+                                <path
+                                    d="M448.13,24.1H426L409,128.25H424.2l3-20.38,18.6-.32,3,20.7v10.31H204.88V81.38h17.55v46.87H238.8V24.1H222.43V66.5H204.88V24.1H188.51V128.25h0v23.86H465.1V128.25Zm-19,68.8,7.42-51.48,7.31,51.48Z" />
+                                <polygon
+                                    points="354.39 113.37 327.46 113.37 327.46 24.1 311.1 24.1 311.1 128.25 354.39 128.25 354.39 113.37" />
+                                <polygon
+                                    points="405.78 113.37 378.85 113.37 378.85 24.1 362.49 24.1 362.49 128.25 405.78 128.25 405.78 113.37" />
+                            </g>
+                        </g>
+                    </svg>
+                </a>
             </div>
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
-                    {#if informations}
-                        <NavAlert data={informations} />
+                    {#if loaded && window.innerWidth < 1024}
+                        <NavAlert data={infos} />
                     {/if}
 
                     <Notifications data={notificationsObj} />
@@ -165,7 +305,7 @@
                 class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
                 <div class="ml-7 links text-xl lg:flex">
                     <!--<a
-                            class="nav-link-container lg:hover:text-shadow-link-hover
+                            class="nav-link-container my-3 lg:hover:text-shadow-link-hover
                             border-l border-primary lg:border-none pl-3"
                             href="/profile">
                         <svg
@@ -178,11 +318,10 @@
                         PROFILE
                     </a>-->
                     <a
-                        class="nav-link-container
+                        class="nav-link-container my-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
-                        href="/play"
-                        rel="prefetch">
+                        href="/play">
                         <svg
                             class="fill-current play"
                             viewBox="0 0 24 24"
@@ -196,7 +335,7 @@
                         PLAY
                     </a>
                     <a
-                        class="nav-link-container
+                        class="nav-link-container my-3 mb-6 lg:mb-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
                         href="/shop"
@@ -237,64 +376,26 @@
                         </svg>
                         SHOP
                     </a>
+
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
+                        <a class="lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto"
+                           href="/play/ffa/{currentMatch}">Rejoin
+                            match</a>
+                    {/if}
                 </div>
-                {#if isShowingPoll}
-                    <div
-                        class="absolute top-2 "
-                        style="left: 50% ; transform: translate(-50%, 0);">
-                        <div class="flex items-center px-4">
-                            <p
-                                class="text-3xl text-center px-4 md:px-0
-                                md:text-left">
-                                Are you interested in a 2vs2 game mode ?
-                            </p>
-                            <button
-                                class="button button-brand w-24 ml-4"
-                                style="padding: 0.5rem 0.75rem">
-                                SUBMIT
-                            </button>
-                        </div>
-                        <div class="mt-2 flex relative" style="">
-                            <div
-                                class="z-10 h-12 w-11 bg-background
-                                rounded-bl-lg border-b-2 border-l-2 border-green" />
-
-                            <div
-                                class="z-20 absolute top-0 left-5 w-12
-                                bg-background rounded-bl-lg"
-                                style="height: calc(3rem - 2px)" />
-                            <div class="z-10 flex-grow">
-                                <Poll />
-                            </div>
-
-                            <div
-                                class="absolute z-10 top-1 bottom-0 left-11
-                                right-12 rounded-b-lg border-2 border-t-0
-                                border-green" />
-                            <div
-                                class="z-20 absolute top-0 right-5 w-12
-                                bg-background rounded-br-lg"
-                                style="height: calc(3rem - 2px)" />
-                            <div
-                                class="absolute top-0 right-5 w-12 bg-background
-                                rounded-br-lg border-b-2 border-green"
-                                style="height: calc(3rem)" />
-                            <div
-                                class="z-10 h-12 w-12 bg-background
-                                rounded-br-lg border-b-2 border-r-2 border-green
-                                " />
-                        </div>
-
-                    </div>
-                {/if}
                 <div class="ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center">
-                    {#if informations}
+                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
+                        <a class="hidden lg:block py-1 px-3 text-xl bg-primary rounded  mb-4 lg:mb-0 lg:mr-8 w-auto"
+                           href="/play/ffa/{currentMatch}">Rejoin
+                            match</a>
+                    {/if}
+                    {#if infos && window.innerWidth >= 1024}
                         <div class="hidden lg:flex items-center">
-                            <NavAlert data={informations} />
+                            <NavAlert data={infos} />
                         </div>
                     {/if}
-                    {#if isUserLoggedIn === true}
-                        <div class="lg:flex lg:items-center">
+                    {#if isUserLoggedIn}
+                        <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.displayName && user.photos}
                                 <NavAccount
                                     username={user.displayName}
@@ -302,33 +403,24 @@
                             {/if}
                             {#if notificationsObj}
                                 <div class="hidden lg:flex items-center">
-                                    <Notifications data={notificationsObj} />
+                                    <Notifications data={notificationsObj} page="{$page.path}" />
                                 </div>
                             {/if}
 
-                            <a class="ml-8 text-2xl text-primary" href="/shop">
+                            <a class="lg:mt-0 lg:ml-9 text-2xl text-primary  flex items-center  pt-1" href="/shop">
                                 <b class="font-normal ">{userCoins}</b>
-                                $
+                                <div class="w-7" style="margin-bottom: 0.18rem; margin-left: 0.40rem">
+                                    <CoinIcon />
+                                </div>
                             </a>
                         </div>
-                    {:else if isUserLoggedIn == 'steam'}
-                        <a
-                            class="button-brand button mr-3"
-                            href="/create-account">
-                            CREATE ACCOUNT
-                        </a>
                     {:else if isUserLoggedIn === 'network'}
                         <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}
                         <a
                             class="button-brand button mr-3"
                             href="{apiUrl}/auth/login">
-                            CREATE ACCOUNT
-                        </a>
-                        <a
-                            class="button-brand-alternative button"
-                            href="{apiUrl}/auth/login">
-                            LOGIN
+                            Login with steam
                         </a>
                     {/if}
                 </div>
@@ -337,43 +429,11 @@
         </div>
 
     </nav>
-
-    <div class="flex justify-center items-start absolute top-2 left-0 right-0">
-        <!--
-        <div class="h-px flex-grow bg-green"></div>
-
-                <div class="relative">
-                    <div class="h-0 w-0" style=" border-top : 21.15rem solid #17171a; border-left : 5rem solid transparent;"></div>
-                    <div class="absolute top-0 h-0 w-0" style="right: -3.99rem; z-index: -5; border-top : 21.21rem solid #3de488; border-right: 4rem solid transparent; border-left : 5.11rem solid transparent;"></div>
-                </div>        <div class="h-12 w-11 bg-background rounded-bl-lg mt-13 border-b-2 border-l-2 border-green">
-
+    {#if loaded}
+        <div
+            class="fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+            transition:fly={{ y:-200, duration: 500 }}>
+            <Poll poll={poll} />
         </div>
-        <div class="">
-            <Poll />
-        </div>
-        <div class="h-12 w-11 bg-background rounded-br-lg mt-13 border-b-2 border-r-2 border-green">
-
-        </div>
-        -->
-
-        <!--
-        <div class="h-full">
-            <div class="w-4 bg-font h-96 max-h-full" style="clip-path: polygon(100% 0, 0 100%, 0 0);">
-
-            </div>
-        </div>
-        <div class="relative max-h-20">
-            <div class="h-full w-full " style=" background-image: linear-gradient(to right top, green 0%, green 50%, transparent 50%);"></div>
-            <div class="absolute top-0 h-0 w-0" style="left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;"></div>
-        </div>
-                <div class="relative">
-                    <div class="h-0 w-0 " style=" border-top : 21.15rem solid #17171a; border-right : 5rem solid transparent;"></div>
-                    <div class="absolute top-0 h-0 w-0" style="left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;"></div>
-                </div>
-
-
-        <div class="h-px flex-grow bg-green"></div>-->
-    </div>
-
+    {/if}
 </div>
-<!--<div class=" h-2px w-72  bg-font ml-28"></div><div class=" h-2px w-72 bg-font mr-28"></div>-->

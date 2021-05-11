@@ -30,15 +30,19 @@
 </style>
 <script>
     export let data;
-    export let type
+    export let duration = 500;
+    import { fade } from "svelte/transition";
 </script>
-<div class:xl:mt-40={type==="inline"} class:xl:ml-100={type==="inline"} class:h-screen-90={!type} class="bg-fixed bg-no-repeat flex items-center justify-center">
-    <div class="pb-20">
-        <div class="loader"></div>
-        {#if data}
-            <h2 class="text-center text-3xl font-bold pt-4">{data}</h2>
-        {:else}
-            <h2 class="text-center text-3xl font-bold pt-4">Loading...</h2>
-        {/if}
+<div out:fade={{duration}}
+     class="fixed z-50 bg-background absolute top-10 bg-fixed z-40 bg-no-repeat flex items-center justify-center h-screen-90">
+    <div class="pb-20 bg-background w-screenw-99 h-screen-99">
+        <div class="mx-auto">
+            <div class="loader mt-15/100 mx-auto"></div>
+            {#if data}
+                <h2 class="text-center text-3xl font-bold pt-4">{data}</h2>
+            {:else}
+                <h2 class="text-center text-3xl font-bold pt-4">Loading...</h2>
+            {/if}
+        </div>
     </div>
 </div>

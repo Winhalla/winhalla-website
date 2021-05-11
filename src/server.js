@@ -2,11 +2,12 @@ import sirv from "sirv";
 import express from "express";
 import compression from "compression";
 import * as sapper from "@sapper/server";
-
+import https from "https";
+import fs from "fs"
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 let throttler = [];
-express() // You can also use Express
+const app = express() // You can also use Express
     .use((req, res, next) => {
         if (req.path.includes("assets") || req.path.includes("css")) return next();
         let i = throttler.findIndex(e => e.ip == req.ip);
@@ -26,10 +27,19 @@ express() // You can also use Express
             next();
         }
     })
+    .use((req,res,next)=>{
+        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
+        next()
+    })
     .use(
         compression({ threshold: 0 }),
         sirv("static", { dev }),
         sapper.middleware()
     )
     .set("x-powered-by", false)
-    .listen(80)
+let server = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/winhalla.app/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
+},app)
+server.listen(443)
+app.listen(80)

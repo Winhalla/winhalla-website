@@ -47,10 +47,14 @@
         class:lg:hidden={!isDropdownOpen}
         class="pt-3 lg:pt-0 rounded lg:bg-variant lg:absolute lg:shadow-card
             dropdown z-50 lg:border lg:border-primary">
+        <a class="block text-lg border-l border-red-600 py-3
+                lg:hover:bg-primary lg:hover:text-font px-3 rounded-sm
+                lg:border-none" href="/referral-link?visible=true">Invite friends and earn rewards</a>
         <a
             class="block text-red-500 text-lg border-l border-red-600 py-3
                 lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm
-                lg:border-none"
+                lg:border-none mb-3 lg:mb-0"
             href="{apiUrl}/auth/logout">Logout</a>
+
     </div>
 </div>

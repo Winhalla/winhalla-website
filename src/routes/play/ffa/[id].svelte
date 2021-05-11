@@ -1,119 +1,177 @@
-<script context="module">
-    export async function preload({params}) {
-        let id = params.id;
-
-        return {
-            id
-        };
-    }
-</script>
-
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { callApi } from "../../../utils/api";
-    import { goto } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
     import Loading from "../../../components/Loading.svelte";
+
+    import ErrorAlert from "../../../components/ErrorAlert.svelte";
+    import Infos from "../../../components/Infos.svelte";
+    import GuideCard from "../../../components/GuideCard.svelte";
+    import AdblockAlert from "../../../components/AdblockAlert.svelte";
+
+    import { fade, fly } from "svelte/transition";
+
     import { counter } from "../../../components/store";
-    import io from "socket.io-client";
+    import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
-    import {fly} from "svelte/transition"
+    import PlayAdButton from "../../../components/PlayAdButton.svelte";
+    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
+    import Quests from "../../../components/Quests.svelte";
+    import gradientGenerator from "../../../utils/gradientGenerator";
 
-    export let id;
+    const { page } = stores();
 
+    let id;
+
+
+    let pages;
     let user;
     let match;
+    let quests;
     let isMatchEnded;
     let countDown;
 
     let userPlayer;
     let players;
+    let info;
+    $: if (info) {
+        setTimeout(() => {
+            info = undefined;
+        }, 5000);
+    }
+
+    let adError;
+    $: if (adError) {
+        setTimeout(() => {
+            adError = undefined;
+        }, 25000);
+    }
+
     let error;
-    let pushError
-    onMount(async () => {
-        let unsub = counter.subscribe((value) => {
-            user = value.content;
+    let pushError;
+    let socket;
+    let isSpectator;
+    let isLoadingOpen = true;
+
+    let gradientList;
+    onMount(() => {
+        pages = page.subscribe(async value => {
+            isSpectator = value.query.spectator === "true";
+            user = undefined;
+            match = undefined;
+            isMatchEnded = undefined;
+            userPlayer = undefined;
+            players = undefined;
+            error = undefined;
+            socket = undefined;
+            id = value.params.id;
+            quests = undefined;
+
+            if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match");
+            let unsub = counter.subscribe((user1) => {
+                user = user1.content;
+            });
+
+            unsub();
+
+
+            try {
+                //Generate gradients
+                gradientList = gradientGenerator(8);
+
+                user = await user;
+                user = user.steam;
+                match = await callApi("get", `/getMatch/${id}`);
+
+                if (match instanceof Error) {
+                    throw match;
+                }
+                isMatchEnded = match.finished;
+
+                //Start the countdown
+                filterUsers(false);
+                const d = new Date(userPlayer.joinDate);
+                const endsIn = -(
+                    (new Date().getTime() -
+                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                    1000
+                );
+                if (endsIn < 1) {
+                    countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
+                } else {
+                    startTimer(endsIn);
+                }
+                counter.set({ "refresh": true });
+
+                socket = io(apiUrl);
+                socket.on("connection", (status) => {
+                    console.log(status);
+                    socket.emit("match connection", "FFA" + id);
+                });
+
+                socket.on("join match", (status) => {
+                    console.log(status);
+                });
+
+                socket.on("lobbyUpdate", (value) => {
+                    match = value;
+                    filterUsers(true);
+                });
+                if (!isMatchEnded) {
+                    quests = await callApi("get", "/getSolo");
+                    quests = quests.solo;
+                }
+                isLoadingOpen = false;
+            } catch (err) {
+                console.log(err);
+                if (err.response) {
+                    if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+                        error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                        return;
+                    } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+                        error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+                        return;
+                    } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+                    return;
+                }
+                error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
+            }
+
 
         });
-        unsub();
-
-        //await user
-        //user = user.steam
-        try {
-            user = await user;
-            user = user.steam;
-            match = await callApi("get", `/getMatch/${id}`);
-            if (match instanceof Error) {
-                throw match
-            }
-            isMatchEnded = match.finished;
-            //Start the countdown
-
-            filterUsers(false);
-            const d = new Date(userPlayer.joinDate);
-            const endsIn = -(
-                (new Date().getTime() -
-                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
-                1000
-            );
-            if (endsIn < 1) {
-                countDown = "Waiting for others to finish (you can start a new game from the play page)";
-            } else {
-                startTimer(endsIn);
-            }
-            counter.set({ "refresh": true });
-
-            let socket = io.io(apiUrl);
-            socket.on("connection", (status) => {
-                console.log(status);
-                socket.emit("match connection", "FFA" + id);
-            });
-
-            socket.on("join match", (status) => {
-                console.log(status);
-            });
-
-            socket.on("lobbyUpdate", (value) => {
-                match = value;
-                filterUsers(true);
-            });
-        } catch (err) {
-            if (err.response) {
-                if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
-                    return
-                } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-                    error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-                    return
-                } else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
-                return
-            }
-            error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
-        }
-
     });
+
+    onDestroy(() => {
+        if (pages) pages();
+    });
+
 
     const filterUsers = (isFromSocket) => {
         //Find user's object
-        if (isFromSocket === false) {
-            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+        if (isSpectator === true) {
+            players = [...match.players];
+            userPlayer = players.splice(0, 1)[0];
+            return;
+        }
+        if (!isFromSocket) {
+            userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
             match.players[playerIndex].wins = userPlayer.wins;
             userPlayer = match.players[playerIndex];
         }
         //Delete user's object from array.
         players = [...match.players];
         players.splice(
-            match.players.findIndex(p => p.steamId === parseInt(user.id)),
+            match.players.findIndex(p => p.steamId === user.id),
             1
         );
     };
 
     //Function that starts a timer with a date, and refreshes it every second
-
     function startTimer(duration) {
         let timer = duration,
             hours,
@@ -134,6 +192,7 @@
             }
         }, 1000);
     }
+
 
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
@@ -156,28 +215,32 @@
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
-            if (exitStatus instanceof Error) throw exitStatus
+            if (exitStatus instanceof Error) throw exitStatus;
             goto(`/play`);
         } catch (e) {
-            pushError = e.response.data.message?e.response.data.message:e.response.data?e.response.data.toString():e.toString();
+            pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
             setTimeout(() => {
-                pushError = undefined
-            }, 8000)
+                pushError = undefined;
+            }, 8000);
         }
     };
 
-    let isInfoDropdownOpen = false;
+    let isQuestsPanelOpen = false;
 
-    function handleInfoDropdown() {
-        isInfoDropdownOpen = !isInfoDropdownOpen;
+    function handleQuestsPanel() {
+        isQuestsPanelOpen = !isQuestsPanelOpen;
     }
+
 </script>
 
 <style>
     b {
-        @apply text-primary font-normal;
+        @apply text-variant font-normal;
     }
 
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.55) 5px 5px 8px;
+    }
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -191,10 +254,10 @@
         left: 0;
         background: linear-gradient(
                 to bottom,
-                rgba(23, 23, 26, 0.68) 0%,
-                rgba(23, 23, 26, 0.88),
-                rgba(23, 23, 26, 0.95) 75%,
-                rgba(23, 23, 26, 0.98) 100%
+                rgba(23, 23, 26, 0.25) 0%,
+                rgba(23, 23, 26, 0.39),
+                rgba(23, 23, 26, 0.33) 75%,
+                rgba(23, 23, 26, 0.38) 100%
         );
     }
 
@@ -211,96 +274,106 @@
         @apply w-60 h-100;
     }
 
-    .user::after {
-        background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.55) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.85) 75%,
-                rgba(23, 23, 26, 0.93) 100%
-        );
-    }
-
     .timer {
         margin-bottom: 0.35rem;
     }
 
-    .quit {
-        @apply bg-legendary px-7;
-    }
 </style>
+
 
 <svelte:head>
     <title>Winhalla | FFA match</title>
-    <script src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
-            id="purpleads-client"></script>
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
+
+
+{#if isLoadingOpen && !error }
+    <Loading data={"Loading game data..."} duration={500} />
+{/if}
+
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
         <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
         <a href="/play"><p class="underline lg:text-3xl pt-4 text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
+    {#if info}
+        <Infos message="Thanks for watching a video" pushError={info} />
+    {/if}
+    <AdblockAlert user="{userPlayer}" />
     <div class="h-full  ">
+
         {#if match}
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners}/>
+                <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
                     <div
-                            class="flex flex-col justify-center lg:flex-row
+                        class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                                class="mode-timer flex justify-center lg:justify-start
-                        items-end w-60 ">
+                            class="flex justify-center lg:justify-start
+                        items-end ">
                             <h1 class="text-6xl leading-none">FFA</h1>
                             <p
-                                    class="timer text-primary ml-5 text-3xl leading-none">
-                                {#if countDown}{countDown}{:else}Loading...{/if}
+                                class="timer text-primary ml-5 text-3xl leading-none">
+                                {#if countDown}{@html countDown}{:else}Loading...{/if}
                             </p>
                         </div>
-
-                        <div
+                        {#if !isSpectator}
+                            <div
                                 class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                            <RefreshButton
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
+                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                    ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
+                                    <strong
+                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                </p>
+
+                                <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
+                                              bind:info={info} />
+                                <RefreshButton
                                     on:click={() => handleRefresh()}
                                     isRefreshing={isRefreshingStats}
-                                    refreshMessage={'Refresh data'}/>
-                            {#if userPlayer.gamesPlayed == 0}
-                                <button
-                                        class="button button-brand quit lg:ml-4 mt-2
-                                lg:mt-0"
+                                    refreshMessage={'Refresh data'} />
+                                {#if userPlayer.gamesPlayed == 0}
+                                    <button
+                                        class="button button-brand quit lg:ml-4 mt-3
+                                lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
+
                                         on:click={() => handleQuit()}>
-                                    Quit lobby
-                                </button>
-                                {#if pushError}
-                                    <div class="z-20 absolute right-0 top-5 lg:top-30 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"
-                                         transition:fly={{ x:200, duration: 500 }}>
-                                        <h3 class="text-legendary">There was an error exiting the match.</h3>
-                                        <p class="text-light text-base">{pushError}</p>
-                                    </div>
+                                        Quit lobby
+                                    </button>
+                                    {#if pushError}
+                                        <ErrorAlert message="There was an error exiting the match"
+                                                    pushError={pushError} />
+                                    {/if}
                                 {/if}
-                            {/if}
-                        </div>
+
+                            </div>
+                        {/if}
                     </div>
 
                     <div
-                            class="flex items-center flex-col lg:flex-row lg:items-start
-                    h-full">
+                        class="flex items-center flex-col lg:flex-row lg:items-start
+                    h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user">
+                                <div class="max-w-full h-full bg-gradient-to-b {gradientList[0]} rounded-lg"></div>
+                                <div
+                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
-                                        src="/assets/CharactersBanners/{userPlayer.legends}.png"
-                                        alt={userPlayer.legends}
-                                        class="block"/>
+                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                    src="{userPlayer.avatarURL}" alt="">
+
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
                                 <div
-                                        class="stats text-2xl bottom-5 text-ultra-light">
+                                    class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
                                         Games played:
                                         <b>{userPlayer.gamesPlayed}</b>
@@ -318,20 +391,24 @@
                         <!--Other Players-->
                         {#if players}
                             <div
-                                    class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0">
-                                {#each players as player}
+                                class="flex flex-col justify-center lg:justify-start
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
+                                {#each players as player, i}
                                     <div class="ffa-player card lg:mr-12 mb-8">
+                                        <div class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                             ></div>
+                                        <div
+                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
                                         <img
-                                                src="/assets/CharactersBanners/{player.legends}.png"
-                                                alt={player.legends}
-                                                class="block"/>
+                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                            src="{player.avatarURL}" alt="">
+
 
                                         <p class="player-name text-3xl">
                                             {player.username}
                                         </p>
                                         <div
-                                                class="stats text-xl bottom-5
+                                            class="stats text-xl bottom-5
                                         text-ultra-light">
                                             <p>
                                                 Games played:
@@ -346,42 +423,60 @@
                     </div>
                 </div>
             {/if}
-            <div class:pb-4={isInfoDropdownOpen} class="absolute fixed bottom-0 w-full bg-background bg-opacity-90 ">
-                <button class="flex lg:ml-20 px-6 py-3 items-center text-lg" on:click={() => handleInfoDropdown()}>
-                    { !isInfoDropdownOpen ? "Show" : "Hide" } information
-                    <svg class:hidden={isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z"/>
-                    </svg>
-                    <svg class:hidden={!isInfoDropdownOpen} class="fill-current w-4 ml-2" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"/>
-                    </svg>
-                </button>
-                <div class="flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5" class:hidden={!isInfoDropdownOpen}>
-                    <div class="w-68">
-                        <p class="text-primary text-lg ">Ranked matches</p>
-                        <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p>
-                    </div>
-                    <div class="w-68 ml-12 xl:ml-0">
-                        <p class="text-primary text-lg ">Delay</p>
-                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when
-                            you click on the "REFRESH DATA" button.</p>
-                    </div>
-                    <div class="w-68 ml-12 xl:ml-0">
-                        <p class="text-primary text-lg ">Refresh data</p>
-                        <p>The other players will see your data updated when you click on the "REFRESH DATA" button.</p>
-                    </div>
 
-                    <div class="w-68 ml-12 xl:ml-0 xl:mr-40">
-                        <p class="text-primary text-lg ">Quit</p>
-                        <p>You will be able to quit the match when you click on the "QUIT" button, if you still didn't
-                            played.</p>
+            <GuideCard page="ffa" />
+            {#if !isSpectator && !isMatchEnded}
+                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
+                            bind:info={info} />
+            {/if}
+            {#if quests}
+                {#if isQuestsPanelOpen}
+                    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+
+                        <!--TRANSPARENT PART-->
+                        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
+                             out:fade={{duration: 350}}></div>
+                        <div
+                            class="bg-background w-full md:w-3/4  lg:w-auto min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
+                            in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
+                            <div class="-mt-32 flex items-center h-full">
+                                <button class="focus:outline-none h-full" on:click={() => handleQuestsPanel()}>
+                                    <svg class="w-6 fill-current text-font ml-8" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                                    </svg>
+                                </button>
+                                <div class="pl-14 pr-24">
+                                    <Quests data={quests} />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            </div>
+                {:else}
+                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
+                        <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
+                            <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                            </svg>
+                        </button>
+                    </div>
+                {/if}
+
+            {/if}
+
         {:else}
-            <Loading data={"Loading game data..."}/>
+            <Loading data={"Loading game data..."} />
         {/if}
+
+
     </div>
 {/if}
+
+<div>
+    {#if adError}
+        <ErrorAlert message="An error occurred while watching the ad" pushError={adError} />
+    {/if}
+</div>

@@ -1,6 +1,7 @@
 <script>
     export let isRefreshing;
     export let refreshMessage;
+    export let onRefreshMessage = "Refreshing"
 </script>
 
 <style>
@@ -24,6 +25,6 @@
         </svg>
     </div>
     <p class:pl-3={isRefreshing} class="pl-3">
-        {isRefreshing ? 'Refreshing' : refreshMessage}
+        {isRefreshing ? onRefreshMessage : refreshMessage}
     </p>
 </button>

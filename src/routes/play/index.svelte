@@ -2,28 +2,32 @@
     import GameModeCards from "../../components/GameModeCards.svelte";
     import Quests from "../../components/Quests.svelte";
     import GuideCard from "../../components/GuideCard.svelte";
-    import {onMount} from "svelte";
-    import {callApi} from "../../utils/api";
+    import { onMount } from "svelte";
+    import { callApi } from "../../utils/api";
     import Loading from "../../components/Loading.svelte";
+    import AdblockAlert from "../../components/AdblockAlert.svelte";
+    import { goto } from "@sapper/app";
+    import { apiUrl } from "../../utils/config";
 
     let quests;
     let error;
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
-
     onMount(async () => {
         gameModes = [
             {
                 name: "ffa",
-                description: "Fight against <b>9</b> players!",
+                displayName: "Solo",
+                description: "Fight against <b>7</b> players!",
                 goal:
-                    "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
+                    "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
                 available: true
             },
             {
                 name: "2vs2",
+                displayName: "Duos",
                 description: "Fight against an other <b>team</b>!",
                 goal:
                     "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
@@ -34,16 +38,13 @@
 
         try {
             //Check which game mode is enabled in config, and then adapt the property available of gameModes object.
-            let gameModesStatus = await callApi("get", "/status");
+            let gameModesStatus = await callApi("get", "/GMStatus");
             if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-                gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
+                gameModesError = `<p class="text-accent">Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class="text-2xl text-light">${gameModesStatus.toString()}</p>`;
             }
             if (gameModesStatus && !gameModesError) {
-                gameModesStatus = gameModesStatus.find(
-                    s => s.name === "GAMEMODES STATUS"
-                );
                 gameModesStatus = gameModesStatus.value;
-
+                console.log(gameModes,gameModesStatus)
                 Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
                         g => g.name === gameModeName.toLowerCase()
@@ -55,17 +56,19 @@
 
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) throw quests;
-            if (quests instanceof Error && quests.response.status === 403) return;
-            quests = quests.solo;
+            if (quests instanceof Error && quests.response.status !== 403) await goto(`${apiUrl}/auth/login`);
+            if (quests instanceof Error && quests.response.status === 403) await goto(`${apiUrl}/auth/login`);
 
-            if (!quests.lastDaily || !quests.lastWeekly) {
+            if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");
                 if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests;
+                quests = quests.solo;
+            } else {
                 quests = quests.solo;
             }
         } catch
             (err) {
+            console.log(err)
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                     error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -77,7 +80,7 @@
 
                 }
             }
-            error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+            error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 
         }
     });
@@ -88,17 +91,24 @@
     <meta
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
-        | Choose your game mode here | Winhalla play page " />
+        | Choose your gamemode here | Winhalla Play page" />
+    <!--Video ads-->
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 
     <link rel="canonical" href="https://winhalla.app/play" />
-    <script src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
-            id="purpleads-client"></script>
+
 </svelte:head>
+{#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
+    <div >
+        <Loading duration={500}/>
+    </div>
+{/if}
 {#if gameModesError && error}
-    <div class="w-full content-center lg:mt-60 mt-25">
+    <div class="w-full lg:mt-60 mt-25">
+
         <div class="text-center">
             <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed. Did you
-                broke grandma's porcelain bowls ?</h2>
+                broke grandma's porcelain bowls?</h2>
             <h3 class="text-center lg:text-3xl text-2xl"><a href="/" class="underline text-primary">Wanna go to
                 homepage</a> then ?</h3>
             <p class="text-light text-center pt-10">If this occurs regularly, maybe clear your cookies and cache. <br>
@@ -111,6 +121,7 @@
         <p class:hidden={!errorDetailsOpen} class="text-light">{@html error} <br><br> {@html gameModesError}</p>
     </div>
 {:else}
+    <AdblockAlert quests={quests} />
     <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
         <div class="text-center lg:text-left">
             <h1 class="text-6xl leading-snug lg:leading-normal">
@@ -119,32 +130,49 @@
         </div>
 
         <div
-                class="flex flex-col items-center lg:items-start lg:flex-wrap
+            class="flex flex-col items-center lg:flex-wrap
         lg:flex-row">
 
             {#if gameModesError}
-                <div class="lg:w-40% content-center lg:mt-60 mt-25 pb-20">
+                <div class="lg:w-40% z-50 content-center lg:mt-60 mt-25 pb-20">
                     <h2 class="lg:text-3xl text-2xl text-center">{@html gameModesError}</h2>
                 </div>
             {:else if gameModes}
                 <div
-                        class="lg:mb-10 lg:mr- mt-10 text-center
+                    class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes}/>
+                    <GameModeCards {gameModes} />
                 </div>
             {/if}
-            <div class="pb-16">
+            <div class="pb-16 flex-grow lg:-ml-15">
+
                 {#if error}
-                    <div class="w-full content-center lg:mt-60 mt-25 ">
+                    <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
                     </div>
                 {:else if quests}
-                    <Quests data={quests}/>
-                {:else}
-                    <Loading type="inline"/>
+                    <!--{#if !quests.lastDaily || !quests.lastWeekly}
+                        <div out:fade={{duration:1000}} class="z-20">
+                            <Loading type="inline" />
+                        </div>
+                    {/if}-->
+                    {#if quests.lastDaily && quests.lastWeekly}
+                        <div class="lg:ml-15">
+                            <Quests data={quests} />
+                        </div>
+                    {/if}
+
                 {/if}
             </div>
         </div>
     </div>
 
+    <GuideCard page="play" />
 {/if}
+<!--
+<div>
+    <script defer
+            src="https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"
+            id="purpleads-client"></script>
+</div>
+-->

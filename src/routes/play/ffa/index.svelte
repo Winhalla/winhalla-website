@@ -10,7 +10,7 @@
         let id;
         try {
             id = await callApi("get", "/lobby");
-
+        if(id instanceof Error) throw id
 
         console.log("id", id);
         if (!id) {

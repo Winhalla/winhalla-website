@@ -77,6 +77,9 @@ function onDestroy(fn) {
 function setContext(key, context) {
     get_current_component().$$.context.set(key, context);
 }
+function getContext(key) {
+    return get_current_component().$$.context.get(key);
+}
 const escaped = {
     '"': '&quot;',
     "'": '&#39;',
@@ -156,14 +159,14 @@ const apiUrl = "https://api.winhalla.app";
 
 const css = {
 	code: ".video-container.svelte-8zrx6u::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.3) 0%,\r\n                rgba(23, 23, 26, 0.4),\r\n                rgba(23, 23, 26, 0.6) 75%,\r\n                rgba(23, 23, 26, 1) 100%\r\n        )}@keyframes svelte-8zrx6u-arrow{0%{transform:translateY(0rem)}100%{transform:translateY(0.55rem)}}.arrow-svg.svelte-8zrx6u{animation:svelte-8zrx6u-arrow 0.8s infinite alternate ease-in-out}.cards.svelte-8zrx6u{height:calc(100% + 5rem)}",
-	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .video-container::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.3) 0%,\\r\\n                rgba(23, 23, 26, 0.4),\\r\\n                rgba(23, 23, 26, 0.6) 75%,\\r\\n                rgba(23, 23, 26, 1) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    @keyframes arrow {\\r\\n        0% {\\r\\n            transform: translateY(0rem);\\r\\n        }\\r\\n\\r\\n        100% {\\r\\n            transform: translateY(0.55rem);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    .arrow-svg {\\r\\n        animation: arrow 0.8s infinite alternate ease-in-out;\\r\\n    }\\r\\n\\r\\n    .cards {\\r\\n        height: calc(100% + 5rem);\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Play Brawlhalla. Earn rewards. - Winhalla</title>\\r\\n    <meta\\r\\n            name=\\\"description\\\"\\r\\n            content=\\\"Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,\\r\\n        Mammoth Coins, Season Packs and more! | Winhalla home page\\\" />\\r\\n\\r\\n    <link rel=\\\"canonical\\\" href=\\\"https://winhalla.app\\\" />\\r\\n</svelte:head>\\r\\n<div class=\\\"pb-8\\\">\\r\\n    <div class=\\\"relative\\\">\\r\\n        <div class=\\\"absolute top-7 left-7 lg:left-24 lg:top-10 z-10\\\">\\r\\n            <h1 class=\\\"text-6xl lg:text-8xl text-shadow-base\\\">\\r\\n                PLAY\\r\\n                <b class=\\\"text-accent\\\">BRAWLHALLA</b>\\r\\n                <br />\\r\\n                EARN\\r\\n                <b class=\\\"text-accent\\\">REWARDS</b>\\r\\n            </h1>\\r\\n        </div>\\r\\n        <div\\r\\n                class=\\\"video-container relative z-0 overflow-hidden w-full\\r\\n            h-screen-60 lg:h-screen\\\">\\r\\n            <video\\r\\n                    class=\\\"w-full h-full object-cover\\\"\\r\\n                    preload=\\\"true\\\"\\r\\n                    loop\\r\\n                    playsinline\\r\\n                    autoplay\\r\\n                    muted>\\r\\n                <source\\r\\n                        src=\\\"/assets/video/brawlhalla-gameplay.mp4\\\"\\r\\n                        type=\\\"video/mp4\\\" />\\r\\n            </video>\\r\\n        </div>\\r\\n\\r\\n        <div\\r\\n                class=\\\"tip absolute left-0 right-0 bottom-20 text-center hidden\\r\\n            lg:block\\\">\\r\\n            <p class=\\\"text-2xl\\\">Learn more</p>\\r\\n            <svg\\r\\n                    class=\\\"fill-current w-7 h-7 mt-1 mb-3 mx-auto arrow-svg\\\"\\r\\n                    xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                    viewBox=\\\"0 0 20 20\\\">\\r\\n                <path\\r\\n                        d=\\\"M9 16.172l-6.071-6.071-1.414 1.414L10 20l.707-.707\\r\\n                    7.778-7.778-1.414-1.414L11 16.172V0H9z\\\" />\\r\\n            </svg>\\r\\n        </div>\\r\\n    </div>\\r\\n    <div class=\\\"pt-10\\\">\\r\\n        <div\\r\\n                class=\\\"cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row\\r\\n            items-center lg:justify-around\\\">\\r\\n            <div class=\\\"pb-10 lg:pb-0\\\">\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">1</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Choose</b>\\r\\n                            a game mode\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            FFA, solo, 2vs2...\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div class=\\\"pb-10 lg:pb-0\\\">\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">2</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Complete</b>\\r\\n                            the goal of the game mode\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            Quests, win goals...\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div>\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">3</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Earn</b>\\r\\n                            rewards\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            Earn coins that you will be able to spend in the\\r\\n                            <a class=\\\"underline\\\" href=\\\"/shop\\\">shop</a>\\r\\n                            !\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class=\\\"join-us w-full text-center mt-15 lg:mt-20 pb-10\\\">\\r\\n            <h2 class=\\\"text-5xl lg:text-7xl\\\">Ready? Start now!</h2>\\r\\n            <a class=\\\"button button-brand mt-4\\\" href=\\\"{apiUrl}/auth/login\\\">\\r\\n                Create Account\\r\\n            </a>\\r\\n            <div class=\\\"pt-1 text-light\\\">\\r\\n                <a class=\\\"text-base\\\" href=\\\"{apiUrl}/auth/login\\\">\\r\\n                    Already a member? Login\\r\\n                </a>\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAKI,8BAAgB,OAAO,AAAC,CAAC,AACrB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE,CAAC;gBACzB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC;gBACtB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,IAAI;SAC/B,AACL,CAAC,AAED,WAAW,mBAAM,CAAC,AACd,EAAE,AAAC,CAAC,AACA,SAAS,CAAE,WAAW,IAAI,CAAC,AAC/B,CAAC,AAED,IAAI,AAAC,CAAC,AACF,SAAS,CAAE,WAAW,OAAO,CAAC,AAClC,CAAC,AACL,CAAC,AAED,UAAU,cAAC,CAAC,AACR,SAAS,CAAE,mBAAK,CAAC,IAAI,CAAC,QAAQ,CAAC,SAAS,CAAC,WAAW,AACxD,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,MAAM,CAAE,KAAK,IAAI,CAAC,CAAC,CAAC,IAAI,CAAC,AAC7B,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n    import {fly} from \\\"svelte/transition\\\"\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .video-container::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.3) 0%,\\r\\n                rgba(23, 23, 26, 0.4),\\r\\n                rgba(23, 23, 26, 0.6) 75%,\\r\\n                rgba(23, 23, 26, 1) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    @keyframes arrow {\\r\\n        0% {\\r\\n            transform: translateY(0rem);\\r\\n        }\\r\\n\\r\\n        100% {\\r\\n            transform: translateY(0.55rem);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    .arrow-svg {\\r\\n        animation: arrow 0.8s infinite alternate ease-in-out;\\r\\n    }\\r\\n\\r\\n    .cards {\\r\\n        height: calc(100% + 5rem);\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Play Brawlhalla. Earn rewards. - Winhalla</title>\\r\\n    <meta\\r\\n            name=\\\"description\\\"\\r\\n            content=\\\"Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,\\r\\n        Mammoth Coins, Season Packs and more! | Winhalla home page\\\" />\\r\\n\\r\\n    <link rel=\\\"canonical\\\" href=\\\"https://winhalla.app\\\" />\\r\\n</svelte:head>\\r\\n<div class=\\\"pb-8 \\\" out:fly={{ y: -450, duration: 400 }}>\\r\\n    <div class=\\\"relative\\\">\\r\\n        <div class=\\\"absolute top-7 left-7 lg:left-24 lg:top-10 z-10\\\">\\r\\n            <h1 class=\\\"text-6xl lg:text-8xl text-shadow-base\\\">\\r\\n                PLAY\\r\\n                <b class=\\\"text-accent\\\">BRAWLHALLA</b>\\r\\n                <br />\\r\\n                EARN\\r\\n                <b class=\\\"text-accent\\\">REWARDS</b>\\r\\n            </h1>\\r\\n        </div>\\r\\n        <div\\r\\n                class=\\\"video-container relative z-0 overflow-hidden w-full\\r\\n            h-screen-60 lg:h-screen\\\">\\r\\n            <video\\r\\n                    class=\\\"w-full h-full object-cover\\\"\\r\\n                    preload=\\\"true\\\"\\r\\n                    loop\\r\\n                    playsinline\\r\\n                    autoplay\\r\\n                    muted>\\r\\n                <source\\r\\n                        src=\\\"/assets/video/brawlhalla-gameplay.mp4\\\"\\r\\n                        type=\\\"video/mp4\\\" />\\r\\n            </video>\\r\\n        </div>\\r\\n\\r\\n        <div\\r\\n                class=\\\"tip absolute left-0 right-0 bottom-20 text-center hidden\\r\\n            lg:block\\\">\\r\\n            <p class=\\\"text-2xl\\\">Learn more</p>\\r\\n            <svg\\r\\n                    class=\\\"fill-current w-7 h-7 mt-1 mb-3 mx-auto arrow-svg\\\"\\r\\n                    xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                    viewBox=\\\"0 0 20 20\\\">\\r\\n                <path\\r\\n                        d=\\\"M9 16.172l-6.071-6.071-1.414 1.414L10 20l.707-.707\\r\\n                    7.778-7.778-1.414-1.414L11 16.172V0H9z\\\" />\\r\\n            </svg>\\r\\n        </div>\\r\\n    </div>\\r\\n    <div class=\\\"pt-10\\\">\\r\\n        <div\\r\\n                class=\\\"cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row\\r\\n            items-center lg:justify-around\\\">\\r\\n            <div class=\\\"pb-10 lg:pb-0\\\">\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">1</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Choose</b>\\r\\n                            a game mode\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            FFA, solo, 2vs2...\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div class=\\\"pb-10 lg:pb-0\\\">\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">2</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Complete</b>\\r\\n                            the goal of the game mode\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            Quests, win goals...\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div>\\r\\n                <div\\r\\n                        class=\\\"card p-4 w-64 h-84 hover:shadow-card-hover border\\r\\n                    border-transparent hover:border-primary\\\">\\r\\n                    <p class=\\\"text-9xl\\\">3</p>\\r\\n                    <div class=\\\"\\\">\\r\\n                        <p class=\\\"text-3xl leading-9\\\">\\r\\n                            <b class=\\\"text-primary font-normal\\\">Earn</b>\\r\\n                            rewards\\r\\n                        </p>\\r\\n                        <p class=\\\"text-light text-xl pt-1\\\">\\r\\n                            Earn coins that you will be able to spend in the\\r\\n                            <a class=\\\"underline\\\" href=\\\"/shop\\\">shop</a>\\r\\n                            !\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class=\\\"join-us w-full text-center mt-15 lg:mt-20 pb-10\\\">\\r\\n            <h2 class=\\\"text-5xl lg:text-7xl\\\">Ready? Start now!</h2>\\r\\n            <a class=\\\"button button-brand mt-4\\\" href=\\\"{apiUrl}/auth/login\\\">\\r\\n                Login with steam\\r\\n            </a>\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAMI,8BAAgB,OAAO,AAAC,CAAC,AACrB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE,CAAC;gBACzB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC;gBACtB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,IAAI;SAC/B,AACL,CAAC,AAED,WAAW,mBAAM,CAAC,AACd,EAAE,AAAC,CAAC,AACA,SAAS,CAAE,WAAW,IAAI,CAAC,AAC/B,CAAC,AAED,IAAI,AAAC,CAAC,AACF,SAAS,CAAE,WAAW,OAAO,CAAC,AAClC,CAAC,AACL,CAAC,AAED,UAAU,cAAC,CAAC,AACR,SAAS,CAAE,mBAAK,CAAC,IAAI,CAAC,QAAQ,CAAC,SAAS,CAAC,WAAW,AACxD,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,MAAM,CAAE,KAAK,IAAI,CAAC,CAAC,CAAC,IAAI,CAAC,AAC7B,CAAC\"}"
 };
 
 const Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	$$result.css.add(css);
 
 	return `${($$result.head += `${($$result.title = `<title>Play Brawlhalla. Earn rewards. - Winhalla</title>`, "")}<meta name="${"description"}" content="${"Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,\r\n        Mammoth Coins, Season Packs and more! | Winhalla home page"}" data-svelte="svelte-756h6c"><link rel="${"canonical"}" href="${"https://winhalla.app"}" data-svelte="svelte-756h6c">`, "")}
-<div class="${"pb-8"}"><div class="${"relative"}"><div class="${"absolute top-7 left-7 lg:left-24 lg:top-10 z-10"}"><h1 class="${"text-6xl lg:text-8xl text-shadow-base"}">PLAY
+<div class="${"pb-8 "}"><div class="${"relative"}"><div class="${"absolute top-7 left-7 lg:left-24 lg:top-10 z-10"}"><h1 class="${"text-6xl lg:text-8xl text-shadow-base"}">PLAY
                 <b class="${"text-accent"}">BRAWLHALLA</b>
                 <br>
                 EARN
@@ -193,10 +196,8 @@ const Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                             !
                         </p></div></div></div></div>
         <div class="${"join-us w-full text-center mt-15 lg:mt-20 pb-10"}"><h2 class="${"text-5xl lg:text-7xl"}">Ready? Start now!</h2>
-            <a class="${"button button-brand mt-4"}" href="${escape(apiUrl) + "/auth/login"}">Create Account
-            </a>
-            <div class="${"pt-1 text-light"}"><a class="${"text-base"}" href="${escape(apiUrl) + "/auth/login"}">Already a member? Login
-                </a></div></div></div></div>`;
+            <a class="${"button button-brand mt-4"}" href="${escape(apiUrl) + "/auth/login"}">Login with steam
+            </a></div></div></div>`;
 });
 
 var component_0 = /*#__PURE__*/Object.freeze({
@@ -256,6 +257,8 @@ function writable(value, start = noop) {
     return { set, update, subscribe };
 }
 
+let eventEmitter = writable({ error:undefined });
+
 const axiosInstance = axios__default['default'].create({
     withCredentials: true,
     baseURL: "https://api.winhalla.app"
@@ -270,6 +273,9 @@ const callApi = async (method, url, data) => {
         });
         return res.data;
     }catch (e) {
+        if(!url.includes("createAccount")&&!url.includes("changeEmail")&&!url.includes("exitMatch")&&!url.includes("feltrom/login")) {
+            eventEmitter.set({error: e});
+        }
         return e
     }
 };
@@ -289,13 +295,30 @@ counter.subscribe((value) => {
     }
 });
 
+/* src\components\ErrorAlert.svelte generated by Svelte v3.31.0 */
+
+const ErrorAlert = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { pushError } = $$props;
+	let { message } = $$props;
+	let { type } = $$props;
+	if ($$props.pushError === void 0 && $$bindings.pushError && pushError !== void 0) $$bindings.pushError(pushError);
+	if ($$props.message === void 0 && $$bindings.message && message !== void 0) $$bindings.message(message);
+	if ($$props.type === void 0 && $$bindings.type && type !== void 0) $$bindings.type(type);
+
+	return `${type === "createAccount"
+	? `<div class="${"px-5 w-full lg:w-auto absolute left-0 lg:left-auto lg:right-0 2xl:right-30 z-20 top-5 lg:top-50 xl:mr-6"}"><div class="${"w-full lg:w-auto h-auto  p-5 bg-background border rounded-lg border-legendary"}"><h3 class="${"text-legendary text-xl"}">${escape(message)}</h3>
+            <p class="${"text-light text-lg"}">${escape(pushError)}</p></div></div>`
+	: `<div class="${"z-50 fixed right-0 top-5 lg:top-30 mr-8 lg:mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary"}"><h3 class="${"text-legendary text-xl"}">${escape(message)}</h3>
+        <p class="${"text-light text-lg"}">${escape(pushError)}</p></div>`}`;
+});
+
 const CONTEXT_KEY = {};
 
 /* src\components\Tailwindcss.svelte generated by Svelte v3.31.0 */
 
 const css$1 = {
 	code: "@tailwind base;@tailwind components;@tailwind utilities;",
-	map: "{\"version\":3,\"file\":\"Tailwindcss.svelte\",\"sources\":[\"Tailwindcss.svelte\"],\"sourcesContent\":[\"<style global>\\r\\n    @tailwind base;\\r\\n    @tailwind components;\\r\\n    @tailwind utilities;\\r\\n\\r\\n    .button {\\r\\n        display: inline-block;\\r\\n        padding: 0.5rem 2.75rem;\\r\\n        border-radius: 0.125rem;\\r\\n        font-size: 1.25rem;\\r\\n        background-color: #3d72e4;\\r\\n    }\\r\\n\\r\\n    .button-brand:hover {\\r\\n        -webkit-box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);\\r\\n        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);\\r\\n    }\\r\\n\\r\\n    .button-brand-alternative {\\r\\n        background-color: #1a1a21;\\r\\n        -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);\\r\\n        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);\\r\\n        border: 1px solid #3d72e4;\\r\\n    }\\r\\n\\r\\n    .button-brand-alternative:hover {\\r\\n        -webkit-box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);\\r\\n        box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);\\r\\n    }\\r\\n\\r\\n    .card {\\r\\n        -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;\\r\\n        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;\\r\\n\\r\\n        @apply bg-variant rounded;\\r\\n    }\\r\\n</style>\\r\\n\"],\"names\":[],\"mappings\":\"AACI,UAAU,IAAI,CAAC,AACf,UAAU,UAAU,CAAC,AACrB,UAAU,SAAS,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"Tailwindcss.svelte\",\"sources\":[\"Tailwindcss.svelte\"],\"sourcesContent\":[\"<style global>\\r\\n    @tailwind base;\\r\\n    @tailwind components;\\r\\n    @tailwind utilities;\\r\\n\\r\\n    .button {\\r\\n        display: inline-block;\\r\\n        padding: 0.5rem 2.75rem;\\r\\n        border-radius: 0.125rem;\\r\\n        font-size: 1.25rem;\\r\\n        background-color: #3d72e4;\\r\\n    }\\r\\n\\r\\n    .button-brand:hover {\\r\\n        -webkit-box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);\\r\\n        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);\\r\\n    }\\r\\n\\r\\n    .button-brand-alternative {\\r\\n        background-color: #1a1a21;\\r\\n        -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);\\r\\n        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);\\r\\n        border: 1px solid #3d72e4;\\r\\n    }\\r\\n\\r\\n    .button-brand-alternative:hover {\\r\\n        -webkit-box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);\\r\\n        box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.125);\\r\\n    }\\r\\n\\r\\n    .card {\\r\\n        -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;\\r\\n        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 8px;\\r\\n\\r\\n        @apply bg-variant rounded;\\r\\n    }\\r\\n\\r\\n    .scrollbar::-webkit-scrollbar {\\r\\n        width: 18px;\\r\\n        height: 18px;\\r\\n        cursor: pointer;\\r\\n\\r\\n        /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/\\r\\n\\r\\n    }\\r\\n\\r\\n    .scrollbar::-webkit-scrollbar-thumb {\\r\\n        height: 3px;\\r\\n        border: 6px solid rgba(0, 0, 0, 0);\\r\\n        background-clip: padding-box;\\r\\n        -webkit-border-radius: 15px;\\r\\n        background-color: #1C1C2C;\\r\\n        -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);\\r\\n        /*outline: 1px solid slategrey;*/\\r\\n    }\\r\\n</style>\\r\\n\"],\"names\":[],\"mappings\":\"AACI,UAAU,IAAI,CAAC,AACf,UAAU,UAAU,CAAC,AACrB,UAAU,SAAS,CAAC\"}"
 };
 
 const Tailwindcss = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -307,7 +330,7 @@ const Tailwindcss = create_ssr_component(($$result, $$props, $$bindings, slots) 
 
 const css$2 = {
 	code: ".username.svelte-i9vj87{margin-left:0.4rem}.dropdown.svelte-i9vj87{top:3.8rem;left:0;right:0}",
-	map: "{\"version\":3,\"file\":\"NavAccount.svelte\",\"sources\":[\"NavAccount.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n    import { apiUrl } from \\\"../../utils/config\\\";\\r\\n\\r\\n    export let username;\\r\\n    export let avatar;\\r\\n\\r\\n    let isDropdownOpen;\\r\\n    const handleClick = () => {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n    };\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .username {\\r\\n        margin-left: 0.4rem;\\r\\n    }\\r\\n\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n        left: 0;\\r\\n        right: 0;\\r\\n    }\\r\\n</style>\\r\\n<div class=\\\"lg:relative\\\">\\r\\n    <div class=\\\"flex items-center h-full\\\">\\r\\n        <button\\r\\n            class=\\\"focus:outline-none lg:hover:bg-primary lg:px-2 py-1 rounded\\\"\\r\\n            use:clickOutside\\r\\n            on:click_outside={() => (isDropdownOpen = false)}\\r\\n            on:click={() => handleClick()}>\\r\\n            <div class=\\\"flex items-center\\\">\\r\\n                <img class=\\\"w-10 h-10 rounded-full\\\" src={avatar} alt=\\\"Avatar\\\" />\\r\\n                <p class=\\\"text-xl mr-2 username\\\">{username}</p>\\r\\n                <svg\\r\\n                    class=\\\"w-4 h-6 fill-current hidden lg:block\\\"\\r\\n                    viewBox=\\\"0 0 24 24\\\"\\r\\n                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                    <path\\r\\n                        d=\\\"m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z\\\" />\\r\\n                </svg>\\r\\n            </div>\\r\\n        </button>\\r\\n    </div>\\r\\n\\r\\n    <div\\r\\n        class:lg:hidden={!isDropdownOpen}\\r\\n        class=\\\"pt-3 lg:pt-0 rounded lg:bg-variant lg:absolute lg:shadow-card\\r\\n            dropdown z-50 lg:border lg:border-primary\\\">\\r\\n        <a\\r\\n            class=\\\"block text-red-500 text-lg border-l border-red-600 py-3\\r\\n                lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm\\r\\n                lg:border-none\\\"\\r\\n            href=\\\"{apiUrl}/auth/logout\\\">Logout</a>\\r\\n    </div>\\r\\n</div>\"],\"names\":[],\"mappings\":\"AAcI,SAAS,cAAC,CAAC,AACP,WAAW,CAAE,MAAM,AACvB,CAAC,AAED,SAAS,cAAC,CAAC,AACP,GAAG,CAAE,MAAM,CACX,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,CAAC,AACZ,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"NavAccount.svelte\",\"sources\":[\"NavAccount.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n    import { apiUrl } from \\\"../../utils/config\\\";\\r\\n\\r\\n    export let username;\\r\\n    export let avatar;\\r\\n\\r\\n    let isDropdownOpen;\\r\\n    const handleClick = () => {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n    };\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .username {\\r\\n        margin-left: 0.4rem;\\r\\n    }\\r\\n\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n        left: 0;\\r\\n        right: 0;\\r\\n    }\\r\\n</style>\\r\\n<div class=\\\"lg:relative\\\">\\r\\n    <div class=\\\"flex items-center h-full\\\">\\r\\n        <button\\r\\n            class=\\\"focus:outline-none lg:hover:bg-primary lg:px-2 py-1 rounded\\\"\\r\\n            use:clickOutside\\r\\n            on:click_outside={() => (isDropdownOpen = false)}\\r\\n            on:click={() => handleClick()}>\\r\\n            <div class=\\\"flex items-center\\\">\\r\\n                <img class=\\\"w-10 h-10 rounded-full\\\" src={avatar} alt=\\\"Avatar\\\" />\\r\\n                <p class=\\\"text-xl mr-2 username\\\">{username}</p>\\r\\n                <svg\\r\\n                    class=\\\"w-4 h-6 fill-current hidden lg:block\\\"\\r\\n                    viewBox=\\\"0 0 24 24\\\"\\r\\n                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                    <path\\r\\n                        d=\\\"m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z\\\" />\\r\\n                </svg>\\r\\n            </div>\\r\\n        </button>\\r\\n    </div>\\r\\n\\r\\n    <div\\r\\n        class:lg:hidden={!isDropdownOpen}\\r\\n        class=\\\"pt-3 lg:pt-0 rounded lg:bg-variant lg:absolute lg:shadow-card\\r\\n            dropdown z-50 lg:border lg:border-primary\\\">\\r\\n        <a class=\\\"block text-lg border-l border-red-600 py-3\\r\\n                lg:hover:bg-primary lg:hover:text-font px-3 rounded-sm\\r\\n                lg:border-none\\\" href=\\\"/change-email\\\" > Change email</a>\\r\\n        <a\\r\\n            class=\\\"block text-red-500 text-lg border-l border-red-600 py-3\\r\\n                lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm\\r\\n                lg:border-none mb-3 lg:mb-0\\\"\\r\\n            href=\\\"{apiUrl}/auth/logout\\\">Logout</a>\\r\\n\\r\\n    </div>\\r\\n</div>\"],\"names\":[],\"mappings\":\"AAcI,SAAS,cAAC,CAAC,AACP,WAAW,CAAE,MAAM,AACvB,CAAC,AAED,SAAS,cAAC,CAAC,AACP,GAAG,CAAE,MAAM,CACX,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,CAAC,AACZ,CAAC\"}"
 };
 
 const NavAccount = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -325,14 +348,15 @@ const NavAccount = create_ssr_component(($$result, $$props, $$bindings, slots) =
     <div class="${[
 		"pt-3 lg:pt-0 rounded lg:bg-variant lg:absolute lg:shadow-card\r\n            dropdown z-50 lg:border lg:border-primary svelte-i9vj87",
 		 "lg:hidden" 
-	].join(" ").trim()}"><a class="${"block text-red-500 text-lg border-l border-red-600 py-3\r\n                lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm\r\n                lg:border-none"}" href="${escape(apiUrl) + "/auth/logout"}">Logout</a></div></div>`;
+	].join(" ").trim()}"><a class="${"block text-lg border-l border-red-600 py-3\r\n                lg:hover:bg-primary lg:hover:text-font px-3 rounded-sm\r\n                lg:border-none"}" href="${"/change-email"}">Change email</a>
+        <a class="${"block text-red-500 text-lg border-l border-red-600 py-3\r\n                lg:hover:bg-red-500 lg:hover:text-font px-3 rounded-sm\r\n                lg:border-none mb-3 lg:mb-0"}" href="${escape(apiUrl) + "/auth/logout"}">Logout</a></div></div>`;
 });
 
 /* src\components\Navigation\NavNotifications.svelte generated by Svelte v3.31.0 */
 
 const css$3 = {
 	code: ".dropdown.svelte-7szmv8.svelte-7szmv8{top:3.8rem}.bell-button.svelte-7szmv8:hover .bell.svelte-7szmv8{display:none}.bell-button.svelte-7szmv8:hover .bell-hover.svelte-7szmv8{display:block}.notification.svelte-7szmv8.svelte-7szmv8{border-radius:10px;@apply flex justify-between px-4 py-3 mt-3 mb-1 relative overflow-hidden w-full;}",
-	map: "{\"version\":3,\"file\":\"NavNotifications.svelte\",\"sources\":[\"NavNotifications.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n    import { callApi } from \\\"../../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import cookie from \\\"cookie\\\";\\r\\n    import { counter } from \\\"../store\\\";\\r\\n\\r\\n    export let data;\\r\\n    let newNotifications = false;\\r\\n    let opened = false;\\r\\n    let isDropdownOpen = false;\\r\\n    let matchesLength;\\r\\n\\r\\n    function handleClick() {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n        opened = true;\\r\\n    }\\r\\n\\r\\n    function calculateTimers() {\\r\\n        data.inGame.forEach((match, i) => {\\r\\n            let d = new Date(match.Date);\\r\\n            const endsIn = -(\\r\\n                (new Date().getTime() -\\r\\n                    new Date(d.setHours(d.getHours() + 3)).getTime()) /\\r\\n                1000\\r\\n            );\\r\\n            if (endsIn < 1) {\\r\\n                data.inGame[i].timer = \\\"\\\";\\r\\n            } else {\\r\\n                startTimer(endsIn, i);\\r\\n            }\\r\\n        });\\r\\n    }\\r\\n\\r\\n    onMount(() => {\\r\\n        if (!data.notifications) return;\\r\\n\\r\\n        let length = data.notifications.length;\\r\\n        let cookies = cookie.parse(document.cookie);\\r\\n\\r\\n        if (length > cookies.notificationNb || !cookies.notificationNb) {\\r\\n            newNotifications = true;\\r\\n        }\\r\\n\\r\\n        cookies.notificationNb = length;\\r\\n        matchesLength = data.inGame.length;\\r\\n        calculateTimers();\\r\\n\\r\\n        //document.cookie = cookie.serialize(\\\"notificationNb\\\",cookies.notificationNb,{maxAge:15552000,sameSite:\\\"lax\\\"})\\r\\n        //document.cookie = cookie.serialize(cookies)\\r\\n    });\\r\\n    //TODO: on peut opti ça en utilisant la data de export let data au lieu de resubscribe pour save de la ram\\r\\n    counter.subscribe(() => {\\r\\n        if (data.inGame) {\\r\\n            if (data.inGame.length !== matchesLength) {\\r\\n                calculateTimers();\\r\\n            }\\r\\n        }\\r\\n    });\\r\\n\\r\\n    function startTimer(duration, i) {\\r\\n        let timer = duration,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n        setInterval(function() {\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n\\r\\n            data.inGame[i].timer = hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n\\r\\n            if (--timer < 0) {\\r\\n                timer = duration;\\r\\n            }\\r\\n        }, 1000);\\r\\n    }\\r\\n\\r\\n    const idToType = id => {\\r\\n        if (id === 0) return \\\"match finished\\\";\\r\\n        if (id === 1) return \\\"quest finished\\\";\\r\\n        if (id === 2) return \\\"match\\\";\\r\\n    };\\r\\n\\r\\n    function delNotif(i) {\\r\\n        callApi(\\\"post\\\", \\\"/deleteNotification/\\\" + i);\\r\\n        data.notifications.splice(i, 1);\\r\\n        data = data;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n    }\\r\\n\\r\\n    .bell-button:hover .bell {\\r\\n        display: none;\\r\\n    }\\r\\n\\r\\n    .bell-button:hover .bell-hover {\\r\\n        display: block;\\r\\n    }\\r\\n\\r\\n    .notification {\\r\\n        border-radius: 10px;\\r\\n        @apply flex justify-between px-4 py-3 mt-3 mb-1 relative overflow-hidden w-full;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"relative\\\">\\r\\n    <div class=\\\"flex items-center h-full mr-4 lg:m-0\\\">\\r\\n        <div\\r\\n            class=\\\"focus:outline-none lg:ml-3 rounded bell-button cursor-pointer\\\"\\r\\n            on:click={() => {\\r\\n                document.cookie = cookie.serialize(\\r\\n                    'notificationNb',\\r\\n                    data.notifications.length,\\r\\n                    { maxAge: 15552000, sameSite: 'lax', path: '/' }\\r\\n                );\\r\\n                newNotifications = false;\\r\\n            }}\\r\\n            on:click={handleClick}>\\r\\n            <div class=\\\"flex items-center relative\\\">\\r\\n                {#if isDropdownOpen}\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m20.333 17.16c-1.04-1.04-2.339-2.341-2.339-7.409\\r\\n                            0-3.706-2.688-6.784-6.22-7.393l-.045-.006c.166-.238.265-.533.265-.851\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .318.099.613.268.856l-.003-.005c-3.578.614-6.266\\r\\n                            3.692-6.266 7.399 0 5.068-1.296 6.367-2.339\\r\\n                            7.409-.405.407-.655.968-.655 1.588 0 1.242 1.005\\r\\n                            2.249 2.246 2.252h5.249c0 1.657 1.343 3 3 3s3-1.343\\r\\n                            3-3h5.248c1.241-.004 2.246-1.011 2.246-2.252\\r\\n                            0-.62-.25-1.181-.655-1.588zm-9.84 4.965c.207 0\\r\\n                            .375.168.375.375s-.168.375-.375.375c-1.035-.001-1.874-.84-1.875-1.875h.75c.001.621.505\\r\\n                            1.125 1.126 1.125z\\\" />\\r\\n                    </svg>\\r\\n                {:else}\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current bell\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m19.945\\r\\n                            15.512c-.8-.786-1.619-1.6-1.619-5.44-.005-3.881-2.832-7.101-6.539-7.717l-.046-.006c.165-.237.263-.531.263-.848\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .317.098.611.266.853l-.003-.005c-3.753.623-6.579\\r\\n                            3.843-6.584 7.723v.001c0 3.84-.822 4.655-1.619\\r\\n                            5.44-.653.577-1.062 1.417-1.062 2.352 0 1.732 1.404\\r\\n                            3.135 3.135 3.135h.007 4.36c0 1.657 1.343 3 3\\r\\n                            3s3-1.343 3-3h4.363.007c1.732 0 3.135-1.404\\r\\n                            3.135-3.135\\r\\n                            0-.935-.409-1.775-1.059-2.349l-.003-.003zm-9.441\\r\\n                            6.613c-.621-.001-1.124-.504-1.125-1.125h2.251c-.001.621-.505\\r\\n                            1.125-1.126\\r\\n                            1.125zm7.36-3.376h-14.726c-.487-.003-.881-.398-.881-.886\\r\\n                            0-.243.098-.463.256-.623 1.34-1.34 2.418-2.612\\r\\n                            2.418-7.17 0-3.077 2.495-5.572 5.572-5.572s5.572\\r\\n                            2.495 5.572 5.572c0 4.578 1.089 5.84 2.418\\r\\n                            7.17.158.16.256.38.256.623 0 .488-.394.883-.881.886z\\\" />\\r\\n                    </svg>\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current hidden bell-hover\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m20.333 17.16c-1.04-1.04-2.339-2.341-2.339-7.409\\r\\n                            0-3.706-2.688-6.784-6.22-7.393l-.045-.006c.166-.238.265-.533.265-.851\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .318.099.613.268.856l-.003-.005c-3.578.614-6.266\\r\\n                            3.692-6.266 7.399 0 5.068-1.296 6.367-2.339\\r\\n                            7.409-.405.407-.655.968-.655 1.588 0 1.242 1.005\\r\\n                            2.249 2.246 2.252h5.249c0 1.657 1.343 3 3 3s3-1.343\\r\\n                            3-3h5.248c1.241-.004 2.246-1.011 2.246-2.252\\r\\n                            0-.62-.25-1.181-.655-1.588zm-9.84 4.965c.207 0\\r\\n                            .375.168.375.375s-.168.375-.375.375c-1.035-.001-1.874-.84-1.875-1.875h.75c.001.621.505\\r\\n                            1.125 1.126 1.125z\\\" />\\r\\n                    </svg>\\r\\n                {/if}\\r\\n                {#if newNotifications}\\r\\n                    <span class=\\\"flex\\\">\\r\\n                        <span\\r\\n                            class=\\\"inline-flex animate-ping absolute top-0\\r\\n                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75\\\" />\\r\\n                        <span\\r\\n                            class=\\\"inline-flex absolute top-0 right-0 w-2 h-2\\r\\n                            rounded-full bg-legendary\\\" />\\r\\n                    </span>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n\\r\\n    <div\\r\\n        class:hidden={!isDropdownOpen}\\r\\n        class=\\\"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\\r\\n        shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border\\r\\n        border-primary overflow-y-scroll max-h-screen-60\\\"\\r\\n        use:clickOutside\\r\\n        on:click_outside={() => (isDropdownOpen = false)}>\\r\\n        <div>\\r\\n            {#if data.notifications}\\r\\n                <div\\r\\n                    on:click={() => {\\r\\n                        setTimeout(() => {\\r\\n                            if (opened === true) {\\r\\n                                document.cookie = cookie.serialize(\\r\\n                                    'notificationNb',\\r\\n                                    data.notifications.length,\\r\\n                                    {\\r\\n                                        maxAge: 15552000,\\r\\n                                        sameSite: 'lax',\\r\\n                                        path: '/'\\r\\n                                    }\\r\\n                                );\\r\\n                                newNotifications = false;\\r\\n                            }\\r\\n                        }, 10);\\r\\n                    }}>\\r\\n                    <p class=\\\"ml-1\\\">Notifications</p>\\r\\n                    <div>\\r\\n                        {#each data.notifications as notification, i}\\r\\n                            <a href=\\\"/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}\\\"\\r\\n                                class=\\\"card notification flex items-center\\r\\n                                relative\\\" class:cursor-default={notification.id === 2}>\\r\\n                                <div class=\\\"progress-container\\\">\\r\\n                                    <p class=\\\"ml-2 mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                        {notification.message}\\r\\n                                    </p>\\r\\n                                    {#if notification.tip}\\r\\n                                        <p\\r\\n                                            class=\\\" mr-6 lg:mr-12 text-light\\r\\n                                            text-lg\\\">\\r\\n                                            {notification.tip}\\r\\n                                        </p>\\r\\n                                    {/if}\\r\\n                                </div>\\r\\n                                <span\\r\\n                                    class=\\\"quest-goal text-sm text-font px-2\\r\\n                                    py-1 bg-legendary rounded-lg b\\\">\\r\\n                                    {idToType(notification.id)}\\r\\n                                </span>\\r\\n                                <button\\r\\n                                    on:click={() => delNotif(i)}\\r\\n                                    class=\\\"p-2 absolute top-0 right-0 text-light\\r\\n                                    hover:text-font\\\">\\r\\n                                    <svg\\r\\n                                        class=\\\"w-3 h-3 fill-current \\\"\\r\\n                                        viewBox=\\\"0 0 28 24\\\"\\r\\n                                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                        <path\\r\\n                                            d=\\\"m24 2.4-2.4-2.4-9.6\\r\\n                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6\\r\\n                                            2.4 2.4 9.6-9.6 9.6 9.6\\r\\n                                            2.4-2.4-9.6-9.6z\\\" />\\r\\n                                    </svg>\\r\\n                                </button>\\r\\n                            </a>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n            {#if data.inGame}\\r\\n                <div class=\\\"mt-5\\\">\\r\\n                    <p class=\\\"ml-1\\\">Matchs in progress</p>\\r\\n                    <div>\\r\\n                        {#each data.inGame as match}\\r\\n                            <a\\r\\n                                class=\\\"card notification flex items-center\\\"\\r\\n                                href=\\\"/play/ffa/{match.id}\\\">\\r\\n                                <div class=\\\"progress-container\\\">\\r\\n                                    <p class=\\\"ml-2 mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                        {match.type}\\r\\n                                    </p>\\r\\n                                    <p\\r\\n                                        class=\\\"ml-2 mr-6 lg:mr-12 text-light\\r\\n                                        text-lg\\\">\\r\\n                                        {match.timer}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                                <p class=\\\"quest-goal text-xl text-primary\\\">\\r\\n                                    <!--{#if match.hasStarted}{/if}-->\\r\\n                                    {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}\\r\\n                                </p>\\r\\n                            </a>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA+FI,SAAS,4BAAC,CAAC,AACP,GAAG,CAAE,MAAM,AACf,CAAC,AAED,0BAAY,MAAM,CAAC,KAAK,cAAC,CAAC,AACtB,OAAO,CAAE,IAAI,AACjB,CAAC,AAED,0BAAY,MAAM,CAAC,WAAW,cAAC,CAAC,AAC5B,OAAO,CAAE,KAAK,AAClB,CAAC,AAED,aAAa,4BAAC,CAAC,AACX,aAAa,CAAE,IAAI,CACnB,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,AACpF,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"NavNotifications.svelte\",\"sources\":[\"NavNotifications.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n    import { callApi } from \\\"../../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import cookie from \\\"cookie\\\";\\r\\n    import { counter } from \\\"../store\\\";\\r\\n\\r\\n    export let data;\\r\\n    let newNotifications = false;\\r\\n    let opened = false;\\r\\n    let isDropdownOpen = false;\\r\\n    let matchesLength;\\r\\n\\r\\n    function handleClick() {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n        opened = true;\\r\\n    }\\r\\n\\r\\n    function calculateTimers() {\\r\\n        data.inGame.forEach((match, i) => {\\r\\n            let d = new Date(match.Date);\\r\\n            const endsIn = -(\\r\\n                (new Date().getTime() -\\r\\n                    new Date(d.setHours(d.getHours() + 3)).getTime()) /\\r\\n                1000\\r\\n            );\\r\\n            if (endsIn < 1) {\\r\\n                data.inGame[i].timer = \\\"\\\";\\r\\n            } else {\\r\\n                startTimer(endsIn, i);\\r\\n            }\\r\\n        });\\r\\n    }\\r\\n\\r\\n    onMount(() => {\\r\\n        if (!data.notifications) return;\\r\\n\\r\\n        let length = data.notifications.length;\\r\\n        let cookies = cookie.parse(document.cookie);\\r\\n\\r\\n        if (length > cookies.notificationNb || !cookies.notificationNb) {\\r\\n            newNotifications = true;\\r\\n        }\\r\\n\\r\\n        cookies.notificationNb = length;\\r\\n        matchesLength = data.inGame.length;\\r\\n        calculateTimers();\\r\\n\\r\\n        //document.cookie = cookie.serialize(\\\"notificationNb\\\",cookies.notificationNb,{maxAge:15552000,sameSite:\\\"lax\\\"})\\r\\n        //document.cookie = cookie.serialize(cookies)\\r\\n    });\\r\\n    //TODO: on peut opti ça en utilisant la data de export let data au lieu de resubscribe pour save de la ram\\r\\n    counter.subscribe(() => {\\r\\n        if (data.inGame) {\\r\\n            if (data.inGame.length !== matchesLength) {\\r\\n                calculateTimers();\\r\\n            }\\r\\n        }\\r\\n    });\\r\\n\\r\\n    function startTimer(duration, i) {\\r\\n        let timer = duration,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n        setInterval(function() {\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n\\r\\n            data.inGame[i].timer = hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n\\r\\n            if (--timer < 0) {\\r\\n                timer = duration;\\r\\n            }\\r\\n        }, 1000);\\r\\n    }\\r\\n\\r\\n    const idToType = id => {\\r\\n        if (id === 0) return \\\"match finished\\\";\\r\\n        if (id === 1) return \\\"quest finished\\\";\\r\\n        if (id === 2) return \\\"match\\\";\\r\\n    };\\r\\n\\r\\n    function delNotif(i) {\\r\\n        callApi(\\\"post\\\", \\\"/deleteNotification/\\\" + i);\\r\\n        data.notifications.splice(i, 1);\\r\\n        data = data;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n    }\\r\\n\\r\\n    .bell-button:hover .bell {\\r\\n        display: none;\\r\\n    }\\r\\n\\r\\n    .bell-button:hover .bell-hover {\\r\\n        display: block;\\r\\n    }\\r\\n\\r\\n    .notification {\\r\\n        border-radius: 10px;\\r\\n        @apply flex justify-between px-4 py-3 mt-3 mb-1 relative overflow-hidden w-full;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"relative\\\">\\r\\n    <div class=\\\"flex items-center h-full mr-4 lg:m-0\\\">\\r\\n        <div\\r\\n            class=\\\"focus:outline-none lg:ml-3 rounded bell-button cursor-pointer\\\"\\r\\n            on:click={() => {\\r\\n                document.cookie = cookie.serialize(\\r\\n                    'notificationNb',\\r\\n                    data.notifications.length,\\r\\n                    { maxAge: 15552000, sameSite: 'lax', path: '/' }\\r\\n                );\\r\\n                newNotifications = false;\\r\\n            }}\\r\\n            on:click={handleClick}>\\r\\n            <div class=\\\"flex items-center relative\\\">\\r\\n                {#if isDropdownOpen}\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m20.333 17.16c-1.04-1.04-2.339-2.341-2.339-7.409\\r\\n                            0-3.706-2.688-6.784-6.22-7.393l-.045-.006c.166-.238.265-.533.265-.851\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .318.099.613.268.856l-.003-.005c-3.578.614-6.266\\r\\n                            3.692-6.266 7.399 0 5.068-1.296 6.367-2.339\\r\\n                            7.409-.405.407-.655.968-.655 1.588 0 1.242 1.005\\r\\n                            2.249 2.246 2.252h5.249c0 1.657 1.343 3 3 3s3-1.343\\r\\n                            3-3h5.248c1.241-.004 2.246-1.011 2.246-2.252\\r\\n                            0-.62-.25-1.181-.655-1.588zm-9.84 4.965c.207 0\\r\\n                            .375.168.375.375s-.168.375-.375.375c-1.035-.001-1.874-.84-1.875-1.875h.75c.001.621.505\\r\\n                            1.125 1.126 1.125z\\\" />\\r\\n                    </svg>\\r\\n                {:else}\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current bell\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m19.945\\r\\n                            15.512c-.8-.786-1.619-1.6-1.619-5.44-.005-3.881-2.832-7.101-6.539-7.717l-.046-.006c.165-.237.263-.531.263-.848\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .317.098.611.266.853l-.003-.005c-3.753.623-6.579\\r\\n                            3.843-6.584 7.723v.001c0 3.84-.822 4.655-1.619\\r\\n                            5.44-.653.577-1.062 1.417-1.062 2.352 0 1.732 1.404\\r\\n                            3.135 3.135 3.135h.007 4.36c0 1.657 1.343 3 3\\r\\n                            3s3-1.343 3-3h4.363.007c1.732 0 3.135-1.404\\r\\n                            3.135-3.135\\r\\n                            0-.935-.409-1.775-1.059-2.349l-.003-.003zm-9.441\\r\\n                            6.613c-.621-.001-1.124-.504-1.125-1.125h2.251c-.001.621-.505\\r\\n                            1.125-1.126\\r\\n                            1.125zm7.36-3.376h-14.726c-.487-.003-.881-.398-.881-.886\\r\\n                            0-.243.098-.463.256-.623 1.34-1.34 2.418-2.612\\r\\n                            2.418-7.17 0-3.077 2.495-5.572 5.572-5.572s5.572\\r\\n                            2.495 5.572 5.572c0 4.578 1.089 5.84 2.418\\r\\n                            7.17.158.16.256.38.256.623 0 .488-.394.883-.881.886z\\\" />\\r\\n                    </svg>\\r\\n                    <svg\\r\\n                        class=\\\"pt-1 w-5 lg:p-0 fill-current hidden bell-hover\\\"\\r\\n                        viewBox=\\\"0 0 21 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m20.333 17.16c-1.04-1.04-2.339-2.341-2.339-7.409\\r\\n                            0-3.706-2.688-6.784-6.22-7.393l-.045-.006c.166-.238.265-.533.265-.851\\r\\n                            0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0\\r\\n                            .318.099.613.268.856l-.003-.005c-3.578.614-6.266\\r\\n                            3.692-6.266 7.399 0 5.068-1.296 6.367-2.339\\r\\n                            7.409-.405.407-.655.968-.655 1.588 0 1.242 1.005\\r\\n                            2.249 2.246 2.252h5.249c0 1.657 1.343 3 3 3s3-1.343\\r\\n                            3-3h5.248c1.241-.004 2.246-1.011 2.246-2.252\\r\\n                            0-.62-.25-1.181-.655-1.588zm-9.84 4.965c.207 0\\r\\n                            .375.168.375.375s-.168.375-.375.375c-1.035-.001-1.874-.84-1.875-1.875h.75c.001.621.505\\r\\n                            1.125 1.126 1.125z\\\" />\\r\\n                    </svg>\\r\\n                {/if}\\r\\n                {#if newNotifications}\\r\\n                    <span class=\\\"flex\\\">\\r\\n                        <span\\r\\n                            class=\\\"inline-flex animate-ping absolute top-0\\r\\n                            right-0 w-2 h-2 rounded-full bg-legendary opacity-75\\\" />\\r\\n                        <span\\r\\n                            class=\\\"inline-flex absolute top-0 right-0 w-2 h-2\\r\\n                            rounded-full bg-legendary\\\" />\\r\\n                    </span>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n\\r\\n    <div\\r\\n        class:hidden={!isDropdownOpen}\\r\\n        class=\\\"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\\r\\n        shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border\\r\\n        border-primary overflow-y-auto max-h-screen-60 scrollbar\\\"\\r\\n        use:clickOutside\\r\\n        on:click_outside={() => (isDropdownOpen = false)}>\\r\\n        <div>\\r\\n            {#if data.notifications}\\r\\n                <div\\r\\n                    on:click={() => {\\r\\n                        setTimeout(() => {\\r\\n                            if (opened === true) {\\r\\n                                document.cookie = cookie.serialize(\\r\\n                                    'notificationNb',\\r\\n                                    data.notifications.length,\\r\\n                                    {\\r\\n                                        maxAge: 15552000,\\r\\n                                        sameSite: 'lax',\\r\\n                                        path: '/'\\r\\n                                    }\\r\\n                                );\\r\\n                                newNotifications = false;\\r\\n                            }\\r\\n                        }, 10);\\r\\n                    }}>\\r\\n                    <p class=\\\"ml-1\\\">Notifications</p>\\r\\n                    <div>\\r\\n                        {#each data.notifications as notification, i}\\r\\n                            <a href=\\\"/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}\\\"\\r\\n                                class=\\\"card notification flex items-center\\r\\n                                relative\\\" class:cursor-default={notification.id === 2}>\\r\\n                                <div class=\\\"progress-container\\\">\\r\\n                                    <p class=\\\"mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                        {notification.message}\\r\\n                                    </p>\\r\\n                                    {#if notification.tip}\\r\\n                                        <p\\r\\n                                            class=\\\" mr-6 lg:mr-12 text-light\\r\\n                                            text-lg\\\">\\r\\n                                            {notification.tip}\\r\\n                                        </p>\\r\\n                                    {/if}\\r\\n                                </div>\\r\\n                                <span\\r\\n                                    class=\\\"quest-goal text-sm text-font px-2\\r\\n                                    py-1 bg-legendary rounded-lg b\\\">\\r\\n                                    {idToType(notification.id)}\\r\\n                                </span>\\r\\n                                <button\\r\\n                                    on:click={() => delNotif(i)}\\r\\n                                    class=\\\"p-2 absolute top-0 right-0 text-light\\r\\n                                    hover:text-font\\\">\\r\\n                                    <svg\\r\\n                                        class=\\\"w-3 h-3 fill-current \\\"\\r\\n                                        viewBox=\\\"0 0 28 24\\\"\\r\\n                                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                        <path\\r\\n                                            d=\\\"m24 2.4-2.4-2.4-9.6\\r\\n                                            9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6\\r\\n                                            2.4 2.4 9.6-9.6 9.6 9.6\\r\\n                                            2.4-2.4-9.6-9.6z\\\" />\\r\\n                                    </svg>\\r\\n                                </button>\\r\\n                            </a>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n            {#if data.inGame}\\r\\n                <div class=\\\"mt-5\\\">\\r\\n                    <p class=\\\"ml-1\\\">Matchs in progress</p>\\r\\n                    <div>\\r\\n                        {#each data.inGame as match}\\r\\n                            <a\\r\\n                                class=\\\"card notification flex items-center\\\"\\r\\n                                href=\\\"/play/ffa/{match.id}\\\">\\r\\n                                <div class=\\\"progress-container\\\">\\r\\n                                    <p class=\\\"ml-2 mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                        {match.type}\\r\\n                                    </p>\\r\\n                                    <p\\r\\n                                        class=\\\"ml-2 mr-6 lg:mr-12 text-light\\r\\n                                        text-lg\\\">\\r\\n                                        {match.timer}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                                <p class=\\\"quest-goal text-xl text-primary\\\">\\r\\n                                    <!--{#if match.hasStarted}{/if}-->\\r\\n                                    {!match.isFinished ? match.progress + '/8' : 'Waiting for others to finish'}\\r\\n                                </p>\\r\\n                            </a>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA+FI,SAAS,4BAAC,CAAC,AACP,GAAG,CAAE,MAAM,AACf,CAAC,AAED,0BAAY,MAAM,CAAC,KAAK,cAAC,CAAC,AACtB,OAAO,CAAE,IAAI,AACjB,CAAC,AAED,0BAAY,MAAM,CAAC,WAAW,cAAC,CAAC,AAC5B,OAAO,CAAE,KAAK,AAClB,CAAC,AAED,aAAa,4BAAC,CAAC,AACX,aAAa,CAAE,IAAI,CACnB,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,AACpF,CAAC\"}"
 };
 
 const NavNotifications = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -414,7 +438,7 @@ const NavNotifications = create_ssr_component(($$result, $$props, $$bindings, sl
 	: ``}</div></div></div>
 
     <div class="${[
-		"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\r\n        shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border\r\n        border-primary overflow-y-scroll max-h-screen-60 svelte-7szmv8",
+		"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\r\n        shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border\r\n        border-primary overflow-y-auto max-h-screen-60 scrollbar svelte-7szmv8",
 		 "hidden" 
 	].join(" ").trim()}"><div>${data.notifications
 	? `<div><p class="${"ml-1"}">Notifications</p>
@@ -423,7 +447,7 @@ const NavNotifications = create_ssr_component(($$result, $$props, $$bindings, sl
 		: notification.id === 1 ? "play" : "")}" class="${[
 			"card notification flex items-center\r\n                                relative svelte-7szmv8",
 			notification.id === 2 ? "cursor-default" : ""
-		].join(" ").trim()}"><div class="${"progress-container"}"><p class="${"ml-2 mr-6 lg:mr-12 text-2xl"}">${escape(notification.message)}</p>
+		].join(" ").trim()}"><div class="${"progress-container"}"><p class="${"mr-6 lg:mr-12 text-2xl"}">${escape(notification.message)}</p>
                                     ${notification.tip
 		? `<p class="${" mr-6 lg:mr-12 text-light\r\n                                            text-lg"}">${escape(notification.tip)}
                                         </p>`
@@ -449,59 +473,129 @@ const NavNotifications = create_ssr_component(($$result, $$props, $$bindings, sl
 
 const css$4 = {
 	code: ".dropdown.svelte-l2gql2{top:3.8rem}.info.svelte-l2gql2{border-radius:10px;@apply flex justify-between px-4 py-3 mt-2 mb-1 relative overflow-hidden w-full;}",
-	map: "{\"version\":3,\"file\":\"NavAlert.svelte\",\"sources\":[\"NavAlert.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import {clickOutside} from \\\"../../utils/clickOutside\\\";\\r\\n\\r\\n    export let data;\\r\\n\\r\\n    let isDropdownOpen;\\r\\n    const handleClick = () => {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n    };\\r\\n\\r\\n</script>\\r\\n<style>\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n    }\\r\\n\\r\\n    .info {\\r\\n        border-radius: 10px;\\r\\n        @apply flex justify-between px-4 py-3 mt-2 mb-1 relative overflow-hidden w-full;\\r\\n    }\\r\\n</style>\\r\\n{#if data === \\\"network\\\"}\\r\\n{:else}\\r\\n    <div class=\\\"relative\\\">\\r\\n        <div class=\\\"flex items-center h-full mr-4 lg:m-0\\\">\\r\\n            <button\\r\\n                    class=\\\"focus:outline-none\\\"\\r\\n                    use:clickOutside\\r\\n                    on:click_outside={() => (isDropdownOpen = false)}\\r\\n                    on:click={() => handleClick()}>\\r\\n                <svg xmlns=\\\"http://www.w3.org/2000/svg\\\" class=\\\"w-6 lg:w-8 mr-2 lg:mr-4 text-legendary\\\"\\r\\n                     viewBox=\\\"0 0 576 512\\\">\\r\\n                    <path fill=\\\"currentColor\\\"\\r\\n                          d=\\\"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z\\\"/>\\r\\n                </svg>\\r\\n            </button>\\r\\n        </div>\\r\\n        <div\\r\\n                class:hidden={!isDropdownOpen}\\r\\n                class=\\\"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\\r\\n            shadow-card dropdown -right-19 md:right-0 z-50 w-86 lg:w-92\\r\\n            border border-legendary\\\">\\r\\n            <div>\\r\\n\\r\\n                {#each data as information}\\r\\n                    <div\\r\\n                            class=\\\"card info flex items-center\\\">\\r\\n                        <div class=\\\"progress-container\\\">\\r\\n                            <p class=\\\"ml-2 mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                {information.name}\\r\\n                            </p>\\r\\n                            <p\\r\\n                                    class=\\\"ml-2 mr-6 lg:mr-12 text-light\\r\\n                                            text-lg\\\">\\r\\n                                {information.description}\\r\\n                            </p>\\r\\n                        </div>\\r\\n\\r\\n                    </div>\\r\\n                {/each}\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\"],\"names\":[],\"mappings\":\"AAYI,SAAS,cAAC,CAAC,AACP,GAAG,CAAE,MAAM,AACf,CAAC,AAED,KAAK,cAAC,CAAC,AACH,aAAa,CAAE,IAAI,CACnB,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,AACpF,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"NavAlert.svelte\",\"sources\":[\"NavAlert.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n    import cookie from \\\"cookie\\\";\\r\\n    import { fade } from \\\"svelte/transition\\\";\\r\\n    import { onDestroy, onMount } from \\\"svelte\\\";\\r\\n\\r\\n    export let data;\\r\\n    export let isPreviewing;\\r\\n    let isDropdownOpen;\\r\\n    onMount(() => {\\r\\n        let length = data.length;\\r\\n        let cookies = cookie.parse(document.cookie);\\r\\n        if (length > parseInt(cookies.infosNb) || !cookies.infosNb) {\\r\\n            isDropdownOpen = true;\\r\\n        }\\r\\n        document.cookie = cookie.serialize(\\r\\n            \\\"infosNb\\\",\\r\\n            data.length,\\r\\n            { maxAge: 15552000, sameSite: \\\"lax\\\", path: \\\"/\\\" }\\r\\n        );\\r\\n    })\\r\\n\\r\\n    if (isPreviewing) {\\r\\n        isDropdownOpen = isPreviewing;\\r\\n    }\\r\\n    const handleClick = () => {\\r\\n        isDropdownOpen = !isDropdownOpen;\\r\\n    };\\r\\n\\r\\n</script>\\r\\n<style>\\r\\n    .dropdown {\\r\\n        top: 3.8rem;\\r\\n    }\\r\\n\\r\\n    .info {\\r\\n        border-radius: 10px;\\r\\n        @apply flex justify-between px-4 py-3 mt-2 mb-1 relative overflow-hidden w-full;\\r\\n    }\\r\\n</style>\\r\\n{#if data !== \\\"network\\\"}\\r\\n    {#if data?.length > 0}\\r\\n        <div class=\\\"relative\\\">\\r\\n            <div class=\\\"flex items-center h-full mr-4 lg:m-0\\\">\\r\\n                <button\\r\\n                    class=\\\"focus:outline-none\\\"\\r\\n                    use:clickOutside\\r\\n                    on:click_outside={() =>{if(!isPreviewing)isDropdownOpen = false}}\\r\\n                    on:click={() => handleClick()}>\\r\\n                    <svg xmlns=\\\"http://www.w3.org/2000/svg\\\" class=\\\"w-6 lg:w-8 mr-2 lg:mr-4 text-legendary hover:opacity-80\\\" class:opacity-60={isDropdownOpen}\\r\\n                         viewBox=\\\"0 0 576 512\\\">\\r\\n                        <path fill=\\\"currentColor\\\"\\r\\n                              d=\\\"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z\\\" />\\r\\n                    </svg>\\r\\n                </button>\\r\\n            </div>\\r\\n            <div\\r\\n                class:hidden={!isDropdownOpen}\\r\\n                class=\\\"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\\r\\n            shadow-card dropdown -right-19 md:right-0 z-50 w-86 lg:w-92\\r\\n            border border-legendary\\\">\\r\\n                <div>\\r\\n\\r\\n                    {#each data as information}\\r\\n                        <div\\r\\n                            class=\\\"card info flex items-center\\\">\\r\\n                            <div class=\\\"progress-container\\\">\\r\\n                                <p class=\\\"ml-2 mr-6 lg:mr-12 text-2xl\\\">\\r\\n                                    {information.name}\\r\\n                                </p>\\r\\n                                <p\\r\\n                                    class=\\\"ml-2 mr-6 lg:mr-12 text-light\\r\\n                                            text-lg\\\">\\r\\n                                    {information.description}\\r\\n                                </p>\\r\\n                            </div>\\r\\n\\r\\n                        </div>\\r\\n                    {/each}\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n\\r\\n    {/if}\\r\\n{/if}\"],\"names\":[],\"mappings\":\"AA+BI,SAAS,cAAC,CAAC,AACP,GAAG,CAAE,MAAM,AACf,CAAC,AAED,KAAK,cAAC,CAAC,AACH,aAAa,CAAE,IAAI,CACnB,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,AACpF,CAAC\"}"
 };
 
 const NavAlert = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	let { data } = $$props;
+	let { isPreviewing } = $$props;
+	let isDropdownOpen;
+
+	onMount(() => {
+		let length = data.length;
+		let cookies = cookie__default['default'].parse(document.cookie);
+
+		if (length > parseInt(cookies.infosNb) || !cookies.infosNb) {
+			isDropdownOpen = true;
+		}
+
+		document.cookie = cookie__default['default'].serialize("infosNb", data.length, {
+			maxAge: 15552000,
+			sameSite: "lax",
+			path: "/"
+		});
+	});
+
+	if (isPreviewing) {
+		isDropdownOpen = isPreviewing;
+	}
 
 	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	if ($$props.isPreviewing === void 0 && $$bindings.isPreviewing && isPreviewing !== void 0) $$bindings.isPreviewing(isPreviewing);
 	$$result.css.add(css$4);
 
-	return `${data === "network"
-	? ``
-	: `<div class="${"relative"}"><div class="${"flex items-center h-full mr-4 lg:m-0"}"><button class="${"focus:outline-none"}"><svg xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-6 lg:w-8 mr-2 lg:mr-4 text-legendary"}" viewBox="${"0 0 576 512"}"><path fill="${"currentColor"}" d="${"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"}"></path></svg></button></div>
-        <div class="${[
-			"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\r\n            shadow-card dropdown -right-19 md:right-0 z-50 w-86 lg:w-92\r\n            border border-legendary svelte-l2gql2",
-			 "hidden" 
-		].join(" ").trim()}"><div>${each(data, information => `<div class="${"card info flex items-center svelte-l2gql2"}"><div class="${"progress-container"}"><p class="${"ml-2 mr-6 lg:mr-12 text-2xl"}">${escape(information.name)}</p>
-                            <p class="${"ml-2 mr-6 lg:mr-12 text-light\r\n                                            text-lg"}">${escape(information.description)}
-                            </p></div>
+	return `${data !== "network"
+	? `${data?.length > 0
+		? `<div class="${"relative"}"><div class="${"flex items-center h-full mr-4 lg:m-0"}"><button class="${"focus:outline-none"}"><svg xmlns="${"http://www.w3.org/2000/svg"}" class="${[
+				"w-6 lg:w-8 mr-2 lg:mr-4 text-legendary hover:opacity-80",
+				isDropdownOpen ? "opacity-60" : ""
+			].join(" ").trim()}" viewBox="${"0 0 576 512"}"><path fill="${"currentColor"}" d="${"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"}"></path></svg></button></div>
+            <div class="${[
+				"pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute\r\n            shadow-card dropdown -right-19 md:right-0 z-50 w-86 lg:w-92\r\n            border border-legendary svelte-l2gql2",
+				!isDropdownOpen ? "hidden" : ""
+			].join(" ").trim()}"><div>${each(data, information => `<div class="${"card info flex items-center svelte-l2gql2"}"><div class="${"progress-container"}"><p class="${"ml-2 mr-6 lg:mr-12 text-2xl"}">${escape(information.name)}</p>
+                                <p class="${"ml-2 mr-6 lg:mr-12 text-light\r\n                                            text-lg"}">${escape(information.description)}
+                                </p></div>
 
-                    </div>`)}</div></div></div>`}`;
+                        </div>`)}</div></div></div>`
+		: ``}`
+	: ``}`;
+});
+
+/* src\components\Poll.svelte generated by Svelte v3.31.0 */
+
+const Poll = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { poll } = $$props;
+	let { preview } = $$props;
+	let answer;
+
+	if ($$props.poll === void 0 && $$bindings.poll && poll !== void 0) $$bindings.poll(poll);
+	if ($$props.preview === void 0 && $$bindings.preview && preview !== void 0) $$bindings.preview(preview);
+
+	return `${poll
+	? `<div class="${["bg-background rounded-lg border border-primary",  ""].join(" ").trim()}"><button class="${"flex justify-between cursor-pointer focus:outline-none w-full"}"><p class="${["pl-5 pt-5",  "pb-4" ].join(" ").trim()}">${escape(poll.name)}</p>
+            
+            <div class="${"ml-5 mr-3 mt-6"}"><svg class="${["fill-current w-5",  ""].join(" ").trim()}" style="${"margin-bottom: 0.14rem;"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z"}"></path></svg>
+                <svg class="${["fill-current w-5",  "hidden" ].join(" ").trim()}" style="${"margin-bottom: 0.14rem;"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"}"></path></svg></div></button>
+
+        <div class="${["px-5",  "hidden" ].join(" ").trim()}">${ `${poll.isMCQ
+			? `<div class="${""}">${each(poll.options, (option, i) => `<div class="${[
+					"p-4 bg-variant my-3 rounded-lg border-2 border-transparent hover:border-primary focus:outline-none focus:border-primary block flex items-center cursor-pointer",
+					answer === i ? "border-primary" : ""
+				].join(" ").trim()}"><input class="${"opacity-0 fixed pointer-events-none w-4 h-4"}" type="${"radio"}"${add_attribute("value", option, 0)}>
+
+                                ${answer === i
+				? `<svg class="${"w-4 fill-current text-primary"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z"}"></path></svg>`
+				: `<svg class="${"w-4 fill-current"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z"}"></path></svg>`}
+
+
+                                <p class="${"ml-2"}" style="${"line-height: 0; margin-bottom: -0.20rem"}">${escape(option)}</p>
+
+                            </div>`)}</div>`
+			: `<textarea class="${"px-3 py-2 text-black"}">${ ""}</textarea>`}
+                <button class="${"button button-brand w-24 mt-2 w-full"}">SUBMIT
+                </button>`
+		}</div></div>`
+	: ``}`;
 });
 
 /* src\components\Navigation\Nav.svelte generated by Svelte v3.31.0 */
 
 const css$5 = {
-	code: "svg.svelte-lg3bo6{@apply pr-1;;margin-bottom:3px}.nav-icon.svelte-lg3bo6{margin-bottom:-6px}.play.svelte-lg3bo6{width:1.05rem;height:1.05rem}.nav-link-container.svelte-lg3bo6{@apply pr-9 flex items-center my-3;}",
-	map: "{\"version\":3,\"file\":\"Nav.svelte\",\"sources\":[\"Nav.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { onMount, onDestroy } from \\\"svelte\\\";\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n\\r\\n    import NavAccount from \\\"./NavAccount.svelte\\\";\\r\\n    import Notifications from \\\"./NavNotifications.svelte\\\";\\r\\n    import NavAlert from \\\"./NavAlert.svelte\\\";\\r\\n    import Poll from \\\"../Poll.svelte\\\";\\r\\n\\r\\n    import { apiUrl } from \\\"../../utils/config\\\";\\r\\n    import { callApi } from \\\"../../utils/api\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { counter } from \\\"../store.js\\\";\\r\\n\\r\\n    export let isScrolling;\\r\\n    let isNavbarOpen;\\r\\n    let isUserLoggedIn;\\r\\n    let userCoins;\\r\\n    let informations;\\r\\n    let notificationsObj = {};\\r\\n    let user;\\r\\n    let firstLoad = true;\\r\\n    let offline;\\r\\n    async function calculateProperties(value) {\\r\\n        const tempUserData = await value;\\r\\n        if (tempUserData.offline) offline = true;\\r\\n        if(tempUserData instanceof Error){\\r\\n            if(tempUserData.response) if(tempUserData.response.status === 503) goto(\\\"/status\\\")\\r\\n            return isUserLoggedIn = \\\"network\\\"\\r\\n        }\\r\\n        if (tempUserData.user) {\\r\\n            notificationsObj.notifications = tempUserData.user.notifications;\\r\\n            notificationsObj.inGame = tempUserData.user.inGame;\\r\\n        }\\r\\n        user = tempUserData.steam;\\r\\n        userCoins = tempUserData.user.coins;\\r\\n\\r\\n        isUserLoggedIn = tempUserData.user\\r\\n            ? true\\r\\n            : tempUserData.steam\\r\\n            ? \\\"steam\\\"\\r\\n            : false;\\r\\n    }\\r\\n\\r\\n    const resetNav = async value => {\\r\\n        user = value.content;\\r\\n        if (firstLoad === true) return (firstLoad = false);\\r\\n        if (value.refresh === true) return;\\r\\n\\r\\n        await calculateProperties(user);\\r\\n    };\\r\\n    const unsubscribe = counter.subscribe(resetNav);\\r\\n    onDestroy(unsubscribe);\\r\\n    onMount(async () => {\\r\\n        try {\\r\\n            informations = await callApi(\\\"get\\\", \\\"/informations\\\");\\r\\n            if(informations instanceof Error){\\r\\n               throw informations\\r\\n            }\\r\\n        } catch (e) {\\r\\n            informations = \\\"network\\\"\\r\\n        }\\r\\n        await calculateProperties(user);\\r\\n    });\\r\\n\\r\\n    let isShowingPoll = false;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    svg {\\r\\n        @apply pr-1;\\r\\n        margin-bottom: 3px;\\r\\n    }\\r\\n\\r\\n    .nav-icon {\\r\\n        margin-bottom: -6px;\\r\\n    }\\r\\n\\r\\n    .play {\\r\\n        width: 1.05rem;\\r\\n        height: 1.05rem;\\r\\n    }\\r\\n    .nav-link-container {\\r\\n        @apply pr-9 flex items-center my-3;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"h-auto w-full fixed z-50\\\">\\r\\n    {#if offline}\\r\\n        <div class=\\\"bg-legendary w-full flex text-white text-center lg:text-xl\\\">\\r\\n            <p class=\\\"text-center w-99%\\\">\\r\\n                You are offline or our services are down, you may experience\\r\\n                bugs on the website.\\r\\n            </p>\\r\\n            <svg\\r\\n                xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                viewBox=\\\"0 0 24 24\\\"\\r\\n                width=\\\"24\\\"\\r\\n                height=\\\"24\\\"\\r\\n                on:click={() => (offline = false)}>\\r\\n                <path\\r\\n                    class=\\\"heroicon-ui\\\"\\r\\n                    d=\\\"M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1\\r\\n                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12\\r\\n                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z\\\"\\r\\n                    fill=\\\"#FFFFFF\\\" />\\r\\n            </svg>\\r\\n        </div>\\r\\n    {/if}\\r\\n    <nav\\r\\n        class:border-green={isScrolling || isShowingPoll}\\r\\n        class:border-b-2={isShowingPoll}\\r\\n        class=\\\"shadow-link-hover bg-background lg:flex items-center text-font\\r\\n        w-full transition duration-200 border-b border-transparent\\\">\\r\\n        <div\\r\\n            class=\\\"w-full lg:w-auto flex justify-between items-center py-3\\r\\n            relative\\\">\\r\\n            <div class=\\\"pl-7 lg:pl-24 lg:pr-34 text-logo\\\">\\r\\n                <a class=\\\"logo\\\" href=\\\"/\\\">WINHALLA</a>\\r\\n            </div>\\r\\n            <div class=\\\"pr-6 lg:hidden flex -mt-2\\\">\\r\\n                <div class=\\\"flex lg:hidden items-center\\\">\\r\\n                    {#if informations}\\r\\n                        <NavAlert data={informations} />\\r\\n                    {/if}\\r\\n\\r\\n                    <Notifications data={notificationsObj} />\\r\\n                </div>\\r\\n                <button\\r\\n                    class=\\\"focus:outline-none\\\"\\r\\n                    use:clickOutside\\r\\n                    on:click_outside={() => (isNavbarOpen = false)}\\r\\n                    on:click={() => {\\r\\n                        isNavbarOpen = !isNavbarOpen;\\r\\n                    }}>\\r\\n                    <svg\\r\\n                        class=\\\"w-7 h-7 fill-current nav-icon\\\"\\r\\n                        viewBox=\\\"0 0 28 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        {#if !isNavbarOpen}\\r\\n                            <path\\r\\n                                d=\\\"m2.61 0h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m2.61 9.39h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m2.61 18.781h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                        {:else}\\r\\n                            <path\\r\\n                                d=\\\"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6\\r\\n                                9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6\\r\\n                                2.4-2.4-9.6-9.6z\\\" />\\r\\n                        {/if}\\r\\n                    </svg>\\r\\n                </button>\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class:hidden={!isNavbarOpen} class=\\\"lg:block w-full\\\">\\r\\n            <div\\r\\n                class=\\\"pb-3 lg:p-0 sm:flex items-center w-full justify-between\\\">\\r\\n                <div class=\\\"ml-7 links text-xl lg:flex\\\">\\r\\n                    <!--<a\\r\\n                            class=\\\"nav-link-container lg:hover:text-shadow-link-hover\\r\\n                            border-l border-primary lg:border-none pl-3\\\"\\r\\n                            href=\\\"/profile\\\">\\r\\n                        <svg\\r\\n                                class=\\\"fill-current w-5 h-5\\\"\\r\\n                                viewBox=\\\"0 0 32 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                    d=\\\"m10 12v8h-4v-8zm6-8v16h-4v-16zm16 18v2h-32v-24h2v22zm-10-14v12h-4v-12zm6-6v18h-4v-18z\\\"/>\\r\\n                        </svg>\\r\\n                        PROFILE\\r\\n                    </a>-->\\r\\n                    <a\\r\\n                        class=\\\"nav-link-container\\r\\n                        lg:hover:text-shadow-link-hover border-l border-primary\\r\\n                        lg:border-none pl-3\\\"\\r\\n                        href=\\\"/play\\\"\\r\\n                        rel=\\\"prefetch\\\">\\r\\n                        <svg\\r\\n                            class=\\\"fill-current play\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m.001 1.165v21.669c.052.661.601 1.177 1.271\\r\\n                                1.177.225 0 .436-.058.62-.16l-.006.003\\r\\n                                21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672\\r\\n                                0-1.223.521-1.27 1.181v.004z\\\" />\\r\\n                        </svg>\\r\\n                        PLAY\\r\\n                    </a>\\r\\n                    <a\\r\\n                        class=\\\"nav-link-container\\r\\n                        lg:hover:text-shadow-link-hover border-l border-primary\\r\\n                        lg:border-none pl-3\\\"\\r\\n                        href=\\\"/shop\\\"\\r\\n                        rel=\\\"prefetch\\\">\\r\\n                        <svg\\r\\n                            class=\\\"fill-current play\\\"\\r\\n                            viewBox=\\\"0 0 22 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m14.416 24v-11.098h5.68c.181 0\\r\\n                                .328.147.328.328v10.114c0\\r\\n                                .362-.294.656-.656.656zm-12.096 0c-.362\\r\\n                                0-.656-.294-.656-.656v-10.114c0-.181.147-.328.328-.328h5.621v11.098zm-1.992-12.08c-.181\\r\\n                                0-.328-.147-.328-.328v-4.031c0-.181.147-.328.328-.328h6.546c-3.914-1.01-5.274-3.055-5.345-3.164-.066-.101-.106-.224-.106-.357\\r\\n                                0-.362.294-.656.656-.656.23 0\\r\\n                                .432.118.549.296l.002.002c.028.041 1.342 1.92\\r\\n                                5.15\\r\\n                                2.74-1.273-.64-2.518-1.529-2.847-2.673-.049-.187-.077-.401-.077-.622\\r\\n                                0-.761.334-1.443.862-1.91l.003-.002c.425-.515\\r\\n                                1.05-.851 1.755-.888h.006c1.714 0 2.904 2.391\\r\\n                                3.583 4.309.749-1.87 2.037-4.252\\r\\n                                3.74-4.252.741.039 1.388.41\\r\\n                                1.799.966l.005.006c.48.464.779 1.113.779 1.832 0\\r\\n                                .262-.04.515-.113.753l.005-.018c-.352\\r\\n                                1.035-1.466 1.823-2.653 2.391 3.472-.872\\r\\n                                4.675-2.61\\r\\n                                4.69-2.633.12-.173.318-.286.541-.286.362 0\\r\\n                                .656.294.656.656 0\\r\\n                                .127-.036.246-.099.347l.002-.003c-.07.11-1.434\\r\\n                                2.154-5.345 3.164h6.48c.181 0\\r\\n                                .328.147.328.328v4.029c0\\r\\n                                .181-.147.328-.328.328zm6.349-10.132c-.65.69-.524\\r\\n                                1.127-.48 1.27.298 1.035 2.268 2.018 3.936\\r\\n                                2.596-.871-2.955-2.053-4.342-2.65-4.342-.329.056-.609.229-.804.473zm5.315\\r\\n                                3.791c1.692-.501 3.698-1.389\\r\\n                                4.043-2.406.048-.142.194-.572-.422-1.291-.183-.271-.469-.461-.801-.513l-.007-.001c-.946\\r\\n                                0-2.103 2.226-2.813 4.21z\\\" />\\r\\n                        </svg>\\r\\n                        SHOP\\r\\n                    </a>\\r\\n                </div>\\r\\n                {#if isShowingPoll}\\r\\n                    <div\\r\\n                        class=\\\"absolute top-2 \\\"\\r\\n                        style=\\\"left: 50% ; transform: translate(-50%, 0);\\\">\\r\\n                        <div class=\\\"flex items-center px-4\\\">\\r\\n                            <p\\r\\n                                class=\\\"text-3xl text-center px-4 md:px-0\\r\\n                                md:text-left\\\">\\r\\n                                Are you interested in a 2vs2 game mode ?\\r\\n                            </p>\\r\\n                            <button\\r\\n                                class=\\\"button button-brand w-24 ml-4\\\"\\r\\n                                style=\\\"padding: 0.5rem 0.75rem\\\">\\r\\n                                SUBMIT\\r\\n                            </button>\\r\\n                        </div>\\r\\n                        <div class=\\\"mt-2 flex relative\\\" style=\\\"\\\">\\r\\n                            <div\\r\\n                                class=\\\"z-10 h-12 w-11 bg-background\\r\\n                                rounded-bl-lg border-b-2 border-l-2 border-green\\\" />\\r\\n\\r\\n                            <div\\r\\n                                class=\\\"z-20 absolute top-0 left-5 w-12\\r\\n                                bg-background rounded-bl-lg\\\"\\r\\n                                style=\\\"height: calc(3rem - 2px)\\\" />\\r\\n                            <div class=\\\"z-10 flex-grow\\\">\\r\\n                                <Poll />\\r\\n                            </div>\\r\\n\\r\\n                            <div\\r\\n                                class=\\\"absolute z-10 top-1 bottom-0 left-11\\r\\n                                right-12 rounded-b-lg border-2 border-t-0\\r\\n                                border-green\\\" />\\r\\n                            <div\\r\\n                                class=\\\"z-20 absolute top-0 right-5 w-12\\r\\n                                bg-background rounded-br-lg\\\"\\r\\n                                style=\\\"height: calc(3rem - 2px)\\\" />\\r\\n                            <div\\r\\n                                class=\\\"absolute top-0 right-5 w-12 bg-background\\r\\n                                rounded-br-lg border-b-2 border-green\\\"\\r\\n                                style=\\\"height: calc(3rem)\\\" />\\r\\n                            <div\\r\\n                                class=\\\"z-10 h-12 w-12 bg-background\\r\\n                                rounded-br-lg border-b-2 border-r-2 border-green\\r\\n                                \\\" />\\r\\n                        </div>\\r\\n\\r\\n                    </div>\\r\\n                {/if}\\r\\n                <div class=\\\"ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center\\\">\\r\\n                    {#if informations}\\r\\n                        <div class=\\\"hidden lg:flex items-center\\\">\\r\\n                            <NavAlert data={informations} />\\r\\n                        </div>\\r\\n                    {/if}\\r\\n                    {#if isUserLoggedIn === true}\\r\\n                        <div class=\\\"lg:flex lg:items-center\\\">\\r\\n                            {#if user.displayName && user.photos}\\r\\n                                <NavAccount\\r\\n                                    username={user.displayName}\\r\\n                                    avatar={user.photos[0].value} />\\r\\n                            {/if}\\r\\n                            {#if notificationsObj}\\r\\n                                <div class=\\\"hidden lg:flex items-center\\\">\\r\\n                                    <Notifications data={notificationsObj} />\\r\\n                                </div>\\r\\n                            {/if}\\r\\n\\r\\n                            <a class=\\\"ml-8 text-2xl text-primary\\\" href=\\\"/shop\\\">\\r\\n                                <b class=\\\"font-normal \\\">{userCoins}</b>\\r\\n                                $\\r\\n                            </a>\\r\\n                        </div>\\r\\n                    {:else if isUserLoggedIn == 'steam'}\\r\\n                        <a\\r\\n                            class=\\\"button-brand button mr-3\\\"\\r\\n                            href=\\\"/create-account\\\">\\r\\n                            CREATE ACCOUNT\\r\\n                        </a>\\r\\n                    {:else if isUserLoggedIn === 'network'}\\r\\n                        <p class=\\\"text-legendary text-xl\\\">An error occured processing the account data</p>\\r\\n                    {:else}\\r\\n                        <a\\r\\n                            class=\\\"button-brand button mr-3\\\"\\r\\n                            href=\\\"{apiUrl}/auth/login\\\">\\r\\n                            CREATE ACCOUNT\\r\\n                        </a>\\r\\n                        <a\\r\\n                            class=\\\"button-brand-alternative button\\\"\\r\\n                            href=\\\"{apiUrl}/auth/login\\\">\\r\\n                            LOGIN\\r\\n                        </a>\\r\\n                    {/if}\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n\\r\\n    </nav>\\r\\n\\r\\n    <div class=\\\"flex justify-center items-start absolute top-2 left-0 right-0\\\">\\r\\n        <!--\\r\\n        <div class=\\\"h-px flex-grow bg-green\\\"></div>\\r\\n\\r\\n                <div class=\\\"relative\\\">\\r\\n                    <div class=\\\"h-0 w-0\\\" style=\\\" border-top : 21.15rem solid #17171a; border-left : 5rem solid transparent;\\\"></div>\\r\\n                    <div class=\\\"absolute top-0 h-0 w-0\\\" style=\\\"right: -3.99rem; z-index: -5; border-top : 21.21rem solid #3de488; border-right: 4rem solid transparent; border-left : 5.11rem solid transparent;\\\"></div>\\r\\n                </div>        <div class=\\\"h-12 w-11 bg-background rounded-bl-lg mt-13 border-b-2 border-l-2 border-green\\\">\\r\\n\\r\\n        </div>\\r\\n        <div class=\\\"\\\">\\r\\n            <Poll />\\r\\n        </div>\\r\\n        <div class=\\\"h-12 w-11 bg-background rounded-br-lg mt-13 border-b-2 border-r-2 border-green\\\">\\r\\n\\r\\n        </div>\\r\\n        -->\\r\\n\\r\\n        <!--\\r\\n        <div class=\\\"h-full\\\">\\r\\n            <div class=\\\"w-4 bg-font h-96 max-h-full\\\" style=\\\"clip-path: polygon(100% 0, 0 100%, 0 0);\\\">\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class=\\\"relative max-h-20\\\">\\r\\n            <div class=\\\"h-full w-full \\\" style=\\\" background-image: linear-gradient(to right top, green 0%, green 50%, transparent 50%);\\\"></div>\\r\\n            <div class=\\\"absolute top-0 h-0 w-0\\\" style=\\\"left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;\\\"></div>\\r\\n        </div>\\r\\n                <div class=\\\"relative\\\">\\r\\n                    <div class=\\\"h-0 w-0 \\\" style=\\\" border-top : 21.15rem solid #17171a; border-right : 5rem solid transparent;\\\"></div>\\r\\n                    <div class=\\\"absolute top-0 h-0 w-0\\\" style=\\\"left: -3.999rem; z-index: -5; border-top : 21.21rem solid #3de488; border-left: 4rem solid transparent; border-right : 5.11rem solid transparent;\\\"></div>\\r\\n                </div>\\r\\n\\r\\n\\r\\n        <div class=\\\"h-px flex-grow bg-green\\\"></div>-->\\r\\n    </div>\\r\\n\\r\\n</div>\\r\\n<!--<div class=\\\" h-2px w-72  bg-font ml-28\\\"></div><div class=\\\" h-2px w-72 bg-font mr-28\\\"></div>-->\\r\\n\"],\"names\":[],\"mappings\":\"AAqEI,GAAG,cAAC,CAAC,AACD,OAAO,IAAI,CAAC,CACZ,aAAa,CAAE,GAAG,AACtB,CAAC,AAED,SAAS,cAAC,CAAC,AACP,aAAa,CAAE,IAAI,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,KAAK,CAAE,OAAO,CACd,MAAM,CAAE,OAAO,AACnB,CAAC,AACD,mBAAmB,cAAC,CAAC,AACjB,OAAO,IAAI,CAAC,IAAI,CAAC,YAAY,CAAC,IAAI,CAAC,AACvC,CAAC\"}"
+	code: "svg.svelte-fsm70y{@apply pr-1;;margin-bottom:3px}.nav-icon.svelte-fsm70y{margin-bottom:-6px}.play.svelte-fsm70y{width:1.05rem;height:1.05rem}.nav-link-container.svelte-fsm70y{@apply pr-9 flex items-center;}",
+	map: "{\"version\":3,\"file\":\"Nav.svelte\",\"sources\":[\"Nav.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { onDestroy, onMount } from \\\"svelte\\\";\\r\\n    import { clickOutside } from \\\"../../utils/clickOutside\\\";\\r\\n\\r\\n    import NavAccount from \\\"./NavAccount.svelte\\\";\\r\\n    import Notifications from \\\"./NavNotifications.svelte\\\";\\r\\n    import NavAlert from \\\"./NavAlert.svelte\\\";\\r\\n    import Poll from \\\"../Poll.svelte\\\";\\r\\n    import { fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    import { apiUrl } from \\\"../../utils/config\\\";\\r\\n    import { callApi } from \\\"../../utils/api\\\";\\r\\n    import { goto, stores } from \\\"@sapper/app\\\";\\r\\n    import { counter } from \\\"../store.js\\\";\\r\\n\\r\\n    const { page } = stores();\\r\\n    export let isScrolling;\\r\\n    let isNavbarOpen;\\r\\n    let isUserLoggedIn;\\r\\n\\r\\n\\r\\n    let informations;\\r\\n    let poll;\\r\\n    let notificationsObj = {};\\r\\n\\r\\n    let user;\\r\\n    let userCoins;\\r\\n\\r\\n    let firstLoad = true;\\r\\n    let offline;\\r\\n    let loaded = false;\\r\\n\\r\\n    let currentMatch;\\r\\n\\r\\n    function calculateProperties(value) {\\r\\n        const tempUserData = value;\\r\\n        if(!tempUserData) return isUserLoggedIn = false\\r\\n        if (tempUserData.offline) offline = true;\\r\\n        if (tempUserData instanceof Error) {\\r\\n            if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto(\\\"/status\\\");\\r\\n            return isUserLoggedIn = \\\"network\\\";\\r\\n        }\\r\\n        if (tempUserData.user) {\\r\\n            notificationsObj.notifications = tempUserData.user.notifications;\\r\\n            notificationsObj.inGame = tempUserData.user.inGame;\\r\\n            currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;\\r\\n        }\\r\\n        user = tempUserData.steam;\\r\\n        userCoins = tempUserData.user.coins;\\r\\n\\r\\n        isUserLoggedIn = tempUserData.user\\r\\n            ? true\\r\\n            : tempUserData.steam\\r\\n                ? \\\"steam\\\"\\r\\n                : false;\\r\\n    }\\r\\n\\r\\n    const resetNav = async value => {\\r\\n        if (value.refresh === true) return;\\r\\n        user = await value.content;\\r\\n        if (firstLoad === true) return (firstLoad = false);\\r\\n        calculateProperties(user);\\r\\n    };\\r\\n\\r\\n    const unsubscribe = counter.subscribe(resetNav);\\r\\n    onDestroy(unsubscribe);\\r\\n\\r\\n    onMount(async () => {\\r\\n        try {\\r\\n            informations = await callApi(\\\"get\\\", \\\"/informations\\\");\\r\\n\\r\\n\\r\\n            if (informations instanceof Error) {\\r\\n                throw informations;\\r\\n            }\\r\\n        } catch (e) {\\r\\n            informations = \\\"network\\\";\\r\\n        }\\r\\n\\r\\n        /*setTimeout(async () => {\\r\\n            try {\\r\\n                if (isUserLoggedIn === true) poll = await callApi(\\\"get\\\", \\\"/getpoll\\\");\\r\\n\\r\\n            } catch (e) {\\r\\n                console.log(e);\\r\\n            }\\r\\n        }, 5000);*/\\r\\n        await user;\\r\\n        calculateProperties(user);\\r\\n        loaded = true;\\r\\n    });\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    svg {\\r\\n        @apply pr-1;\\r\\n        margin-bottom: 3px;\\r\\n    }\\r\\n\\r\\n    .nav-icon {\\r\\n        margin-bottom: -6px;\\r\\n    }\\r\\n\\r\\n    .play {\\r\\n        width: 1.05rem;\\r\\n        height: 1.05rem;\\r\\n    }\\r\\n\\r\\n    .nav-link-container {\\r\\n        @apply pr-9 flex items-center;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"h-auto w-full fixed z-50\\\">\\r\\n    {#if offline}\\r\\n        <div class=\\\"bg-legendary w-full flex text-white text-center lg:text-xl\\\">\\r\\n            <p class=\\\"text-center w-99%\\\">\\r\\n                You are offline or our services are down, you may experience\\r\\n                bugs on the website.\\r\\n            </p>\\r\\n            <svg\\r\\n                xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                viewBox=\\\"0 0 24 24\\\"\\r\\n                width=\\\"24\\\"\\r\\n                height=\\\"24\\\"\\r\\n                on:click={() => (offline = false)}>\\r\\n                <path\\r\\n                    class=\\\"heroicon-ui\\\"\\r\\n                    d=\\\"M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1\\r\\n                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12\\r\\n                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z\\\"\\r\\n                    fill=\\\"#FFFFFF\\\" />\\r\\n            </svg>\\r\\n        </div>\\r\\n    {/if}\\r\\n    <nav\\r\\n        class:border-primary={isScrolling}\\r\\n        class:border-b-2={isScrolling}\\r\\n        class=\\\"shadow-link-hover bg-background lg:flex items-center text-font\\r\\n        w-full transition duration-200 border-b border-transparent\\\">\\r\\n        <div\\r\\n            class=\\\"w-full lg:w-auto flex justify-between items-center py-3\\r\\n            relative\\\">\\r\\n            <div class=\\\"pl-7 lg:pl-24 lg:pr-34 text-logo\\\">\\r\\n                <a class=\\\"logo\\\" href=\\\"/\\\">WINHALLA</a>\\r\\n            </div>\\r\\n            <div class=\\\"pr-6 lg:hidden flex -mt-2\\\">\\r\\n                <div class=\\\"flex lg:hidden items-center\\\">\\r\\n                    {#if loaded && window.innerWidth < 1024}\\r\\n                        <NavAlert data={informations} />\\r\\n                    {/if}\\r\\n\\r\\n                    <Notifications data={notificationsObj} />\\r\\n                </div>\\r\\n                <button\\r\\n                    class=\\\"focus:outline-none\\\"\\r\\n                    use:clickOutside\\r\\n                    on:click_outside={() => (isNavbarOpen = false)}\\r\\n                    on:click={() => {\\r\\n                        isNavbarOpen = !isNavbarOpen;\\r\\n                    }}>\\r\\n                    <svg\\r\\n                        class=\\\"w-7 h-7 fill-current nav-icon\\\"\\r\\n                        viewBox=\\\"0 0 28 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        {#if !isNavbarOpen}\\r\\n                            <path\\r\\n                                d=\\\"m2.61 0h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m2.61 9.39h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m2.61 18.781h22.431c1.441 0 2.61 1.168 2.61\\r\\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\\r\\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z\\\" />\\r\\n                        {:else}\\r\\n                            <path\\r\\n                                d=\\\"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6\\r\\n                                9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6\\r\\n                                2.4-2.4-9.6-9.6z\\\" />\\r\\n                        {/if}\\r\\n                    </svg>\\r\\n                </button>\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class:hidden={!isNavbarOpen} class=\\\"lg:block w-full\\\">\\r\\n            <div\\r\\n                class=\\\"pb-3 lg:p-0 sm:flex items-center w-full justify-between\\\">\\r\\n                <div class=\\\"ml-7 links text-xl lg:flex\\\">\\r\\n                    <!--<a\\r\\n                            class=\\\"nav-link-container my-3 lg:hover:text-shadow-link-hover\\r\\n                            border-l border-primary lg:border-none pl-3\\\"\\r\\n                            href=\\\"/profile\\\">\\r\\n                        <svg\\r\\n                                class=\\\"fill-current w-5 h-5\\\"\\r\\n                                viewBox=\\\"0 0 32 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                    d=\\\"m10 12v8h-4v-8zm6-8v16h-4v-16zm16 18v2h-32v-24h2v22zm-10-14v12h-4v-12zm6-6v18h-4v-18z\\\"/>\\r\\n                        </svg>\\r\\n                        PROFILE\\r\\n                    </a>-->\\r\\n                    <a\\r\\n                        class=\\\"nav-link-container my-3\\r\\n                        lg:hover:text-shadow-link-hover border-l border-primary\\r\\n                        lg:border-none pl-3\\\"\\r\\n                        href=\\\"/play\\\">\\r\\n                        <svg\\r\\n                            class=\\\"fill-current play\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m.001 1.165v21.669c.052.661.601 1.177 1.271\\r\\n                                1.177.225 0 .436-.058.62-.16l-.006.003\\r\\n                                21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672\\r\\n                                0-1.223.521-1.27 1.181v.004z\\\" />\\r\\n                        </svg>\\r\\n                        PLAY\\r\\n                    </a>\\r\\n                    <a\\r\\n                        class=\\\"nav-link-container my-3 mb-6 lg:mb-3\\r\\n                        lg:hover:text-shadow-link-hover border-l border-primary\\r\\n                        lg:border-none pl-3\\\"\\r\\n                        href=\\\"/shop\\\"\\r\\n                        rel=\\\"prefetch\\\">\\r\\n                        <svg\\r\\n                            class=\\\"fill-current play\\\"\\r\\n                            viewBox=\\\"0 0 22 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m14.416 24v-11.098h5.68c.181 0\\r\\n                                .328.147.328.328v10.114c0\\r\\n                                .362-.294.656-.656.656zm-12.096 0c-.362\\r\\n                                0-.656-.294-.656-.656v-10.114c0-.181.147-.328.328-.328h5.621v11.098zm-1.992-12.08c-.181\\r\\n                                0-.328-.147-.328-.328v-4.031c0-.181.147-.328.328-.328h6.546c-3.914-1.01-5.274-3.055-5.345-3.164-.066-.101-.106-.224-.106-.357\\r\\n                                0-.362.294-.656.656-.656.23 0\\r\\n                                .432.118.549.296l.002.002c.028.041 1.342 1.92\\r\\n                                5.15\\r\\n                                2.74-1.273-.64-2.518-1.529-2.847-2.673-.049-.187-.077-.401-.077-.622\\r\\n                                0-.761.334-1.443.862-1.91l.003-.002c.425-.515\\r\\n                                1.05-.851 1.755-.888h.006c1.714 0 2.904 2.391\\r\\n                                3.583 4.309.749-1.87 2.037-4.252\\r\\n                                3.74-4.252.741.039 1.388.41\\r\\n                                1.799.966l.005.006c.48.464.779 1.113.779 1.832 0\\r\\n                                .262-.04.515-.113.753l.005-.018c-.352\\r\\n                                1.035-1.466 1.823-2.653 2.391 3.472-.872\\r\\n                                4.675-2.61\\r\\n                                4.69-2.633.12-.173.318-.286.541-.286.362 0\\r\\n                                .656.294.656.656 0\\r\\n                                .127-.036.246-.099.347l.002-.003c-.07.11-1.434\\r\\n                                2.154-5.345 3.164h6.48c.181 0\\r\\n                                .328.147.328.328v4.029c0\\r\\n                                .181-.147.328-.328.328zm6.349-10.132c-.65.69-.524\\r\\n                                1.127-.48 1.27.298 1.035 2.268 2.018 3.936\\r\\n                                2.596-.871-2.955-2.053-4.342-2.65-4.342-.329.056-.609.229-.804.473zm5.315\\r\\n                                3.791c1.692-.501 3.698-1.389\\r\\n                                4.043-2.406.048-.142.194-.572-.422-1.291-.183-.271-.469-.461-.801-.513l-.007-.001c-.946\\r\\n                                0-2.103 2.226-2.813 4.21z\\\" />\\r\\n                        </svg>\\r\\n                        SHOP\\r\\n                    </a>\\r\\n\\r\\n                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}\\r\\n                        <a class=\\\"lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto\\\"\\r\\n                           href=\\\"/play/ffa/{currentMatch}\\\">Rejoin\\r\\n                            match</a>\\r\\n                    {/if}\\r\\n                </div>\\r\\n                <div class=\\\"ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center\\\">\\r\\n                    {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}\\r\\n                        <a class=\\\"hidden lg:block py-1 px-3 text-xl bg-primary rounded  mb-4 lg:mb-0 lg:mr-8 w-auto\\\"\\r\\n                           href=\\\"/play/ffa/{currentMatch}\\\">Rejoin\\r\\n                            match</a>\\r\\n                    {/if}\\r\\n                    {#if informations && window.innerWidth >= 1024}\\r\\n                        <div class=\\\"hidden lg:flex items-center\\\">\\r\\n                            <NavAlert data={informations} />\\r\\n                        </div>\\r\\n                    {/if}\\r\\n                    {#if isUserLoggedIn === true}\\r\\n                        <div class=\\\"lg:flex lg:items-center //mt-5 md:mt-0\\\">\\r\\n                            {#if user.displayName && user.photos}\\r\\n                                <NavAccount\\r\\n                                    username={user.displayName}\\r\\n                                    avatar={user.photos[0].value} />\\r\\n                            {/if}\\r\\n                            {#if notificationsObj}\\r\\n                                <div class=\\\"hidden lg:flex items-center\\\">\\r\\n                                    <Notifications data={notificationsObj} />\\r\\n                                </div>\\r\\n                            {/if}\\r\\n\\r\\n                            <a class=\\\"lg:mt-0 lg:ml-8 text-2xl text-primary\\\" href=\\\"/shop\\\">\\r\\n                                <b class=\\\"font-normal \\\">{userCoins}</b>\\r\\n                                $\\r\\n                            </a>\\r\\n                        </div>\\r\\n                    {:else if isUserLoggedIn == 'steam'}\\r\\n                        <a\\r\\n                            class=\\\"button-brand button mr-3\\\"\\r\\n                            href=\\\"/create-account\\\">\\r\\n                            Register email\\r\\n                        </a>\\r\\n                    {:else if isUserLoggedIn === 'network'}\\r\\n                        <p class=\\\"text-legendary text-xl\\\">An error occured processing the account data</p>\\r\\n                    {:else}\\r\\n                        <a\\r\\n                            class=\\\"button-brand button mr-3\\\"\\r\\n                            href=\\\"{apiUrl}/auth/login\\\">\\r\\n                            Login with steam\\r\\n                        </a>\\r\\n                    {/if}\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n\\r\\n    </nav>\\r\\n    {#if loaded}\\r\\n        <div\\r\\n            class=\\\"fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0\\\"\\r\\n            transition:fly={{ y:-200, duration: 500 }}>\\r\\n            <Poll poll={poll} />\\r\\n        </div>\\r\\n    {/if}\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA8FI,GAAG,cAAC,CAAC,AACD,OAAO,IAAI,CAAC,CACZ,aAAa,CAAE,GAAG,AACtB,CAAC,AAED,SAAS,cAAC,CAAC,AACP,aAAa,CAAE,IAAI,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,KAAK,CAAE,OAAO,CACd,MAAM,CAAE,OAAO,AACnB,CAAC,AAED,mBAAmB,cAAC,CAAC,AACjB,OAAO,IAAI,CAAC,IAAI,CAAC,YAAY,CAAC,AAClC,CAAC\"}"
 };
 
-let isShowingPoll = false;
-
 const Nav = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let $page;
+	const { page } = stores$1();
+	$page = get_store_value(page);
 	let { isScrolling } = $$props;
 	let isUserLoggedIn;
-	let userCoins;
 	let informations;
+	let poll;
 	let notificationsObj = {};
 	let user;
+	let userCoins;
 	let firstLoad = true;
 	let offline;
+	let loaded = false;
+	let currentMatch;
 
-	async function calculateProperties(value) {
-		const tempUserData = await value;
+	function calculateProperties(value) {
+		const tempUserData = value;
+		if (!tempUserData) return isUserLoggedIn = false;
 		if (tempUserData.offline) offline = true;
 
 		if (tempUserData instanceof Error) {
-			if (tempUserData.response) if (tempUserData.response.status === 503) goto("/status");
+			if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
 			return isUserLoggedIn = "network";
 		}
 
 		if (tempUserData.user) {
 			notificationsObj.notifications = tempUserData.user.notifications;
 			notificationsObj.inGame = tempUserData.user.inGame;
+			currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
 		}
 
 		user = tempUserData.steam;
@@ -513,10 +607,10 @@ const Nav = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	}
 
 	const resetNav = async value => {
-		user = value.content;
-		if (firstLoad === true) return firstLoad = false;
 		if (value.refresh === true) return;
-		await calculateProperties(user);
+		user = await value.content;
+		if (firstLoad === true) return firstLoad = false;
+		calculateProperties(user);
 	};
 
 	const unsubscribe = counter.subscribe(resetNav);
@@ -533,44 +627,64 @@ const Nav = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 			informations = "network";
 		}
 
-		await calculateProperties(user);
+		/*setTimeout(async () => {
+    try {
+        if (isUserLoggedIn === true) poll = await callApi("get", "/getpoll");
+
+    } catch (e) {
+        console.log(e);
+    }
+}, 5000);*/
+		await user;
+
+		calculateProperties(user);
+		loaded = true;
 	});
 
 	if ($$props.isScrolling === void 0 && $$bindings.isScrolling && isScrolling !== void 0) $$bindings.isScrolling(isScrolling);
 	$$result.css.add(css$5);
+	$page = get_store_value(page);
 
 	return `<div class="${"h-auto w-full fixed z-50"}">${offline
 	? `<div class="${"bg-legendary w-full flex text-white text-center lg:text-xl"}"><p class="${"text-center w-99%"}">You are offline or our services are down, you may experience
                 bugs on the website.
             </p>
-            <svg xmlns="${"http://www.w3.org/2000/svg"}" viewBox="${"0 0 24 24"}" width="${"24"}" height="${"24"}" class="${"svelte-lg3bo6"}"><path class="${"heroicon-ui"}" d="${"M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1\r\n                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12\r\n                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z"}" fill="${"#FFFFFF"}"></path></svg></div>`
+            <svg xmlns="${"http://www.w3.org/2000/svg"}" viewBox="${"0 0 24 24"}" width="${"24"}" height="${"24"}" class="${"svelte-fsm70y"}"><path class="${"heroicon-ui"}" d="${"M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1\r\n                    0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12\r\n                    10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z"}" fill="${"#FFFFFF"}"></path></svg></div>`
 	: ``}
     <nav class="${[
 		"shadow-link-hover bg-background lg:flex items-center text-font\r\n        w-full transition duration-200 border-b border-transparent",
-		(isScrolling || isShowingPoll ? "border-green" : "") + " " + ( "")
+		(isScrolling ? "border-primary" : "") + " " + (isScrolling ? "border-b-2" : "")
 	].join(" ").trim()}"><div class="${"w-full lg:w-auto flex justify-between items-center py-3\r\n            relative"}"><div class="${"pl-7 lg:pl-24 lg:pr-34 text-logo"}"><a class="${"logo"}" href="${"/"}">WINHALLA</a></div>
-            <div class="${"pr-6 lg:hidden flex -mt-2"}"><div class="${"flex lg:hidden items-center"}">${informations
+            <div class="${"pr-6 lg:hidden flex -mt-2"}"><div class="${"flex lg:hidden items-center"}">${loaded && window.innerWidth < 1024
 	? `${validate_component(NavAlert, "NavAlert").$$render($$result, { data: informations }, {}, {})}`
 	: ``}
 
                     ${validate_component(NavNotifications, "Notifications").$$render($$result, { data: notificationsObj }, {}, {})}</div>
-                <button class="${"focus:outline-none"}"><svg class="${"w-7 h-7 fill-current nav-icon svelte-lg3bo6"}" viewBox="${"0 0 28 24"}" xmlns="${"http://www.w3.org/2000/svg"}">${ `<path d="${"m2.61 0h22.431c1.441 0 2.61 1.168 2.61\r\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\r\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"}"></path>
+                <button class="${"focus:outline-none"}"><svg class="${"w-7 h-7 fill-current nav-icon svelte-fsm70y"}" viewBox="${"0 0 28 24"}" xmlns="${"http://www.w3.org/2000/svg"}">${ `<path d="${"m2.61 0h22.431c1.441 0 2.61 1.168 2.61\r\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\r\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"}"></path>
                             <path d="${"m2.61 9.39h22.431c1.441 0 2.61 1.168 2.61\r\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\r\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"}"></path>
                             <path d="${"m2.61 18.781h22.431c1.441 0 2.61 1.168 2.61\r\n                                2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441\r\n                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"}"></path>`
 	}</svg></button></div></div>
         <div class="${["lg:block w-full",  "hidden" ].join(" ").trim()}"><div class="${"pb-3 lg:p-0 sm:flex items-center w-full justify-between"}"><div class="${"ml-7 links text-xl lg:flex"}">
-                    <a class="${"nav-link-container\r\n                        lg:hover:text-shadow-link-hover border-l border-primary\r\n                        lg:border-none pl-3 svelte-lg3bo6"}" href="${"/play"}" rel="${"prefetch"}"><svg class="${"fill-current play svelte-lg3bo6"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m.001 1.165v21.669c.052.661.601 1.177 1.271\r\n                                1.177.225 0 .436-.058.62-.16l-.006.003\r\n                                21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672\r\n                                0-1.223.521-1.27 1.181v.004z"}"></path></svg>
+                    <a class="${"nav-link-container my-3\r\n                        lg:hover:text-shadow-link-hover border-l border-primary\r\n                        lg:border-none pl-3 svelte-fsm70y"}" href="${"/play"}"><svg class="${"fill-current play svelte-fsm70y"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m.001 1.165v21.669c.052.661.601 1.177 1.271\r\n                                1.177.225 0 .436-.058.62-.16l-.006.003\r\n                                21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672\r\n                                0-1.223.521-1.27 1.181v.004z"}"></path></svg>
                         PLAY
                     </a>
-                    <a class="${"nav-link-container\r\n                        lg:hover:text-shadow-link-hover border-l border-primary\r\n                        lg:border-none pl-3 svelte-lg3bo6"}" href="${"/shop"}" rel="${"prefetch"}"><svg class="${"fill-current play svelte-lg3bo6"}" viewBox="${"0 0 22 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m14.416 24v-11.098h5.68c.181 0\r\n                                .328.147.328.328v10.114c0\r\n                                .362-.294.656-.656.656zm-12.096 0c-.362\r\n                                0-.656-.294-.656-.656v-10.114c0-.181.147-.328.328-.328h5.621v11.098zm-1.992-12.08c-.181\r\n                                0-.328-.147-.328-.328v-4.031c0-.181.147-.328.328-.328h6.546c-3.914-1.01-5.274-3.055-5.345-3.164-.066-.101-.106-.224-.106-.357\r\n                                0-.362.294-.656.656-.656.23 0\r\n                                .432.118.549.296l.002.002c.028.041 1.342 1.92\r\n                                5.15\r\n                                2.74-1.273-.64-2.518-1.529-2.847-2.673-.049-.187-.077-.401-.077-.622\r\n                                0-.761.334-1.443.862-1.91l.003-.002c.425-.515\r\n                                1.05-.851 1.755-.888h.006c1.714 0 2.904 2.391\r\n                                3.583 4.309.749-1.87 2.037-4.252\r\n                                3.74-4.252.741.039 1.388.41\r\n                                1.799.966l.005.006c.48.464.779 1.113.779 1.832 0\r\n                                .262-.04.515-.113.753l.005-.018c-.352\r\n                                1.035-1.466 1.823-2.653 2.391 3.472-.872\r\n                                4.675-2.61\r\n                                4.69-2.633.12-.173.318-.286.541-.286.362 0\r\n                                .656.294.656.656 0\r\n                                .127-.036.246-.099.347l.002-.003c-.07.11-1.434\r\n                                2.154-5.345 3.164h6.48c.181 0\r\n                                .328.147.328.328v4.029c0\r\n                                .181-.147.328-.328.328zm6.349-10.132c-.65.69-.524\r\n                                1.127-.48 1.27.298 1.035 2.268 2.018 3.936\r\n                                2.596-.871-2.955-2.053-4.342-2.65-4.342-.329.056-.609.229-.804.473zm5.315\r\n                                3.791c1.692-.501 3.698-1.389\r\n                                4.043-2.406.048-.142.194-.572-.422-1.291-.183-.271-.469-.461-.801-.513l-.007-.001c-.946\r\n                                0-2.103 2.226-2.813 4.21z"}"></path></svg>
+                    <a class="${"nav-link-container my-3 mb-6 lg:mb-3\r\n                        lg:hover:text-shadow-link-hover border-l border-primary\r\n                        lg:border-none pl-3 svelte-fsm70y"}" href="${"/shop"}" rel="${"prefetch"}"><svg class="${"fill-current play svelte-fsm70y"}" viewBox="${"0 0 22 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m14.416 24v-11.098h5.68c.181 0\r\n                                .328.147.328.328v10.114c0\r\n                                .362-.294.656-.656.656zm-12.096 0c-.362\r\n                                0-.656-.294-.656-.656v-10.114c0-.181.147-.328.328-.328h5.621v11.098zm-1.992-12.08c-.181\r\n                                0-.328-.147-.328-.328v-4.031c0-.181.147-.328.328-.328h6.546c-3.914-1.01-5.274-3.055-5.345-3.164-.066-.101-.106-.224-.106-.357\r\n                                0-.362.294-.656.656-.656.23 0\r\n                                .432.118.549.296l.002.002c.028.041 1.342 1.92\r\n                                5.15\r\n                                2.74-1.273-.64-2.518-1.529-2.847-2.673-.049-.187-.077-.401-.077-.622\r\n                                0-.761.334-1.443.862-1.91l.003-.002c.425-.515\r\n                                1.05-.851 1.755-.888h.006c1.714 0 2.904 2.391\r\n                                3.583 4.309.749-1.87 2.037-4.252\r\n                                3.74-4.252.741.039 1.388.41\r\n                                1.799.966l.005.006c.48.464.779 1.113.779 1.832 0\r\n                                .262-.04.515-.113.753l.005-.018c-.352\r\n                                1.035-1.466 1.823-2.653 2.391 3.472-.872\r\n                                4.675-2.61\r\n                                4.69-2.633.12-.173.318-.286.541-.286.362 0\r\n                                .656.294.656.656 0\r\n                                .127-.036.246-.099.347l.002-.003c-.07.11-1.434\r\n                                2.154-5.345 3.164h6.48c.181 0\r\n                                .328.147.328.328v4.029c0\r\n                                .181-.147.328-.328.328zm6.349-10.132c-.65.69-.524\r\n                                1.127-.48 1.27.298 1.035 2.268 2.018 3.936\r\n                                2.596-.871-2.955-2.053-4.342-2.65-4.342-.329.056-.609.229-.804.473zm5.315\r\n                                3.791c1.692-.501 3.698-1.389\r\n                                4.043-2.406.048-.142.194-.572-.422-1.291-.183-.271-.469-.461-.801-.513l-.007-.001c-.946\r\n                                0-2.103 2.226-2.813 4.21z"}"></path></svg>
                         SHOP
-                    </a></div>
-                ${ ``}
-                <div class="${"ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center"}">${informations
+                    </a>
+
+                    ${currentMatch && $page.path !== `/play/ffa/${currentMatch}`
+	? `<a class="${"lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto"}" href="${"/play/ffa/" + escape(currentMatch)}">Rejoin
+                            match</a>`
+	: ``}</div>
+                <div class="${"ml-7 mt-5 md:m-0 md:mr-7 lg:flex lg:items-center"}">${currentMatch && $page.path !== `/play/ffa/${currentMatch}`
+	? `<a class="${"hidden lg:block py-1 px-3 text-xl bg-primary rounded  mb-4 lg:mb-0 lg:mr-8 w-auto"}" href="${"/play/ffa/" + escape(currentMatch)}">Rejoin
+                            match</a>`
+	: ``}
+                    ${informations && window.innerWidth >= 1024
 	? `<div class="${"hidden lg:flex items-center"}">${validate_component(NavAlert, "NavAlert").$$render($$result, { data: informations }, {}, {})}</div>`
 	: ``}
                     ${isUserLoggedIn === true
-	? `<div class="${"lg:flex lg:items-center"}">${user.displayName && user.photos
+	? `<div class="${"lg:flex lg:items-center //mt-5 md:mt-0"}">${user.displayName && user.photos
 		? `${validate_component(NavAccount, "NavAccount").$$render(
 				$$result,
 				{
@@ -585,23 +699,19 @@ const Nav = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		? `<div class="${"hidden lg:flex items-center"}">${validate_component(NavNotifications, "Notifications").$$render($$result, { data: notificationsObj }, {}, {})}</div>`
 		: ``}
 
-                            <a class="${"ml-8 text-2xl text-primary"}" href="${"/shop"}"><b class="${"font-normal "}">${escape(userCoins)}</b>
+                            <a class="${"lg:mt-0 lg:ml-8 text-2xl text-primary"}" href="${"/shop"}"><b class="${"font-normal "}">${escape(userCoins)}</b>
                                 $
                             </a></div>`
 	: `${isUserLoggedIn == "steam"
-		? `<a class="${"button-brand button mr-3"}" href="${"/create-account"}">CREATE ACCOUNT
+		? `<a class="${"button-brand button mr-3"}" href="${"/create-account"}">Register email
                         </a>`
 		: `${isUserLoggedIn === "network"
 			? `<p class="${"text-legendary text-xl"}">An error occured processing the account data</p>`
-			: `<a class="${"button-brand button mr-3"}" href="${escape(apiUrl) + "/auth/login"}">CREATE ACCOUNT
-                        </a>
-                        <a class="${"button-brand-alternative button"}" href="${escape(apiUrl) + "/auth/login"}">LOGIN
+			: `<a class="${"button-brand button mr-3"}" href="${escape(apiUrl) + "/auth/login"}">Login with steam
                         </a>`}`}`}</div></div></div></nav>
-
-    <div class="${"flex justify-center items-start absolute top-2 left-0 right-0"}">
-
-        </div></div>
-`;
+    ${loaded
+	? `<div class="${"fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"}">${validate_component(Poll, "Poll").$$render($$result, { poll }, {}, {})}</div>`
+	: ``}</div>`;
 });
 
 /* src\components\Footer.svelte generated by Svelte v3.31.0 */
@@ -624,8 +734,7 @@ const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                 <div class="${"mt-8 lg:mt-0 lg:ml-8"}"><h3 class="${"text-primary"}">Company</h3>
                     <a href="${"/contact"}" class="${"block hover:text-shadow-link-hover"}">Contact us</a>
                     <a href="${"/about"}" class="${"block hover:text-shadow-link-hover"}">About</a></div></div></div>
-        <div class="${"mt-10 flex justify-between items-center w-full"}"><div class="${"flex items-end"}"><div class="${"text-logo"}"><a class="${"logo leading-0"}" href="${"/"}">WINHALLA </a></div>
-                <p class="${"text-lg ml-3"}" style="${"padding-bottom: 0.2rem"}">© 2020</p></div>
+        <div class="${"mt-10 flex justify-between items-center w-full"}"><div class="${"flex items-end"}"><div class="${"text-logo"}"><a class="${"logo leading-0"}" href="${"/"}">WINHALLA </a></div></div>
 
             <div class="${"flex items-center"}"><a href="${""}"><svg class="${"w-5 fill-current"}" viewBox="${"0 0 21 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m13.93 11.4c-.054.633-.582 1.127-1.224 1.127-.678 0-1.229-.55-1.229-1.229s.55-1.229 1.228-1.229c.683.029 1.225.59 1.225 1.277 0 .019 0 .037-.001.056v-.003zm-5.604-1.33c-.688.061-1.223.634-1.223 1.332s.535 1.271 1.218 1.332h.005c.683-.029 1.225-.59 1.225-1.277 0-.019 0-.037-.001-.056v.003c.001-.02.002-.043.002-.067 0-.685-.541-1.243-1.219-1.269h-.002zm12.674-7.598v21.528c-3.023-2.672-2.057-1.787-5.568-5.052l.636 2.22h-13.609c-1.359-.004-2.46-1.106-2.46-2.466 0-.002 0-.004 0-.006v-16.224c0-.002 0-.004 0-.006 0-1.36 1.101-2.462 2.459-2.466h16.081c1.359.004 2.46 1.106 2.46 2.466v.006zm-3.42 11.376c-.042-2.559-.676-4.96-1.77-7.086l.042.09c-.924-.731-2.088-1.195-3.358-1.259l-.014-.001-.168.192c1.15.312 2.15.837 3.002 1.535l-.014-.011c-1.399-.769-3.066-1.222-4.839-1.222-1.493 0-2.911.321-4.189.898l.064-.026c-.444.204-.708.35-.708.35.884-.722 1.942-1.266 3.1-1.56l.056-.012-.12-.144c-1.284.065-2.448.529-3.384 1.269l.012-.009c-1.052 2.036-1.686 4.437-1.728 6.982v.014c.799 1.111 2.088 1.826 3.543 1.826.041 0 .082-.001.123-.002h-.006s.444-.54.804-.996c-.866-.223-1.592-.727-2.093-1.406l-.007-.01c.176.124.468.284.49.3 1.209.672 2.652 1.067 4.188 1.067 1.191 0 2.326-.238 3.36-.668l-.058.021c.528-.202.982-.44 1.404-.723l-.025.016c-.526.703-1.277 1.212-2.144 1.423l-.026.005c.36.456.792.972.792.972.033.001.072.001.111.001 1.461 0 2.755-.714 3.552-1.813l.009-.013z"}"></path></svg></a>
                 <a href="${""}"><svg class="${"ml-4 w-6 fill-current"}" viewBox="${"0 0 30 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m29.55 2.85c-.841 1.224-1.848 2.26-3.004 3.106l-.036.025q.018.262.018.787c-.004 1.736-.264 3.41-.745 4.987l.032-.122c-.534 1.773-1.272 3.32-2.206 4.724l.04-.065c-.989 1.509-2.132 2.808-3.435 3.927l-.024.02c-1.372 1.153-2.978 2.083-4.73 2.704l-.108.033c-1.765.648-3.803 1.022-5.928 1.022-.045 0-.09 0-.134 0h.007c-.038 0-.082 0-.127 0-3.41 0-6.584-1.015-9.234-2.76l.063.039c.419.048.904.075 1.396.075h.07-.004c.037 0 .082.001.126.001 2.807 0 5.386-.975 7.417-2.606l-.023.018c-2.639-.05-4.861-1.777-5.65-4.157l-.012-.043c.342.057.738.091 1.141.094h.003c.567 0 1.116-.075 1.637-.216l-.044.01c-1.412-.284-2.615-1.034-3.47-2.08l-.008-.011c-.858-1.011-1.379-2.331-1.379-3.773 0-.028 0-.056.001-.084v.004-.075c.788.452 1.726.732 2.727.768h.011c-.822-.553-1.487-1.279-1.953-2.129l-.016-.031c-.46-.835-.731-1.83-.731-2.889 0-1.126.306-2.18.84-3.084l-.015.028c1.5 1.839 3.337 3.341 5.425 4.427l.095.045c2.022 1.067 4.402 1.743 6.927 1.864l.038.001c-.093-.415-.147-.892-.149-1.382v-.001c.004-3.345 2.717-6.055 6.062-6.055 1.74 0 3.309.733 4.415 1.908l.003.003c1.448-.284 2.735-.792 3.893-1.492l-.053.03c-.455 1.431-1.4 2.596-2.635 3.323l-.028.015c1.294-.148 2.475-.479 3.569-.967l-.077.031z"}"></path></svg></a></div></div></div></div>`;
@@ -635,7 +744,7 @@ const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 const css$6 = {
 	code: "p.svelte-1ytjjcy b{@apply text-primary font-normal;}.game-mode-card.svelte-1ytjjcy{width:20rem;height:33rem}.game-mode-image.svelte-1ytjjcy{width:100%;height:100%;object-position:18%}.game-mode-card.svelte-1ytjjcy::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.65) 0%,\r\n                rgba(23, 23, 26, 0.83),\r\n                rgba(23, 23, 26, 0.92) 75%,\r\n                rgba(23, 23, 26, 0.97) 100%\r\n        );@apply z-0;}.locked-gradient.svelte-1ytjjcy::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.75) 0%,\r\n                rgba(23, 23, 26, 0.77),\r\n                rgba(23, 23, 26, 0.78) 75%,\r\n                rgba(23, 23, 26, 0.80) 100%\r\n        );@apply z-20;}.lock.svelte-1ytjjcy{top:50%;left:50%;transform:translate(-50%, -50%);@apply z-40;}.game-mode-image.svelte-1ytjjcy{@apply object-cover block;}.game-mode-text-container.svelte-1ytjjcy{@apply absolute z-10 top-0 bottom-0 left-0 right-0;}h3.svelte-1ytjjcy{@apply absolute text-6xl top-24 left-0 right-0 text-shadow-link-hover;}.stats.svelte-1ytjjcy{@apply absolute bottom-8 leading-5;}.desc.svelte-1ytjjcy{font-size:1.7rem;@apply text-3xl;}.goal.svelte-1ytjjcy{color:#e2e2ea;@apply text-xl mt-8 px-10;}.duration.svelte-1ytjjcy{color:#c2c2c9;@apply text-base mt-4;}.desc.svelte-1ytjjcy b{font-size:1.95rem}.goal.svelte-1ytjjcy b{@apply text-default;}.duration.svelte-1ytjjcy b{@apply text-lg;}",
-	map: "{\"version\":3,\"file\":\"GameModeCards.svelte\",\"sources\":[\"GameModeCards.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let gameModes;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    p :global(b) {\\r\\n        @apply text-primary font-normal;\\r\\n    }\\r\\n\\r\\n    .game-mode-card {\\r\\n        width: 20rem;\\r\\n        height: 33rem;\\r\\n    }\\r\\n\\r\\n    .game-mode-image {\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n        object-position: 18%;\\r\\n    }\\r\\n\\r\\n    .game-mode-card::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.65) 0%,\\r\\n                rgba(23, 23, 26, 0.83),\\r\\n                rgba(23, 23, 26, 0.92) 75%,\\r\\n                rgba(23, 23, 26, 0.97) 100%\\r\\n        );\\r\\n        @apply z-0;\\r\\n    }\\r\\n\\r\\n    .locked-gradient::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.75) 0%,\\r\\n                rgba(23, 23, 26, 0.77),\\r\\n                rgba(23, 23, 26, 0.78) 75%,\\r\\n                rgba(23, 23, 26, 0.80) 100%\\r\\n        );\\r\\n        @apply z-20;\\r\\n    }\\r\\n\\r\\n    .lock {\\r\\n        top: 50%;\\r\\n        left: 50%;\\r\\n        transform: translate(-50%, -50%);\\r\\n        @apply z-40;\\r\\n    }\\r\\n\\r\\n\\r\\n    .game-mode-image {\\r\\n        @apply object-cover block;\\r\\n    }\\r\\n\\r\\n    .game-mode-text-container {\\r\\n        @apply absolute z-10 top-0 bottom-0 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    h3 {\\r\\n        @apply absolute text-6xl top-24 left-0 right-0 text-shadow-link-hover;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute bottom-8 leading-5;\\r\\n    }\\r\\n\\r\\n    .desc {\\r\\n        font-size: 1.7rem;\\r\\n        @apply text-3xl;\\r\\n    }\\r\\n\\r\\n    .goal {\\r\\n        color: #e2e2ea;\\r\\n        @apply text-xl mt-8 px-10;\\r\\n    }\\r\\n\\r\\n    .duration {\\r\\n        color: #c2c2c9;\\r\\n        @apply text-base mt-4;\\r\\n    }\\r\\n\\r\\n    .desc :global(b) {\\r\\n        font-size: 1.95rem;\\r\\n    }\\r\\n\\r\\n    .goal :global(b) {\\r\\n        @apply text-default;\\r\\n    }\\r\\n\\r\\n    .duration :global(b) {\\r\\n        @apply text-lg;\\r\\n    }\\r\\n\\r\\n</style>\\r\\n\\r\\n{#each gameModes as gameMode}\\r\\n    {#if gameMode.available}\\r\\n        <a\\r\\n            class=\\\"game-mode-card block relative shadow-card border\\r\\n                        border-transparent hover:border-primary\\r\\n                        hover:shadow-card-hover mb-10 md:mb-0 md:mr-15 relative\\\"\\r\\n            href=\\\"/play/{gameMode.name}\\\">\\r\\n\\r\\n            <div class=\\\"h-full\\\">\\r\\n                <img\\r\\n                    src=\\\"../assets/ModeBanners/{gameMode.name}.jpg\\\"\\r\\n                    alt={gameMode.name}\\r\\n                    class=\\\"game-mode-image object-cover block\\\" />\\r\\n                <div\\r\\n                    class=\\\"game-mode-text-container\\\">\\r\\n                    <h3\\r\\n                        class=\\\"\\\">\\r\\n                        {gameMode.name}\\r\\n                    </h3>\\r\\n                    <div class=\\\"stats\\\">\\r\\n                        <p class=\\\"desc\\\">\\r\\n                            {@html gameMode.description}\\r\\n                        </p>\\r\\n                        <p class=\\\"goal\\\">\\r\\n                            {@html gameMode.goal}\\r\\n                        </p>\\r\\n                        <p class=\\\"duration\\\">\\r\\n                            {@html gameMode.duration}\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        </a>\\r\\n    {:else}\\r\\n        <div\\r\\n            class=\\\"game-mode-card block relative shadow-card border border-transparent mb-10 md:mb-0 md:mr-0 lg:mr-15 relative\\\">\\r\\n\\r\\n            <div class=\\\"h-full locked-gradient\\\">\\r\\n                <img\\r\\n                    src=\\\"../assets/ModeBanners/{gameMode.name}.jpg\\\"\\r\\n                    alt={gameMode.name}\\r\\n                    class=\\\"game-mode-image\\\" />\\r\\n\\r\\n                <div\\r\\n                    class=\\\"game-mode-text-container\\\">\\r\\n                    <h3\\r\\n                        class=\\\"\\\">\\r\\n                        {gameMode.name}\\r\\n                    </h3>\\r\\n                    <div class=\\\"stats\\\">\\r\\n                        <p class=\\\"desc\\\">\\r\\n                            {@html gameMode.description}\\r\\n                        </p>\\r\\n                        <p class=\\\"goal\\\">\\r\\n                            {@html gameMode.goal}\\r\\n                        </p>\\r\\n                        <p class=\\\"duration\\\">\\r\\n                            {@html gameMode.duration}\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div class=\\\"absolute lock\\\">\\r\\n                <!--Locked icon-->\\r\\n                <svg class=\\\"fill-current text-disabled w-12 mx-auto\\\" viewBox=\\\"0 0 20 24\\\"\\r\\n                     xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                    <path\\r\\n                        d=\\\"m3.5 6.5v3.5h-1.5c-1.105 0-2 .895-2 2v10c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-10c0-1.105-.895-2-2-2h-1.5v-3.5c0-3.59-2.91-6.5-6.5-6.5s-6.5 2.91-6.5 6.5zm2.5 3.5v-3.5c0-2.209 1.791-4 4-4s4 1.791 4 4v3.5zm2 5.5c0-1.105.895-2 2-2s2 .895 2 2c0 .701-.361 1.319-.908 1.676l-.008.005s.195 1.18.415 2.57v.001c0 .414-.335.749-.749.749-.001 0-.001 0-.002 0h-1.499-.001c-.414 0-.749-.335-.749-.749v-.001l.415-2.57c-.554-.361-.916-.979-.916-1.68z\\\" />\\r\\n                </svg>\\r\\n\\r\\n                <p class=\\\"mt-1 text-light\\\">Coming soon</p>\\r\\n            </div>\\r\\n        </div>\\r\\n    {/if}\\r\\n{/each}\"],\"names\":[],\"mappings\":\"AAKI,gBAAC,CAAC,AAAQ,CAAC,AAAE,CAAC,AACV,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAED,eAAe,eAAC,CAAC,AACb,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,AACjB,CAAC,AAED,gBAAgB,eAAC,CAAC,AACd,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,eAAe,CAAE,GAAG,AACxB,CAAC,AAED,8BAAe,OAAO,AAAC,CAAC,AACpB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,CACD,OAAO,GAAG,CAAC,AACf,CAAC,AAED,+BAAgB,OAAO,AAAC,CAAC,AACrB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,CACD,OAAO,IAAI,CAAC,AAChB,CAAC,AAED,KAAK,eAAC,CAAC,AACH,GAAG,CAAE,GAAG,CACR,IAAI,CAAE,GAAG,CACT,SAAS,CAAE,UAAU,IAAI,CAAC,CAAC,IAAI,CAAC,CAChC,OAAO,IAAI,CAAC,AAChB,CAAC,AAGD,gBAAgB,eAAC,CAAC,AACd,OAAO,YAAY,CAAC,KAAK,CAAC,AAC9B,CAAC,AAED,yBAAyB,eAAC,CAAC,AACvB,OAAO,QAAQ,CAAC,IAAI,CAAC,KAAK,CAAC,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,AACvD,CAAC,AAED,EAAE,eAAC,CAAC,AACA,OAAO,QAAQ,CAAC,QAAQ,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,sBAAsB,CAAC,AAC1E,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,QAAQ,CAAC,SAAS,CAAC,AACvC,CAAC,AAED,KAAK,eAAC,CAAC,AACH,SAAS,CAAE,MAAM,CACjB,OAAO,QAAQ,CAAC,AACpB,CAAC,AAED,KAAK,eAAC,CAAC,AACH,KAAK,CAAE,OAAO,CACd,OAAO,OAAO,CAAC,IAAI,CAAC,KAAK,CAAC,AAC9B,CAAC,AAED,SAAS,eAAC,CAAC,AACP,KAAK,CAAE,OAAO,CACd,OAAO,SAAS,CAAC,IAAI,CAAC,AAC1B,CAAC,AAED,oBAAK,CAAC,AAAQ,CAAC,AAAE,CAAC,AACd,SAAS,CAAE,OAAO,AACtB,CAAC,AAED,oBAAK,CAAC,AAAQ,CAAC,AAAE,CAAC,AACd,OAAO,YAAY,CAAC,AACxB,CAAC,AAED,wBAAS,CAAC,AAAQ,CAAC,AAAE,CAAC,AAClB,OAAO,OAAO,CAAC,AACnB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"GameModeCards.svelte\",\"sources\":[\"GameModeCards.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let gameModes;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    p :global(b) {\\r\\n        @apply text-primary font-normal;\\r\\n    }\\r\\n\\r\\n    .game-mode-card {\\r\\n        width: 20rem;\\r\\n        height: 33rem;\\r\\n    }\\r\\n\\r\\n    .game-mode-image {\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n        object-position: 18%;\\r\\n    }\\r\\n\\r\\n    .game-mode-card::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.65) 0%,\\r\\n                rgba(23, 23, 26, 0.83),\\r\\n                rgba(23, 23, 26, 0.92) 75%,\\r\\n                rgba(23, 23, 26, 0.97) 100%\\r\\n        );\\r\\n        @apply z-0;\\r\\n    }\\r\\n\\r\\n    .locked-gradient::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.75) 0%,\\r\\n                rgba(23, 23, 26, 0.77),\\r\\n                rgba(23, 23, 26, 0.78) 75%,\\r\\n                rgba(23, 23, 26, 0.80) 100%\\r\\n        );\\r\\n        @apply z-20;\\r\\n    }\\r\\n\\r\\n    .lock {\\r\\n        top: 50%;\\r\\n        left: 50%;\\r\\n        transform: translate(-50%, -50%);\\r\\n        @apply z-40;\\r\\n    }\\r\\n\\r\\n\\r\\n    .game-mode-image {\\r\\n        @apply object-cover block;\\r\\n    }\\r\\n\\r\\n    .game-mode-text-container {\\r\\n        @apply absolute z-10 top-0 bottom-0 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    h3 {\\r\\n        @apply absolute text-6xl top-24 left-0 right-0 text-shadow-link-hover;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute bottom-8 leading-5;\\r\\n    }\\r\\n\\r\\n    .desc {\\r\\n        font-size: 1.7rem;\\r\\n        @apply text-3xl;\\r\\n    }\\r\\n\\r\\n    .goal {\\r\\n        color: #e2e2ea;\\r\\n        @apply text-xl mt-8 px-10;\\r\\n    }\\r\\n\\r\\n    .duration {\\r\\n        color: #c2c2c9;\\r\\n        @apply text-base mt-4;\\r\\n    }\\r\\n\\r\\n    .desc :global(b) {\\r\\n        font-size: 1.95rem;\\r\\n    }\\r\\n\\r\\n    .goal :global(b) {\\r\\n        @apply text-default;\\r\\n    }\\r\\n\\r\\n    .duration :global(b) {\\r\\n        @apply text-lg;\\r\\n    }\\r\\n\\r\\n</style>\\r\\n\\r\\n{#each gameModes as gameMode}\\r\\n    {#if gameMode.available}\\r\\n        <a\\r\\n            class=\\\"game-mode-card block relative shadow-card border\\r\\n                        border-transparent hover:border-primary\\r\\n                        hover:shadow-card-hover mb-10 md:mb-0 md:mr-15 relative\\\"\\r\\n            href=\\\"/play/{gameMode.name}\\\">\\r\\n\\r\\n            <div class=\\\"h-full\\\">\\r\\n                <img\\r\\n                    src=\\\"../assets/ModeBanners/{gameMode.name}.jpg\\\"\\r\\n                    alt={gameMode.name}\\r\\n                    class=\\\"game-mode-image object-cover block\\\" />\\r\\n                <div\\r\\n                    class=\\\"game-mode-text-container\\\">\\r\\n                    <h3\\r\\n                        class=\\\"\\\">\\r\\n                        {gameMode.displayName}\\r\\n                    </h3>\\r\\n                    <div class=\\\"stats\\\">\\r\\n                        <p class=\\\"desc\\\">\\r\\n                            {@html gameMode.description}\\r\\n                        </p>\\r\\n                        <p class=\\\"goal\\\">\\r\\n                            {@html gameMode.goal}\\r\\n                        </p>\\r\\n                        <p class=\\\"duration\\\">\\r\\n                            {@html gameMode.duration}\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        </a>\\r\\n    {:else}\\r\\n        <div\\r\\n            class=\\\"game-mode-card block relative shadow-card border border-transparent mb-10 md:mb-0 md:mr-0 lg:mr-15 relative\\\">\\r\\n\\r\\n            <div class=\\\"h-full locked-gradient\\\">\\r\\n                <img\\r\\n                    src=\\\"../assets/ModeBanners/{gameMode.name}.jpg\\\"\\r\\n                    alt={gameMode.name}\\r\\n                    class=\\\"game-mode-image\\\" />\\r\\n\\r\\n                <div\\r\\n                    class=\\\"game-mode-text-container\\\">\\r\\n                    <h3\\r\\n                        class=\\\"\\\">\\r\\n                        {gameMode.displayName}\\r\\n                    </h3>\\r\\n                    <div class=\\\"stats\\\">\\r\\n                        <p class=\\\"desc\\\">\\r\\n                            {@html gameMode.description}\\r\\n                        </p>\\r\\n                        <p class=\\\"goal\\\">\\r\\n                            {@html gameMode.goal}\\r\\n                        </p>\\r\\n                        <p class=\\\"duration\\\">\\r\\n                            {@html gameMode.duration}\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n            <div class=\\\"absolute lock\\\">\\r\\n                <!--Locked icon-->\\r\\n                <svg class=\\\"fill-current text-disabled w-12 mx-auto\\\" viewBox=\\\"0 0 20 24\\\"\\r\\n                     xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                    <path\\r\\n                        d=\\\"m3.5 6.5v3.5h-1.5c-1.105 0-2 .895-2 2v10c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-10c0-1.105-.895-2-2-2h-1.5v-3.5c0-3.59-2.91-6.5-6.5-6.5s-6.5 2.91-6.5 6.5zm2.5 3.5v-3.5c0-2.209 1.791-4 4-4s4 1.791 4 4v3.5zm2 5.5c0-1.105.895-2 2-2s2 .895 2 2c0 .701-.361 1.319-.908 1.676l-.008.005s.195 1.18.415 2.57v.001c0 .414-.335.749-.749.749-.001 0-.001 0-.002 0h-1.499-.001c-.414 0-.749-.335-.749-.749v-.001l.415-2.57c-.554-.361-.916-.979-.916-1.68z\\\" />\\r\\n                </svg>\\r\\n\\r\\n                <p class=\\\"mt-1 text-light\\\">Coming soon</p>\\r\\n            </div>\\r\\n        </div>\\r\\n    {/if}\\r\\n{/each}\"],\"names\":[],\"mappings\":\"AAKI,gBAAC,CAAC,AAAQ,CAAC,AAAE,CAAC,AACV,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAED,eAAe,eAAC,CAAC,AACb,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,AACjB,CAAC,AAED,gBAAgB,eAAC,CAAC,AACd,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,eAAe,CAAE,GAAG,AACxB,CAAC,AAED,8BAAe,OAAO,AAAC,CAAC,AACpB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,CACD,OAAO,GAAG,CAAC,AACf,CAAC,AAED,+BAAgB,OAAO,AAAC,CAAC,AACrB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,CACD,OAAO,IAAI,CAAC,AAChB,CAAC,AAED,KAAK,eAAC,CAAC,AACH,GAAG,CAAE,GAAG,CACR,IAAI,CAAE,GAAG,CACT,SAAS,CAAE,UAAU,IAAI,CAAC,CAAC,IAAI,CAAC,CAChC,OAAO,IAAI,CAAC,AAChB,CAAC,AAGD,gBAAgB,eAAC,CAAC,AACd,OAAO,YAAY,CAAC,KAAK,CAAC,AAC9B,CAAC,AAED,yBAAyB,eAAC,CAAC,AACvB,OAAO,QAAQ,CAAC,IAAI,CAAC,KAAK,CAAC,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,AACvD,CAAC,AAED,EAAE,eAAC,CAAC,AACA,OAAO,QAAQ,CAAC,QAAQ,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,sBAAsB,CAAC,AAC1E,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,QAAQ,CAAC,SAAS,CAAC,AACvC,CAAC,AAED,KAAK,eAAC,CAAC,AACH,SAAS,CAAE,MAAM,CACjB,OAAO,QAAQ,CAAC,AACpB,CAAC,AAED,KAAK,eAAC,CAAC,AACH,KAAK,CAAE,OAAO,CACd,OAAO,OAAO,CAAC,IAAI,CAAC,KAAK,CAAC,AAC9B,CAAC,AAED,SAAS,eAAC,CAAC,AACP,KAAK,CAAE,OAAO,CACd,OAAO,SAAS,CAAC,IAAI,CAAC,AAC1B,CAAC,AAED,oBAAK,CAAC,AAAQ,CAAC,AAAE,CAAC,AACd,SAAS,CAAE,OAAO,AACtB,CAAC,AAED,oBAAK,CAAC,AAAQ,CAAC,AAAE,CAAC,AACd,OAAO,YAAY,CAAC,AACxB,CAAC,AAED,wBAAS,CAAC,AAAQ,CAAC,AAAE,CAAC,AAClB,OAAO,OAAO,CAAC,AACnB,CAAC\"}"
 };
 
 const GameModeCards = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -645,7 +754,7 @@ const GameModeCards = create_ssr_component(($$result, $$props, $$bindings, slots
 
 	return `${each(gameModes, gameMode => `${gameMode.available
 	? `<a class="${"game-mode-card block relative shadow-card border\r\n                        border-transparent hover:border-primary\r\n                        hover:shadow-card-hover mb-10 md:mb-0 md:mr-15 relative svelte-1ytjjcy"}" href="${"/play/" + escape(gameMode.name)}"><div class="${"h-full"}"><img src="${"../assets/ModeBanners/" + escape(gameMode.name) + ".jpg"}"${add_attribute("alt", gameMode.name, 0)} class="${"game-mode-image object-cover block svelte-1ytjjcy"}">
-                <div class="${"game-mode-text-container svelte-1ytjjcy"}"><h3 class="${" svelte-1ytjjcy"}">${escape(gameMode.name)}</h3>
+                <div class="${"game-mode-text-container svelte-1ytjjcy"}"><h3 class="${" svelte-1ytjjcy"}">${escape(gameMode.displayName)}</h3>
                     <div class="${"stats svelte-1ytjjcy"}"><p class="${"desc svelte-1ytjjcy"}">${gameMode.description}</p>
                         <p class="${"goal svelte-1ytjjcy"}">${gameMode.goal}</p>
                         <p class="${"duration svelte-1ytjjcy"}">${gameMode.duration}
@@ -654,7 +763,7 @@ const GameModeCards = create_ssr_component(($$result, $$props, $$bindings, slots
         </a>`
 	: `<div class="${"game-mode-card block relative shadow-card border border-transparent mb-10 md:mb-0 md:mr-0 lg:mr-15 relative svelte-1ytjjcy"}"><div class="${"h-full locked-gradient svelte-1ytjjcy"}"><img src="${"../assets/ModeBanners/" + escape(gameMode.name) + ".jpg"}"${add_attribute("alt", gameMode.name, 0)} class="${"game-mode-image svelte-1ytjjcy"}">
 
-                <div class="${"game-mode-text-container svelte-1ytjjcy"}"><h3 class="${" svelte-1ytjjcy"}">${escape(gameMode.name)}</h3>
+                <div class="${"game-mode-text-container svelte-1ytjjcy"}"><h3 class="${" svelte-1ytjjcy"}">${escape(gameMode.displayName)}</h3>
                     <div class="${"stats svelte-1ytjjcy"}"><p class="${"desc svelte-1ytjjcy"}">${gameMode.description}</p>
                         <p class="${"goal svelte-1ytjjcy"}">${gameMode.goal}</p>
                         <p class="${"duration svelte-1ytjjcy"}">${gameMode.duration}
@@ -671,10 +780,34 @@ const GameModeCards = create_ssr_component(($$result, $$props, $$bindings, slots
 
 const css$7 = {
 	code: ".font.svelte-2ej71o{font-family:\"Bebas Neue\", sans-serif}main.svelte-2ej71o{margin-top:calc(4rem - 2px);min-height:calc(100vh - calc(4rem - 2px))}@media(min-width: 400px){}",
-	map: "{\"version\":3,\"file\":\"_layout.svelte\",\"sources\":[\"_layout.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import Tailwindcss from \\\"../components/Tailwindcss.svelte\\\";\\r\\n    import Nav from \\\"../components/Navigation/Nav.svelte\\\";\\r\\n    import Footer from \\\"../components/Footer.svelte\\\";\\r\\n    import GameModeCards from \\\"../components/GameModeCards.svelte\\\";\\r\\n\\r\\n    let scrollY = 0;\\r\\n    //export let segment;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .font {\\r\\n        font-family: \\\"Bebas Neue\\\", sans-serif;\\r\\n    }\\r\\n\\r\\n    main {\\r\\n        margin-top: calc(4rem - 2px);\\r\\n        min-height: calc(100vh - calc(4rem - 2px));\\r\\n    }\\r\\n\\r\\n    body {\\r\\n        margin: 0;\\r\\n        font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,\\r\\n        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;\\r\\n        font-size: 14px;\\r\\n        line-height: 1.5;\\r\\n        color: #333;\\r\\n    }\\r\\n\\r\\n    h1,\\r\\n    h2,\\r\\n    h3,\\r\\n    h4,\\r\\n    h5,\\r\\n    h6 {\\r\\n        margin: 0 0 0.5em 0;\\r\\n        font-weight: 400;\\r\\n        line-height: 1.2;\\r\\n    }\\r\\n\\r\\n    h1 {\\r\\n        font-size: 2em;\\r\\n    }\\r\\n\\r\\n    a {\\r\\n        color: inherit;\\r\\n    }\\r\\n\\r\\n    code {\\r\\n        font-family: menlo, inconsolata, monospace;\\r\\n        font-size: calc(1em - 2px);\\r\\n        color: #555;\\r\\n        background-color: #f0f0f0;\\r\\n        padding: 0.2em 0.4em;\\r\\n        border-radius: 2px;\\r\\n    }\\r\\n\\r\\n    @media (min-width: 400px) {\\r\\n        body {\\r\\n            font-size: 16px;\\r\\n        }\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<Tailwindcss />\\r\\n\\r\\n<svelte:head>\\r\\n    <!-- <link rel=\\\"stylesheet\\\" href=\\\"../../fontisto-master/css/fontisto/fontisto.min.css\\\" /> -->\\r\\n    <!--Adsense-->\\r\\n</svelte:head>\\r\\n\\r\\n<svelte:window bind:scrollY={scrollY} />\\r\\n<div class=\\\"font w-full bg-background min-h-screen h-full flex flex-col relative\\\">\\r\\n    <Nav isScrolling={scrollY > 0} />\\r\\n\\r\\n    <main class=\\\"text-font text-default min-h-screen h-full relative\\\">\\r\\n        <!--Main-->\\r\\n        <slot class=\\\"flex-grow bg-background block-grow\\\" />\\r\\n        <!--<GameModeCards page={\\\"play\\\"}/>-->\\r\\n    </main>\\r\\n    <!--<div class=\\\"fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl\\\">\\r\\n        <Poll/>\\r\\n    </div>-->\\r\\n\\r\\n    <!--Footer-->\\r\\n    <Footer />\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAWI,KAAK,cAAC,CAAC,AACH,WAAW,CAAE,YAAY,CAAC,CAAC,UAAU,AACzC,CAAC,AAED,IAAI,cAAC,CAAC,AACF,UAAU,CAAE,KAAK,IAAI,CAAC,CAAC,CAAC,GAAG,CAAC,CAC5B,UAAU,CAAE,KAAK,KAAK,CAAC,CAAC,CAAC,KAAK,IAAI,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC,AAC9C,CAAC,AAuCD,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAI3B,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"_layout.svelte\",\"sources\":[\"_layout.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import Tailwindcss from \\\"../components/Tailwindcss.svelte\\\";\\r\\n    import Nav from \\\"../components/Navigation/Nav.svelte\\\";\\r\\n    import Footer from \\\"../components/Footer.svelte\\\";\\r\\n    import GameModeCards from \\\"../components/GameModeCards.svelte\\\";\\r\\n    import ErrorAlert from \\\"../components/ErrorAlert.svelte\\\";\\r\\n    import { eventEmitter } from \\\"../utils/api\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import PollTest from \\\"../components/Poll.svelte\\\";\\r\\n\\r\\n    let error;\\r\\n    onMount(() => {\\r\\n        eventEmitter.subscribe(async e => {\\r\\n            e = e.error;\\r\\n            if (!e) return;\\r\\n            if (e instanceof Error) {\\r\\n                error = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();\\r\\n                setTimeout(() => {\\r\\n                    error = undefined;\\r\\n                }, 8000);\\r\\n            }\\r\\n        });\\r\\n    });\\r\\n\\r\\n    let scrollY = 0;\\r\\n    //export let segment;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .font {\\r\\n        font-family: \\\"Bebas Neue\\\", sans-serif;\\r\\n    }\\r\\n\\r\\n    main {\\r\\n        margin-top: calc(4rem - 2px);\\r\\n        min-height: calc(100vh - calc(4rem - 2px));\\r\\n    }\\r\\n\\r\\n    body {\\r\\n        margin: 0;\\r\\n        font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,\\r\\n        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;\\r\\n        font-size: 14px;\\r\\n        line-height: 1.5;\\r\\n        color: #333;\\r\\n    }\\r\\n\\r\\n    h1,\\r\\n    h2,\\r\\n    h3,\\r\\n    h4,\\r\\n    h5,\\r\\n    h6 {\\r\\n        margin: 0 0 0.5em 0;\\r\\n        font-weight: 400;\\r\\n        line-height: 1.2;\\r\\n    }\\r\\n\\r\\n    h1 {\\r\\n        font-size: 2em;\\r\\n    }\\r\\n\\r\\n    a {\\r\\n        color: inherit;\\r\\n    }\\r\\n\\r\\n    code {\\r\\n        font-family: menlo, inconsolata, monospace;\\r\\n        font-size: calc(1em - 2px);\\r\\n        color: #555;\\r\\n        background-color: #f0f0f0;\\r\\n        padding: 0.2em 0.4em;\\r\\n        border-radius: 2px;\\r\\n    }\\r\\n\\r\\n    @media (min-width: 400px) {\\r\\n        body {\\r\\n            font-size: 16px;\\r\\n        }\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<Tailwindcss />\\r\\n\\r\\n<svelte:head>\\r\\n    <!-- <link rel=\\\"stylesheet\\\" href=\\\"../../fontisto-master/css/fontisto/fontisto.min.css\\\" /> -->\\r\\n    <!--Adsense-->\\r\\n</svelte:head>\\r\\n\\r\\n<svelte:window bind:scrollY={scrollY} />\\r\\n<div class=\\\"font w-full bg-background min-h-screen h-full flex flex-col relative\\\">\\r\\n    <Nav isScrolling={scrollY > 0} />\\r\\n    {#if error}\\r\\n        <ErrorAlert message=\\\"We had some trouble getting to Winhalla\\\" pushError={error} />\\r\\n    {/if}\\r\\n\\r\\n    <main class=\\\"text-font text-default min-h-screen h-full relative\\\">\\r\\n        <!--Main-->\\r\\n\\r\\n\\r\\n        <slot class=\\\"flex-grow bg-background block-grow\\\" />\\r\\n        <!--<GameModeCards page={\\\"play\\\"}/>-->\\r\\n    </main>\\r\\n    <!--<div class=\\\"fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl\\\">\\r\\n        <Poll/>\\r\\n    </div>-->\\r\\n\\r\\n    <!--Footer-->\\r\\n    <Footer />\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA6BI,KAAK,cAAC,CAAC,AACH,WAAW,CAAE,YAAY,CAAC,CAAC,UAAU,AACzC,CAAC,AAED,IAAI,cAAC,CAAC,AACF,UAAU,CAAE,KAAK,IAAI,CAAC,CAAC,CAAC,GAAG,CAAC,CAC5B,UAAU,CAAE,KAAK,KAAK,CAAC,CAAC,CAAC,KAAK,IAAI,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC,AAC9C,CAAC,AAuCD,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAI3B,CAAC\"}"
 };
 
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let error;
+
+	onMount(() => {
+		eventEmitter.subscribe(async e => {
+			e = e.error;
+			if (!e) return;
+
+			if (e instanceof Error) {
+				error = e.response.data.message
+				? e.response.data.message
+				: e.response.data
+					? e.response.data.toString()
+					: e.toString();
+
+				setTimeout(
+					() => {
+						error = undefined;
+					},
+					8000
+				);
+			}
+		});
+	});
+
 	let scrollY = 0;
 	$$result.css.add(css$7);
 
@@ -684,8 +817,21 @@ ${($$result.head += ``, "")}
 
 
 <div class="${"font w-full bg-background min-h-screen h-full flex flex-col relative svelte-2ej71o"}">${validate_component(Nav, "Nav").$$render($$result, { isScrolling: scrollY > 0 }, {}, {})}
+    ${error
+	? `${validate_component(ErrorAlert, "ErrorAlert").$$render(
+			$$result,
+			{
+				message: "We had some trouble getting to Winhalla",
+				pushError: error
+			},
+			{},
+			{}
+		)}`
+	: ``}
 
     <main class="${"text-font text-default min-h-screen h-full relative svelte-2ej71o"}">
+
+
         ${slots.default
 	? slots.default({
 			class: "flex-grow bg-background block-grow"
@@ -707,7 +853,7 @@ var root_comp = /*#__PURE__*/Object.freeze({
 
 const css$8 = {
 	code: "h1.svelte-8od9u6,p.svelte-8od9u6{margin:0 auto}h1.svelte-8od9u6{font-size:2.8em;font-weight:700;margin:0 0 0.5em 0}p.svelte-8od9u6{margin:1em auto}@media(min-width: 480px){h1.svelte-8od9u6{font-size:4em}}",
-	map: "{\"version\":3,\"file\":\"_error.svelte\",\"sources\":[\"_error.svelte\"],\"sourcesContent\":[\"<script>\\n\\texport let status;\\n\\texport let error;\\n\\n\\tconst dev = \\\"production\\\" === 'development';\\n</script>\\n\\n<style>\\n\\th1, p {\\n\\t\\tmargin: 0 auto;\\n\\t}\\n\\n\\th1 {\\n\\t\\tfont-size: 2.8em;\\n\\t\\tfont-weight: 700;\\n\\t\\tmargin: 0 0 0.5em 0;\\n\\t}\\n\\n\\tp {\\n\\t\\tmargin: 1em auto;\\n\\t}\\n\\n\\t@media (min-width: 480px) {\\n\\t\\th1 {\\n\\t\\t\\tfont-size: 4em;\\n\\t\\t}\\n\\t}\\n</style>\\n\\n<svelte:head>\\n\\t<title>{status}</title>\\n</svelte:head>\\n\\n<h1>{status}</h1>\\n\\n<p>{error.message}</p>\\n\\n{#if dev && error.stack}\\n\\t<pre>{error.stack}</pre>\\n{/if}\\n\"],\"names\":[],\"mappings\":\"AAQC,gBAAE,CAAE,CAAC,cAAC,CAAC,AACN,MAAM,CAAE,CAAC,CAAC,IAAI,AACf,CAAC,AAED,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,MAAM,CAAE,CAAC,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,AACpB,CAAC,AAED,CAAC,cAAC,CAAC,AACF,MAAM,CAAE,GAAG,CAAC,IAAI,AACjB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,GAAG,AACf,CAAC,AACF,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"_error.svelte\",\"sources\":[\"_error.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\texport let status;\\r\\n\\texport let error;\\r\\n\\r\\n\\tconst dev = \\\"production\\\" === 'development';\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n\\th1, p {\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\t}\\r\\n\\r\\n\\th1 {\\r\\n\\t\\tfont-size: 2.8em;\\r\\n\\t\\tfont-weight: 700;\\r\\n\\t\\tmargin: 0 0 0.5em 0;\\r\\n\\t}\\r\\n\\r\\n\\tp {\\r\\n\\t\\tmargin: 1em auto;\\r\\n\\t}\\r\\n\\r\\n\\t@media (min-width: 480px) {\\r\\n\\t\\th1 {\\r\\n\\t\\t\\tfont-size: 4em;\\r\\n\\t\\t}\\r\\n\\t}\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n\\t<title>{status}</title>\\r\\n</svelte:head>\\r\\n\\r\\n<h1>{status}</h1>\\r\\n\\r\\n<p>{error.message}</p>\\r\\n\\r\\n{#if dev && error.stack}\\r\\n\\t<pre>{error.stack}</pre>\\r\\n{/if}\\r\\n\"],\"names\":[],\"mappings\":\"AAQC,gBAAE,CAAE,CAAC,cAAC,CAAC,AACN,MAAM,CAAE,CAAC,CAAC,IAAI,AACf,CAAC,AAED,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,MAAM,CAAE,CAAC,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,AACpB,CAAC,AAED,CAAC,cAAC,CAAC,AACF,MAAM,CAAE,GAAG,CAAC,IAAI,AACjB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,GAAG,AACf,CAAC,AACF,CAAC\"}"
 };
 
 const Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -794,10 +940,19 @@ const routes = (d => [
 	},
 
 	{
+		// feltrom/admin.svelte
+		pattern: /^\/feltrom\/admin\/?$/,
+		parts: [
+			null,
+			{ i: 4 }
+		]
+	},
+
+	{
 		// offline.svelte
 		pattern: /^\/offline\/?$/,
 		parts: [
-			{ i: 4 }
+			{ i: 5 }
 		]
 	},
 
@@ -805,7 +960,7 @@ const routes = (d => [
 		// privacy.svelte
 		pattern: /^\/privacy\/?$/,
 		parts: [
-			{ i: 5 }
+			{ i: 6 }
 		]
 	},
 
@@ -813,7 +968,7 @@ const routes = (d => [
 		// status.svelte
 		pattern: /^\/status\/?$/,
 		parts: [
-			{ i: 6 }
+			{ i: 7 }
 		]
 	},
 
@@ -821,7 +976,7 @@ const routes = (d => [
 		// about.svelte
 		pattern: /^\/about\/?$/,
 		parts: [
-			{ i: 7 }
+			{ i: 8 }
 		]
 	},
 
@@ -829,15 +984,16 @@ const routes = (d => [
 		// terms.svelte
 		pattern: /^\/terms\/?$/,
 		parts: [
-			{ i: 8 }
+			{ i: 9 }
 		]
 	},
 
 	{
-		// tests.svelte
-		pattern: /^\/tests\/?$/,
+		// tests/[id].svelte
+		pattern: /^\/tests\/([^/]+?)\/?$/,
 		parts: [
-			{ i: 9 }
+			null,
+			{ i: 10, params: match => ({ id: d(match[1]) }) }
 		]
 	},
 
@@ -845,7 +1001,7 @@ const routes = (d => [
 		// help.svelte
 		pattern: /^\/help\/?$/,
 		parts: [
-			{ i: 10 }
+			{ i: 11 }
 		]
 	},
 
@@ -854,7 +1010,7 @@ const routes = (d => [
 		pattern: /^\/link\/([^/]+?)\/?$/,
 		parts: [
 			null,
-			{ i: 11, params: match => ({ id: d(match[1]) }) }
+			{ i: 12, params: match => ({ id: d(match[1]) }) }
 		]
 	},
 
@@ -862,7 +1018,7 @@ const routes = (d => [
 		// play/index.svelte
 		pattern: /^\/play\/?$/,
 		parts: [
-			{ i: 12 }
+			{ i: 13 }
 		]
 	},
 
@@ -871,7 +1027,7 @@ const routes = (d => [
 		pattern: /^\/play\/ffa\/?$/,
 		parts: [
 			null,
-			{ i: 13 }
+			{ i: 14 }
 		]
 	},
 
@@ -881,7 +1037,7 @@ const routes = (d => [
 		parts: [
 			null,
 			null,
-			{ i: 14, params: match => ({ id: d(match[1]) }) }
+			{ i: 15, params: match => ({ id: d(match[1]) }) }
 		]
 	},
 
@@ -889,7 +1045,7 @@ const routes = (d => [
 		// shop.svelte
 		pattern: /^\/shop\/?$/,
 		parts: [
-			{ i: 15 }
+			{ i: 16 }
 		]
 	},
 
@@ -897,7 +1053,7 @@ const routes = (d => [
 		// test.svelte
 		pattern: /^\/test\/?$/,
 		parts: [
-			{ i: 16 }
+			{ i: 17 }
 		]
 	}
 ])(decodeURIComponent);
@@ -1075,11 +1231,13 @@ stores.session.subscribe((value) => __awaiter(void 0, void 0, void 0, function* 
     return;
 }));
 
+const stores$1 = () => getContext(CONTEXT_KEY);
+
 /* src\routes\create-account.svelte generated by Svelte v3.31.0 */
 
 const css$9 = {
 	code: "b.svelte-29gitm{@apply text-primary font-normal leading-none;}.accent.svelte-29gitm{@apply text-accent;}input.svelte-29gitm{@apply w-full text-background bg-font py-3 px-4 rounded;}button.svelte-29gitm:disabled{@apply bg-disabled;;cursor:not-allowed}.info.svelte-29gitm{@apply text-lg mt-1;}.input-header.svelte-29gitm{@apply text-primary text-3xl;;margin-bottom:0.35rem}.check.svelte-29gitm{margin-top:0.15rem;margin-right:0.4rem}",
-	map: "{\"version\":3,\"file\":\"create-account.svelte\",\"sources\":[\"create-account.svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\r\\n    export async function preload({ params, query }) {\\r\\n        let firstLink = query.link;\\r\\n        return { firstLink };\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<script>\\r\\n    import { counter } from \\\"../components/store\\\";\\r\\n\\r\\n    export let firstLink;\\r\\n    import { callApi } from \\\"../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n    import { fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    let account;\\r\\n    let email;\\r\\n    let link = firstLink;\\r\\n    let linkId;\\r\\n    let validLink = null;\\r\\n    let validEmail = null;\\r\\n\\r\\n    let accountCreationStep = 0;\\r\\n    let generatedLink;\\r\\n    let pushError;\\r\\n\\r\\n    const onKeyPressLink = () => {\\r\\n        setTimeout(async () => {\\r\\n            if (link.length > 0) {\\r\\n                try {\\r\\n                    linkId = new URL(link);\\r\\n                    linkId = linkId.pathname.split(\\\"/\\\")[2];\\r\\n                    if (linkId.length == 24) {\\r\\n                        const testLink = await callApi(\\r\\n                            \\\"get\\\",\\r\\n                            `/getLink/${linkId}`\\r\\n                        );\\r\\n                        if (testLink) validLink = true;\\r\\n                        else validLink = false;\\r\\n                    } else {\\r\\n                        validLink = false;\\r\\n                    }\\r\\n                } catch (err) {\\r\\n                    validLink = false;\\r\\n                }\\r\\n            } else {\\r\\n                validLink = null;\\r\\n            }\\r\\n        }, 1);\\r\\n    };\\r\\n\\r\\n    const onKeyPressEmail = () => {\\r\\n        setTimeout(() => {\\r\\n            if (email.length > 0) {\\r\\n                let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21\\\\x23-\\\\x5b\\\\x5d-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21-\\\\x5a\\\\x53-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])+)\\\\])/gm;\\r\\n                let exec = regex.exec(email);\\r\\n                if (exec) validEmail = true;\\r\\n                else validEmail = false;\\r\\n            } else {\\r\\n                validEmail = null;\\r\\n            }\\r\\n        }, 1);\\r\\n    };\\r\\n    if (link && link != \\\"\\\") onKeyPressLink();\\r\\n    onMount(() => {\\r\\n        let unsub = counter.subscribe((value) => {\\r\\n            let user = value.content;\\r\\n            if (user.then) {\\r\\n                user.then((values) => {\\r\\n                    if (values.user) {\\r\\n                        goto(\\\"/\\\");\\r\\n                    }\\r\\n                });\\r\\n            } else if (user) {\\r\\n                if (!user.user) {\\r\\n                    goto(\\\"/\\\");\\r\\n                }\\r\\n            }\\r\\n        });\\r\\n        unsub();\\r\\n    });\\r\\n\\r\\n    async function handleClick() {\\r\\n        if (accountCreationStep == 0) {\\r\\n            try {\\r\\n                linkId = new URL(link);\\r\\n                linkId = linkId.pathname.split(\\\"/\\\")[2];\\r\\n            } catch (err) {\\r\\n                console.log(err);\\r\\n            }\\r\\n            try {\\r\\n                generatedLink = await callApi(\\r\\n                    \\\"post\\\",\\r\\n                    `/auth/createAccount?email=${email}&linkId=${linkId}`\\r\\n                );\\r\\n                if (generatedLink instanceof Error) throw generatedLink;\\r\\n                accountCreationStep++;\\r\\n                counter.set({ \\\"refresh\\\": true });\\r\\n            } catch (e) {\\r\\n                pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();\\r\\n                setTimeout(() => {\\r\\n                    pushError = undefined;\\r\\n                }, 8000);\\r\\n            }\\r\\n\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /*\\r\\n    import { tick } from \\\"svelte\\\";\\r\\n\\r\\n    let valueCopy = null;\\r\\n    export let value = null;\\r\\n    let areaDom;\\r\\n    async function copy() {\\r\\n        valueCopy = value;\\r\\n        console.log(areaDom);\\r\\n        await tick();\\r\\n        areaDom.focus();\\r\\n        areaDom.select();\\r\\n        let message = \\\"Copying text was successful\\\";\\r\\n        try {\\r\\n            const successful = document.execCommand(\\\"copy\\\");\\r\\n            if (!successful) {\\r\\n                message = \\\"Copying text was unsuccessful\\\";\\r\\n            }\\r\\n        } catch (err) {\\r\\n            message = \\\"Oops, unable to copy\\\";\\r\\n        }\\r\\n\\r\\n        // we can notifi by event or storage about copy status\\r\\n        console.log(message);\\r\\n        valueCopy = null;\\r\\n    }\\r\\n    async function handleShare() {\\r\\n        if (window.navigator.share) {\\r\\n            await window.navigator.share({\\r\\n                title: \\\"Share your affiliate link\\\",\\r\\n                url: generatedLink,\\r\\n            });\\r\\n        } else {\\r\\n            copy();\\r\\n        }\\r\\n    }*/\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-primary font-normal leading-none;\\r\\n    }\\r\\n\\r\\n    .accent {\\r\\n        @apply text-accent;\\r\\n    }\\r\\n\\r\\n    input {\\r\\n        @apply w-full text-background bg-font py-3 px-4 rounded;\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    .info {\\r\\n        @apply text-lg mt-1;\\r\\n    }\\r\\n\\r\\n    .input-header {\\r\\n        @apply text-primary text-3xl;\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n    .check {\\r\\n        margin-top: 0.15rem;\\r\\n        margin-right: 0.4rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>\\r\\n    <meta\\r\\n        name=\\\"description\\\"\\r\\n        content=\\\"This is where all starts | Create a Winhalla account now and\\r\\n        get a Battle Pass and Mammoth Coins FOR FREE\\\" />\\r\\n</svelte:head>\\r\\n<div>\\r\\n    {#if pushError}\\r\\n\\r\\n        <div class=\\\"px-5    w-full lg:w-auto   absolute left-0 lg:left-auto lg:right-0 2xl:right-30 z-20 top-5 lg:top-50 xl:mr-6\\\">\\r\\n            <div\\r\\n                class=\\\"w-full lg:w-auto h-auto  p-5 bg-background border rounded-lg border-legendary\\\"\\r\\n                transition:fly={{ x:200, duration: 400 }}>\\r\\n                <h3 class=\\\"text-legendary\\\">There was an error creating your account.</h3>\\r\\n                <p class=\\\"text-light text-base\\\">{pushError}</p>\\r\\n            </div>\\r\\n        </div>\\r\\n\\r\\n\\r\\n    {/if}\\r\\n    <div class=\\\"flex items-center justify-center md:h-screen-7\\\">\\r\\n        {#if accountCreationStep === 0}\\r\\n            <div class=\\\"flex flex-col justify-center px-5 md:p-0\\\">\\r\\n                <div class=\\\"text-center md:text-left mt-7 md:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-6 md:mb-8 leading-snug\\r\\n                        md:leading-normal\\\">\\r\\n                        Create your account\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"md:mt-4\\\">\\r\\n                    <p class=\\\"input-header\\\">Email</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressEmail}\\r\\n                            type=\\\"email\\\"\\r\\n                            placeholder=\\\"Your email goes here\\\"\\r\\n                            bind:value={email}\\r\\n                            class:border-legendary={validEmail == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary placeholder-disabled\\\" />\\r\\n\\r\\n                        {#if validEmail}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID EMAIL</p>\\r\\n                            </div>\\r\\n                        {:else if validEmail == false}\\r\\n                            <p class=\\\"text-legendary info \\\">INVALID EMAIL</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n\\r\\n                <div class:mt-12={validEmail == null} class=\\\"mt-4\\\">\\r\\n                    <p class=\\\"text-3xl input-header\\\">Friend link</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressLink}\\r\\n                            bind:value={link}\\r\\n                            placeholder=\\\"Paste here your affiliate link\\\"\\r\\n                            class:border-legendary={validLink == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full placeholder-disabled\\\" />\\r\\n                        {#if validLink}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID LINK</p>\\r\\n                            </div>\\r\\n                        {:else if validLink == false}\\r\\n                            <p class=\\\"text-legendary info\\\">INVALID LINK</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n                <button\\r\\n                    disabled={!validEmail}\\r\\n                    on:click={handleClick}\\r\\n                    class:mt-11={validLink == null}\\r\\n                    class=\\\"button button-brand mt-3\\\">\\r\\n                    Create account\\r\\n                </button>\\r\\n                <!--<div class=\\\"card pt-8 pb-11 px-10 w-100% mx-5 w-full md:w-96\\\">\\r\\n                    <p class=\\\"input-header\\\">Email</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressEmail}\\r\\n                            type=\\\"email\\\"\\r\\n                            bind:value={email}\\r\\n                            class:border-legendary={validEmail == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full\\\" />\\r\\n\\r\\n                        {#if validEmail}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID EMAIL</p>\\r\\n                            </div>\\r\\n                        {:else if validEmail == false}\\r\\n                            <p class=\\\"text-legendary info \\\">INVALID EMAIL</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n\\r\\n                    <p class=\\\"pt-6 text-3xl input-header\\\">Friend link</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressLink}\\r\\n                            bind:value={link}\\r\\n                            class:border-legendary={validLink == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full\\\" />\\r\\n                        {#if validLink}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID LINK</p>\\r\\n                            </div>\\r\\n                        {:else if validLink == false}\\r\\n                            <p class=\\\"text-legendary info\\\">INVALID LINK</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n                <button\\r\\n                    disabled={!validEmail}\\r\\n                    on:click={handleClick}\\r\\n                    class=\\\"button button-brand mt-6\\\">\\r\\n                    Create account\\r\\n                </button>-->\\r\\n            </div>\\r\\n        {:else}\\r\\n            <div class=\\\"flex flex-col items-center px-5\\\">\\r\\n                <div class=\\\"text-center mt-7 lg:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-8 lg:mb-8 leading-snug\\r\\n                        lg:leading-normal\\\">\\r\\n                        Share your affiliate link\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"flex flex-col md:flex-row items-center\\\">\\r\\n                    <div\\r\\n                        class=\\\"card py-8 px-6 text-center w-64 h-78 mb-6 md:mb-0\\r\\n                        md:mr-12\\\">\\r\\n                        <p class=\\\"text-6xl mt-6\\\">You</p>\\r\\n                        <p class=\\\"leading-7 mt-13\\\">\\r\\n                            will get\\r\\n                            <b>20%</b>\\r\\n                            of what\\r\\n                            <b>each people</b>\\r\\n                            who\\r\\n                            <b>creates an account</b>\\r\\n                            with\\r\\n                            <u>your</u>\\r\\n                            link\\r\\n                            <b>wins</b>\\r\\n                            , for one month!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div class=\\\"flex items-center md:block\\\">\\r\\n                        <div class=\\\"hidden md:flex items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mr-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m19.2 2.43-2.422-2.43-11.978 12 11.978 12\\r\\n                                    2.422-2.43-9.547-9.57z\\\" />\\r\\n                            </svg>\\r\\n                            <div class=\\\"h-2px bg-accent w-40\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -ml-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m4.8 21.57 2.422 2.43\\r\\n                                    11.978-12-11.978-12-2.422 2.43 9.547 9.57z\\\" />\\r\\n                            </svg>\\r\\n                        </div>\\r\\n                        <div class=\\\"flex flex-col md:hidden items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mb-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m21.57 19.2 2.43-2.422-12-11.978-12\\r\\n                                    11.978 2.43 2.422 9.57-9.547z\\\" />\\r\\n                            </svg>\\r\\n                            <div class=\\\"w-2px bg-accent h-16\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mt-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m2.43 4.8-2.43 2.422 12 11.978\\r\\n                                    12-11.978-2.43-2.422-9.57 9.547z\\\" />\\r\\n                            </svg>\\r\\n                        </div>\\r\\n\\r\\n                        <p\\r\\n                            class=\\\"text-center text-extra-light text-lg ml-4\\r\\n                            md:ml-0\\\">\\r\\n                            Everyone wins!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div\\r\\n                        class=\\\"card py-8 px-6 text-center w-64 h-78 mt-6 lg:mt-0\\r\\n                        md:ml-12\\\">\\r\\n                        <p class=\\\"text-6xl\\\">Each person</p>\\r\\n                        <p class=\\\"leading-7 mt-4\\\">\\r\\n                            that will\\r\\n                            <b>create an account</b>\\r\\n                            with\\r\\n                            <u>your</u>\\r\\n                            link will get\\r\\n                            <b>20%</b>\\r\\n                            of reward\\r\\n                            <b>boost</b>\\r\\n                            , for one month!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n                <div class=\\\"lg:flex justify-center\\\">\\r\\n                    <!--<textarea bind:this={areaDom}>{valueCopy}</textarea>-->\\r\\n\\r\\n                    <button\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-14 flex items-center rounded\\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-10 md:w-5 ml-1\\r\\n                            lg:ml-4 lg:block\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626\\r\\n                                1.041-2.651 1.041-2.152\\r\\n                                0-3.896-1.744-3.896-3.896 0-1.025.396-1.958\\r\\n                                1.043-2.654l-.002.002\\r\\n                                3.671-3.671c.212-.23.341-.539.341-.878\\r\\n                                0-.717-.582-1.299-1.299-1.299-.339\\r\\n                                0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108\\r\\n                                1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494\\r\\n                                6.494 6.494 1.738 0 3.316-.683\\r\\n                                4.482-1.795l-.003.002\\r\\n                                3.671-3.671c.212-.23.341-.539.341-.878\\r\\n                                0-.717-.582-1.299-1.299-1.299-.339\\r\\n                                0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" />\\r\\n                        </svg>\\r\\n                    </button>\\r\\n                </div>\\r\\n\\r\\n                <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                    You will be able to\\r\\n                    <b class=\\\"accent\\\">access your link</b>\\r\\n                    by clicking on\\r\\n                    <b class=\\\"accent\\\">your profile</b>\\r\\n                    !\\r\\n                </p>\\r\\n                <a\\r\\n                    href=\\\"/play\\\"\\r\\n                    class=\\\"button button-brand mt-10 block mx-auto mb-6 md:mb-0\\\">\\r\\n                    Finish\\r\\n                </a>\\r\\n            </div>\\r\\n            <!--<div class=\\\" -flex flex-col items-center\\\">\\r\\n                <div class=\\\"text-center lg:text-left lg:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal\\\">\\r\\n                        Share your affiliate link\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"-flex flex-col items-center lg:flex-row mt-8\\\">\\r\\n                    <div class=\\\"card py-8 px-6 text-center w-64 h-78 mr-12\\\">\\r\\n                        <p class=\\\"text-6xl\\\">Each person...</p>\\r\\n                        <p class=\\\"leading-7 mt-4\\\">\\r\\n                            ...that will\\r\\n                            <b>create an account</b>\\r\\n                            with your link will get\\r\\n                            <b>20%</b>\\r\\n                            of reward\\r\\n                            <b>boost</b>\\r\\n                            for one month.\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div>\\r\\n                        <div class=\\\"-flex items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mr-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                    d=\\\"m19.2 2.43-2.422-2.43-11.978 12 11.978 12 2.422-2.43-9.547-9.57z\\\" /></svg>\\r\\n                            <div class=\\\"h-2px bg-accent w-40 join relative\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -ml-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                    d=\\\"m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z\\\" /></svg>\\r\\n                        </div>\\r\\n                        <p class=\\\"text-center text-extra-light text-lg\\\">\\r\\n                            Everyone wins !\\r\\n                        </p>\\r\\n                    </div>\\r\\n\\r\\n                    <div class=\\\"card py-8 px-6 text-center w-64 h-78 ml-12\\\">\\r\\n                        <p class=\\\"text-6xl mt-6\\\">You...</p>\\r\\n                        <p class=\\\"leading-7 mt-13\\\">\\r\\n                            ... will get\\r\\n                            <b>20%</b>\\r\\n                            of what each of your godsons wins!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n                <div>\\r\\n                    <div\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-14 flex justify-between items-center rounded overflow-x-scroll lg:overflow-auto w-lin\\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-5 ml-4\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" /></svg>\\r\\n                    </div>\\r\\n                </div>\\r\\n\\r\\n                <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                    You will be able to\\r\\n                    <b class=\\\"accent\\\">access your link</b>\\r\\n                    by clicking on\\r\\n                    <b class=\\\"accent\\\">your profile</b>!\\r\\n                </p>\\r\\n                <button on:click={handleClick} class=\\\"button button-brand mt-6\\\">\\r\\n                    Finish\\r\\n                </button>\\r\\n            </div>-->\\r\\n\\r\\n            <!--<div class=\\\"card pt-8 pb-8 px-10 w-100% mx-5 w-full md:w-96\\\">\\r\\n                    <p class=\\\"leading-7\\\">\\r\\n                        - Each person that will\\r\\n                        <b>create an account</b>\\r\\n                        with your link will get\\r\\n                        <b>20%</b>\\r\\n                        of reward\\r\\n                        <b>boost</b>\\r\\n                        for one month.\\r\\n                        <br />\\r\\n                    </p>\\r\\n                    <p class=\\\"mt-1\\\">\\r\\n                        -\\r\\n                        <u>You</u>\\r\\n                        will also get\\r\\n                        <b>20%</b>\\r\\n                        of\\r\\n                        <b>what they win</b>! Everyone wins!\\r\\n                    </p>\\r\\n                    <div\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-7 flex justify-between items-center rounded overflow-x-scroll w-full \\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-5\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" /></svg>\\r\\n                    </div>\\r\\n                    <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                        You will be able to\\r\\n                        <b class=\\\"accent\\\">access your link</b>\\r\\n                        by clicking on\\r\\n                        <b class=\\\"accent\\\">your profile</b>!\\r\\n                    </p>\\r\\n                </div>-->\\r\\n        {/if}\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAqJI,CAAC,cAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,YAAY,CAAC,AACjD,CAAC,AAED,OAAO,cAAC,CAAC,AACL,OAAO,WAAW,CAAC,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,MAAM,CAAC,eAAe,CAAC,OAAO,CAAC,IAAI,CAAC,IAAI,CAAC,OAAO,CAAC,AAC5D,CAAC,AAED,oBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,OAAO,CAAC,IAAI,CAAC,AACxB,CAAC,AAED,aAAa,cAAC,CAAC,AACX,OAAO,YAAY,CAAC,QAAQ,CAAC,CAC7B,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,UAAU,CAAE,OAAO,CACnB,YAAY,CAAE,MAAM,AACxB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"create-account.svelte\",\"sources\":[\"create-account.svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\r\\n    export async function preload({ params, query }) {\\r\\n        let firstLink = query.link;\\r\\n        return { firstLink };\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<script>\\r\\n    import { counter } from \\\"../components/store\\\";\\r\\n    import Error from \\\"../components/ErrorAlert.svelte\\\";\\r\\n\\r\\n    export let firstLink;\\r\\n    import { callApi } from \\\"../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n    import { fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    let account;\\r\\n    let email;\\r\\n    let link = firstLink;\\r\\n    let linkId;\\r\\n    let validLink = null;\\r\\n    let validEmail = null;\\r\\n\\r\\n    let accountCreationStep = 0;\\r\\n    let generatedLink;\\r\\n    let pushError;\\r\\n\\r\\n    const onKeyPressLink = () => {\\r\\n        setTimeout(async () => {\\r\\n            if (link.length > 0) {\\r\\n                try {\\r\\n                    linkId = new URL(link);\\r\\n                    linkId = linkId.pathname.split(\\\"/\\\")[2];\\r\\n                    if (linkId.length == 24) {\\r\\n                        const testLink = await callApi(\\r\\n                            \\\"get\\\",\\r\\n                            `/getLink/${linkId}`\\r\\n                        );\\r\\n                        if (testLink) validLink = true;\\r\\n                        else validLink = false;\\r\\n                    } else {\\r\\n                        validLink = false;\\r\\n                    }\\r\\n                } catch (err) {\\r\\n                    validLink = false;\\r\\n                }\\r\\n            } else {\\r\\n                validLink = null;\\r\\n            }\\r\\n        }, 1);\\r\\n    };\\r\\n\\r\\n    const onKeyPressEmail = () => {\\r\\n        setTimeout(() => {\\r\\n            if (email.length > 0) {\\r\\n                let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21\\\\x23-\\\\x5b\\\\x5d-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21-\\\\x5a\\\\x53-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])+)\\\\])/gm;\\r\\n                let exec = regex.exec(email);\\r\\n                if (exec) validEmail = true;\\r\\n                else validEmail = false;\\r\\n            } else {\\r\\n                validEmail = null;\\r\\n            }\\r\\n        }, 1);\\r\\n    };\\r\\n    if (link && link != \\\"\\\") onKeyPressLink();\\r\\n    onMount(() => {\\r\\n        let unsub = counter.subscribe((value) => {\\r\\n            let user = value.content;\\r\\n            if (user.then) {\\r\\n                user.then((values) => {\\r\\n                    if (values.user) {\\r\\n                        goto(\\\"/\\\");\\r\\n                    }\\r\\n                });\\r\\n            } else if (user) {\\r\\n                if (!user.user) {\\r\\n                    goto(\\\"/\\\");\\r\\n                }\\r\\n            }\\r\\n        });\\r\\n        unsub();\\r\\n    });\\r\\n\\r\\n    async function handleClick() {\\r\\n        if (accountCreationStep == 0) {\\r\\n            try {\\r\\n                linkId = new URL(link);\\r\\n                linkId = linkId.pathname.split(\\\"/\\\")[2];\\r\\n            } catch (err) {\\r\\n                console.log(err);\\r\\n            }\\r\\n            try {\\r\\n                generatedLink = await callApi(\\r\\n                    \\\"post\\\",\\r\\n                    `/auth/createAccount?email=${email}&linkId=${linkId}`\\r\\n                );\\r\\n                if (generatedLink instanceof Error) throw generatedLink;\\r\\n                accountCreationStep++;\\r\\n                counter.set({ \\\"refresh\\\": true });\\r\\n            } catch (e) {\\r\\n                pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();\\r\\n                setTimeout(() => {\\r\\n                    pushError = undefined;\\r\\n                }, 8000);\\r\\n            }\\r\\n\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /*\\r\\n    import { tick } from \\\"svelte\\\";\\r\\n\\r\\n    let valueCopy = null;\\r\\n    export let value = null;\\r\\n    let areaDom;\\r\\n    async function copy() {\\r\\n        valueCopy = value;\\r\\n        console.log(areaDom);\\r\\n        await tick();\\r\\n        areaDom.focus();\\r\\n        areaDom.select();\\r\\n        let message = \\\"Copying text was successful\\\";\\r\\n        try {\\r\\n            const successful = document.execCommand(\\\"copy\\\");\\r\\n            if (!successful) {\\r\\n                message = \\\"Copying text was unsuccessful\\\";\\r\\n            }\\r\\n        } catch (err) {\\r\\n            message = \\\"Oops, unable to copy\\\";\\r\\n        }\\r\\n\\r\\n        // we can notifi by event or storage about copy status\\r\\n        console.log(message);\\r\\n        valueCopy = null;\\r\\n    }\\r\\n    async function handleShare() {\\r\\n        if (window.navigator.share) {\\r\\n            await window.navigator.share({\\r\\n                title: \\\"Share your affiliate link\\\",\\r\\n                url: generatedLink,\\r\\n            });\\r\\n        } else {\\r\\n            copy();\\r\\n        }\\r\\n    }*/\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-primary font-normal leading-none;\\r\\n    }\\r\\n\\r\\n    .accent {\\r\\n        @apply text-accent;\\r\\n    }\\r\\n\\r\\n    input {\\r\\n        @apply w-full text-background bg-font py-3 px-4 rounded;\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    .info {\\r\\n        @apply text-lg mt-1;\\r\\n    }\\r\\n\\r\\n    .input-header {\\r\\n        @apply text-primary text-3xl;\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n    .check {\\r\\n        margin-top: 0.15rem;\\r\\n        margin-right: 0.4rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>\\r\\n    <meta\\r\\n        name=\\\"description\\\"\\r\\n        content=\\\"This is where all starts | Create a Winhalla account now and\\r\\n        get a Battle Pass and Mammoth Coins FOR FREE\\\" />\\r\\n</svelte:head>\\r\\n<div>\\r\\n    {#if pushError}\\r\\n        <Error pushError={pushError} message=\\\"There was an error creating your account\\\" type=\\\"createAccount\\\" />\\r\\n    {/if}\\r\\n    <div class=\\\"flex items-center justify-center md:h-screen-7\\\">\\r\\n        {#if accountCreationStep === 0}\\r\\n            <div class=\\\"flex flex-col justify-center px-5 md:p-0\\\">\\r\\n                <div class=\\\"text-center md:text-left mt-7 md:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-6 md:mb-8 leading-snug\\r\\n                        md:leading-normal\\\">\\r\\n                        Register email\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"md:mt-4\\\">\\r\\n                    <p class=\\\"input-header\\\">Email</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressEmail}\\r\\n                            type=\\\"email\\\"\\r\\n                            placeholder=\\\"Your email goes here\\\"\\r\\n                            bind:value={email}\\r\\n                            class:border-legendary={validEmail == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary placeholder-disabled\\\" />\\r\\n\\r\\n                        {#if validEmail}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID EMAIL</p>\\r\\n                            </div>\\r\\n                        {:else if validEmail == false}\\r\\n                            <p class=\\\"text-legendary info \\\">INVALID EMAIL</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n\\r\\n                <div class:mt-12={validEmail == null} class=\\\"mt-4\\\">\\r\\n                    <p class=\\\"text-3xl input-header\\\">Friend link</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressLink}\\r\\n                            bind:value={link}\\r\\n                            placeholder=\\\"Paste here your affiliate link\\\"\\r\\n                            class:border-legendary={validLink == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full placeholder-disabled\\\" />\\r\\n                        {#if validLink}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID LINK</p>\\r\\n                            </div>\\r\\n                        {:else if validLink == false}\\r\\n                            <p class=\\\"text-legendary info\\\">INVALID LINK</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n                <button\\r\\n                    disabled={!validEmail}\\r\\n                    on:click={handleClick}\\r\\n                    class:mt-11={validLink == null}\\r\\n                    class=\\\"button button-brand mt-3\\\">\\r\\n                    Create account\\r\\n                </button>\\r\\n                <!--<div class=\\\"card pt-8 pb-11 px-10 w-100% mx-5 w-full md:w-96\\\">\\r\\n                    <p class=\\\"input-header\\\">Email</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressEmail}\\r\\n                            type=\\\"email\\\"\\r\\n                            bind:value={email}\\r\\n                            class:border-legendary={validEmail == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full\\\" />\\r\\n\\r\\n                        {#if validEmail}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID EMAIL</p>\\r\\n                            </div>\\r\\n                        {:else if validEmail == false}\\r\\n                            <p class=\\\"text-legendary info \\\">INVALID EMAIL</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n\\r\\n                    <p class=\\\"pt-6 text-3xl input-header\\\">Friend link</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            on:keydown={onKeyPressLink}\\r\\n                            bind:value={link}\\r\\n                            class:border-legendary={validLink == false}\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary w-full\\\" />\\r\\n                        {#if validLink}\\r\\n                            <div class=\\\"flex items-center\\\">\\r\\n                                <svg\\r\\n                                    class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                    viewBox=\\\"0 0 33 24\\\"\\r\\n                                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                    <path\\r\\n                                        d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                                </svg>\\r\\n                                <p class=\\\"text-green info\\\">VALID LINK</p>\\r\\n                            </div>\\r\\n                        {:else if validLink == false}\\r\\n                            <p class=\\\"text-legendary info\\\">INVALID LINK</p>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n                <button\\r\\n                    disabled={!validEmail}\\r\\n                    on:click={handleClick}\\r\\n                    class=\\\"button button-brand mt-6\\\">\\r\\n                    Create account\\r\\n                </button>-->\\r\\n            </div>\\r\\n        {:else}\\r\\n            <div class=\\\"flex flex-col items-center px-5\\\">\\r\\n                <div class=\\\"text-center mt-7 lg:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-8 lg:mb-8 leading-snug\\r\\n                        lg:leading-normal\\\">\\r\\n                        Share your affiliate link\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"flex flex-col md:flex-row items-center\\\">\\r\\n                    <div\\r\\n                        class=\\\"card py-8 px-6 text-center w-64 h-78 mb-6 md:mb-0\\r\\n                        md:mr-12\\\">\\r\\n                        <p class=\\\"text-6xl mt-6\\\">You</p>\\r\\n                        <p class=\\\"leading-7 mt-13\\\">\\r\\n                            will get\\r\\n                            <b>20%</b>\\r\\n                            of what\\r\\n                            <b>each people</b>\\r\\n                            who\\r\\n                            <b>creates an account</b>\\r\\n                            with\\r\\n                            <u>your</u>\\r\\n                            link\\r\\n                            <b>wins</b>\\r\\n                            , for one month!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div class=\\\"flex items-center md:block\\\">\\r\\n                        <div class=\\\"hidden md:flex items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mr-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m19.2 2.43-2.422-2.43-11.978 12 11.978 12\\r\\n                                    2.422-2.43-9.547-9.57z\\\" />\\r\\n                            </svg>\\r\\n                            <div class=\\\"h-2px bg-accent w-40\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -ml-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m4.8 21.57 2.422 2.43\\r\\n                                    11.978-12-11.978-12-2.422 2.43 9.547 9.57z\\\" />\\r\\n                            </svg>\\r\\n                        </div>\\r\\n                        <div class=\\\"flex flex-col md:hidden items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mb-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m21.57 19.2 2.43-2.422-12-11.978-12\\r\\n                                    11.978 2.43 2.422 9.57-9.547z\\\" />\\r\\n                            </svg>\\r\\n                            <div class=\\\"w-2px bg-accent h-16\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mt-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m2.43 4.8-2.43 2.422 12 11.978\\r\\n                                    12-11.978-2.43-2.422-9.57 9.547z\\\" />\\r\\n                            </svg>\\r\\n                        </div>\\r\\n\\r\\n                        <p\\r\\n                            class=\\\"text-center text-extra-light text-lg ml-4\\r\\n                            md:ml-0\\\">\\r\\n                            Everyone wins!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div\\r\\n                        class=\\\"card py-8 px-6 text-center w-64 h-78 mt-6 lg:mt-0\\r\\n                        md:ml-12\\\">\\r\\n                        <p class=\\\"text-6xl\\\">Each person</p>\\r\\n                        <p class=\\\"leading-7 mt-4\\\">\\r\\n                            that will\\r\\n                            <b>create an account</b>\\r\\n                            with\\r\\n                            <u>your</u>\\r\\n                            link will get\\r\\n                            <b>20%</b>\\r\\n                            of reward\\r\\n                            <b>boost</b>\\r\\n                            , for one month!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n                <div class=\\\"lg:flex justify-center\\\">\\r\\n                    <!--<textarea bind:this={areaDom}>{valueCopy}</textarea>-->\\r\\n\\r\\n                    <button\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-14 flex items-center rounded\\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-10 md:w-5 ml-1\\r\\n                            lg:ml-4 lg:block\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626\\r\\n                                1.041-2.651 1.041-2.152\\r\\n                                0-3.896-1.744-3.896-3.896 0-1.025.396-1.958\\r\\n                                1.043-2.654l-.002.002\\r\\n                                3.671-3.671c.212-.23.341-.539.341-.878\\r\\n                                0-.717-.582-1.299-1.299-1.299-.339\\r\\n                                0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108\\r\\n                                1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494\\r\\n                                6.494 6.494 1.738 0 3.316-.683\\r\\n                                4.482-1.795l-.003.002\\r\\n                                3.671-3.671c.212-.23.341-.539.341-.878\\r\\n                                0-.717-.582-1.299-1.299-1.299-.339\\r\\n                                0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" />\\r\\n                        </svg>\\r\\n                    </button>\\r\\n                </div>\\r\\n\\r\\n                <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                    You will be able to\\r\\n                    <b class=\\\"accent\\\">access your link</b>\\r\\n                    by clicking on\\r\\n                    <b class=\\\"accent\\\">your profile</b>\\r\\n                    !\\r\\n                </p>\\r\\n                <a\\r\\n                    href=\\\"/play\\\"\\r\\n                    class=\\\"button button-brand mt-10 block mx-auto mb-6 md:mb-0\\\">\\r\\n                    Finish\\r\\n                </a>\\r\\n            </div>\\r\\n            <!--<div class=\\\" -flex flex-col items-center\\\">\\r\\n                <div class=\\\"text-center lg:text-left lg:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-8 lg:mb-8 leading-snug lg:leading-normal\\\">\\r\\n                        Share your affiliate link\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"-flex flex-col items-center lg:flex-row mt-8\\\">\\r\\n                    <div class=\\\"card py-8 px-6 text-center w-64 h-78 mr-12\\\">\\r\\n                        <p class=\\\"text-6xl\\\">Each person...</p>\\r\\n                        <p class=\\\"leading-7 mt-4\\\">\\r\\n                            ...that will\\r\\n                            <b>create an account</b>\\r\\n                            with your link will get\\r\\n                            <b>20%</b>\\r\\n                            of reward\\r\\n                            <b>boost</b>\\r\\n                            for one month.\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div>\\r\\n                        <div class=\\\"-flex items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -mr-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                    d=\\\"m19.2 2.43-2.422-2.43-11.978 12 11.978 12 2.422-2.43-9.547-9.57z\\\" /></svg>\\r\\n                            <div class=\\\"h-2px bg-accent w-40 join relative\\\" />\\r\\n                            <svg\\r\\n                                class=\\\"w-4 fill-current text-accent -ml-3\\\"\\r\\n                                viewBox=\\\"0 0 24 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                    d=\\\"m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z\\\" /></svg>\\r\\n                        </div>\\r\\n                        <p class=\\\"text-center text-extra-light text-lg\\\">\\r\\n                            Everyone wins !\\r\\n                        </p>\\r\\n                    </div>\\r\\n\\r\\n                    <div class=\\\"card py-8 px-6 text-center w-64 h-78 ml-12\\\">\\r\\n                        <p class=\\\"text-6xl mt-6\\\">You...</p>\\r\\n                        <p class=\\\"leading-7 mt-13\\\">\\r\\n                            ... will get\\r\\n                            <b>20%</b>\\r\\n                            of what each of your godsons wins!\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n                <div>\\r\\n                    <div\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-14 flex justify-between items-center rounded overflow-x-scroll lg:overflow-auto w-lin\\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-5 ml-4\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" /></svg>\\r\\n                    </div>\\r\\n                </div>\\r\\n\\r\\n                <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                    You will be able to\\r\\n                    <b class=\\\"accent\\\">access your link</b>\\r\\n                    by clicking on\\r\\n                    <b class=\\\"accent\\\">your profile</b>!\\r\\n                </p>\\r\\n                <button on:click={handleClick} class=\\\"button button-brand mt-6\\\">\\r\\n                    Finish\\r\\n                </button>\\r\\n            </div>-->\\r\\n\\r\\n            <!--<div class=\\\"card pt-8 pb-8 px-10 w-100% mx-5 w-full md:w-96\\\">\\r\\n                    <p class=\\\"leading-7\\\">\\r\\n                        - Each person that will\\r\\n                        <b>create an account</b>\\r\\n                        with your link will get\\r\\n                        <b>20%</b>\\r\\n                        of reward\\r\\n                        <b>boost</b>\\r\\n                        for one month.\\r\\n                        <br />\\r\\n                    </p>\\r\\n                    <p class=\\\"mt-1\\\">\\r\\n                        -\\r\\n                        <u>You</u>\\r\\n                        will also get\\r\\n                        <b>20%</b>\\r\\n                        of\\r\\n                        <b>what they win</b>! Everyone wins!\\r\\n                    </p>\\r\\n                    <div\\r\\n                        class=\\\"text-background bg-font py-4 px-4 mt-7 flex justify-between items-center rounded overflow-x-scroll w-full \\\">\\r\\n                        <p class=\\\"leading-none\\\">{generatedLink}</p>\\r\\n                        <svg\\r\\n                            class=\\\"fill-current text-primary w-5\\\"\\r\\n                            viewBox=\\\"0 0 24 24\\\"\\r\\n                            xmlns=\\\"http://www.w3.org/2000/svg\\\"><path\\r\\n                                d=\\\"m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z\\\" />\\r\\n                            <path\\r\\n                                d=\\\"m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z\\\" /></svg>\\r\\n                    </div>\\r\\n                    <p class=\\\"pt-4 text-lg text-center\\\">\\r\\n                        You will be able to\\r\\n                        <b class=\\\"accent\\\">access your link</b>\\r\\n                        by clicking on\\r\\n                        <b class=\\\"accent\\\">your profile</b>!\\r\\n                    </p>\\r\\n                </div>-->\\r\\n        {/if}\\r\\n    </div>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAsJI,CAAC,cAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,YAAY,CAAC,AACjD,CAAC,AAED,OAAO,cAAC,CAAC,AACL,OAAO,WAAW,CAAC,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,MAAM,CAAC,eAAe,CAAC,OAAO,CAAC,IAAI,CAAC,IAAI,CAAC,OAAO,CAAC,AAC5D,CAAC,AAED,oBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,OAAO,CAAC,IAAI,CAAC,AACxB,CAAC,AAED,aAAa,cAAC,CAAC,AACX,OAAO,YAAY,CAAC,QAAQ,CAAC,CAC7B,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,UAAU,CAAE,OAAO,CACnB,YAAY,CAAE,MAAM,AACxB,CAAC\"}"
 };
 
 async function preload({ params, query }) {
@@ -1149,7 +1307,7 @@ const Create_account = create_ssr_component(($$result, $$props, $$bindings, slot
 	return `${($$result.head += `${($$result.title = `<title>Create account | Winhalla, Play Brawlhalla. Earn rewards.</title>`, "")}<meta name="${"description"}" content="${"This is where all starts | Create a Winhalla account now and\r\n        get a Battle Pass and Mammoth Coins FOR FREE"}" data-svelte="svelte-fwzdel">`, "")}
 <div>${ ``}
     <div class="${"flex items-center justify-center md:h-screen-7"}">${accountCreationStep === 0
-	? `<div class="${"flex flex-col justify-center px-5 md:p-0"}"><div class="${"text-center md:text-left mt-7 md:mt-12"}"><h1 class="${"text-6xl mb-6 md:mb-8 leading-snug\r\n                        md:leading-normal"}">Create your account
+	? `<div class="${"flex flex-col justify-center px-5 md:p-0"}"><div class="${"text-center md:text-left mt-7 md:mt-12"}"><h1 class="${"text-6xl mb-6 md:mb-8 leading-snug\r\n                        md:leading-normal"}">Register email
                     </h1></div>
                 <div class="${"md:mt-4"}"><p class="${"input-header svelte-29gitm"}">Email</p>
                     <div><input type="${"email"}" placeholder="${"Your email goes here"}" class="${[
@@ -1235,8 +1393,8 @@ var component_1 = /*#__PURE__*/Object.freeze({
 /* src\routes\change-email.svelte generated by Svelte v3.31.0 */
 
 const css$a = {
-	code: "button.svelte-c5uhy1:disabled{@apply bg-disabled;;cursor:not-allowed}",
-	map: "{\"version\":3,\"file\":\"change-email.svelte\",\"sources\":[\"change-email.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { callApi } from \\\"../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { counter } from \\\"../components/store\\\";\\r\\n\\r\\n    let account;\\r\\n    let email;\\r\\n    let valid = false;\\r\\n\\r\\n    function onKeyPress() {\\r\\n        setTimeout(async () => {\\r\\n            //Mettre un checker email\\r\\n            let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21\\\\x23-\\\\x5b\\\\x5d-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21-\\\\x5a\\\\x53-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])+)\\\\])/gm;\\r\\n            let exec = regex.exec(email);\\r\\n            if (exec) valid = true;\\r\\n            else valid = false;\\r\\n        }, 1);\\r\\n    }\\r\\n\\r\\n    let user;\\r\\n    onMount(()=>{\\r\\n        let unsub = counter.subscribe(async (value) => {\\r\\n            user = value.content\\r\\n            if (user.then) {\\r\\n                user.then((values) => {\\r\\n                    if (!values.user) {\\r\\n                        goto('/')\\r\\n                    }\\r\\n                });\\r\\n            } else if (user) {\\r\\n                if (!user.user) {\\r\\n                    goto(\\\"/\\\");\\r\\n                }\\r\\n            }\\r\\n        });\\r\\n        unsub()\\r\\n    })\\r\\n\\r\\n\\r\\n    async function onClick() {\\r\\n        await callApi(\\\"post\\\", `/auth/changeEmail?email=${email}`);\\r\\n        goto(\\\"/\\\");\\r\\n    }\\r\\n</script>\\r\\n<style>\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n</style>\\r\\n<svelte:head>\\r\\n    <title>Change email | Winhalla</title>\\r\\n</svelte:head>\\r\\n<div class=\\\"p-8\\\">\\r\\n    <h2>Email</h2>\\r\\n    <input on:keydown={onKeyPress} size=\\\"100\\\" id=\\\"test\\\" bind:value={email} class=\\\"text-black p-1\\\" />\\r\\n\\r\\n    {#if valid}\\r\\n        <p class=\\\"text-green-700\\\">VALID EMAIL</p>\\r\\n    {:else}\\r\\n        <p class=\\\"text-red-700\\\">INVALID EMAIL</p>\\r\\n    {/if}\\r\\n\\r\\n    <br />\\r\\n    <button disabled={!valid} on:click={onClick} class=\\\"px-4 py-1 mt-4 bg-primary rounded\\\">\\r\\n        Create account\\r\\n    </button>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA8CI,oBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC\"}"
+	code: "input.svelte-1ktchpc{@apply w-full text-background bg-font py-3 px-4 rounded;}button.svelte-1ktchpc:disabled{@apply bg-disabled;;cursor:not-allowed}.info.svelte-1ktchpc{@apply text-lg mt-1;}.input-header.svelte-1ktchpc{@apply text-primary text-3xl;;margin-bottom:0.35rem}.check.svelte-1ktchpc{margin-top:0.15rem;margin-right:0.4rem}",
+	map: "{\"version\":3,\"file\":\"change-email.svelte\",\"sources\":[\"change-email.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { callApi } from \\\"../utils/api.js\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { counter } from \\\"../components/store\\\";\\r\\n    import ErrorAlert from \\\"../components/ErrorAlert.svelte\\\";\\r\\n\\r\\n    let account;\\r\\n    let email;\\r\\n    let valid = null;\\r\\n    let pushError;\\r\\n\\r\\n    function onKeyPress() {\\r\\n        setTimeout(() => {\\r\\n            if (email.length > 0) {\\r\\n                let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21\\\\x23-\\\\x5b\\\\x5d-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x21-\\\\x5a\\\\x53-\\\\x7f]|\\\\\\\\[\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0e-\\\\x7f])+)\\\\])/gm;\\r\\n                let exec = regex.exec(email);\\r\\n                if (exec) valid = true;\\r\\n                else valid = false;\\r\\n            } else {\\r\\n                valid = null;\\r\\n            }\\r\\n        }, 1);\\r\\n    }\\r\\n\\r\\n    let user;\\r\\n    onMount(() => {\\r\\n        let unsub = counter.subscribe(async (value) => {\\r\\n            user = value.content;\\r\\n            if (user.then) {\\r\\n                user.then((values) => {\\r\\n                    if (!values.user) {\\r\\n                        goto(\\\"/\\\");\\r\\n                    }\\r\\n                });\\r\\n            } else if (user) {\\r\\n                if (!user.user) {\\r\\n                    goto(\\\"/\\\");\\r\\n                }\\r\\n            }\\r\\n        });\\r\\n        unsub();\\r\\n    });\\r\\n\\r\\n\\r\\n    async function onClick() {\\r\\n        try {\\r\\n            const changeEmailStatus = await callApi(\\\"patch\\\", `/auth/changeEmail?email=${email}`);\\r\\n            if (changeEmailStatus instanceof Error) throw changeEmailStatus;\\r\\n            goto(\\\"/\\\");\\r\\n        } catch (e) {\\r\\n            pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();\\r\\n            setTimeout(() => {\\r\\n                pushError = undefined;\\r\\n            }, 8000);\\r\\n        }\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Change email | Winhalla</title>\\r\\n</svelte:head>\\r\\n\\r\\n<style>\\r\\n    input {\\r\\n        @apply w-full text-background bg-font py-3 px-4 rounded;\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    .info {\\r\\n        @apply text-lg mt-1;\\r\\n    }\\r\\n\\r\\n    .input-header {\\r\\n        @apply text-primary text-3xl;\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n    .check {\\r\\n        margin-top: 0.15rem;\\r\\n        margin-right: 0.4rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div>\\r\\n    {#if pushError}\\r\\n        <ErrorAlert pushError={pushError} message=\\\"There was an error creating your account\\\" type=\\\"createAccount\\\" />\\r\\n    {/if}\\r\\n    <div class=\\\"flex items-center justify-center md:h-screen-7\\\">\\r\\n        <div class=\\\"flex flex-col justify-center px-5 md:p-0\\\">\\r\\n            <div class=\\\"text-center md:text-left mt-7 md:mt-12\\\">\\r\\n                <h1\\r\\n                    class=\\\"text-6xl mb-6 md:mb-8 leading-snug\\r\\n                        md:leading-normal\\\">\\r\\n                    Change your email\\r\\n                </h1>\\r\\n            </div>\\r\\n            <div class=\\\"md:mt-4\\\">\\r\\n                <p class=\\\"input-header\\\">Email</p>\\r\\n                <div>\\r\\n                    <input\\r\\n                        on:keydown={onKeyPress}\\r\\n                        type=\\\"email\\\"\\r\\n                        placeholder=\\\"Type here your new email\\\"\\r\\n                        bind:value={email}\\r\\n                        class:border-legendary={valid === false}\\r\\n                        class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary placeholder-disabled\\\" />\\r\\n\\r\\n                    {#if valid}\\r\\n                        <div class=\\\"flex items-center\\\">\\r\\n                            <svg\\r\\n                                class=\\\"fill-current text-green w-4 check\\\"\\r\\n                                viewBox=\\\"0 0 33 24\\\"\\r\\n                                xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m0 10.909 4.364-4.364 8.727 8.727\\r\\n                                        15.273-15.273 4.364 4.364-19.636 19.636z\\\" />\\r\\n                            </svg>\\r\\n                            <p class=\\\"text-green info\\\">VALID EMAIL</p>\\r\\n                        </div>\\r\\n                    {:else if valid === false}\\r\\n                        <p class=\\\"text-legendary info \\\">INVALID EMAIL</p>\\r\\n                    {/if}\\r\\n                </div>\\r\\n            </div>\\r\\n            <button\\r\\n                disabled={!valid}\\r\\n                on:click={onClick}\\r\\n                class:mt-11={valid == null}\\r\\n                class=\\\"button button-brand mt-3\\\">\\r\\n                Change email\\r\\n            </button>\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\"],\"names\":[],\"mappings\":\"AAgEI,KAAK,eAAC,CAAC,AACH,OAAO,MAAM,CAAC,eAAe,CAAC,OAAO,CAAC,IAAI,CAAC,IAAI,CAAC,OAAO,CAAC,AAC5D,CAAC,AAED,qBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC,AAED,KAAK,eAAC,CAAC,AACH,OAAO,OAAO,CAAC,IAAI,CAAC,AACxB,CAAC,AAED,aAAa,eAAC,CAAC,AACX,OAAO,YAAY,CAAC,QAAQ,CAAC,CAC7B,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,UAAU,CAAE,OAAO,CACnB,YAAY,CAAE,MAAM,AACxB,CAAC\"}"
 };
 
 const Change_email = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1267,14 +1425,21 @@ const Change_email = create_ssr_component(($$result, $$props, $$bindings, slots)
 	$$result.css.add(css$a);
 
 	return `${($$result.head += `${($$result.title = `<title>Change email | Winhalla</title>`, "")}`, "")}
-<div class="${"p-8"}"><h2>Email</h2>
-    <input size="${"100"}" id="${"test"}" class="${"text-black p-1"}"${add_attribute("value", email, 1)}>
 
-    ${ `<p class="${"text-red-700"}">INVALID EMAIL</p>`}
 
-    <br>
-    <button ${ "disabled" } class="${"px-4 py-1 mt-4 bg-primary rounded svelte-c5uhy1"}">Create account
-    </button></div>`;
+
+<div>${ ``}
+    <div class="${"flex items-center justify-center md:h-screen-7"}"><div class="${"flex flex-col justify-center px-5 md:p-0"}"><div class="${"text-center md:text-left mt-7 md:mt-12"}"><h1 class="${"text-6xl mb-6 md:mb-8 leading-snug\r\n                        md:leading-normal"}">Change your email
+                </h1></div>
+            <div class="${"md:mt-4"}"><p class="${"input-header svelte-1ktchpc"}">Email</p>
+                <div><input type="${"email"}" placeholder="${"Type here your new email"}" class="${[
+		"input-style focus:outline-none\r\n                            focus:border-primary placeholder-disabled svelte-1ktchpc",
+		 ""
+	].join(" ").trim()}"${add_attribute("value", email, 1)}>
+
+                    ${ `${ ``}`}</div></div>
+            <button ${ "disabled" } class="${["button button-brand mt-3 svelte-1ktchpc",  "mt-11" ].join(" ").trim()}">Change email
+            </button></div></div></div>`;
 });
 
 var component_2 = /*#__PURE__*/Object.freeze({
@@ -1345,13 +1510,786 @@ var component_3 = /*#__PURE__*/Object.freeze({
     'default': Contact
 });
 
+/* src\components\Loading.svelte generated by Svelte v3.31.0 */
+
+const css$b = {
+	code: ".loader.svelte-1r0tf3p{border:12px solid transparent;border-radius:50%;border-top:12px solid #3d72e4;width:150px;height:150px;-webkit-animation:svelte-1r0tf3p-spin 0.6s linear infinite;animation:svelte-1r0tf3p-spin 0.6s linear infinite}@-webkit-keyframes svelte-1r0tf3p-spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes svelte-1r0tf3p-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}",
+	map: "{\"version\":3,\"file\":\"Loading.svelte\",\"sources\":[\"Loading.svelte\"],\"sourcesContent\":[\"<style>\\r\\n    .loader {\\r\\n        border: 12px solid transparent;\\r\\n        border-radius: 50%;\\r\\n        border-top: 12px solid #3d72e4;\\r\\n        width: 150px;\\r\\n        height: 150px;\\r\\n        -webkit-animation: spin 0.6s linear infinite; /* Safari */\\r\\n        animation: spin 0.6s linear infinite;\\r\\n    }\\r\\n\\r\\n    /* Safari */\\r\\n    @-webkit-keyframes spin {\\r\\n        0% {\\r\\n            -webkit-transform: rotate(0deg);\\r\\n        }\\r\\n        100% {\\r\\n            -webkit-transform: rotate(360deg);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    @keyframes spin {\\r\\n        0% {\\r\\n            transform: rotate(0deg);\\r\\n        }\\r\\n        100% {\\r\\n            transform: rotate(360deg);\\r\\n        }\\r\\n    }\\r\\n</style>\\r\\n<script>\\r\\n    export let data;\\r\\n    export let duration = 500;\\r\\n    import { fade } from \\\"svelte/transition\\\";\\r\\n</script>\\r\\n<div out:fade={{duration}}\\r\\n     class=\\\"fixed z-50 bg-background absolute top-10 bg-fixed z-40 bg-no-repeat flex items-center justify-center h-screen-90\\\">\\r\\n    <div class=\\\"pb-20 bg-background w-screenw-99 h-screen-99\\\">\\r\\n        <div class=\\\"mx-auto\\\">\\r\\n            <div class=\\\"loader mt-15/100 mx-auto\\\"></div>\\r\\n            {#if data}\\r\\n                <h2 class=\\\"text-center text-3xl font-bold pt-4\\\">{data}</h2>\\r\\n            {:else}\\r\\n                <h2 class=\\\"text-center text-3xl font-bold pt-4\\\">Loading...</h2>\\r\\n            {/if}\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\"],\"names\":[],\"mappings\":\"AACI,OAAO,eAAC,CAAC,AACL,MAAM,CAAE,IAAI,CAAC,KAAK,CAAC,WAAW,CAC9B,aAAa,CAAE,GAAG,CAClB,UAAU,CAAE,IAAI,CAAC,KAAK,CAAC,OAAO,CAC9B,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,iBAAiB,CAAE,mBAAI,CAAC,IAAI,CAAC,MAAM,CAAC,QAAQ,CAC5C,SAAS,CAAE,mBAAI,CAAC,IAAI,CAAC,MAAM,CAAC,QAAQ,AACxC,CAAC,AAGD,mBAAmB,mBAAK,CAAC,AACrB,EAAE,AAAC,CAAC,AACA,iBAAiB,CAAE,OAAO,IAAI,CAAC,AACnC,CAAC,AACD,IAAI,AAAC,CAAC,AACF,iBAAiB,CAAE,OAAO,MAAM,CAAC,AACrC,CAAC,AACL,CAAC,AAED,WAAW,mBAAK,CAAC,AACb,EAAE,AAAC,CAAC,AACA,SAAS,CAAE,OAAO,IAAI,CAAC,AAC3B,CAAC,AACD,IAAI,AAAC,CAAC,AACF,SAAS,CAAE,OAAO,MAAM,CAAC,AAC7B,CAAC,AACL,CAAC\"}"
+};
+
+const Loading = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { data } = $$props;
+	let { duration = 500 } = $$props;
+	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	if ($$props.duration === void 0 && $$bindings.duration && duration !== void 0) $$bindings.duration(duration);
+	$$result.css.add(css$b);
+
+	return `<div class="${"fixed z-50 bg-background absolute top-10 bg-fixed z-40 bg-no-repeat flex items-center justify-center h-screen-90"}"><div class="${"pb-20 bg-background w-screenw-99 h-screen-99"}"><div class="${"mx-auto"}"><div class="${"loader mt-15/100 mx-auto svelte-1r0tf3p"}"></div>
+            ${data
+	? `<h2 class="${"text-center text-3xl font-bold pt-4"}">${escape(data)}</h2>`
+	: `<h2 class="${"text-center text-3xl font-bold pt-4"}">Loading...</h2>`}</div></div></div>`;
+});
+
+let config = writable({ users:true });
+
+/* src\components\admin\UsersArray.svelte generated by Svelte v3.31.0 */
+
+const UsersArray = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { users } = $$props;
+	let { color } = $$props;
+	let { pwd } = $$props;
+	let { banned = false } = $$props;
+	let { type = "full" } = $$props;
+	let { otp } = $$props;
+
+	if ($$props.users === void 0 && $$bindings.users && users !== void 0) $$bindings.users(users);
+	if ($$props.color === void 0 && $$bindings.color && color !== void 0) $$bindings.color(color);
+	if ($$props.pwd === void 0 && $$bindings.pwd && pwd !== void 0) $$bindings.pwd(pwd);
+	if ($$props.banned === void 0 && $$bindings.banned && banned !== void 0) $$bindings.banned(banned);
+	if ($$props.type === void 0 && $$bindings.type && type !== void 0) $$bindings.type(type);
+	if ($$props.otp === void 0 && $$bindings.otp && otp !== void 0) $$bindings.otp(otp);
+
+	return `
+
+<table class="${"card px-4 text-2xl rounded-lg overflow-scroll"}"><thead class="${[
+		"rounded-lg",
+		(color === "blue" ? "bg-primary" : "") + " " + (color === "red" ? "bg-legendary" : "")
+	].join(" ").trim()}"><tr><td class="${"px-4 py-3"}">#
+        </td>
+        <td class="${"px-4 py-3"}">Name
+        </td>
+        ${!banned && type !== "simple"
+	? `<td class="${"px-4 py-3"}">In game?
+            </td>`
+	: ``}
+        ${type !== "simple"
+	? `<td class="${"px-4 py-3"}">Games played
+            </td>
+            <td class="${"px-4 py-3"}">Winrate
+            </td>
+            <td class="${"px-4 py-3"}">Coins
+            </td>`
+	: ``}
+        ${banned
+	? `<td class="${"px-4 py-3"}">Reason
+            </td>`
+	: ``}
+        ${type !== "simple"
+	? `<td class="${"px-4 py-3"}">Join date
+            </td>
+            <td class="${"px-4 py-3"}">Actions
+            </td>`
+	: ``}
+        ${type === "simple"
+	? `
+            <td class="${"px-4 py-3"}">Product
+            </td>
+            <td class="${"px-4 py-3"}">Since
+            </td>
+            <td class="${"px-4 py-3"}">SteamId
+            </td>`
+	: ``}</tr></thead>
+    <tbody class="${" divide-y-4 divide-background rounded-lg"}">
+    ${each(users, (user, i) => `<tr class="${["text-center", type !== "simple" ? "cursor-pointer" : ""].join(" ").trim()}"><td class="${"px-2 py-2"}"><b class="${"font-normal"}">${escape(i + 1)}</b></td>
+            <td class="${"h-full px-2 py-2"}"><div class="${"flex items-center my-auto  overflow-x-auto"}" style="${"width: 13rem"}"><img class="${"w-10 h-10 rounded-full"}"${add_attribute("src", user.avatarURL, 0)} alt="${"PP"}">
+                    <p class="${[
+		"pl-2",
+		user.brawlhallaName?.length >= 17 && user.brawlhallaName?.length < 26
+		? "text-lg"
+		: ""
+	].join(" ").trim()}">${escape(user.brawlhallaName)}</p>
+                </div></td>
+            ${!banned && type !== "simple"
+	? `<td class="${"px-2 py-2"}"><b class="${[
+			"font-normal",
+			(user.inGame.findIndex(e => !e.isFinished) === -1
+			? "text-legendary"
+			: "") + " " + (user.inGame.findIndex(e => !e.isFinished) !== -1
+			? "text-green"
+			: "")
+		].join(" ").trim()}">${escape(user.inGame.findIndex(e => !e.isFinished) === -1
+		? "No"
+		: "Yes")}</b>
+                </td>`
+	: ``}
+            ${type !== "simple"
+	? `<td class="${"px-2 py-2"}">${escape(user.stats.ffa.gamesPlayed)}</td>
+                <td class="${[
+			"px-2 py-2",
+			(user.winrate < 14 ? "text-green" : "") + " " + (user.winrate < 25 && user.winrate >= 14
+			? "text-accent"
+			: "") + " " + (user.winrate >= 25 ? "text-legendary" : "")
+		].join(" ").trim()}">${escape(user.winrate)}%
+                </td>
+                <td class="${[
+			"px-2 py-2",
+			(user.coins < 40000 ? "text-green" : "") + " " + (user.coins < 120000 && user.coins >= 40000
+			? "text-accent"
+			: "") + " " + (user.coins >= 120000 ? "text-legendary" : "")
+		].join(" ").trim()}">${escape(user.coins)}$
+                </td>`
+	: ``}
+            ${banned
+	? `<td class="${[
+			"px-2 py-2 overflow-x-auto text-start -pt-8",
+			(user.reason?.length > 15 ? "text-base" : "") + " " + (user.reason?.length > 30 ? "text-xs" : "")
+		].join(" ").trim()}" style="${"width: 10rem;"}">${escape(user.reason)}
+                </td>`
+	: ``}
+            ${!banned && type !== "simple"
+	? `<td><p hidden>${escape(user.date = new Date(user.joinDate))}</p>
+                    ${escape(user.date?.getDate() < 10
+		? "0" + user.date?.getDate()
+		: user.date?.getDate())}
+                    /${escape(user.date?.getMonth() + 1 < 10
+		? "0" + (user.date?.getMonth() + 1)
+		: user.date?.getMonth() + 1)}
+                    /${escape(user.date?.getFullYear())}</td>
+                <td class="${"px-2 py-2 block w-15"}"><div class="${"flex items-center"}"><button class="${"cursor-pointer mr-2"}"><svg viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-6 h-6"}" style="${"fill: #fc1870;"}"><path d="${"m20.46 11.992c0-.018 0-.038 0-.059 0-1.69-.507-3.261-1.376-4.571l.019.031-11.757 11.74c1.296.87 2.89 1.388 4.606 1.388h.026-.001.029c1.182 0 2.306-.25 3.321-.699l-.052.021c3.074-1.315 5.188-4.314 5.188-7.807 0-.015 0-.03 0-.045v.002zm-15.576 4.662 11.773-11.757c-1.29-.889-2.886-1.42-4.607-1.42-.025 0-.05 0-.074 0h.004c-.019 0-.041 0-.064 0-1.546 0-2.992.423-4.231 1.159l.038-.021c-2.544 1.51-4.223 4.244-4.223 7.369 0 1.736.518 3.352 1.408 4.7l-.02-.032zm19.066-4.662v.035c0 1.678-.35 3.273-.981 4.718l.03-.076c-1.842 4.36-6.082 7.363-11.024 7.363s-9.182-3.004-10.994-7.285l-.029-.078c-.601-1.379-.951-2.985-.951-4.674s.35-3.295.981-4.751l-.03.077c1.842-4.36 6.082-7.363 11.024-7.363s9.182 3.004 10.994 7.285l.029.078c.601 1.365.952 2.957.952 4.631v.041-.002z"}"></path></svg></button>
+                        ${color === "red"
+		? `<button class="${"cursor-pointer"}"><svg viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-6 h-6"}" style="${"fill: #3de488;"}"><path d="${"m20.46 11.992c0-.018 0-.038 0-.059 0-1.69-.507-3.261-1.376-4.571l.019.031-11.757 11.74c1.296.87 2.89 1.388 4.606 1.388h.026-.001.029c1.182 0 2.306-.25 3.321-.699l-.052.021c3.074-1.315 5.188-4.314 5.188-7.807 0-.015 0-.03 0-.045v.002zm-15.576 4.662 11.773-11.757c-1.29-.889-2.886-1.42-4.607-1.42-.025 0-.05 0-.074 0h.004c-.019 0-.041 0-.064 0-1.546 0-2.992.423-4.231 1.159l.038-.021c-2.544 1.51-4.223 4.244-4.223 7.369 0 1.736.518 3.352 1.408 4.7l-.02-.032zm19.066-4.662v.035c0 1.678-.35 3.273-.981 4.718l.03-.076c-1.842 4.36-6.082 7.363-11.024 7.363s-9.182-3.004-10.994-7.285l-.029-.078c-.601-1.379-.951-2.985-.951-4.674s.35-3.295.981-4.751l-.03.077c1.842-4.36 6.082-7.363 11.024-7.363s9.182 3.004 10.994 7.285l.029.078c.601 1.365.952 2.957.952 4.631v.041-.002z"}"></path></svg>
+                            </button>`
+		: ``}</div>
+                </td>`
+	: `${type !== "simple"
+		? `<td><p hidden>${escape(user.date = new Date(user.joinDate))}</p>
+                    ${escape(user.date?.getDate() < 10
+			? "0" + user.date?.getDate()
+			: user.date?.getDate())}
+                    / ${escape(user.date?.getMonth() + 1 < 10
+			? "0" + (user.date?.getMonth() + 1)
+			: user.date?.getMonth() + 1)}
+                    / ${escape(user.date?.getFullYear())}</td>
+                <td class="${"px-2 py-2"}"><div class="${"cursor-pointer"}"><svg viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-6 h-6"}" style="${"fill: #3de488;"}"><path d="${"m20.46 11.992c0-.018 0-.038 0-.059 0-1.69-.507-3.261-1.376-4.571l.019.031-11.757 11.74c1.296.87 2.89 1.388 4.606 1.388h.026-.001.029c1.182 0 2.306-.25 3.321-.699l-.052.021c3.074-1.315 5.188-4.314 5.188-7.807 0-.015 0-.03 0-.045v.002zm-15.576 4.662 11.773-11.757c-1.29-.889-2.886-1.42-4.607-1.42-.025 0-.05 0-.074 0h.004c-.019 0-.041 0-.064 0-1.546 0-2.992.423-4.231 1.159l.038-.021c-2.544 1.51-4.223 4.244-4.223 7.369 0 1.736.518 3.352 1.408 4.7l-.02-.032zm19.066-4.662v.035c0 1.678-.35 3.273-.981 4.718l.03-.076c-1.842 4.36-6.082 7.363-11.024 7.363s-9.182-3.004-10.994-7.285l-.029-.078c-.601-1.379-.951-2.985-.951-4.674s.35-3.295.981-4.751l-.03.077c1.842-4.36 6.082-7.363 11.024-7.363s9.182 3.004 10.994 7.285l.029.078c.601 1.365.952 2.957.952 4.631v.041-.002z"}"></path></svg></div>
+                </td>`
+		: ``}`}
+            ${type === "simple"
+	? `
+                <td class="${"px-4 py-3 text-primary"}">${escape(user.product)}</td>
+                <p hidden>${escape(user.time = (Date.now() - user.date) / 1000)}${escape(user.days = Math.floor(user.time / 86400))}${escape(user.hours = Math.floor(user.time / 3600 - user.days * 24))}</p>
+                <td class="${[
+			"px-4 py-3 text-green",
+			(user.days > 14 ? "text-legendary" : "") + " " + (user.days > 7 ? "text-accent" : "")
+		].join(" ").trim()}">${escape(user.days)} days, ${escape(user.hours)} hours
+                </td>
+                <td class="${"px-4 py-3 text-xl cursor-pointer text-gray-400 hover:text-white"}">${escape(user.steamId)}
+                </td>`
+	: ``}</tr>
+        ${user.isDetailsOpen
+	? `<tr class="${"w-full py-5 "}"><td></td>
+                <td class="${"w-full"}" colspan="${"4"}">${user.solo?.logs.length !== 0
+		? `<div class="${"w-full"}"><h1 class="${"text-green text-4xl p-4"}">Quests History</h1>
+                            ${each(user.solo?.logs, (quest, ii) => `${ii < 5
+			? `<div class="${"p-2 pl-4"}"><h3 class="${"text-3xl text-primary"}">Quest ${escape(ii + 1)}:</h3>
+                                        <p class="${"text-xl"}">Type : ${escape(quest.type)}</p>
+                                        <p class="${"text-xl"}">Goal : ${escape(quest.name)}</p>
+                                        <p class="${[
+					"text-xl",
+					(Math.floor(quest.time / 60) < 1 && quest.time - Math.floor(quest.time / 60) * 60 < 30
+					? "text-legendary"
+					: "") + " " + (Math.floor(quest.time / 60) < 1 ? "text-accent" : "") + " " + (Math.floor(quest.time / 60) > 1 ? "text-green" : "")
+				].join(" ").trim()}">Time : ${escape(Math.floor(quest.time / 60))}
+                                            h ${escape(quest.time - Math.floor(quest.time / 60) * 60)}m</p>
+                                    </div>`
+			: ``}`)}
+                        </div>`
+		: `<h1 class="${[
+				"text-4xl p-4",
+				(color === "red" ? "text-primary" : "") + " " + (color === "blue" ? "text-legendary" : "")
+			].join(" ").trim()}">No history</h1>`}</td>
+                <td class="${"w-full h-auto"}" colspan="${"3"}">${user.lastGames.length !== 0
+		? `<div class="${"w-full"}"><h1 class="${"text-green text-4xl p-4"}">Match History</h1>
+                            ${each(user.lastGames, (game, ii) => `${ii < 5
+			? `<div class="${"p-2 pl-4"}"><a class="${"text-xl"}" href="${"/play/ffa/" + escape(game.id) + "?spectator=true"}"><h1 class="${"text-3xl hover:underline text-primary"}">Game ${escape(ii + 1)}:</h1></a>
+                                        <p class="${"text-2xl"}">Games played:
+                                            <d class="${"font-normal text-primary"}">${escape(game.games)}</d></p>
+                                        <p class="${"text-2xl"}">Wins:
+                                            <d${add_classes([
+					(game.rank < 4 ? "text-green" : "") + " " + (game.wins < 7 && game.wins >= 4 ? "text-accent" : "") + " " + (game.wins >= 7 ? "text-legendary" : "")
+				].join(" ").trim())}>${escape(game.wins)}</d></p>
+                                        <p class="${"text-2xl"}">Rank:
+                                            <d${add_classes([
+					(game.rank > 2 ? "text-green" : "") + " " + (game.rank <= 2 ? "text-legendary" : "")
+				].join(" ").trim())}>${escape(game.rank + 1)}</d></p>
+                                    </div>`
+			: ``}`)}
+                        </div>`
+		: `<h1 class="${[
+				"text-4xl p-4",
+				(color === "red" ? "text-primary" : "") + " " + (color === "blue" ? "text-legendary" : "")
+			].join(" ").trim()}">No history</h1>`}</td>
+            </tr>`
+	: ``}`)}</tbody></table>
+${ ``}
+${ ``}`;
+});
+
+/* src\components\RefreshButton.svelte generated by Svelte v3.31.0 */
+
+const css$c = {
+	code: ".refresh-button.svelte-rn9nnu.svelte-rn9nnu{@apply flex px-7 items-center;}.refresh-button.svelte-rn9nnu div.svelte-rn9nnu{margin-top:-0.185rem}.refresh-button.svelte-rn9nnu svg.svelte-rn9nnu{@apply fill-current text-font w-5 animate-spin left-4;}",
+	map: "{\"version\":3,\"file\":\"RefreshButton.svelte\",\"sources\":[\"RefreshButton.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let isRefreshing;\\r\\n    export let refreshMessage;\\r\\n    export let onRefreshMessage = \\\"Refreshing\\\"\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .refresh-button {\\r\\n        @apply flex px-7 items-center;\\r\\n    }\\r\\n\\r\\n    .refresh-button div {\\r\\n        margin-top: -0.185rem;\\r\\n    }\\r\\n    .refresh-button svg {\\r\\n        @apply fill-current text-font w-5 animate-spin left-4;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<button class=\\\"button button-brand refresh-button focus:outline-none\\\" on:click>\\r\\n    <div class:hidden={!isRefreshing} class=\\\"block\\\">\\r\\n        <svg viewBox=\\\"0 0 21 24\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n            <path\\r\\n                d=\\\"m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z\\\" />\\r\\n        </svg>\\r\\n    </div>\\r\\n    <p class:pl-3={isRefreshing} class=\\\"pl-3\\\">\\r\\n        {isRefreshing ? onRefreshMessage : refreshMessage}\\r\\n    </p>\\r\\n</button>\\r\\n\"],\"names\":[],\"mappings\":\"AAOI,eAAe,4BAAC,CAAC,AACb,OAAO,IAAI,CAAC,IAAI,CAAC,YAAY,CAAC,AAClC,CAAC,AAED,6BAAe,CAAC,GAAG,cAAC,CAAC,AACjB,UAAU,CAAE,SAAS,AACzB,CAAC,AACD,6BAAe,CAAC,GAAG,cAAC,CAAC,AACjB,OAAO,YAAY,CAAC,SAAS,CAAC,GAAG,CAAC,YAAY,CAAC,MAAM,CAAC,AAC1D,CAAC\"}"
+};
+
+const RefreshButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { isRefreshing } = $$props;
+	let { refreshMessage } = $$props;
+	let { onRefreshMessage = "Refreshing" } = $$props;
+	if ($$props.isRefreshing === void 0 && $$bindings.isRefreshing && isRefreshing !== void 0) $$bindings.isRefreshing(isRefreshing);
+	if ($$props.refreshMessage === void 0 && $$bindings.refreshMessage && refreshMessage !== void 0) $$bindings.refreshMessage(refreshMessage);
+	if ($$props.onRefreshMessage === void 0 && $$bindings.onRefreshMessage && onRefreshMessage !== void 0) $$bindings.onRefreshMessage(onRefreshMessage);
+	$$result.css.add(css$c);
+
+	return `<button class="${"button button-brand refresh-button focus:outline-none svelte-rn9nnu"}"><div class="${["block svelte-rn9nnu", !isRefreshing ? "hidden" : ""].join(" ").trim()}"><svg viewBox="${"0 0 21 24"}" xmlns="${"http://www.w3.org/2000/svg"}" class="${"svelte-rn9nnu"}"><path d="${"m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z"}"></path></svg></div>
+    <p class="${["pl-3", isRefreshing ? "pl-3" : ""].join(" ").trim()}">${escape(isRefreshing ? onRefreshMessage : refreshMessage)}</p></button>`;
+});
+
+/* src\components\admin\ConfigEditor.svelte generated by Svelte v3.31.0 */
+
+const css$d = {
+	code: "input.svelte-1afdmgb::-webkit-outer-spin-button,input.svelte-1afdmgb::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}input[type=number].svelte-1afdmgb{-moz-appearance:textfield}",
+	map: "{\"version\":3,\"file\":\"ConfigEditor.svelte\",\"sources\":[\"ConfigEditor.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import UsersArray from \\\"./UsersArray.svelte\\\";\\r\\n\\r\\n    export let newConfig;\\r\\n    export let goldEvent;\\r\\n    export let popup;\\r\\n    export let bannedOnes;\\r\\n    export let otp;\\r\\n    export let pwd;\\r\\n    export let infoDates;\\r\\n\\r\\n    function makePopup(reason, options) {\\r\\n        popup.type = reason.goal === \\\"create\\\" ? \\\"creation\\\" : \\\"deletion\\\";\\r\\n        popup.thing = reason.text;\\r\\n        if (reason.text === \\\"event\\\" && reason.goal === \\\"create\\\") {\\r\\n            popup.fields = [{ name: \\\"Name (reason of the event)\\\", value: null }, {\\r\\n                name: \\\"Duration (in days)\\\",\\r\\n                value: null\\r\\n            }, {\\r\\n                name: \\\"Percentage of boost (20 equals all rewards to be raised by 20%)\\\",\\r\\n                value: null\\r\\n            }, { name: \\\"description (additional infos)\\\", value: null }];\\r\\n        } else if (reason.text === \\\"info\\\" && reason.goal === \\\"create\\\") {\\r\\n            popup.fields = [{ name: \\\"Name\\\", value: null }, {\\r\\n                name: \\\"Duration (in hours)\\\",\\r\\n                value: null\\r\\n            }, { name: \\\"description\\\", value: null }];\\r\\n        } else if (reason.text === \\\"info\\\" || reason.text === \\\"event\\\" || reason.text === \\\"poll\\\" && reason.goal === \\\"delete\\\") {\\r\\n            popup.options = options;\\r\\n            popup.fields = [];\\r\\n        } else if (reason.text === \\\"poll\\\") {\\r\\n            popup.fields = [{ name: \\\"name\\\", value: null }, {\\r\\n                name: \\\"Multiple choice question ?\\\",\\r\\n                value: null,\\r\\n                special: []\\r\\n            }];\\r\\n            popup.special = \\\"poll\\\";\\r\\n        }\\r\\n    }\\r\\n</script>\\r\\n<style>\\r\\n    /*Chrome, Safari, Edge, Opera */\\r\\n    input::-webkit-outer-spin-button,\\r\\n    input::-webkit-inner-spin-button {\\r\\n        -webkit-appearance: none;\\r\\n        margin: 0;\\r\\n    }\\r\\n\\r\\n    /* Firefox */\\r\\n    input[type=number] {\\r\\n        -moz-appearance: textfield;\\r\\n    }\\r\\n</style>\\r\\n<div class=\\\"justify-evenly mx-4 w-full flex h-full flex-wrap p-8\\\">\\r\\n    {#each newConfig as config,i}\\r\\n        <div class=\\\"mb-16 border-t-2 border-primary bg-variant rounded-lg mx-8 p-4\\\">\\r\\n            <div class=\\\"flex flex-justify\\\">\\r\\n                <h1 class=\\\"text-5xl text-primary w-full\\\">{config.name}</h1>\\r\\n                {#if config.name !== \\\"IDs BANNED\\\"}\\r\\n                    <div>\\r\\n                        <button\\r\\n                            class=\\\"flex m-3 mt-1.5 p-2 pt-1 focus:outline-none text-gray-500 hover:text-white\\\"\\r\\n                            on:click={()=>config.isEditing = !config.isEditing}>\\r\\n                            <svg version=\\\"1.1\\\" class=\\\"w-5 h-5\\\"\\r\\n                                 xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                                 xmlns:xlink=\\\"http://www.w3.org/1999/xlink\\\" x=\\\"0px\\\" y=\\\"0px\\\"\\r\\n                                 viewBox=\\\"0 0 1000 1000\\\" enable-background=\\\"new 0 0 1000 1000\\\"\\r\\n                                 xml:space=\\\"preserve\\\">\\r\\n                                                    <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>\\r\\n                                <g><g class=\\\"fill-current\\\" transform=\\\"translate(0.000000,511.000000) scale(0.100000,-0.100000)\\\"><path d=\\\"M7681.7,4992.8c-223.8-57.1-328.5-138.1-840.3-649.9c-278.5-276.1-507-514.2-507-528.5c0-30.9,2337.6-2368.5,2370.9-2368.5c11.9,0,254.7,233.3,535.6,518.9c552.2,557,599.8,623.7,647.5,902.2c31,178.5,0,376.1-90.4,571.3c-50,111.9-164.3,240.4-626.1,704.6c-645.1,649.9-737.9,730.8-926,802.2C8088.7,5004.7,7819.8,5026.1,7681.7,4992.8z\\\"/><path\\r\\n                                    d=\\\"M3704,1207.9L1299.7-1196.4l285.6-285.7c157.1-157.1,295.2-285.7,309.5-285.7c11.9,0,1099.8,1076,2416.1,2392.3L6703.3,3017l-297.5,297.6l-297.6,297.6L3704,1207.9z\\\" /><path\\r\\n                                    d=\\\"M4418.1,493.7L2013.9-1910.5l483.2-480.8l480.9-483.2L5382.2-470.4l2404.2,2404.2l-483.2,483.2L6822.4,2898L4418.1,493.7z\\\" /><path\\r\\n                                    d=\\\"M5506-584.6c-1311.6-1311.6-2385.2-2397.1-2385.2-2409c0-14.3,128.5-152.4,285.7-309.5l285.6-285.6l2404.3,2404.2l2404.2,2404.2l-290.4,290.4C8048.3,1672,7912.6,1803,7905.5,1803C7898.3,1803,6820,729.4,5506-584.6z\\\" /><path\\r\\n                                    d=\\\"M959.3-2284.2C826-2700.8,716.5-3053.1,716.5-3065c0-33.3,1078.3-1106.9,1111.7-1106.9c30.9,0,1511.6,476.1,1530.6,492.8c9.5,9.5-2121,2149.5-2142.4,2149.5C1209.3-1529.6,1092.6-1870,959.3-2284.2z\\\" /><path\\r\\n                                    d=\\\"M588-3429.2c-7.1-11.9-66.7-173.8-133.3-359.5c-64.3-185.7-171.4-485.6-235.7-666.5l-119-333.3l290.4,104.7c159.5,57.1,461.8,164.3,671.3,238c209.5,73.8,388,142.8,397.5,152.4c9.5,9.5-178.5,211.8-419,452.3C799.8-3600.6,597.5-3415,588-3429.2z\\\" /></g></g>\\r\\n                                                </svg>\\r\\n                        </button>\\r\\n                    </div>\\r\\n                {/if}\\r\\n            </div>\\r\\n            <div class=\\\"pt-4 block\\\">\\r\\n                {#if config.name === \\\"GAMEMODES STATUS\\\"}\\r\\n                    <h2 class=\\\"text-3xl\\\">FFA</h2>\\r\\n                    <div class:flex={!config.isEditing}>\\r\\n                        {#if config.isEditing}\\r\\n                            <input type=\\\"radio\\\" id=\\\"FFAActivatedTrue\\\" name=\\\"FFAActivated\\\"\\r\\n                                   value={true}\\r\\n                                   bind:group={config.value.FFA}>\\r\\n                            <label for=\\\"FFAActivatedTrue\\\" class=\\\"text-green\\\">Activated</label><br>\\r\\n                            <input type=\\\"radio\\\" id=\\\"FFAActivatedMaintenance\\\" name=\\\"FFAActivated\\\"\\r\\n                                   value=\\\"maintenance\\\" bind:group={config.value.FFA}>\\r\\n                            <label for=\\\"FFAActivatedMaintenance\\\"\\r\\n                                   class=\\\"text-accent\\\">Maintenance</label><br>\\r\\n                            <input type=\\\"radio\\\" id=\\\"FFAActivatedFalse\\\" name=\\\"FFAActivated\\\"\\r\\n                                   value={false} bind:group={config.value.FFA}>\\r\\n                            <label for=\\\"FFAActivatedFalse\\\" class=\\\"text-legendary\\\">Disabled</label>\\r\\n                        {:else}\\r\\n                            <p class:text-green={config.value.FFA === true}\\r\\n                               class:text-accent={config.value.FFA === \\\"maintenance\\\"}\\r\\n                               class:text-legendary={config.value.FFA === false}>\\r\\n                                • {config.value.FFA === true ? 'Active' : config.value.FFA === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}\\r\\n                            </p>\\r\\n                        {/if}\\r\\n\\r\\n                    </div>\\r\\n                    <h2 class=\\\"text-3xl\\\">2vs2</h2>\\r\\n                    <div class:flex={!config.isEditing}>\\r\\n                        {#if config.isEditing}\\r\\n                            <input type=\\\"radio\\\" id=\\\"2vs2ActivatedTrue\\\" name=\\\"2vs2Activated\\\"\\r\\n                                   value={true}\\r\\n                                   bind:group={config.value['2vs2']}>\\r\\n                            <label for=\\\"2vs2ActivatedTrue\\\" class=\\\"text-green\\\">Activated</label><br>\\r\\n                            <input type=\\\"radio\\\" id=\\\"2vs2ActivatedMaintenance\\\" name=\\\"2vs2Activated\\\"\\r\\n                                   value=\\\"maintenance\\\" bind:group={config.value['2vs2']}>\\r\\n                            <label for=\\\"2vs2ActivatedMaintenance\\\"\\r\\n                                   class=\\\"text-accent\\\">Maintenance</label><br>\\r\\n                            <input type=\\\"radio\\\" id=\\\"2vs2ActivatedFalse\\\" name=\\\"2vs2Activated\\\"\\r\\n                                   value={false} bind:group={config.value['2vs2']}>\\r\\n                            <label for=\\\"2vs2ActivatedFalse\\\" class=\\\"text-legendary\\\">Disabled</label>\\r\\n                        {:else}\\r\\n                            <p class:text-green={config.value[\\\"2vs2\\\"] === true}\\r\\n                               class:text-accent={config.value[\\\"2vs2\\\"] === \\\"maintenance\\\"}\\r\\n                               class:text-legendary={config.value[\\\"2vs2\\\"] === false}>\\r\\n                                • {config.value['2vs2'] === true ? 'Active' : config.value['2vs2'] === 'maintenance' ? 'Maintenance in progress' : 'Inactive (Coming soon)'}\\r\\n                            </p>\\r\\n                        {/if}\\r\\n\\r\\n\\r\\n                    </div>\\r\\n                {:else if config.name === \\\"FFA REWARDS CONFIG\\\"}\\r\\n                    <div class=\\\"block\\\">\\r\\n                        {#if config.isEditing}\\r\\n                            {#each config.value as reward,ii}\\r\\n                                <div class=\\\"flex my-2px\\\">\\r\\n                                    <p class=\\\"text-accent\\\">{ii + 1}{ii === 0 ? \\\"st\\\" : ii === 1 ? \\\"nd\\\" : ii === 2 ? \\\"rd\\\" : \\\"th\\\"}</p>\\r\\n                                    :\\r\\n                                    <input bind:value={reward} type=\\\"number\\\"\\r\\n                                           class=\\\"bg-gray-200 ml-1 text-black px-2\\\"\\r\\n                                           size=\\\"4\\\">\\r\\n                                </div>\\r\\n                            {/each}\\r\\n                        {:else}\\r\\n                            {#each config.value as reward,ii}\\r\\n                                <div class=\\\"flex my-2px\\\">\\r\\n                                    <p class=\\\"text-accent\\\">{ii + 1}{ii === 0 ? \\\"st\\\" : ii === 1 ? \\\"nd\\\" : ii === 2 ? \\\"rd\\\" : \\\"th\\\"}</p>\\r\\n                                    : {reward}$\\r\\n                                </div>\\r\\n                            {/each}\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                {:else if config.name === \\\"ADVICES\\\"}\\r\\n                    <div class=\\\"flex mb-5\\\">\\r\\n                        <p>Probability:</p>\\r\\n                        <input type=\\\"text\\\"\\r\\n                               class=\\\"text-2xl bg-variant rounded -mt-3 mx-2 text-center\\\"\\r\\n                               size=\\\"3\\\"\\r\\n                               bind:value={config.value.probability} />%\\r\\n                    </div>\\r\\n                    {#each config.value.advices as info,ii}\\r\\n                        <h2 class=\\\"text-4xl text-accent\\\">{ii + 1}.</h2>\\r\\n                        <h3 class=\\\"text-3xl\\\">Name</h3>\\r\\n                        <input class=\\\"text-2xl bg-variant rounded\\\" size=\\\"40\\\" type=\\\"text\\\"\\r\\n                               bind:value={info.name} />\\r\\n                        <h3 class=\\\"text-3xl mt-3\\\">Strong</h3>\\r\\n                        <input class=\\\"text-xl bg-variant rounded mt-2\\\" size=\\\"40\\\" type=\\\"text\\\"\\r\\n                               bind:value={info.strong}>\\r\\n\\r\\n                    {/each}\\r\\n                {:else if config.name === \\\"INFOS\\\"}\\r\\n                    {#each config.value as info,ii}\\r\\n                        <div class=\\\"border-primary border-b pb-8 mb-6\\\">\\r\\n                            <div class=\\\"flex justify-between\\\">\\r\\n                                <h2 class=\\\"text-4xl text-accent\\\">{ii + 1}.</h2>\\r\\n                                <button\\r\\n                                    class=\\\"hover:bg-legendary h-6 text-legendary hover:text-white rounded\\\"\\r\\n                                    on:click={()=>makePopup({text:\\\"info\\\",goal:\\\"delete\\\"},{index:ii})}>\\r\\n                                    <svg class=\\\"w-4 mx-1 fill-current\\\" viewBox=\\\"0 0 24 24\\\"\\r\\n                                         xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                        <path\\r\\n                                            d=\\\"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z\\\" />\\r\\n                                    </svg>\\r\\n                                </button>\\r\\n                            </div>\\r\\n                            <h3 class=\\\"text-3xl text-primary\\\">Name</h3>\\r\\n                            {#if config.isEditing === true}\\r\\n                                                <textarea class=\\\"text-xl px-3 py-2 bg-background rounded\\\" type=\\\"text\\\"\\r\\n                                                          cols=\\\"40\\\" rows=\\\"3\\\"\\r\\n                                                          bind:value={info.name} />\\r\\n                            {:else}\\r\\n                                <p class=\\\"text-2xl mb-4\\\">{info.name}</p>\\r\\n                            {/if}\\r\\n                            <h3 class=\\\"text-3xl text-primary\\\">Description</h3>\\r\\n                            {#if config.isEditing === true}\\r\\n                                            <textarea class=\\\"text-xl px-3 py-2 bg-background rounded mt-2\\\" type=\\\"text\\\"\\r\\n                                                      bind:value={info.description} cols=\\\"40\\\" rows=\\\"3\\\" />\\r\\n                            {:else}\\r\\n                                <p class=\\\"text-xl mb-4\\\">{info.description}</p>\\r\\n                            {/if}\\r\\n                            <h3 class=\\\"text-3xl text-primary\\\">Expires</h3>\\r\\n                            {#if info.expiration < Date.now()}\\r\\n                                <h3 class=\\\"text-2xl text-legendary\\\">Expired</h3>\\r\\n                            {:else}\\r\\n                                <p>{infoDates[ii].getDate() < 10 ? \\\"0\\\" + infoDates[ii].getDate() : infoDates[ii].getDate()}\\r\\n                                    / {infoDates[ii].getMonth() + 1 < 10 ? \\\"0\\\" + (infoDates[ii].getMonth() + 1) : infoDates[ii].getMonth() + 1}\\r\\n                                    / {infoDates[ii].getFullYear()}\\r\\n                                <p>{infoDates[ii].getHours() < 10 ? \\\"0\\\" + infoDates[ii].getHours() : infoDates[ii].getHours()}\\r\\n                                    : {infoDates[ii].getMinutes() < 10 ? \\\"0\\\" + infoDates[ii].getMinutes() : infoDates[ii].getMinutes()}</p>\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    {/each}\\r\\n                    <div class=\\\"flex\\\">\\r\\n                        <button class=\\\"m-auto  button button-brand\\\"\\r\\n                                on:click={()=>makePopup({text:\\\"info\\\",goal:\\\"create\\\"})}>Create\\r\\n                            info\\r\\n                        </button>\\r\\n                    </div>\\r\\n                {:else if config.name === \\\"POLLS\\\"}\\r\\n                    {#each config.value as poll,ii}\\r\\n                        <div class=\\\"border-primary border-b pt-4 pb-8\\\">\\r\\n                            <div class=\\\"flex justify-between\\\">\\r\\n                                <h3 class=\\\"text-primary text-3xl\\\">Name</h3>\\r\\n                                <button\\r\\n                                    class=\\\"hover:bg-legendary h-6 text-legendary hover:text-white rounded\\\"\\r\\n                                    on:click={()=>makePopup({text:\\\"poll\\\",goal:\\\"delete\\\"},{index:poll._id})}>\\r\\n                                    <svg class=\\\"w-4 mx-1 fill-current\\\" viewBox=\\\"0 0 24 24\\\"\\r\\n                                         xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                        <path\\r\\n                                            d=\\\"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z\\\" />\\r\\n                                    </svg>\\r\\n                                </button>\\r\\n                            </div>\\r\\n                            {#if config.isEditing === true}\\r\\n                                                <textarea class=\\\"text-xl px-3 py-2 bg-background rounded\\\" type=\\\"text\\\"\\r\\n                                                          cols=\\\"40\\\" rows=\\\"3\\\"\\r\\n                                                          bind:value={poll.name} />\\r\\n                            {:else}\\r\\n                                <p class=\\\"text-2xl ml-4 mb-4\\\">{poll.name}</p>\\r\\n                            {/if}\\r\\n                            {#if poll.isMCQ}\\r\\n                                <h3 class=\\\"text-3xl text-primary\\\">Options</h3>\\r\\n                                {#each poll.answers as option, iii}\\r\\n                                    <div class=\\\"flex\\\">\\r\\n                                        <input class=\\\"text-2xl bg-variant rounded mt-2\\\"\\r\\n                                               size=\\\"60\\\"\\r\\n                                               type=\\\"text\\\"\\r\\n                                               bind:value={option.name}>\\r\\n                                        <p class=\\\"text-primary text-2xl\\\">Votes <strong\\r\\n                                            class=\\\"font-normal text-white\\\">{option.nb}</strong>\\r\\n                                            Percentage <strong class=\\\"font-normal\\\"\\r\\n                                                               class:text-legendary={(option.nb/poll.totalAnswers ||0)<0.25}\\r\\n                                                               class:text-green={(option.nb/poll.totalAnswers ||0)>=0.5}\\r\\n                                                               class:text-accent={(option.nb/poll.totalAnswers ||0)>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100 || 0}\\r\\n                                                %</strong></p>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            {:else}\\r\\n                                <button class=\\\"button button-brand\\\"\\r\\n                                        on:click={()=>poll.areAnswersShown = !poll.areAnswersShown}>{poll.areAnswersShown ? 'Hide' : 'Show'}\\r\\n                                    answers\\r\\n                                </button>\\r\\n                                {#if poll.areAnswersShown}\\r\\n                                    <p class=\\\"mt-8 text-accent text-3xl\\\">Total\\r\\n                                        answers: {poll.totalAnswers}</p>\\r\\n                                    <div class=\\\"flex mt-4\\\">\\r\\n                                        {#each poll.answers as answer, iii}\\r\\n                                            <p>\\r\\n                                                <h class=\\\"text-primary mr-1\\\">1.</h>{answer}</p>\\r\\n                                        {/each}\\r\\n                                    </div>\\r\\n\\r\\n                                {/if}\\r\\n                            {/if}\\r\\n\\r\\n\\r\\n                        </div>\\r\\n                    {/each}\\r\\n                    <div class=\\\"flex pt-4\\\">\\r\\n                        <button class=\\\"m-auto button button-brand\\\"\\r\\n                                on:click={()=>makePopup({text:\\\"poll\\\",goal:\\\"create\\\"})}>Create new\\r\\n                            poll\\r\\n                        </button>\\r\\n                    </div>\\r\\n                {:else if config.name === \\\"GOLD EVENT\\\"}\\r\\n                    <div class=\\\"hidden\\\">\\r\\n                        {goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400)}\\r\\n                        {goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24)}\\r\\n                        {goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60)}\\r\\n                    </div>\\r\\n                    {#if config.value.expiration !== null && goldEvent[0] >= 0}\\r\\n\\r\\n                        {#if config.isEditing}\\r\\n                            <div class=\\\"block\\\">\\r\\n                                <label>\\r\\n                                    Boost of:\\r\\n                                    <input type=\\\"number\\\" class=\\\"text-black\\\" size=\\\"4\\\"\\r\\n                                           bind:value={config.value.percentage}>\\r\\n\\r\\n                                </label><br>\\r\\n                                <p class=\\\"text-accent\\\">Example : 120 equals all rewards to be raised\\r\\n                                    by 20%</p><br>\\r\\n                                <label>\\r\\n                                    Expiration:<br>\\r\\n                                    <input type=\\\"date\\\" class=\\\"text-black\\\"\\r\\n                                           bind:value={config.value.expDate}><br>\\r\\n                                    <input type=\\\"time\\\" class=\\\"text-black my-2\\\"\\r\\n                                           bind:value={config.value.expTime}><br>\\r\\n                                </label>\\r\\n                            </div>\\r\\n                        {:else}\\r\\n                            <h3 class=\\\"text-2xl\\\">Boost of <strong\\r\\n                                class=\\\"font-normal text-accent text-3xl\\\">{config.value.percentage - 100}\\r\\n                                %</strong></h3>\\r\\n\\r\\n                            <p class=\\\"text-2xl\\\">\\r\\n                                Expires in\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">{goldEvent[0]}</strong>\\r\\n                                days,\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">{goldEvent[1]}</strong>\\r\\n                                hours,\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">{goldEvent[2]}</strong>\\r\\n                                minutes,\\r\\n                            </p>\\r\\n                        {/if}\\r\\n                        <div class=\\\"flex\\\">\\r\\n                            <button class=\\\"button button-brand mx-auto mt-4\\\"\\r\\n                                    style=\\\"background-color: #fc1870\\\"\\r\\n                                    on:click={()=>makePopup({text:\\\"event\\\",goal:\\\"delete\\\"})}>Stop\\r\\n                                event\\r\\n                            </button>\\r\\n                        </div>\\r\\n                    {:else}\\r\\n                        <div class=\\\"flex\\\">\\r\\n                            <button class=\\\"button m-auto button-brand\\\"\\r\\n                                    on:click={()=>makePopup({text:\\\"event\\\",goal:\\\"create\\\"})}>\\r\\n                                Create event\\r\\n                            </button>\\r\\n                        </div>\\r\\n                    {/if}\\r\\n\\r\\n                {:else if config.name === \\\"LINKS CONFIG\\\"}\\r\\n                    <div class=\\\"w-60\\\">\\r\\n                        <p class=\\\"text-2xl\\\">Players joining via an affiliated link get\\r\\n                            {#if config.isEditing}\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">\\r\\n                                    <input type=\\\"number\\\" class=\\\"bg-background\\\" size=\\\"4\\\"\\r\\n                                           bind:value|number={config.value.boost}>%</strong>\\r\\n                                more coins for\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">\\r\\n                                    <input type=\\\"number\\\" class=\\\"bg-background\\\" size=\\\"4\\\"\\r\\n                                           bind:value={config.value.duration}>days</strong>\\r\\n\\r\\n                            {:else}\\r\\n                                <strong\\r\\n                                    class=\\\"text-accent font-normal text-3xl\\\">{config.value.boost}\\r\\n                                    %</strong>\\r\\n                                more\\r\\n                                coins for <strong\\r\\n                                class=\\\"text-accent font-normal text-3xl\\\">{config.value.duration}\\r\\n                                days</strong>\\r\\n                            {/if}\\r\\n                        </p>\\r\\n                    </div>\\r\\n                {:else if config.name === \\\"IDs BANNED\\\"}\\r\\n                    <div class=\\\"block\\\">\\r\\n                        {#if config.value.length !== 0}\\r\\n                            <UsersArray users=\\\"{bannedOnes}\\\" banned=\\\"true\\\" color=\\\"blue\\\"\\r\\n                                        otp={otp}\\r\\n                                        pwd={pwd} />\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                    <p class=\\\"text-3xl text-green\\\">\\r\\n                        {config.value.length === 0 ? \\\"No player has been banned\\\" : \\\"\\\"}\\r\\n                    </p>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n    {/each}\\r\\n</div>\"],\"names\":[],\"mappings\":\"AA0CI,oBAAK,2BAA2B,CAChC,oBAAK,2BAA2B,AAAC,CAAC,AAC9B,kBAAkB,CAAE,IAAI,CACxB,MAAM,CAAE,CAAC,AACb,CAAC,AAGD,KAAK,CAAC,IAAI,CAAC,MAAM,CAAC,eAAC,CAAC,AAChB,eAAe,CAAE,SAAS,AAC9B,CAAC\"}"
+};
+
+const ConfigEditor = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { newConfig } = $$props;
+	let { goldEvent } = $$props;
+	let { popup } = $$props;
+	let { bannedOnes } = $$props;
+	let { otp } = $$props;
+	let { pwd } = $$props;
+	let { infoDates } = $$props;
+
+	if ($$props.newConfig === void 0 && $$bindings.newConfig && newConfig !== void 0) $$bindings.newConfig(newConfig);
+	if ($$props.goldEvent === void 0 && $$bindings.goldEvent && goldEvent !== void 0) $$bindings.goldEvent(goldEvent);
+	if ($$props.popup === void 0 && $$bindings.popup && popup !== void 0) $$bindings.popup(popup);
+	if ($$props.bannedOnes === void 0 && $$bindings.bannedOnes && bannedOnes !== void 0) $$bindings.bannedOnes(bannedOnes);
+	if ($$props.otp === void 0 && $$bindings.otp && otp !== void 0) $$bindings.otp(otp);
+	if ($$props.pwd === void 0 && $$bindings.pwd && pwd !== void 0) $$bindings.pwd(pwd);
+	if ($$props.infoDates === void 0 && $$bindings.infoDates && infoDates !== void 0) $$bindings.infoDates(infoDates);
+	$$result.css.add(css$d);
+
+	return `<div class="${"justify-evenly mx-4 w-full flex h-full flex-wrap p-8"}">${each(newConfig, (config, i) => `<div class="${"mb-16 border-t-2 border-primary bg-variant rounded-lg mx-8 p-4"}"><div class="${"flex flex-justify"}"><h1 class="${"text-5xl text-primary w-full"}">${escape(config.name)}</h1>
+                ${config.name !== "IDs BANNED"
+	? `<div><button class="${"flex m-3 mt-1.5 p-2 pt-1 focus:outline-none text-gray-500 hover:text-white"}"><svg version="${"1.1"}" class="${"w-5 h-5"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" viewBox="${"0 0 1000 1000"}" enable-background="${"new 0 0 1000 1000"}" xml:space="${"preserve"}"><metadata>Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata><g><g class="${"fill-current"}" transform="${"translate(0.000000,511.000000) scale(0.100000,-0.100000)"}"><path d="${"M7681.7,4992.8c-223.8-57.1-328.5-138.1-840.3-649.9c-278.5-276.1-507-514.2-507-528.5c0-30.9,2337.6-2368.5,2370.9-2368.5c11.9,0,254.7,233.3,535.6,518.9c552.2,557,599.8,623.7,647.5,902.2c31,178.5,0,376.1-90.4,571.3c-50,111.9-164.3,240.4-626.1,704.6c-645.1,649.9-737.9,730.8-926,802.2C8088.7,5004.7,7819.8,5026.1,7681.7,4992.8z"}"></path><path d="${"M3704,1207.9L1299.7-1196.4l285.6-285.7c157.1-157.1,295.2-285.7,309.5-285.7c11.9,0,1099.8,1076,2416.1,2392.3L6703.3,3017l-297.5,297.6l-297.6,297.6L3704,1207.9z"}"></path><path d="${"M4418.1,493.7L2013.9-1910.5l483.2-480.8l480.9-483.2L5382.2-470.4l2404.2,2404.2l-483.2,483.2L6822.4,2898L4418.1,493.7z"}"></path><path d="${"M5506-584.6c-1311.6-1311.6-2385.2-2397.1-2385.2-2409c0-14.3,128.5-152.4,285.7-309.5l285.6-285.6l2404.3,2404.2l2404.2,2404.2l-290.4,290.4C8048.3,1672,7912.6,1803,7905.5,1803C7898.3,1803,6820,729.4,5506-584.6z"}"></path><path d="${"M959.3-2284.2C826-2700.8,716.5-3053.1,716.5-3065c0-33.3,1078.3-1106.9,1111.7-1106.9c30.9,0,1511.6,476.1,1530.6,492.8c9.5,9.5-2121,2149.5-2142.4,2149.5C1209.3-1529.6,1092.6-1870,959.3-2284.2z"}"></path><path d="${"M588-3429.2c-7.1-11.9-66.7-173.8-133.3-359.5c-64.3-185.7-171.4-485.6-235.7-666.5l-119-333.3l290.4,104.7c159.5,57.1,461.8,164.3,671.3,238c209.5,73.8,388,142.8,397.5,152.4c9.5,9.5-178.5,211.8-419,452.3C799.8-3600.6,597.5-3415,588-3429.2z"}"></path></g></g></svg></button>
+                    </div>`
+	: ``}</div>
+            <div class="${"pt-4 block"}">${config.name === "GAMEMODES STATUS"
+	? `<h2 class="${"text-3xl"}">FFA</h2>
+                    <div${add_classes([!config.isEditing ? "flex" : ""].join(" ").trim())}>${config.isEditing
+		? `<input type="${"radio"}" id="${"FFAActivatedTrue"}" name="${"FFAActivated"}"${add_attribute("value", true, 0)} class="${"svelte-1afdmgb"}">
+                            <label for="${"FFAActivatedTrue"}" class="${"text-green"}">Activated</label><br>
+                            <input type="${"radio"}" id="${"FFAActivatedMaintenance"}" name="${"FFAActivated"}" value="${"maintenance"}" class="${"svelte-1afdmgb"}">
+                            <label for="${"FFAActivatedMaintenance"}" class="${"text-accent"}">Maintenance</label><br>
+                            <input type="${"radio"}" id="${"FFAActivatedFalse"}" name="${"FFAActivated"}"${add_attribute("value", false, 0)} class="${"svelte-1afdmgb"}">
+                            <label for="${"FFAActivatedFalse"}" class="${"text-legendary"}">Disabled</label>`
+		: `<p${add_classes([
+				(config.value.FFA === true ? "text-green" : "") + " " + (config.value.FFA === "maintenance" ? "text-accent" : "") + " " + (config.value.FFA === false ? "text-legendary" : "")
+			].join(" ").trim())}>• ${escape(config.value.FFA === true
+			? "Active"
+			: config.value.FFA === "maintenance"
+				? "Maintenance in progress"
+				: "Inactive (Coming soon)")}
+                            </p>`}</div>
+                    <h2 class="${"text-3xl"}">2vs2</h2>
+                    <div${add_classes([!config.isEditing ? "flex" : ""].join(" ").trim())}>${config.isEditing
+		? `<input type="${"radio"}" id="${"2vs2ActivatedTrue"}" name="${"2vs2Activated"}"${add_attribute("value", true, 0)} class="${"svelte-1afdmgb"}">
+                            <label for="${"2vs2ActivatedTrue"}" class="${"text-green"}">Activated</label><br>
+                            <input type="${"radio"}" id="${"2vs2ActivatedMaintenance"}" name="${"2vs2Activated"}" value="${"maintenance"}" class="${"svelte-1afdmgb"}">
+                            <label for="${"2vs2ActivatedMaintenance"}" class="${"text-accent"}">Maintenance</label><br>
+                            <input type="${"radio"}" id="${"2vs2ActivatedFalse"}" name="${"2vs2Activated"}"${add_attribute("value", false, 0)} class="${"svelte-1afdmgb"}">
+                            <label for="${"2vs2ActivatedFalse"}" class="${"text-legendary"}">Disabled</label>`
+		: `<p${add_classes([
+				(config.value["2vs2"] === true ? "text-green" : "") + " " + (config.value["2vs2"] === "maintenance"
+				? "text-accent"
+				: "") + " " + (config.value["2vs2"] === false ? "text-legendary" : "")
+			].join(" ").trim())}>• ${escape(config.value["2vs2"] === true
+			? "Active"
+			: config.value["2vs2"] === "maintenance"
+				? "Maintenance in progress"
+				: "Inactive (Coming soon)")}
+                            </p>`}
+
+
+                    </div>`
+	: `${config.name === "FFA REWARDS CONFIG"
+		? `<div class="${"block"}">${config.isEditing
+			? `${each(config.value, (reward, ii) => `<div class="${"flex my-2px"}"><p class="${"text-accent"}">${escape(ii + 1)}${escape(ii === 0
+				? "st"
+				: ii === 1 ? "nd" : ii === 2 ? "rd" : "th")}</p>
+                                    :
+                                    <input type="${"number"}" class="${"bg-gray-200 ml-1 text-black px-2 svelte-1afdmgb"}" size="${"4"}"${add_attribute("value", reward, 1)}>
+                                </div>`)}`
+			: `${each(config.value, (reward, ii) => `<div class="${"flex my-2px"}"><p class="${"text-accent"}">${escape(ii + 1)}${escape(ii === 0
+				? "st"
+				: ii === 1 ? "nd" : ii === 2 ? "rd" : "th")}</p>
+                                    : ${escape(reward)}$
+                                </div>`)}`}
+                    </div>`
+		: `${config.name === "ADVICES"
+			? `<div class="${"flex mb-5"}"><p>Probability:</p>
+                        <input type="${"text"}" class="${"text-2xl bg-variant rounded -mt-3 mx-2 text-center svelte-1afdmgb"}" size="${"3"}"${add_attribute("value", config.value.probability, 1)}>%
+                    </div>
+                    ${each(config.value.advices, (info, ii) => `<h2 class="${"text-4xl text-accent"}">${escape(ii + 1)}.</h2>
+                        <h3 class="${"text-3xl"}">Name</h3>
+                        <input class="${"text-2xl bg-variant rounded svelte-1afdmgb"}" size="${"40"}" type="${"text"}"${add_attribute("value", info.name, 1)}>
+                        <h3 class="${"text-3xl mt-3"}">Strong</h3>
+                        <input class="${"text-xl bg-variant rounded mt-2 svelte-1afdmgb"}" size="${"40"}" type="${"text"}"${add_attribute("value", info.strong, 1)}>`)}`
+			: `${config.name === "INFOS"
+				? `${each(config.value, (info, ii) => `<div class="${"border-primary border-b pb-8 mb-6"}"><div class="${"flex justify-between"}"><h2 class="${"text-4xl text-accent"}">${escape(ii + 1)}.</h2>
+                                <button class="${"hover:bg-legendary h-6 text-legendary hover:text-white rounded"}"><svg class="${"w-4 mx-1 fill-current"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"}"></path></svg>
+                                </button></div>
+                            <h3 class="${"text-3xl text-primary"}">Name</h3>
+                            ${config.isEditing === true
+					? `<textarea class="${"text-xl px-3 py-2 bg-background rounded"}" type="${"text"}" cols="${"40"}" rows="${"3"}">${info.name || ""}</textarea>`
+					: `<p class="${"text-2xl mb-4"}">${escape(info.name)}</p>`}
+                            <h3 class="${"text-3xl text-primary"}">Description</h3>
+                            ${config.isEditing === true
+					? `<textarea class="${"text-xl px-3 py-2 bg-background rounded mt-2"}" type="${"text"}" cols="${"40"}" rows="${"3"}">${info.description || ""}</textarea>`
+					: `<p class="${"text-xl mb-4"}">${escape(info.description)}</p>`}
+                            <h3 class="${"text-3xl text-primary"}">Expires</h3>
+                            ${info.expiration < Date.now()
+					? `<h3 class="${"text-2xl text-legendary"}">Expired</h3>`
+					: `<p>${escape(infoDates[ii].getDate() < 10
+						? "0" + infoDates[ii].getDate()
+						: infoDates[ii].getDate())}
+                                    / ${escape(infoDates[ii].getMonth() + 1 < 10
+						? "0" + (infoDates[ii].getMonth() + 1)
+						: infoDates[ii].getMonth() + 1)}
+                                    / ${escape(infoDates[ii].getFullYear())}
+                                </p><p>${escape(infoDates[ii].getHours() < 10
+						? "0" + infoDates[ii].getHours()
+						: infoDates[ii].getHours())}
+                                    : ${escape(infoDates[ii].getMinutes() < 10
+						? "0" + infoDates[ii].getMinutes()
+						: infoDates[ii].getMinutes())}</p>`}
+                        </div>`)}
+                    <div class="${"flex"}"><button class="${"m-auto  button button-brand"}">Create
+                            info
+                        </button>
+                    </div>`
+				: `${config.name === "POLLS"
+					? `${each(config.value, (poll, ii) => `<div class="${"border-primary border-b pt-4 pb-8"}"><div class="${"flex justify-between"}"><h3 class="${"text-primary text-3xl"}">Name</h3>
+                                <button class="${"hover:bg-legendary h-6 text-legendary hover:text-white rounded"}"><svg class="${"w-4 mx-1 fill-current"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"}"></path></svg>
+                                </button></div>
+                            ${config.isEditing === true
+						? `<textarea class="${"text-xl px-3 py-2 bg-background rounded"}" type="${"text"}" cols="${"40"}" rows="${"3"}">${poll.name || ""}</textarea>`
+						: `<p class="${"text-2xl ml-4 mb-4"}">${escape(poll.name)}</p>`}
+                            ${poll.isMCQ
+						? `<h3 class="${"text-3xl text-primary"}">Options</h3>
+                                ${each(poll.answers, (option, iii) => `<div class="${"flex"}"><input class="${"text-2xl bg-variant rounded mt-2 svelte-1afdmgb"}" size="${"60"}" type="${"text"}"${add_attribute("value", option.name, 1)}>
+                                        <p class="${"text-primary text-2xl"}">Votes <strong class="${"font-normal text-white"}">${escape(option.nb)}</strong>
+                                            Percentage <strong class="${[
+								"font-normal",
+								((option.nb / poll.totalAnswers || 0) < 0.25
+								? "text-legendary"
+								: "") + " " + ((option.nb / poll.totalAnswers || 0) >= 0.5
+								? "text-green"
+								: "") + " " + ((option.nb / poll.totalAnswers || 0) >= 0.25 && option.nb / poll.totalAnswers < 0.5
+								? "text-accent"
+								: "")
+							].join(" ").trim()}">${escape(option.nb / poll.totalAnswers * 100 || 0)}
+                                                %</strong></p>
+                                    </div>`)}`
+						: `<button class="${"button button-brand"}">${escape(poll.areAnswersShown ? "Hide" : "Show")}
+                                    answers
+                                </button>
+                                ${poll.areAnswersShown
+							? `<p class="${"mt-8 text-accent text-3xl"}">Total
+                                        answers: ${escape(poll.totalAnswers)}</p>
+                                    <div class="${"flex mt-4"}">${each(poll.answers, (answer, iii) => `<p><h class="${"text-primary mr-1"}">1.</h>${escape(answer)}</p>`)}
+                                    </div>`
+							: ``}`}
+
+
+                        </div>`)}
+                    <div class="${"flex pt-4"}"><button class="${"m-auto button button-brand"}">Create new
+                            poll
+                        </button>
+                    </div>`
+					: `${config.name === "GOLD EVENT"
+						? `<div class="${"hidden"}">${escape(goldEvent[0] = Math.floor((config.value.expiration - Date.now()) / 1000 / 86400))}
+                        ${escape(goldEvent[1] = Math.floor((config.value.expiration - Date.now()) / 1000 / 3600 - goldEvent[0] * 24))}
+                        ${escape(goldEvent[2] = Math.floor((config.value.expiration - Date.now()) / 1000 / 60 - goldEvent[0] * 24 * 60 - goldEvent[1] * 60))}</div>
+                    ${config.value.expiration !== null && goldEvent[0] >= 0
+							? `${config.isEditing
+								? `<div class="${"block"}"><label>Boost of:
+                                    <input type="${"number"}" class="${"text-black svelte-1afdmgb"}" size="${"4"}"${add_attribute("value", config.value.percentage, 1)}>
+
+                                </label><br>
+                                <p class="${"text-accent"}">Example : 120 equals all rewards to be raised
+                                    by 20%</p><br>
+                                <label>Expiration:<br>
+                                    <input type="${"date"}" class="${"text-black svelte-1afdmgb"}"${add_attribute("value", config.value.expDate, 1)}><br>
+                                    <input type="${"time"}" class="${"text-black my-2 svelte-1afdmgb"}"${add_attribute("value", config.value.expTime, 1)}><br></label>
+                            </div>`
+								: `<h3 class="${"text-2xl"}">Boost of <strong class="${"font-normal text-accent text-3xl"}">${escape(config.value.percentage - 100)}
+                                %</strong></h3>
+
+                            <p class="${"text-2xl"}">Expires in
+                                <strong class="${"text-accent font-normal text-3xl"}">${escape(goldEvent[0])}</strong>
+                                days,
+                                <strong class="${"text-accent font-normal text-3xl"}">${escape(goldEvent[1])}</strong>
+                                hours,
+                                <strong class="${"text-accent font-normal text-3xl"}">${escape(goldEvent[2])}</strong>
+                                minutes,
+                            </p>`}
+                        <div class="${"flex"}"><button class="${"button button-brand mx-auto mt-4"}" style="${"background-color: #fc1870"}">Stop
+                                event
+                            </button>
+                        </div>`
+							: `<div class="${"flex"}"><button class="${"button m-auto button-brand"}">Create event
+                            </button>
+                        </div>`}`
+						: `${config.name === "LINKS CONFIG"
+							? `<div class="${"w-60"}"><p class="${"text-2xl"}">Players joining via an affiliated link get
+                            ${config.isEditing
+								? `<strong class="${"text-accent font-normal text-3xl"}"><input type="${"number"}" class="${"bg-background svelte-1afdmgb"}" size="${"4"}"${add_attribute("value", config.value.boost, 1)}>%</strong>
+                                more coins for
+                                <strong class="${"text-accent font-normal text-3xl"}"><input type="${"number"}" class="${"bg-background svelte-1afdmgb"}" size="${"4"}"${add_attribute("value", config.value.duration, 1)}>days</strong>`
+								: `<strong class="${"text-accent font-normal text-3xl"}">${escape(config.value.boost)}
+                                    %</strong>
+                                more
+                                coins for <strong class="${"text-accent font-normal text-3xl"}">${escape(config.value.duration)}
+                                days</strong>`}</p>
+                    </div>`
+							: `${config.name === "IDs BANNED"
+								? `<div class="${"block"}">${config.value.length !== 0
+									? `${validate_component(UsersArray, "UsersArray").$$render(
+											$$result,
+											{
+												users: bannedOnes,
+												banned: "true",
+												color: "blue",
+												otp,
+												pwd
+											},
+											{},
+											{}
+										)}`
+									: ``}</div>
+                    <p class="${"text-3xl text-green"}">${escape(config.value.length === 0
+									? "No player has been banned"
+									: "")}
+                    </p>`
+								: ``}`}`}`}`}`}`}`}</div>
+        </div>`)}</div>`;
+});
+
+/* src\components\admin\PopupAdmin.svelte generated by Svelte v3.31.0 */
+
+const PopupAdmin = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { popup } = $$props;
+	let { configs } = $$props;
+	let { newConfig } = $$props;
+	let { otp } = $$props;
+	let { pwd } = $$props;
+
+	if ($$props.popup === void 0 && $$bindings.popup && popup !== void 0) $$bindings.popup(popup);
+	if ($$props.configs === void 0 && $$bindings.configs && configs !== void 0) $$bindings.configs(configs);
+	if ($$props.newConfig === void 0 && $$bindings.newConfig && newConfig !== void 0) $$bindings.newConfig(newConfig);
+	if ($$props.otp === void 0 && $$bindings.otp && otp !== void 0) $$bindings.otp(otp);
+	if ($$props.pwd === void 0 && $$bindings.pwd && pwd !== void 0) $$bindings.pwd(pwd);
+
+	return `${popup.type
+	? `<div class="${"fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"}"></div>
+    <div class="${"fixed flex w-screen h-screen z-50 left-0 top-0"}"><div class="${"justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"}" style="${"margin-top:20vh"}"><h1 class="${"text-5xl text-primary"}">${escape(popup.type === "creation"
+		? `Create ${popup.thing}`
+		: `Confirm delete ${popup.thing}`)}</h1>
+            <div><div class="${"overflow-auto max-h-screen-50"}">${each(popup.fields, (field, i) => `${field.name === "Multiple choice question ?"
+		? `<div class="${"text-3xl mt-8"}"><input type="${"radio"}" id="${"Normal"}" name="${"type"}" value="${"false"}">
+                                <label for="${"Normal"}">Normal</label><br>
+                                <input type="${"radio"}" id="${"MCQ"}" name="${"type"}" value="${"true"}">
+                                <label for="${"MCQ"}">MCQ</label></div>
+
+                            ${field.value == "true"
+			? `${each(popup.fields[1].special, (option, ii) => `<div class="${"my-4"}"><h3 class="${"text-3xl"}">Option ${escape(ii + 1)}</h3>
+
+                                        <input class="${"text-black"}" type="${"text"}"${add_attribute("value", option, 1)}>
+                                        <p></p>
+                                    </div>`)}
+                                <p></p>
+                                <button class="${"button button-brand mt-4 ml-2"}">Add
+                                    option
+                                </button>`
+			: ``}`
+		: `<h3 class="${"text-3xl mt-8"}">${escape(field.name)}</h3>
+                            <input type="${"text"}" class="${"text-black rounded"}"${add_attribute("rows", field.name.includes("description") ? 5 : 1, 0)} size="${"40"}"${add_attribute("placeholder", field.name, 0)}${add_attribute("value", field.value, 1)}>`}
+                        <p></p>`)}</div>
+                <div class="${"justify-center w-full flex"}"><button class="${"button button-brand mt-8"}" style="${"background-color:#" + escape(popup.type === "deletion" ? "fc1870" : "3d72e4")}">${escape(popup.type === "creation"
+		? `Create ${popup.thing}`
+		: `Confirm delete ${popup.thing}`)}</button>
+                    <button class="${[
+			"button button-brand mt-8 border ml-5",
+			(popup.type !== "deletion" ? "border-primary" : "") + " " + (popup.type === "deletion" ? "border-legendary" : "")
+		].join(" ").trim()}" style="${"background-color: #17171a;padding: -1px"}">Cancel
+                    </button>
+                    ${(popup.thing === "poll" || popup.thing === "info") && popup.type === "creation"
+		? `<button class="${"button button-brand mt-8 ml-5"}" style="${"background-color: #ff8f0f"}">${escape(popup.isPreviewing ? "Stop" : "")} Preview
+                        </button>`
+		: ``}</div></div></div></div>
+    ${popup.isPreviewing
+		? `${popup.thing === "poll"
+			? `<div class="${"fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"}">${validate_component(Poll, "Poll").$$render(
+					$$result,
+					{
+						poll: {
+							name: popup.fields[0].value,
+							isMCQ: popup.fields[1].value === "true",
+							options: popup.fields[1].special
+						},
+						isPreviewing: true
+					},
+					{},
+					{}
+				)}</div>`
+			: `${popup.thing === "info"
+				? `<div class="${"fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"}">${validate_component(NavAlert, "NavAlert").$$render(
+						$$result,
+						{
+							data: [
+								{
+									name: popup.fields[0].value,
+									duration: popup.fields[1].value,
+									description: popup.fields[2].value
+								}
+							],
+							isPreviewing: true
+						},
+						{},
+						{}
+					)}</div>`
+				: ``}`}`
+		: ``}`
+	: ``}`;
+});
+
+/* src\routes\feltrom\admin.svelte generated by Svelte v3.31.0 */
+
+const css$e = {
+	code: "input[type=text].svelte-4smvjn{@apply py-1 px-2;}.input.svelte-4smvjn{@apply w-full text-background bg-font py-3 px-4 rounded;}button.svelte-4smvjn:disabled{@apply bg-disabled;;cursor:not-allowed}.input-header.svelte-4smvjn{@apply text-primary text-3xl;;margin-bottom:0.35rem}",
+	map: "{\"version\":3,\"file\":\"admin.svelte\",\"sources\":[\"admin.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { callApi } from \\\"../../utils/api\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { fade, fly } from \\\"svelte/transition\\\";\\r\\n    import Loading from \\\"../../components/Loading.svelte\\\";\\r\\n    import UsersArray from \\\"../../components/admin/UsersArray.svelte\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n    import { config } from \\\"../../components/admin/storeAdmin.js\\\";\\r\\n    import RefreshButton from \\\"../../components/RefreshButton.svelte\\\";\\r\\n    import ConfigEditor from \\\"../../components/admin/ConfigEditor.svelte\\\";\\r\\n    import UsersConfig from \\\"../../components/admin/UsersConfig.svelte\\\";\\r\\n    import PopupAdmin from \\\"../../components/admin/PopupAdmin.svelte\\\";\\r\\n\\r\\n    let configs;\\r\\n    let isAuthorizedUser = false;\\r\\n    let isLoggedIn = false;\\r\\n    let otp = \\\"\\\";\\r\\n    let pwd = \\\"a\\\";\\r\\n    let users;\\r\\n    let activePanel = \\\"config\\\";\\r\\n    let newConfig;\\r\\n    let goldEvent = [];\\r\\n    let loadingUsers;\\r\\n    let suspiciousBitches = [];\\r\\n    let suspiciousUsersFound = 0;\\r\\n    let bannedOnes = [];\\r\\n    let commands;\\r\\n    let popup = {};\\r\\n    let isSavingConfig;\\r\\n    let infoDates = [];\\r\\n    let totalCoins = 0;\\r\\n\\r\\n    async function loadUsers() {\\r\\n        loadingUsers = true;\\r\\n        suspiciousBitches = [];\\r\\n        suspiciousUsersFound = 0;\\r\\n        bannedOnes = [];\\r\\n        users = await callApi(\\\"get\\\", `/feltrom/users?otp=${otp}&pwd=${pwd}`);\\r\\n\\r\\n        for (let i = 0; i < users.length * 2; i++) {\\r\\n            if (!users[i - suspiciousUsersFound]) continue;\\r\\n            totalCoins += users[i - suspiciousUsersFound].coins;\\r\\n            users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);\\r\\n            if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;\\r\\n            if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {\\r\\n                suspiciousBitches.push(...users.splice(i - suspiciousUsersFound, 1));\\r\\n                suspiciousUsersFound += 1;\\r\\n            }\\r\\n        }\\r\\n        sortArrays((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));\\r\\n\\r\\n        bannedOnes = configs.find(e => e.name === \\\"IDs BANNED\\\").value;\\r\\n        bannedOnes.forEach((ban, i) => {\\r\\n            let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0]\\r\\n            let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);\\r\\n            if (isNaN(winrate)) winrate = 0;\\r\\n            bannedOnes[i] = user;\\r\\n            bannedOnes[i].reason = ban.reason;\\r\\n            users = users;\\r\\n            suspiciousBitches = suspiciousBitches;\\r\\n        });\\r\\n\\r\\n\\r\\n        loadingUsers = false;\\r\\n    }\\r\\n\\r\\n    async function loadCommands() {\\r\\n        commands = await callApi(\\\"get\\\", `/feltrom/commands?otp=${otp}&pwd=${pwd}`);\\r\\n        commands.sort((a, b) => a.date - b.date);\\r\\n    }\\r\\n\\r\\n    async function login(refresh) {\\r\\n        goldEvent = [\\\"\\\", \\\"\\\", \\\"\\\", \\\"\\\"];\\r\\n        isLoggedIn = true;\\r\\n        configs = await callApi(\\\"get\\\", `/feltrom/config?otp=${otp}&pwd=${pwd}`);\\r\\n        otp = configs.tempKey;\\r\\n        configs = configs.configs;\\r\\n        let polls = await callApi(\\\"get\\\", `/feltrom/getAllPolls?otp=${otp}&pwd=${pwd}`);\\r\\n        configs.push({ name: \\\"POLLS\\\", value: polls });\\r\\n        newConfig = configs;\\r\\n        configs = JSON.stringify(configs);\\r\\n        configs = JSON.parse(configs);\\r\\n        newConfig[3].value.forEach((e, i) => {\\r\\n            infoDates[i] = new Date(e.expiration);\\r\\n        });\\r\\n        if (refresh.users === true) loadUsers();\\r\\n        if (refresh.commands === true) loadCommands();\\r\\n    }\\r\\n\\r\\n\\r\\n    function logout() {\\r\\n        callApi(\\\"post\\\", `/feltrom/save?otp=${otp}&pwd=${pwd}`);\\r\\n        goto(\\\"/\\\");\\r\\n    }\\r\\n\\r\\n    function sortArrays(fx) {\\r\\n        users.sort(fx);\\r\\n        suspiciousBitches.sort(fx);\\r\\n    }\\r\\n\\r\\n\\r\\n    onMount(async () => {\\r\\n        isAuthorizedUser = (await callApi(\\\"get\\\", \\\"/feltrom/login\\\")) === true;\\r\\n        config.subscribe(login);\\r\\n    });\\r\\n\\r\\n    function resetConfig() {\\r\\n        newConfig = configs;\\r\\n        configs = JSON.stringify(configs);\\r\\n        configs = JSON.parse(configs);\\r\\n    }\\r\\n\\r\\n    async function saveConfig() {\\r\\n        isSavingConfig = true;\\r\\n        //Handle event changes\\r\\n        if (newConfig[4].value.expTime) {\\r\\n            let expiration = Date.parse(newConfig[4].value.expDate + \\\"T\\\" + newConfig[4].value.expTime);\\r\\n            delete newConfig[4].value.expTime;\\r\\n            delete newConfig[4].value.expDate;\\r\\n            newConfig[4].value.expiration = expiration;\\r\\n            newConfig[3].value[newConfig[3].value.findIndex(e => e.type === \\\"event\\\")].expiration = expiration;\\r\\n            console.log(expiration);\\r\\n        }\\r\\n        await callApi(\\\"post\\\", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);\\r\\n        login({ users:true,commands:false });\\r\\n        isSavingConfig = false;\\r\\n    }\\r\\n</script>\\r\\n<style global>\\r\\n    input[type=text] {\\r\\n        @apply py-1 px-2;\\r\\n    }\\r\\n\\r\\n    .input {\\r\\n        @apply w-full text-background bg-font py-3 px-4 rounded;\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    /*.info {\\r\\n        @apply text-lg mt-1;\\r\\n    }*/\\r\\n\\r\\n    .input-header {\\r\\n        @apply text-primary text-3xl;\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n    /*.check {\\r\\n        margin-top: 0.15rem;\\r\\n        margin-right: 0.4rem;\\r\\n    }\\r\\n\\r\\n    .h1, .p {\\r\\n        margin: 0 auto;\\r\\n    }\\r\\n\\r\\n    .h1 {\\r\\n        font-size: 2.8em;\\r\\n        font-weight: 700;\\r\\n        margin: 0 0 0.5em 0;\\r\\n    }\\r\\n\\r\\n    .p {\\r\\n        margin: 1em auto;\\r\\n    }\\r\\n\\r\\n    @media (min-width: 480px) {\\r\\n        .h1 {\\r\\n            font-size: 4em;\\r\\n        }\\r\\n    }*/\\r\\n</style>\\r\\n<svelte:head>\\r\\n    {#if isAuthorizedUser}\\r\\n        <title>Admin dashboard - Winhalla</title>\\r\\n    {:else}\\r\\n        <title>404</title>\\r\\n    {/if}\\r\\n</svelte:head>\\r\\n{#if isAuthorizedUser && !isLoggedIn}\\r\\n    <div>\\r\\n        <div class=\\\"flex items-center justify-center md:h-screen-7\\\">\\r\\n            <div class=\\\"flex flex-col justify-center px-5 md:p-0\\\">\\r\\n                <div class=\\\"text-center md:text-left mt-7 md:mt-12\\\">\\r\\n                    <h1\\r\\n                        class=\\\"text-6xl mb-6 md:mb-8 leading-snug\\r\\n                        md:leading-normal\\\">\\r\\n                        ADMIN DASHBOARD\\r\\n                    </h1>\\r\\n                </div>\\r\\n                <div class=\\\"md:mt-4\\\">\\r\\n                    <p class=\\\"input-header\\\">Password</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            placeholder=\\\"Personal password\\\"\\r\\n                            bind:value={pwd}\\r\\n                            type=\\\"password\\\"\\r\\n                            class=\\\"input-style focus:outline-none\\r\\n                            focus:border-primary placeholder-disabled input\\\" />\\r\\n                    </div>\\r\\n                </div>\\r\\n                <div class=\\\"md:mt-4\\\">\\r\\n                    <p class=\\\"input-header\\\">Authenticator password</p>\\r\\n                    <div>\\r\\n                        <input\\r\\n                            type=\\\"text\\\"\\r\\n                            maxlength=\\\"6\\\"\\r\\n                            placeholder=\\\"Google authenticator OTP\\\"\\r\\n                            bind:value={otp}\\r\\n                            class=\\\"input input-style focus:outline-none\\r\\n                            focus:border-primary placeholder-disabled\\\" />\\r\\n                    </div>\\r\\n                </div>\\r\\n                <button\\r\\n                    on:click={login}\\r\\n                    class=\\\"button button-brand mt-3\\\">\\r\\n                    Login\\r\\n                </button>\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n{:else if isLoggedIn}\\r\\n    {#if !configs}\\r\\n        <div out:fade={{duration:100}} class=\\\"z-50 bg-background absolute\\\">\\r\\n            <Loading data=\\\"Entering super secret page...\\\" />\\r\\n        </div>\\r\\n    {/if}\\r\\n    {#if newConfig }\\r\\n        <div class=\\\"lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full\\\">\\r\\n            <div class=\\\"flex justify-between mb-12\\\">\\r\\n                <h1 class=\\\"text-6xl\\\">ADMIN DASHBOARD</h1>\\r\\n                <button class=\\\"button button-brand\\\" on:click={logout}>Logout</button>\\r\\n            </div>\\r\\n\\r\\n            <h2 class=\\\"text-3xl mb-2\\\">View :\\r\\n                <strong class=\\\"text-3xl cursor-pointer font-normal\\\" class:text-primary={activePanel === \\\"config\\\"}\\r\\n                        class:text-4xl={activePanel === \\\"config\\\"} on:click={()=>activePanel = \\\"config\\\"}>CONFIG</strong>,\\r\\n                <strong class=\\\"text-3xl cursor-pointer font-normal\\\" class:text-primary={activePanel === \\\"users\\\"}\\r\\n                        class:text-4xl={activePanel === \\\"users\\\"}\\r\\n                        on:click={()=>{activePanel = \\\"users\\\";if(!users)loadUsers()}}>USERS</strong>,\\r\\n                <strong class=\\\"text-3xl cursor-pointer font-normal\\\" class:text-primary={activePanel === \\\"commands\\\"}\\r\\n                        class:text-4xl={activePanel === \\\"commands\\\"}\\r\\n                        on:click={()=>{activePanel = \\\"commands\\\";if(!commands)loadCommands()}}>COMMANDS</strong>\\r\\n            </h2>\\r\\n            <div class=\\\"w-full\\\">\\r\\n                {#if configs && activePanel === \\\"config\\\"}\\r\\n                    <ConfigEditor bind:popup={popup} bind:newConfig={newConfig} bind:goldEvent={goldEvent}\\r\\n                                  bind:bannedOnes={bannedOnes} otp={otp} pwd={pwd} bind:infoDates={infoDates} />\\r\\n                {:else if activePanel === \\\"users\\\"}\\r\\n                    {#if !loadingUsers}\\r\\n                        <UsersConfig bind:users={users} bind:suspiciousBitches={suspiciousBitches}\\r\\n                                     totalCoins={totalCoins} pwd={pwd} otp={otp} sortArrays={sortArrays} />\\r\\n                    {:else}\\r\\n                        <RefreshButton isRefreshing refreshMessage=\\\"{'Loading...'}\\\" />\\r\\n                    {/if}\\r\\n                {:else if activePanel === \\\"commands\\\"}\\r\\n                    {#if !commands}\\r\\n                        <RefreshButton isRefreshing refreshMessage=\\\"{'Loading...'}\\\" />\\r\\n                    {:else}\\r\\n                        <div class=\\\"content-center\\\">\\r\\n                            <UsersArray color=\\\"blue\\\" users=\\\"{commands}\\\" type=\\\"simple\\\" pwd=\\\"{pwd}\\\" otp={otp} />\\r\\n                        </div>\\r\\n                    {/if}\\r\\n                {/if}\\r\\n\\r\\n\\r\\n                <PopupAdmin bind:popup={popup} bind:configs={configs} bind:newConfig={newConfig} pwd={pwd} otp={otp} />\\r\\n            </div>\\r\\n        </div>\\r\\n        {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(configs.map(e => e.value))}\\r\\n            <div\\r\\n                class=\\\"fixed top-screen-90 w-full\\\">\\r\\n                <div transition:fly|local={{y:150, duration:500}}\\r\\n                     class=\\\"flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%\\\">\\r\\n                    <p class=\\\"my-auto\\\">Carefully, you have unsaved changes</p>\\r\\n                    <div class=\\\"flex\\\">\\r\\n                        <button class=\\\"button button-brand border border-primary mr-2\\\"\\r\\n                                style=\\\"background-color: #000000;padding: -1px\\\"\\r\\n                                on:click={resetConfig}>\\r\\n                            Reset changes\\r\\n                        </button>\\r\\n                        <RefreshButton on:click={saveConfig} refreshMessage=\\\"Save changes\\\"\\r\\n                                       onRefreshMessage=\\\"Saving...\\\" isRefreshing={isSavingConfig} />\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        {/if}\\r\\n    {/if}\\r\\n\\r\\n{:else}\\r\\n    <h1 class=\\\"h1\\\">404</h1>\\r\\n    <p class=\\\"p\\\">Not found</p>\\r\\n{/if}\"],\"names\":[],\"mappings\":\"AAiII,KAAK,CAAC,IAAI,CAAC,IAAI,CAAC,cAAC,CAAC,AACd,OAAO,IAAI,CAAC,IAAI,CAAC,AACrB,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,OAAO,MAAM,CAAC,eAAe,CAAC,OAAO,CAAC,IAAI,CAAC,IAAI,CAAC,OAAO,CAAC,AAC5D,CAAC,AAED,oBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC,AAMD,aAAa,cAAC,CAAC,AACX,OAAO,YAAY,CAAC,QAAQ,CAAC,CAC7B,aAAa,CAAE,OAAO,AAC1B,CAAC\"}"
+};
+
+const Admin = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let configs;
+	let isAuthorizedUser = false;
+	let isLoggedIn = false;
+	let otp = "";
+	let pwd = "a";
+	let users;
+	let activePanel = "config";
+	let newConfig;
+	let goldEvent = [];
+	let suspiciousBitches = [];
+	let suspiciousUsersFound = 0;
+	let bannedOnes = [];
+	let commands;
+	let popup = {};
+	let isSavingConfig;
+	let infoDates = [];
+	let totalCoins = 0;
+
+	async function loadUsers() {
+		suspiciousBitches = [];
+		suspiciousUsersFound = 0;
+		bannedOnes = [];
+		users = await callApi("get", `/feltrom/users?otp=${otp}&pwd=${pwd}`);
+
+		for (let i = 0; i < users.length * 2; i++) {
+			if (!users[i - suspiciousUsersFound]) continue;
+			totalCoins += users[i - suspiciousUsersFound].coins;
+			users[i - suspiciousUsersFound].winrate = Math.round(users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed * 100);
+			if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
+
+			if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
+				suspiciousBitches.push(...users.splice(i - suspiciousUsersFound, 1));
+				suspiciousUsersFound += 1;
+			}
+		}
+
+		sortArrays((a, b) => a.brawlhallaName.localeCompare(b.brawlhallaName));
+		bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
+
+		bannedOnes.forEach((ban, i) => {
+			let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0];
+			let winrate = Math.round(user.stats.ffa.wins / user.stats.ffa.gamesPlayed * 100);
+			if (isNaN(winrate)) winrate = 0;
+			bannedOnes[i] = user;
+			bannedOnes[i].reason = ban.reason;
+			users = users;
+			suspiciousBitches = suspiciousBitches;
+		});
+	}
+
+	async function loadCommands() {
+		commands = await callApi("get", `/feltrom/commands?otp=${otp}&pwd=${pwd}`);
+		commands.sort((a, b) => a.date - b.date);
+	}
+
+	async function login(refresh) {
+		goldEvent = ["", "", "", ""];
+		isLoggedIn = true;
+		configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
+		otp = configs.tempKey;
+		configs = configs.configs;
+		let polls = await callApi("get", `/feltrom/getAllPolls?otp=${otp}&pwd=${pwd}`);
+		configs.push({ name: "POLLS", value: polls });
+		newConfig = configs;
+		configs = JSON.stringify(configs);
+		configs = JSON.parse(configs);
+
+		newConfig[3].value.forEach((e, i) => {
+			infoDates[i] = new Date(e.expiration);
+		});
+
+		if (refresh.users === true) loadUsers();
+		if (refresh.commands === true) loadCommands();
+	}
+
+	function sortArrays(fx) {
+		users.sort(fx);
+		suspiciousBitches.sort(fx);
+	}
+
+	onMount(async () => {
+		isAuthorizedUser = await callApi("get", "/feltrom/login") === true;
+		config.subscribe(login);
+	});
+
+	$$result.css.add(css$e);
+	let $$settled;
+	let $$rendered;
+
+	do {
+		$$settled = true;
+
+		$$rendered = `${($$result.head += `${isAuthorizedUser
+		? `${($$result.title = `<title>Admin dashboard - Winhalla</title>`, "")}`
+		: `${($$result.title = `<title>404</title>`, "")}`}`, "")}
+${isAuthorizedUser && !isLoggedIn
+		? `<div><div class="${"flex items-center justify-center md:h-screen-7"}"><div class="${"flex flex-col justify-center px-5 md:p-0"}"><div class="${"text-center md:text-left mt-7 md:mt-12"}"><h1 class="${"text-6xl mb-6 md:mb-8 leading-snug\r\n                        md:leading-normal"}">ADMIN DASHBOARD
+                    </h1></div>
+                <div class="${"md:mt-4"}"><p class="${"input-header svelte-4smvjn"}">Password</p>
+                    <div><input placeholder="${"Personal password"}" type="${"password"}" class="${"input-style focus:outline-none\r\n                            focus:border-primary placeholder-disabled input svelte-4smvjn"}"${add_attribute("value", pwd, 1)}></div></div>
+                <div class="${"md:mt-4"}"><p class="${"input-header svelte-4smvjn"}">Authenticator password</p>
+                    <div><input type="${"text"}" maxlength="${"6"}" placeholder="${"Google authenticator OTP"}" class="${"input input-style focus:outline-none\r\n                            focus:border-primary placeholder-disabled svelte-4smvjn"}"${add_attribute("value", otp, 1)}></div></div>
+                <button class="${"button button-brand mt-3 svelte-4smvjn"}">Login
+                </button></div></div></div>`
+		: `${isLoggedIn
+			? `${!configs
+				? `<div class="${"z-50 bg-background absolute"}">${validate_component(Loading, "Loading").$$render($$result, { data: "Entering super secret page..." }, {}, {})}</div>`
+				: ``}
+    ${newConfig
+				? `<div class="${"lg:block lg:pl-24 lg:pr-24 mt-7 lg:mt-12 h-full w-full"}"><div class="${"flex justify-between mb-12"}"><h1 class="${"text-6xl"}">ADMIN DASHBOARD</h1>
+                <button class="${"button button-brand svelte-4smvjn"}">Logout</button></div>
+
+            <h2 class="${"text-3xl mb-2"}">View :
+                <strong class="${[
+						"text-3xl cursor-pointer font-normal",
+						( "text-primary" ) + " " + ( "text-4xl" )
+					].join(" ").trim()}">CONFIG</strong>,
+                <strong class="${[
+						"text-3xl cursor-pointer font-normal",
+						( "") + " " + ( "")
+					].join(" ").trim()}">USERS</strong>,
+                <strong class="${[
+						"text-3xl cursor-pointer font-normal",
+						( "") + " " + ( "")
+					].join(" ").trim()}">COMMANDS</strong></h2>
+            <div class="${"w-full"}">${configs && activePanel === "config"
+					? `${validate_component(ConfigEditor, "ConfigEditor").$$render(
+							$$result,
+							{
+								otp,
+								pwd,
+								popup,
+								newConfig,
+								goldEvent,
+								bannedOnes,
+								infoDates
+							},
+							{
+								popup: $$value => {
+									popup = $$value;
+									$$settled = false;
+								},
+								newConfig: $$value => {
+									newConfig = $$value;
+									$$settled = false;
+								},
+								goldEvent: $$value => {
+									goldEvent = $$value;
+									$$settled = false;
+								},
+								bannedOnes: $$value => {
+									bannedOnes = $$value;
+									$$settled = false;
+								},
+								infoDates: $$value => {
+									infoDates = $$value;
+									$$settled = false;
+								}
+							},
+							{}
+						)}`
+					: `${ `${ ``}`}`}
+
+
+                ${validate_component(PopupAdmin, "PopupAdmin").$$render(
+						$$result,
+						{ pwd, otp, popup, configs, newConfig },
+						{
+							popup: $$value => {
+								popup = $$value;
+								$$settled = false;
+							},
+							configs: $$value => {
+								configs = $$value;
+								$$settled = false;
+							},
+							newConfig: $$value => {
+								newConfig = $$value;
+								$$settled = false;
+							}
+						},
+						{}
+					)}</div></div>
+        ${JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(configs.map(e => e.value))
+					? `<div class="${"fixed top-screen-90 w-full"}"><div class="${"flex justify-between content-center rounded mx-auto bg-black border border-legendary px-6 py-3 w-90%"}"><p class="${"my-auto"}">Carefully, you have unsaved changes</p>
+                    <div class="${"flex"}"><button class="${"button button-brand border border-primary mr-2 svelte-4smvjn"}" style="${"background-color: #000000;padding: -1px"}">Reset changes
+                        </button>
+                        ${validate_component(RefreshButton, "RefreshButton").$$render(
+							$$result,
+							{
+								refreshMessage: "Save changes",
+								onRefreshMessage: "Saving...",
+								isRefreshing: isSavingConfig
+							},
+							{},
+							{}
+						)}</div></div></div>`
+					: ``}`
+				: ``}`
+			: `<h1 class="${"h1"}">404</h1>
+    <p class="${"p"}">Not found</p>`}`}`;
+	} while (!$$settled);
+
+	return $$rendered;
+});
+
+var component_4 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': Admin
+});
+
 /* src\routes\offline.svelte generated by Svelte v3.31.0 */
 
 const Offline = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	return ``;
 });
 
-var component_4 = /*#__PURE__*/Object.freeze({
+var component_5 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Offline
 });
@@ -1362,7 +2300,7 @@ const Privacy = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	return `${($$result.head += `${($$result.title = `<title>Privacy policy | Winhalla</title>`, "")}`, "")}`;
 });
 
-var component_5 = /*#__PURE__*/Object.freeze({
+var component_6 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Privacy
 });
@@ -1392,7 +2330,7 @@ const Status = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: ``}`;
 });
 
-var component_6 = /*#__PURE__*/Object.freeze({
+var component_7 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Status
 });
@@ -1407,7 +2345,7 @@ const About = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 <p>This is the &#39;about&#39; page. There&#39;s not much here.</p>`;
 });
 
-var component_7 = /*#__PURE__*/Object.freeze({
+var component_8 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': About
 });
@@ -1418,28 +2356,39 @@ const Terms = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	return `${($$result.head += `${($$result.title = `<title>Terms of use | Winhalla</title>`, "")}`, "")}`;
 });
 
-var component_8 = /*#__PURE__*/Object.freeze({
+var component_9 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Terms
 });
 
-/* src\routes\tests.svelte generated by Svelte v3.31.0 */
+/* src\routes\tests\[id].svelte generated by Svelte v3.31.0 */
 
-const Tests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let $counter = get_store_value(counter);
+const U5Bidu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let $page;
+	const { page } = stores$1();
+	$page = get_store_value(page);
+	let id;
 
-	return `
+	page.subscribe(value => {
+		console.log(value.params.id);
+		id = value.params.id;
+	});
 
+	onMount(() => {
+		id = document.location.pathname.split("/");
+		id = id[id.length - 1];
+	});
 
+	$page = get_store_value(page);
 
-<div><button>Reset</button>
-    <button>Update</button>
-    ${escape($counter.content)}</div>`;
+	return `<div class="${"block m-20"}">${each([1, 2, 3, 4, 5, 6, 7, 8, 9], number => `<a href="${"/tests/" + escape(number)}">${escape(number)}</a> <br>`)}
+    ${escape(id)}
+    ${escape($page)}</div>`;
 });
 
-var component_9 = /*#__PURE__*/Object.freeze({
+var component_10 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    'default': Tests
+    'default': U5Bidu5D
 });
 
 /* src\routes\help.svelte generated by Svelte v3.31.0 */
@@ -1448,7 +2397,7 @@ const Help = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	return `${($$result.head += `${($$result.title = `<title>How it works | Winhalla</title>`, "")}`, "")}`;
 });
 
-var component_10 = /*#__PURE__*/Object.freeze({
+var component_11 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Help
 });
@@ -1460,39 +2409,34 @@ async function preload$1({ params, query }) {
 	this.redirect(302, `create-account?link=https://winhalla.appspot.com/link/${id}`);
 }
 
-const U5Bidu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	return `Redirecting to <a href="${"https://winhalla.appspot.com/create-account"}">https://winhalla.appspot.com/create-account</a>`;
+const U5Bidu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	return `${($$result.head += `${($$result.title = `<title>Redirecting...</title>`, "")}`, "")}
+Redirecting to <a href="${"https://winhalla.appspot.com/create-account"}" class="${"text-primary underline"}">https://winhalla.app.com/create-account</a>`;
 });
 
-var component_11 = /*#__PURE__*/Object.freeze({
+var component_12 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    'default': U5Bidu5D,
+    'default': U5Bidu5D$1,
     preload: preload$1
 });
 
-/* src\components\RefreshButton.svelte generated by Svelte v3.31.0 */
+/* src\components\Infos.svelte generated by Svelte v3.31.0 */
 
-const css$b = {
-	code: ".refresh-button.svelte-rn9nnu.svelte-rn9nnu{@apply flex px-7 items-center;}.refresh-button.svelte-rn9nnu div.svelte-rn9nnu{margin-top:-0.185rem}.refresh-button.svelte-rn9nnu svg.svelte-rn9nnu{@apply fill-current text-font w-5 animate-spin left-4;}",
-	map: "{\"version\":3,\"file\":\"RefreshButton.svelte\",\"sources\":[\"RefreshButton.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let isRefreshing;\\r\\n    export let refreshMessage;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .refresh-button {\\r\\n        @apply flex px-7 items-center;\\r\\n    }\\r\\n\\r\\n    .refresh-button div {\\r\\n        margin-top: -0.185rem;\\r\\n    }\\r\\n    .refresh-button svg {\\r\\n        @apply fill-current text-font w-5 animate-spin left-4;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<button class=\\\"button button-brand refresh-button focus:outline-none\\\" on:click>\\r\\n    <div class:hidden={!isRefreshing} class=\\\"block\\\">\\r\\n        <svg viewBox=\\\"0 0 21 24\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n            <path\\r\\n                d=\\\"m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z\\\" />\\r\\n        </svg>\\r\\n    </div>\\r\\n    <p class:pl-3={isRefreshing} class=\\\"pl-3\\\">\\r\\n        {isRefreshing ? 'Refreshing' : refreshMessage}\\r\\n    </p>\\r\\n</button>\\r\\n\"],\"names\":[],\"mappings\":\"AAMI,eAAe,4BAAC,CAAC,AACb,OAAO,IAAI,CAAC,IAAI,CAAC,YAAY,CAAC,AAClC,CAAC,AAED,6BAAe,CAAC,GAAG,cAAC,CAAC,AACjB,UAAU,CAAE,SAAS,AACzB,CAAC,AACD,6BAAe,CAAC,GAAG,cAAC,CAAC,AACjB,OAAO,YAAY,CAAC,SAAS,CAAC,GAAG,CAAC,YAAY,CAAC,MAAM,CAAC,AAC1D,CAAC\"}"
-};
+const Infos = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { pushError } = $$props;
+	let { message } = $$props;
+	if ($$props.pushError === void 0 && $$bindings.pushError && pushError !== void 0) $$bindings.pushError(pushError);
+	if ($$props.message === void 0 && $$bindings.message && message !== void 0) $$bindings.message(message);
 
-const RefreshButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { isRefreshing } = $$props;
-	let { refreshMessage } = $$props;
-	if ($$props.isRefreshing === void 0 && $$bindings.isRefreshing && isRefreshing !== void 0) $$bindings.isRefreshing(isRefreshing);
-	if ($$props.refreshMessage === void 0 && $$bindings.refreshMessage && refreshMessage !== void 0) $$bindings.refreshMessage(refreshMessage);
-	$$result.css.add(css$b);
-
-	return `<button class="${"button button-brand refresh-button focus:outline-none svelte-rn9nnu"}"><div class="${["block svelte-rn9nnu", !isRefreshing ? "hidden" : ""].join(" ").trim()}"><svg viewBox="${"0 0 21 24"}" xmlns="${"http://www.w3.org/2000/svg"}" class="${"svelte-rn9nnu"}"><path d="${"m7.5 21 2.999-3v1.5c4.143 0 7.501-3.359 7.501-7.502 0-2.074-.842-3.952-2.202-5.309l2.114-2.124c1.908 1.901 3.088 4.531 3.088 7.437 0 5.798-4.7 10.498-10.498 10.498-.001 0-.001 0-.002 0v1.5zm-7.5-9c.007-5.796 4.704-10.493 10.499-10.5h.001v-1.5l3 3-3 3v-1.5s-.001 0-.002 0c-4.143 0-7.502 3.359-7.502 7.502 0 2.074.842 3.952 2.203 5.31l-2.112 2.124c-1.907-1.89-3.088-4.511-3.088-7.407 0-.01 0-.02 0-.03v.002z"}"></path></svg></div>
-    <p class="${["pl-3", isRefreshing ? "pl-3" : ""].join(" ").trim()}">${escape(isRefreshing ? "Refreshing" : refreshMessage)}</p></button>`;
+	return `<div class="${"z-20 absolute right-0 top-5 lg:top-30 mr-5 lg:mr-8 lg:mr-6 w-auto h-auto p-7 bg-background border rounded-lg border-primary"}"><h3 class="${"text-primary text-3xl"}">${escape(message)}</h3>
+    <p class="${"text-white text-2xl"}">${escape(pushError)}</p></div>`;
 });
 
 /* src\components\Quests.svelte generated by Svelte v3.31.0 */
 
-const css$c = {
-	code: ".quest.svelte-dhexfd.svelte-dhexfd{border-radius:10px;@apply relative overflow-hidden w-full my-4;}.quest-infos.svelte-dhexfd.svelte-dhexfd{@apply flex justify-between px-7 py-6;}.progress-container.svelte-dhexfd.svelte-dhexfd{@apply flex items-center;}svg.svelte-dhexfd.svelte-dhexfd{margin-bottom:0.15rem}.checkbox-active.svelte-dhexfd.svelte-dhexfd{width:1.1rem}.quest.svelte-dhexfd:hover span.svelte-dhexfd{left:0}span.svelte-dhexfd.svelte-dhexfd{left:-100%;transition:left 0.28s ease-in-out;width:100%;@apply absolute h-full top-0 bg-background flex items-center justify-center text-center;}.tip-text.svelte-dhexfd.svelte-dhexfd{padding-top:0.15rem}.text-light.svelte-dhexfd.svelte-dhexfd{color:#e2e2ea}",
-	map: "{\"version\":3,\"file\":\"Quests.svelte\",\"sources\":[\"Quests.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { callApi } from \\\"../utils/api\\\";\\r\\n    import RefreshButton from \\\"./RefreshButton.svelte\\\";\\r\\n    import { counter } from \\\"./store\\\";\\r\\n\\r\\n    let countDown = [{}, {}];\\r\\n    export let data;\\r\\n    let error;\\r\\n    const calculateRarity = (reward, daily) => {\\r\\n        if (daily) {\\r\\n            if (reward == 100) return \\\"primary\\\";\\r\\n            if (reward == 200) return \\\"epic\\\";\\r\\n            if (reward == 400) return \\\"legendary\\\";\\r\\n        } else {\\r\\n            if (reward == 300) return \\\"primary\\\";\\r\\n            if (reward == 500) return \\\"epic\\\";\\r\\n            if (reward == 1000) return \\\"legendary\\\";\\r\\n        }\\r\\n    };\\r\\n\\r\\n    const calculateProgressBarWidth = (progress, goal) => {\\r\\n        const calculatedProgress = (progress / goal) * 100;\\r\\n        if (calculatedProgress < 0) {\\r\\n            return 2;\\r\\n        } else {\\r\\n            return calculatedProgress;\\r\\n        }\\r\\n    };\\r\\n\\r\\n    function startTimer(duration, i) {\\r\\n        let timer = duration,\\r\\n            days,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n\\r\\n        function calculateTime() {\\r\\n            if (--timer < 0) {\\r\\n                countDown.finished = true;\\r\\n                countDown[i].timer = \\\"Refresh for new quests\\\";\\r\\n                return;\\r\\n            }\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n            days = Math.floor(hours / 24);\\r\\n\\r\\n            hours = hours - days * 24;\\r\\n            hours = hours < 10 ? \\\"0\\\" + hours : hours;\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n            let errDetected\\r\\n            let vars = [hours,minutes,days,seconds]\\r\\n            for(let i=0;i<4;i++) {\\r\\n                if(vars[i]==undefined || isNaN(vars[i])) errDetected = true\\r\\n            }\\r\\n            if (errDetected) {\\r\\n                countDown[i].timer = \\\"Oops error :(\\\"\\r\\n                return countDown[i].speed = \\\"legendary\\\"\\r\\n            }\\r\\n            countDown[i].timer =\\r\\n                days != 0\\r\\n                    ? days + \\\":\\\" + hours + \\\":\\\" + minutes + \\\":\\\" + seconds\\r\\n                    : hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n            countDown[i].speed =\\r\\n                hours >= 6 || days > 0\\r\\n                    ? \\\"primary\\\"\\r\\n                    : hours >= 1\\r\\n                    ? \\\"accent\\\"\\r\\n                    : \\\"legendary\\\";\\r\\n        }\\r\\n\\r\\n        calculateTime();\\r\\n        setInterval(calculateTime, 1000);\\r\\n    }\\r\\n\\r\\n    try {\\r\\n        for (let i = 0; i < 2; i++) {\\r\\n            let d = i === 0 ? data.lastDaily : data.lastWeekly;\\r\\n            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;\\r\\n            if (endsIn < 1) {\\r\\n                countDown[i] = \\\"\\\";\\r\\n            } else {\\r\\n                startTimer(endsIn, i);\\r\\n            }\\r\\n        }\\r\\n    } catch (e) {\\r\\n        error = e;\\r\\n    }\\r\\n\\r\\n    function calculateOrder(object) {\\r\\n        //Reorder quests by rarety\\r\\n        if (object.dailyQuests) {\\r\\n            object.dailyQuests.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.finished && object.finished.daily) {\\r\\n            object.finished.daily.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.weeklyQuests) {\\r\\n            object.weeklyQuests.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.finished && object.finished.weekly) {\\r\\n            object.finished.weekly.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n    }\\r\\n\\r\\n    data = data;\\r\\n    calculateOrder(data);\\r\\n    let isRefreshingQuests = false;\\r\\n    const handleRefresh = async () => {\\r\\n        isRefreshingQuests = true;\\r\\n\\r\\n        const refreshedData = await callApi(\\\"get\\\", \\\"solo\\\");\\r\\n        console.log(refreshedData);\\r\\n        calculateOrder(refreshedData.solo);\\r\\n        data = refreshedData.solo;\\r\\n\\r\\n        isRefreshingQuests = false;\\r\\n    };\\r\\n\\r\\n    async function collect(type, index) {\\r\\n        await callApi(\\\"post\\\", `solo/collect?type=${type}&index=${index}`);\\r\\n        counter.set({ \\\"refresh\\\": true });\\r\\n        data.collected[type].push(...data.finished[type].splice(index, 1));\\r\\n        data = data;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .quest {\\r\\n        border-radius: 10px;\\r\\n        @apply relative overflow-hidden w-full my-4;\\r\\n    }\\r\\n\\r\\n    .quest-infos {\\r\\n        @apply flex justify-between px-7 py-6;\\r\\n    }\\r\\n\\r\\n    .progress-container {\\r\\n        @apply flex items-center;\\r\\n    }\\r\\n\\r\\n    svg {\\r\\n        margin-bottom: 0.15rem;\\r\\n    }\\r\\n\\r\\n    .checkbox-active {\\r\\n        width: 1.1rem;\\r\\n    }\\r\\n\\r\\n    .quest:hover span {\\r\\n        left: 0;\\r\\n    }\\r\\n\\r\\n    span {\\r\\n        left: -100%;\\r\\n        transition: left 0.28s ease-in-out;\\r\\n        width: 100%;\\r\\n        @apply absolute h-full top-0 bg-background flex items-center justify-center text-center;\\r\\n    }\\r\\n\\r\\n    .tip-text {\\r\\n        padding-top: 0.15rem;\\r\\n    }\\r\\n\\r\\n    .text-light {\\r\\n        color: #e2e2ea;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<!--TODO: Afficher reward des quêtes sur mobile-->\\r\\n<div>\\r\\n    {#if error}\\r\\n        <p class=\\\"text-legendary w-full\\\">An error has been detected by our fellow erroR0B0T, quests might show\\r\\n            wierdly. </p>\\r\\n        <p class=\\\"text-xl\\\" style=\\\"color: #666666\\\"><b class=\\\"font-normal\\\" style=\\\"color: #aaaaaa\\\">Details:</b> {error}</p>\\r\\n    {/if}\\r\\n    <div class=\\\"container md:flex mt-7 md:mt-20 lg:mt-7 w-auto\\\">\\r\\n        <div\\r\\n            class=\\\"ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8\\\">\\r\\n            <div class=\\\"lg:flex\\\">\\r\\n                <h2 class=\\\"text-6xl text-center lg:text-left\\\">Daily Quests</h2>\\r\\n                <p\\r\\n                    class=\\\"text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none\\r\\n                    lg:pt-6\\\" class:text-xl={countDown[0].finished}>\\r\\n                    {#if countDown[0].timer} {countDown[0].timer} {/if}\\r\\n                </p>\\r\\n            </div>\\r\\n            <div class=\\\"quests-container\\\">\\r\\n                {#if data.finished && data.finished.daily}\\r\\n                    <div class=\\\"pb-1 \\\">\\r\\n                        {#each data.finished.daily as quest, i}\\r\\n                            <button\\r\\n                                on:click={() => collect('daily', i)}\\r\\n                                class=\\\"card quest finished border-2 border-{calculateRarity(quest.reward, true)}\\r\\n                                max-w-sm mx-auto lg:mx-0 block\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span>Click to collect</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current checkbox-active\\r\\n                                            text-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                            viewBox=\\\"0 0 27 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Click to collect\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"line-through\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                            </button>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.dailyQuests}\\r\\n                    <div>\\r\\n                        {#each data.dailyQuests as quest}\\r\\n                            <div class=\\\"relative card quest max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span\\r\\n                                        class=\\\"text-{calculateRarity(quest.reward, true)}\\\">{quest.reward}$</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current w-4 text-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                            viewBox=\\\"0 0 25 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            {quest.progress}/{quest.goal}\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n                                    <p class=\\\"\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                                <div\\r\\n                                    class=\\\"absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                    style=\\\"width: {calculateProgressBarWidth(quest.progress, quest.goal)}%\\\" />\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.collected && data.collected.daily}\\r\\n                    <div class=\\\"pt-5\\\">\\r\\n                        {#each data.collected.daily as quest}\\r\\n                            <div\\r\\n                                class=\\\"card quest text-disabled italic max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <p class=\\\"mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Collected\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n        <div\\r\\n            class=\\\"ml-5 mr-5 mt-12 md:ml-5 md:mr-0\\r\\n            md:mt-0\\\">\\r\\n            <div class=\\\"lg:flex\\\">\\r\\n                <h2 class=\\\"text-6xl text-center lg:text-left\\\">Weekly Quests</h2>\\r\\n                <p\\r\\n                    class=\\\"text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none\\r\\n                    lg:pt-6\\\" class:text-xl={countDown[1].finished}>\\r\\n                    {#if countDown[1].timer} {countDown[1].timer} {/if}\\r\\n                </p>\\r\\n            </div>\\r\\n            <div class=\\\"quests-container\\\">\\r\\n                {#if data.finished && data.finished.weekly}\\r\\n                    <div class=\\\"pb-1\\\">\\r\\n                        {#each data.finished.weekly as quest, i}\\r\\n                            <button\\r\\n                                on:click={() => collect('weekly', i)}\\r\\n                                class=\\\"card quest finished border-2 border-{calculateRarity(quest.reward, false)} max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span>Click to collect</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current checkbox-active\\r\\n                                            text-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                            viewBox=\\\"0 0 27 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Click to collect\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </button>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.weeklyQuests}\\r\\n                    <div>\\r\\n                        {#each data.weeklyQuests as quest}\\r\\n                            <div class=\\\"relative card quest max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span\\r\\n                                        class=\\\"text-{calculateRarity(quest.reward, false)}\\\">{quest.reward}$</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current w-4 text-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                            viewBox=\\\"0 0 25 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            {quest.progress}/{quest.goal}\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n                                    <p class=\\\"quest-goal\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                                <div\\r\\n                                    class=\\\"absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                    style=\\\"width: {calculateProgressBarWidth(quest.progress, quest.goal)}%\\\" />\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n                {#if data.collected && data.collected.weekly}\\r\\n                    <div class=\\\"pt-5\\\">\\r\\n                        {#each data.collected.weekly as quest}\\r\\n                            <div\\r\\n                                class=\\\"card quest text-disabled italic max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <p class=\\\"mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Collected\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n    <div\\r\\n        class=\\\"flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4 ml-5 lg:ml-0\\\">\\r\\n        <RefreshButton\\r\\n            on:click={() => handleRefresh()}\\r\\n            isRefreshing={isRefreshingQuests}\\r\\n            refreshMessage={'Refresh quests data'} />\\r\\n\\r\\n        <div class=\\\"flex lg:ml-8 items-center mt-4 lg:mt-0\\\">\\r\\n            <!--<div class=\\\"flex items-center \\\">\\r\\n                <div class=\\\"py-2 px-2 rounded-full bg-primary\\\">\\r\\n                    <svg\\r\\n                        class=\\\"w-3 h-3 fill-current\\\"\\r\\n                        viewBox=\\\"0 0 17 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z\\\"/>\\r\\n                    </svg>\\r\\n                </div>\\r\\n            </div>-->\\r\\n            <svg\\r\\n                xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                class=\\\"w-9 text-primary\\\"\\r\\n                viewBox=\\\"0 0 576 512\\\">\\r\\n                <path\\r\\n                    fill=\\\"currentColor\\\"\\r\\n                    d=\\\"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z\\\" />\\r\\n            </svg>\\r\\n            <p class=\\\"text-lg ml-3 lg:ml-2 tip-text text-light\\\">\\r\\n                Daily and Weekly quests data may take up to 30 minutes to\\r\\n                refresh\\r\\n            </p>\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n<div hidden class=\\\"bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90\\\"></div>\"],\"names\":[],\"mappings\":\"AA4II,MAAM,4BAAC,CAAC,AACJ,aAAa,CAAE,IAAI,CACnB,OAAO,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,IAAI,CAAC,AAChD,CAAC,AAED,YAAY,4BAAC,CAAC,AACV,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,AAC1C,CAAC,AAED,mBAAmB,4BAAC,CAAC,AACjB,OAAO,IAAI,CAAC,YAAY,CAAC,AAC7B,CAAC,AAED,GAAG,4BAAC,CAAC,AACD,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,gBAAgB,4BAAC,CAAC,AACd,KAAK,CAAE,MAAM,AACjB,CAAC,AAED,oBAAM,MAAM,CAAC,IAAI,cAAC,CAAC,AACf,IAAI,CAAE,CAAC,AACX,CAAC,AAED,IAAI,4BAAC,CAAC,AACF,IAAI,CAAE,KAAK,CACX,UAAU,CAAE,IAAI,CAAC,KAAK,CAAC,WAAW,CAClC,KAAK,CAAE,IAAI,CACX,OAAO,QAAQ,CAAC,MAAM,CAAC,KAAK,CAAC,aAAa,CAAC,IAAI,CAAC,YAAY,CAAC,cAAc,CAAC,WAAW,CAAC,AAC5F,CAAC,AAED,SAAS,4BAAC,CAAC,AACP,WAAW,CAAE,OAAO,AACxB,CAAC,AAED,WAAW,4BAAC,CAAC,AACT,KAAK,CAAE,OAAO,AAClB,CAAC\"}"
+const css$f = {
+	code: ".quest.svelte-t2bftp.svelte-t2bftp{border-radius:10px;@apply relative overflow-hidden w-full my-4;}.quest-infos.svelte-t2bftp.svelte-t2bftp{@apply flex justify-between px-7 py-6;}.progress-container.svelte-t2bftp.svelte-t2bftp{@apply flex items-center;}svg.svelte-t2bftp.svelte-t2bftp{margin-bottom:0.15rem}.checkbox-active.svelte-t2bftp.svelte-t2bftp{width:1.1rem}.quest.svelte-t2bftp:hover span.svelte-t2bftp{left:0}span.svelte-t2bftp.svelte-t2bftp{left:-100%;transition:left 0.28s ease-in-out;width:100%;@apply absolute h-full top-0 bg-background flex items-center justify-center text-center;}.tip-text.svelte-t2bftp.svelte-t2bftp{padding-top:0.15rem}.text-light.svelte-t2bftp.svelte-t2bftp{color:#e2e2ea}",
+	map: "{\"version\":3,\"file\":\"Quests.svelte\",\"sources\":[\"Quests.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { callApi, getUser } from \\\"../utils/api\\\";\\r\\n    import RefreshButton from \\\"./RefreshButton.svelte\\\";\\r\\n    import { counter } from \\\"./store\\\";\\r\\n    import { onMount, onDestroy } from \\\"svelte\\\";\\r\\n    import io from \\\"socket.io-client\\\";\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n    import Infos from \\\"./Infos.svelte\\\";\\r\\n    import ErrorAlert from \\\"./ErrorAlert.svelte\\\";\\r\\n\\r\\n    let countDown = [{}, {}];\\r\\n    export let data;\\r\\n    let error;\\r\\n    let socket;\\r\\n    let adError;\\r\\n    let info;\\r\\n    let user;\\r\\n    let waitingAd;\\r\\n    let waitingAdAccept = false;\\r\\n    let interval;\\r\\n\\r\\n    const calculateRarity = (reward, daily) => {\\r\\n        if (daily) {\\r\\n            if (reward == 100) return \\\"primary\\\";\\r\\n            if (reward == 200) return \\\"epic\\\";\\r\\n            if (reward == 400) return \\\"legendary\\\";\\r\\n        } else {\\r\\n            if (reward == 300) return \\\"primary\\\";\\r\\n            if (reward == 500) return \\\"epic\\\";\\r\\n            if (reward == 1000) return \\\"legendary\\\";\\r\\n        }\\r\\n    };\\r\\n\\r\\n    const calculateProgressBarWidth = (progress, goal) => {\\r\\n        const calculatedProgress = (progress / goal) * 100;\\r\\n        if (calculatedProgress < 0) {\\r\\n            return 2;\\r\\n        } else {\\r\\n            return calculatedProgress;\\r\\n        }\\r\\n    };\\r\\n\\r\\n    function startTimer(duration, i) {\\r\\n        let timer = duration,\\r\\n            days,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n\\r\\n        function calculateTime() {\\r\\n            if (--timer < 0) {\\r\\n                countDown.finished = true;\\r\\n                countDown[i].timer = \\\"Refresh for new quests\\\";\\r\\n                return;\\r\\n            }\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n            days = Math.floor(hours / 24);\\r\\n\\r\\n            hours = hours - days * 24;\\r\\n            hours = hours < 10 ? \\\"0\\\" + hours : hours;\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n            let errDetected;\\r\\n            let vars = [hours, minutes, days, seconds];\\r\\n            for (let i = 0; i < 4; i++) {\\r\\n                if (vars[i] == undefined || isNaN(vars[i])) errDetected = true;\\r\\n            }\\r\\n            if (errDetected) {\\r\\n                countDown[i].timer = \\\"Refreshing...\\\";\\r\\n                return countDown[i].speed = \\\"legendary\\\";\\r\\n            }\\r\\n            countDown[i].timer =\\r\\n                days != 0\\r\\n                    ? days + \\\":\\\" + hours + \\\":\\\" + minutes + \\\":\\\" + seconds\\r\\n                    : hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n            countDown[i].speed =\\r\\n                hours >= 6 || days > 0\\r\\n                    ? \\\"primary\\\"\\r\\n                    : hours >= 1\\r\\n                    ? \\\"accent\\\"\\r\\n                    : \\\"legendary\\\";\\r\\n        }\\r\\n\\r\\n        calculateTime();\\r\\n        setInterval(calculateTime, 1000);\\r\\n    }\\r\\n\\r\\n    try {\\r\\n        for (let i = 0; i < 2; i++) {\\r\\n            let d = i === 0 ? data.lastDaily : data.lastWeekly;\\r\\n            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;\\r\\n            if (endsIn < 1) {\\r\\n                countDown[i] = \\\"\\\";\\r\\n            } else {\\r\\n                startTimer(endsIn, i);\\r\\n            }\\r\\n        }\\r\\n    } catch (e) {\\r\\n        error = e;\\r\\n    }\\r\\n    onMount(async () => {\\r\\n        user = await getUser();\\r\\n        socket = io.io(apiUrl);\\r\\n        let stop = 0;\\r\\n        let advideostate = 0;\\r\\n        let tempNb;\\r\\n        let goal;\\r\\n        interval = setInterval(() => {\\r\\n            try {\\r\\n                if (stop > 0) {\\r\\n                    return stop--;\\r\\n                }\\r\\n                tempNb = JSON.parse(document.getElementById(\\\"transfer\\\").value);\\r\\n                goal = tempNb.goal ? tempNb.goal : goal;\\r\\n                tempNb = tempNb.state;\\r\\n                if (tempNb !== advideostate) {\\r\\n                    socket.emit(\\\"advideo\\\", tempNb === 1 ? {\\r\\n                        state: 1,\\r\\n                        steamId: user.steam.id,\\r\\n                        shopItemId: 0,\\r\\n                        goal: goal\\r\\n                    } : { state: tempNb, steamId: user.steam.id });\\r\\n                }\\r\\n                advideostate = tempNb;\\r\\n            } catch (e) {\\r\\n                \\r\\n            }\\r\\n        }, 1200);\\r\\n        socket.on(\\\"advideo\\\", async (e) => {\\r\\n            console.log(e);\\r\\n            if (e.code === \\\"error\\\") {\\r\\n                console.log(e.message);\\r\\n                stop = 2;\\r\\n                advideostate = 0;\\r\\n                tempNb = 0;\\r\\n                adError = e.message;\\r\\n                setTimeout(() => {\\r\\n                    adError = undefined;\\r\\n                }, 12000);\\r\\n            } else if (e.code === \\\"success\\\") {\\r\\n                stop = 2;\\r\\n                info = e.message;\\r\\n                advideostate = 0;\\r\\n                tempNb;\\r\\n                setTimeout(() => {\\r\\n                    info = undefined;\\r\\n                }, 5000);\\r\\n                counter.set({ refresh: true });\\r\\n                if (waitingAd) {\\r\\n                    collect(waitingAd.type, waitingAd.index, false);\\r\\n                }\\r\\n            } else {\\r\\n                console.log(\\\"code not supported\\\");\\r\\n            }\\r\\n        });\\r\\n    });\\r\\n\\r\\n    function calculateOrder(object) {\\r\\n        //Reorder quests by rarety\\r\\n        if (object.dailyQuests) {\\r\\n            object.dailyQuests.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.finished && object.finished.daily) {\\r\\n            object.finished.daily.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.weeklyQuests) {\\r\\n            object.weeklyQuests.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n\\r\\n        if (object.finished && object.finished.weekly) {\\r\\n            object.finished.weekly.sort((b, a) => {\\r\\n                return a.reward - b.reward;\\r\\n            });\\r\\n        }\\r\\n    }\\r\\n\\r\\n    data = data;\\r\\n    calculateOrder(data);\\r\\n\\r\\n    let isRefreshingQuests = false;\\r\\n\\r\\n    async function handleRefresh() {\\r\\n        try {\\r\\n            isRefreshingQuests = true;\\r\\n\\r\\n            const refreshedData = await callApi(\\\"get\\\", \\\"solo\\\");\\r\\n            console.log(refreshedData);\\r\\n            calculateOrder(refreshedData.solo);\\r\\n            data = refreshedData.solo;\\r\\n\\r\\n            isRefreshingQuests = false;\\r\\n        } catch (e) {\\r\\n            isRefreshingQuests = false;\\r\\n        }\\r\\n    };\\r\\n\\r\\n    function acceptAd(accepted) {\\r\\n        if (accepted) document.getElementById(\\\"playAd\\\").onclick(\\\"earnMoreQuests\\\");\\r\\n        if (!accepted) {\\r\\n            collect(waitingAd.type,waitingAd.index,false)\\r\\n        }\\r\\n        waitingAdAccept = false;\\r\\n    }\\r\\n\\r\\n    async function collect(type, index, possibleAd) {\\r\\n        let probability;\\r\\n        if (possibleAd) probability = Math.floor(Math.random() * 3);\\r\\n        if (probability === 2) {\\r\\n            waitingAdAccept = true;\\r\\n            waitingAd = { type, index };\\r\\n            console.log(\\\"waitingAdAccept\\\");\\r\\n        } else {\\r\\n            await callApi(\\\"post\\\", `solo/collect?type=${type}&index=${index}`);\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n            data.collected[type].push(...data.finished[type].splice(index, 1));\\r\\n            data = data;\\r\\n        }\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .quest {\\r\\n        border-radius: 10px;\\r\\n        @apply relative overflow-hidden w-full my-4;\\r\\n    }\\r\\n\\r\\n    .quest-infos {\\r\\n        @apply flex justify-between px-7 py-6;\\r\\n    }\\r\\n\\r\\n    .progress-container {\\r\\n        @apply flex items-center;\\r\\n    }\\r\\n\\r\\n    svg {\\r\\n        margin-bottom: 0.15rem;\\r\\n    }\\r\\n\\r\\n    .checkbox-active {\\r\\n        width: 1.1rem;\\r\\n    }\\r\\n\\r\\n    .quest:hover span {\\r\\n        left: 0;\\r\\n    }\\r\\n\\r\\n    span {\\r\\n        left: -100%;\\r\\n        transition: left 0.28s ease-in-out;\\r\\n        width: 100%;\\r\\n        @apply absolute h-full top-0 bg-background flex items-center justify-center text-center;\\r\\n    }\\r\\n\\r\\n    .tip-text {\\r\\n        padding-top: 0.15rem;\\r\\n    }\\r\\n\\r\\n    .text-light {\\r\\n        color: #e2e2ea;\\r\\n    }\\r\\n\\r\\n</style>\\r\\n\\r\\n<!--TODO: Afficher reward des quêtes sur mobile-->\\r\\n\\r\\n\\r\\n<div>\\r\\n    {#if waitingAdAccept}\\r\\n        <div class=\\\"absolute top-1/3 left-40% rounded-lg p-16 z-30 border-primary border bg-background text-center\\\">\\r\\n            <style>\\r\\n                .button-alternative {\\r\\n                    display: inline-block;\\r\\n                    padding: calc(0.5rem - 1px) calc(2.25rem - 1px);\\r\\n                    border-radius: 0.125rem;\\r\\n                    border-width: 1px;\\r\\n                    border-color: #3d72e4;\\r\\n                    font-size: 1.25rem;\\r\\n                }\\r\\n            </style>\\r\\n            <h1 class=\\\"text-2xl\\\">Watch an ad to earn x2 coins for your next quest</h1>\\r\\n            <button on:click={()=>acceptAd(true)} class=\\\"button button-brand\\\">Play ad</button>\\r\\n            <button on:click={()=>acceptAd(false)} class=\\\"bg-background button-alternative button-brand\\\">No thanks\\r\\n            </button>\\r\\n        </div>\\r\\n    {/if}\\r\\n    {#if error}\\r\\n        <p class=\\\"text-legendary w-full\\\">An error has been detected by our fellow erroR0B0T, quests might appear\\r\\n            weirdly. </p>\\r\\n        <p class=\\\"text-xl\\\" style=\\\"color: #666666\\\"><b class=\\\"font-normal\\\" style=\\\"color: #aaaaaa\\\">Details:</b> {error}</p>\\r\\n    {/if}\\r\\n    <div class=\\\"container md:flex mt-7 md:mt-20 lg:mt-7 w-auto\\\">\\r\\n        <div\\r\\n            class=\\\"ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8\\\">\\r\\n            <div class=\\\"lg:flex\\\">\\r\\n                <h2 class=\\\"text-6xl text-center lg:text-left\\\">Daily Quests</h2>\\r\\n                <p\\r\\n                    class=\\\"text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none\\r\\n                    lg:pt-6\\\" class:text-xl={countDown[0].finished}>\\r\\n                    {#if countDown[0].timer} {countDown[0].timer} {/if}\\r\\n                </p>\\r\\n            </div>\\r\\n            <div class=\\\"quests-container\\\">\\r\\n                {#if data.finished && data.finished.daily}\\r\\n                    <div class=\\\"pb-1 \\\">\\r\\n                        {#each data.finished.daily as quest, i}\\r\\n                            <button\\r\\n                                on:click={() => collect('daily', i, true)}\\r\\n                                class=\\\"card quest finished border-2 border-{calculateRarity(quest.reward, true)}\\r\\n                                max-w-sm mx-auto lg:mx-0 block\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span>Click to collect</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current checkbox-active\\r\\n                                            text-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                            viewBox=\\\"0 0 27 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24\\r\\n                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42\\r\\n                                                1.807-1.807 5.422 5.422\\r\\n                                                13.68-13.68 1.811 1.803-15.491\\r\\n                                                15.491z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Click to collect\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"line-through\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                            </button>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.dailyQuests}\\r\\n                    <div>\\r\\n                        {#each data.dailyQuests as quest}\\r\\n                            <div class=\\\"relative card quest max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span\\r\\n                                        class=\\\"text-{calculateRarity(quest.reward, true)}\\\">\\r\\n                                        {quest.reward}$\\r\\n                                    </span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current w-4 text-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                            viewBox=\\\"0 0 25 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24\\r\\n                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            {quest.progress}/{quest.goal}\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n                                    <p class=\\\"\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                                <div\\r\\n                                    class=\\\"absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, true)}\\\"\\r\\n                                    style=\\\"width:{calculateProgressBarWidth(quest.progress, quest.goal)}%\\\" />\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.collected && data.collected.daily}\\r\\n                    <div class=\\\"pt-5\\\">\\r\\n                        {#each data.collected.daily as quest}\\r\\n                            <div\\r\\n                                class=\\\"card quest text-disabled italic max-w-sm\\r\\n                                mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <p class=\\\"mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Collected\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n        <div\\r\\n            class=\\\"ml-5 mr-5 mt-12 md:ml-5 md:mr-0\\r\\n            md:mt-0\\\">\\r\\n            <div class=\\\"lg:flex\\\">\\r\\n                <h2 class=\\\"text-6xl text-center lg:text-left\\\">Weekly Quests</h2>\\r\\n                <p\\r\\n                    class=\\\"text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none\\r\\n                    lg:pt-6\\\" class:text-xl={countDown[1].finished}>\\r\\n                    {#if countDown[1].timer} {countDown[1].timer} {/if}\\r\\n                </p>\\r\\n            </div>\\r\\n            <div class=\\\"quests-container\\\">\\r\\n                {#if data.finished && data.finished.weekly}\\r\\n                    <div class=\\\"pb-1\\\">\\r\\n                        {#each data.finished.weekly as quest, i}\\r\\n                            <button\\r\\n                                on:click={() => collect('weekly', i)}\\r\\n                                class=\\\"card quest finished border-2 border-{calculateRarity(quest.reward, false)}\\r\\n                                max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span>Click to collect</span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current checkbox-active\\r\\n                                            text-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                            viewBox=\\\"0 0 27 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24\\r\\n                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42\\r\\n                                                1.807-1.807 5.422 5.422\\r\\n                                                13.68-13.68 1.811 1.803-15.491\\r\\n                                                15.491z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Click to collect\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </button>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n                {#if data.weeklyQuests}\\r\\n                    <div>\\r\\n                        {#each data.weeklyQuests as quest}\\r\\n                            <div class=\\\"relative card quest max-w-sm mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <span\\r\\n                                        class=\\\"text-{calculateRarity(quest.reward, false)}\\\">\\r\\n                                        {quest.reward}$\\r\\n                                    </span>\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <svg\\r\\n                                            class=\\\"fill-current w-4 text-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                            viewBox=\\\"0 0 25 24\\\"\\r\\n                                            xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                            <path\\r\\n                                                d=\\\"m24\\r\\n                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z\\\" />\\r\\n                                        </svg>\\r\\n                                        <p class=\\\"ml-2 mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            {quest.progress}/{quest.goal}\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n                                    <p class=\\\"quest-goal\\\">{quest.name}</p>\\r\\n                                </div>\\r\\n                                <div\\r\\n                                    class=\\\"absolute bottom-0 left-0 h-2px bg-{calculateRarity(quest.reward, false)}\\\"\\r\\n                                    style=\\\"width: {calculateProgressBarWidth(quest.progress, quest.goal)}%\\\" />\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n                {#if data.collected && data.collected.weekly}\\r\\n                    <div class=\\\"pt-5\\\">\\r\\n                        {#each data.collected.weekly as quest}\\r\\n                            <div\\r\\n                                class=\\\"card quest text-disabled italic max-w-sm\\r\\n                                mx-auto lg:mx-0\\\">\\r\\n                                <div class=\\\"quest-infos\\\">\\r\\n                                    <div class=\\\"progress-container\\\">\\r\\n                                        <p class=\\\"mr-6 lg:mr-12 text-lg\\\">\\r\\n                                            Collected\\r\\n                                        </p>\\r\\n                                    </div>\\r\\n\\r\\n                                    <p class=\\\"quest-goal line-through\\\">\\r\\n                                        {quest.name}\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/each}\\r\\n                    </div>\\r\\n                {/if}\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n    <div\\r\\n        class=\\\"flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4\\r\\n        ml-5 lg:ml-0\\\">\\r\\n        <RefreshButton\\r\\n            on:click={() => handleRefresh()}\\r\\n            isRefreshing={isRefreshingQuests}\\r\\n            refreshMessage={'Refresh quests data'} />\\r\\n        <div class=\\\"flex lg:ml-8 items-center mt-4 lg:mt-0\\\">\\r\\n            <!--<div class=\\\"flex items-center \\\">\\r\\n                <div class=\\\"py-2 px-2 rounded-full bg-primary\\\">\\r\\n                    <svg\\r\\n                        class=\\\"w-3 h-3 fill-current\\\"\\r\\n                        viewBox=\\\"0 0 17 24\\\"\\r\\n                        xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path\\r\\n                            d=\\\"m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z\\\"/>\\r\\n                    </svg>\\r\\n                </div>\\r\\n            </div>-->\\r\\n            <svg\\r\\n                xmlns=\\\"http://www.w3.org/2000/svg\\\"\\r\\n                class=\\\"w-9 text-primary\\\"\\r\\n                viewBox=\\\"0 0 576 512\\\">\\r\\n                <path\\r\\n                    fill=\\\"currentColor\\\"\\r\\n                    d=\\\"M569.517 440.013C587.975 472.007 564.806 512 527.94\\r\\n                    512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423\\r\\n                    23.985c18.467-32.009 64.72-31.951 83.154 0l239.94\\r\\n                    416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46\\r\\n                    46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418\\r\\n                    136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0\\r\\n                    11.635-4.982\\r\\n                    11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884\\r\\n                    0-12.356 5.78-11.981 12.654z\\\" />\\r\\n            </svg>\\r\\n            <p class=\\\"text-lg ml-3 lg:ml-2 tip-text text-light\\\">\\r\\n                Daily and Weekly quests data may take up to 30 minutes to\\r\\n                refresh\\r\\n            </p>\\r\\n        </div>\\r\\n    </div>\\r\\n</div>\\r\\n<div>\\r\\n    <input id=\\\"transfer\\\" value=\\\"0\\\" hidden />\\r\\n    {#if info}\\r\\n        <Infos message=\\\"Thanks for watching a video\\\" pushError={info} />\\r\\n    {/if}\\r\\n    {#if adError}\\r\\n        <ErrorAlert message=\\\"An error occured while watching the ad\\\" pushError={adError} />\\r\\n    {/if}\\r\\n    <script data-playerPro=\\\"current\\\">\\r\\n        function playAd(goal) {\\r\\n            const init = (api) => {\\r\\n                if (api) {\\r\\n                    api.on(\\\"AdVideoStart\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 1, goal });\\r\\n                        //api.setAdVolume(1);\\r\\n                        document.body.onblur = function() {\\r\\n                            //api.pauseAd();\\r\\n                        };\\r\\n                        document.body.onfocus = function() {\\r\\n                            //api.resumeAd();\\r\\n                        };\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoFirstQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 2 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoMidpoint\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 3 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoThirdQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 4 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoComplete\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 5 });\\r\\n                        setTimeout(() => {\\r\\n                            document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 0 });\\r\\n                        }, 1200);\\r\\n                        document.body.onblur = null;\\r\\n                        document.body.onfocus = null;\\r\\n                    });\\r\\n                } else {\\r\\n                    console.log(\\\"blank\\\");\\r\\n                }\\r\\n            };\\r\\n            var s = document.querySelector(\\\"script[data-playerPro=\\\\\\\"current\\\\\\\"]\\\");\\r\\n            //s.removeAttribute(\\\"data-playerPro\\\");\\r\\n            (playerPro = window.playerPro || []).push({\\r\\n                id: \\\"oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp\\\",\\r\\n                after: s,\\r\\n                init: init\\r\\n            });\\r\\n        }\\r\\n    </script>\\r\\n</div>\\r\\n<div hidden class=\\\"bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90\\\"></div>\"],\"names\":[],\"mappings\":\"AAuOI,MAAM,4BAAC,CAAC,AACJ,aAAa,CAAE,IAAI,CACnB,OAAO,QAAQ,CAAC,eAAe,CAAC,MAAM,CAAC,IAAI,CAAC,AAChD,CAAC,AAED,YAAY,4BAAC,CAAC,AACV,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,CAAC,IAAI,CAAC,AAC1C,CAAC,AAED,mBAAmB,4BAAC,CAAC,AACjB,OAAO,IAAI,CAAC,YAAY,CAAC,AAC7B,CAAC,AAED,GAAG,4BAAC,CAAC,AACD,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,gBAAgB,4BAAC,CAAC,AACd,KAAK,CAAE,MAAM,AACjB,CAAC,AAED,oBAAM,MAAM,CAAC,IAAI,cAAC,CAAC,AACf,IAAI,CAAE,CAAC,AACX,CAAC,AAED,IAAI,4BAAC,CAAC,AACF,IAAI,CAAE,KAAK,CACX,UAAU,CAAE,IAAI,CAAC,KAAK,CAAC,WAAW,CAClC,KAAK,CAAE,IAAI,CACX,OAAO,QAAQ,CAAC,MAAM,CAAC,KAAK,CAAC,aAAa,CAAC,IAAI,CAAC,YAAY,CAAC,cAAc,CAAC,WAAW,CAAC,AAC5F,CAAC,AAED,SAAS,4BAAC,CAAC,AACP,WAAW,CAAE,OAAO,AACxB,CAAC,AAED,WAAW,4BAAC,CAAC,AACT,KAAK,CAAE,OAAO,AAClB,CAAC\"}"
 };
 
 function calculateOrder(object) {
@@ -1526,6 +2470,11 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	let countDown = [{}, {}];
 	let { data } = $$props;
 	let error;
+	let socket;
+	let adError;
+	let info;
+	let user;
+	let interval;
 
 	const calculateRarity = (reward, daily) => {
 		if (daily) {
@@ -1575,7 +2524,7 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 			}
 
 			if (errDetected) {
-				countDown[i].timer = "Oops error :(";
+				countDown[i].timer = "Refreshing...";
 				return countDown[i].speed = "legendary";
 			}
 
@@ -1607,29 +2556,105 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		error = e;
 	}
 
+	onMount(async () => {
+		user = await getUser();
+		socket = io__default['default'].io(apiUrl);
+		let stop = 0;
+		let advideostate = 0;
+		let tempNb;
+		let goal;
+
+		interval = setInterval(
+			() => {
+				try {
+					if (stop > 0) {
+						return stop--;
+					}
+
+					tempNb = JSON.parse(document.getElementById("transfer").value);
+					goal = tempNb.goal ? tempNb.goal : goal;
+					tempNb = tempNb.state;
+
+					if (tempNb !== advideostate) {
+						socket.emit("advideo", tempNb === 1
+						? {
+								state: 1,
+								steamId: user.steam.id,
+								shopItemId: 0,
+								goal
+							}
+						: { state: tempNb, steamId: user.steam.id });
+					}
+
+					advideostate = tempNb;
+				} catch(e) {
+					
+				}
+			},
+			1200
+		);
+
+		socket.on("advideo", async e => {
+			console.log(e);
+
+			if (e.code === "error") {
+				console.log(e.message);
+				stop = 2;
+				advideostate = 0;
+				tempNb = 0;
+				adError = e.message;
+
+				setTimeout(
+					() => {
+						adError = undefined;
+					},
+					12000
+				);
+			} else if (e.code === "success") {
+				stop = 2;
+				info = e.message;
+				advideostate = 0;
+
+				setTimeout(
+					() => {
+						info = undefined;
+					},
+					5000
+				);
+
+				counter.set({ refresh: true });
+			} else {
+				console.log("code not supported");
+			}
+		});
+	});
+
 	data = data;
 	calculateOrder(data);
 	let isRefreshingQuests = false;
 
 	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
-	$$result.css.add(css$c);
+	$$result.css.add(css$f);
 
 	return `
-<div>${error
-	? `<p class="${"text-legendary w-full"}">An error has been detected by our fellow erroR0B0T, quests might show
-            wierdly. </p>
+
+
+<div>${ ``}
+    ${error
+	? `<p class="${"text-legendary w-full"}">An error has been detected by our fellow erroR0B0T, quests might appear
+            weirdly. </p>
         <p class="${"text-xl"}" style="${"color: #666666"}"><b class="${"font-normal"}" style="${"color: #aaaaaa"}">Details:</b> ${escape(error)}</p>`
 	: ``}
     <div class="${"container md:flex mt-7 md:mt-20 lg:mt-7 w-auto"}"><div class="${"ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8"}"><div class="${"lg:flex"}"><h2 class="${"text-6xl text-center lg:text-left"}">Daily Quests</h2>
                 <p class="${[
-		"text-" + escape(countDown[0].speed) + " text-center lg:text-center lg:ml-5 text-3xl leading-none\r\n                    lg:pt-6" + " svelte-dhexfd",
+		"text-" + escape(countDown[0].speed) + " text-center lg:text-center lg:ml-5 text-3xl leading-none\r\n                    lg:pt-6" + " svelte-t2bftp",
 		countDown[0].finished ? "text-xl" : ""
 	].join(" ").trim()}">${countDown[0].timer
 	? `${escape(countDown[0].timer)}`
 	: ``}</p></div>
             <div class="${"quests-container"}">${data.finished && data.finished.daily
-	? `<div class="${"pb-1 "}">${each(data.finished.daily, (quest, i) => `<button class="${"card quest finished border-2 border-" + escape(calculateRarity(quest.reward, true)) + "\r\n                                max-w-sm mx-auto lg:mx-0 block" + " svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><span class="${"svelte-dhexfd"}">Click to collect</span>
-                                    <div class="${"progress-container svelte-dhexfd"}"><svg class="${"fill-current checkbox-active\r\n                                            text-" + escape(calculateRarity(quest.reward, true)) + " svelte-dhexfd"}" viewBox="${"0 0 27 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z"}"></path></svg>
+	? `<div class="${"pb-1 "}">${each(data.finished.daily, (quest, i) => `<button class="${"card quest finished border-2 border-" + escape(calculateRarity(quest.reward, true)) + "\r\n                                max-w-sm mx-auto lg:mx-0 block" + " svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><span class="${"svelte-t2bftp"}">Click to collect</span>
+                                    <div class="${"progress-container svelte-t2bftp"}"><svg class="${"fill-current checkbox-active\r\n                                            text-" + escape(calculateRarity(quest.reward, true)) + " svelte-t2bftp"}" viewBox="${"0 0 27 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24\r\n                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42\r\n                                                1.807-1.807 5.422 5.422\r\n                                                13.68-13.68 1.811 1.803-15.491\r\n                                                15.491z"}"></path></svg>
                                         <p class="${"ml-2 mr-6 lg:mr-12 text-lg"}">Click to collect
                                         </p></div>
 
@@ -1638,17 +2663,18 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: ``}
 
                 ${data.dailyQuests
-	? `<div>${each(data.dailyQuests, quest => `<div class="${"relative card quest max-w-sm mx-auto lg:mx-0 svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><span class="${"text-" + escape(calculateRarity(quest.reward, true)) + " svelte-dhexfd"}">${escape(quest.reward)}$</span>
-                                    <div class="${"progress-container svelte-dhexfd"}"><svg class="${"fill-current w-4 text-" + escape(calculateRarity(quest.reward, true)) + " svelte-dhexfd"}" viewBox="${"0 0 25 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"}"></path></svg>
+	? `<div>${each(data.dailyQuests, quest => `<div class="${"relative card quest max-w-sm mx-auto lg:mx-0 svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><span class="${"text-" + escape(calculateRarity(quest.reward, true)) + " svelte-t2bftp"}">${escape(quest.reward)}$
+                                    </span>
+                                    <div class="${"progress-container svelte-t2bftp"}"><svg class="${"fill-current w-4 text-" + escape(calculateRarity(quest.reward, true)) + " svelte-t2bftp"}" viewBox="${"0 0 25 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24\r\n                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"}"></path></svg>
                                         <p class="${"ml-2 mr-6 lg:mr-12 text-lg"}">${escape(quest.progress)}/${escape(quest.goal)}
                                         </p></div>
                                     <p class="${""}">${escape(quest.name)}</p></div>
-                                <div class="${"absolute bottom-0 left-0 h-2px bg-" + escape(calculateRarity(quest.reward, true)) + " svelte-dhexfd"}" style="${"width: " + escape(calculateProgressBarWidth(quest.progress, quest.goal)) + "%"}"></div>
+                                <div class="${"absolute bottom-0 left-0 h-2px bg-" + escape(calculateRarity(quest.reward, true)) + " svelte-t2bftp"}" style="${"width:" + escape(calculateProgressBarWidth(quest.progress, quest.goal)) + "%"}"></div>
                             </div>`)}</div>`
 	: ``}
 
                 ${data.collected && data.collected.daily
-	? `<div class="${"pt-5"}">${each(data.collected.daily, quest => `<div class="${"card quest text-disabled italic max-w-sm mx-auto lg:mx-0 svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><div class="${"progress-container svelte-dhexfd"}"><p class="${"mr-6 lg:mr-12 text-lg"}">Collected
+	? `<div class="${"pt-5"}">${each(data.collected.daily, quest => `<div class="${"card quest text-disabled italic max-w-sm\r\n                                mx-auto lg:mx-0 svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><div class="${"progress-container svelte-t2bftp"}"><p class="${"mr-6 lg:mr-12 text-lg"}">Collected
                                         </p></div>
 
                                     <p class="${"quest-goal line-through"}">${escape(quest.name)}
@@ -1657,14 +2683,14 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: ``}</div></div>
         <div class="${"ml-5 mr-5 mt-12 md:ml-5 md:mr-0\r\n            md:mt-0"}"><div class="${"lg:flex"}"><h2 class="${"text-6xl text-center lg:text-left"}">Weekly Quests</h2>
                 <p class="${[
-		"text-" + escape(countDown[1].speed) + " text-center lg:text-center lg:ml-5 text-3xl leading-none\r\n                    lg:pt-6" + " svelte-dhexfd",
+		"text-" + escape(countDown[1].speed) + " text-center lg:text-center lg:ml-5 text-3xl leading-none\r\n                    lg:pt-6" + " svelte-t2bftp",
 		countDown[1].finished ? "text-xl" : ""
 	].join(" ").trim()}">${countDown[1].timer
 	? `${escape(countDown[1].timer)}`
 	: ``}</p></div>
             <div class="${"quests-container"}">${data.finished && data.finished.weekly
-	? `<div class="${"pb-1"}">${each(data.finished.weekly, (quest, i) => `<button class="${"card quest finished border-2 border-" + escape(calculateRarity(quest.reward, false)) + " max-w-sm mx-auto lg:mx-0" + " svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><span class="${"svelte-dhexfd"}">Click to collect</span>
-                                    <div class="${"progress-container svelte-dhexfd"}"><svg class="${"fill-current checkbox-active\r\n                                            text-" + escape(calculateRarity(quest.reward, false)) + " svelte-dhexfd"}" viewBox="${"0 0 27 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z"}"></path></svg>
+	? `<div class="${"pb-1"}">${each(data.finished.weekly, (quest, i) => `<button class="${"card quest finished border-2 border-" + escape(calculateRarity(quest.reward, false)) + "\r\n                                max-w-sm mx-auto lg:mx-0" + " svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><span class="${"svelte-t2bftp"}">Click to collect</span>
+                                    <div class="${"progress-container svelte-t2bftp"}"><svg class="${"fill-current checkbox-active\r\n                                            text-" + escape(calculateRarity(quest.reward, false)) + " svelte-t2bftp"}" viewBox="${"0 0 27 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24\r\n                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42\r\n                                                1.807-1.807 5.422 5.422\r\n                                                13.68-13.68 1.811 1.803-15.491\r\n                                                15.491z"}"></path></svg>
                                         <p class="${"ml-2 mr-6 lg:mr-12 text-lg"}">Click to collect
                                         </p></div>
 
@@ -1674,23 +2700,24 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: ``}
 
                 ${data.weeklyQuests
-	? `<div>${each(data.weeklyQuests, quest => `<div class="${"relative card quest max-w-sm mx-auto lg:mx-0 svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><span class="${"text-" + escape(calculateRarity(quest.reward, false)) + " svelte-dhexfd"}">${escape(quest.reward)}$</span>
-                                    <div class="${"progress-container svelte-dhexfd"}"><svg class="${"fill-current w-4 text-" + escape(calculateRarity(quest.reward, false)) + " svelte-dhexfd"}" viewBox="${"0 0 25 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"}"></path></svg>
+	? `<div>${each(data.weeklyQuests, quest => `<div class="${"relative card quest max-w-sm mx-auto lg:mx-0 svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><span class="${"text-" + escape(calculateRarity(quest.reward, false)) + " svelte-t2bftp"}">${escape(quest.reward)}$
+                                    </span>
+                                    <div class="${"progress-container svelte-t2bftp"}"><svg class="${"fill-current w-4 text-" + escape(calculateRarity(quest.reward, false)) + " svelte-t2bftp"}" viewBox="${"0 0 25 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24\r\n                                                24h-24v-24h24.8v24zm-1.6-2.4v-19.2h-20v19.2z"}"></path></svg>
                                         <p class="${"ml-2 mr-6 lg:mr-12 text-lg"}">${escape(quest.progress)}/${escape(quest.goal)}
                                         </p></div>
                                     <p class="${"quest-goal"}">${escape(quest.name)}</p></div>
-                                <div class="${"absolute bottom-0 left-0 h-2px bg-" + escape(calculateRarity(quest.reward, false)) + " svelte-dhexfd"}" style="${"width: " + escape(calculateProgressBarWidth(quest.progress, quest.goal)) + "%"}"></div>
+                                <div class="${"absolute bottom-0 left-0 h-2px bg-" + escape(calculateRarity(quest.reward, false)) + " svelte-t2bftp"}" style="${"width: " + escape(calculateProgressBarWidth(quest.progress, quest.goal)) + "%"}"></div>
                             </div>`)}</div>`
 	: ``}
                 ${data.collected && data.collected.weekly
-	? `<div class="${"pt-5"}">${each(data.collected.weekly, quest => `<div class="${"card quest text-disabled italic max-w-sm mx-auto lg:mx-0 svelte-dhexfd"}"><div class="${"quest-infos svelte-dhexfd"}"><div class="${"progress-container svelte-dhexfd"}"><p class="${"mr-6 lg:mr-12 text-lg"}">Collected
+	? `<div class="${"pt-5"}">${each(data.collected.weekly, quest => `<div class="${"card quest text-disabled italic max-w-sm\r\n                                mx-auto lg:mx-0 svelte-t2bftp"}"><div class="${"quest-infos svelte-t2bftp"}"><div class="${"progress-container svelte-t2bftp"}"><p class="${"mr-6 lg:mr-12 text-lg"}">Collected
                                         </p></div>
 
                                     <p class="${"quest-goal line-through"}">${escape(quest.name)}
                                     </p></div>
                             </div>`)}</div>`
 	: ``}</div></div></div>
-    <div class="${"flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4 ml-5 lg:ml-0"}">${validate_component(RefreshButton, "RefreshButton").$$render(
+    <div class="${"flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4\r\n        ml-5 lg:ml-0"}">${validate_component(RefreshButton, "RefreshButton").$$render(
 		$$result,
 		{
 			isRefreshing: isRefreshingQuests,
@@ -1699,36 +2726,197 @@ const Quests = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		{},
 		{}
 	)}
-
         <div class="${"flex lg:ml-8 items-center mt-4 lg:mt-0"}">
-            <svg xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-9 text-primary svelte-dhexfd"}" viewBox="${"0 0 576 512"}"><path fill="${"currentColor"}" d="${"M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"}"></path></svg>
-            <p class="${"text-lg ml-3 lg:ml-2 tip-text text-light svelte-dhexfd"}">Daily and Weekly quests data may take up to 30 minutes to
+            <svg xmlns="${"http://www.w3.org/2000/svg"}" class="${"w-9 text-primary svelte-t2bftp"}" viewBox="${"0 0 576 512"}"><path fill="${"currentColor"}" d="${"M569.517 440.013C587.975 472.007 564.806 512 527.94\r\n                    512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423\r\n                    23.985c18.467-32.009 64.72-31.951 83.154 0l239.94\r\n                    416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46\r\n                    46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418\r\n                    136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0\r\n                    11.635-4.982\r\n                    11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884\r\n                    0-12.356 5.78-11.981 12.654z"}"></path></svg>
+            <p class="${"text-lg ml-3 lg:ml-2 tip-text text-light svelte-t2bftp"}">Daily and Weekly quests data may take up to 30 minutes to
                 refresh
             </p></div></div></div>
+<div><input id="${"transfer"}" value="${"0"}" hidden>
+    ${info
+	? `${validate_component(Infos, "Infos").$$render(
+			$$result,
+			{
+				message: "Thanks for watching a video",
+				pushError: info
+			},
+			{},
+			{}
+		)}`
+	: ``}
+    ${adError
+	? `${validate_component(ErrorAlert, "ErrorAlert").$$render(
+			$$result,
+			{
+				message: "An error occured while watching the ad",
+				pushError: adError
+			},
+			{},
+			{}
+		)}`
+	: ``}
+    <script data-playerPro="${"current"}">function playAd(goal) {
+            const init = (api) => {
+                if (api) {
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
+                        //api.setAdVolume(1);
+                        document.body.onblur = function() {
+                            //api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            //api.resumeAd();
+                        };
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
+                        setTimeout(() => {
+                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
+                        }, 1200);
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\\"current\\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script></div>
 <div hidden class="${"bg-epic text-epic bg-legendary text-legendary xl:mt-40 xl:ml-100 h-screen-90"}"></div>`;
 });
 
-/* src\components\Loading.svelte generated by Svelte v3.31.0 */
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
 
-const css$d = {
-	code: ".loader.svelte-1r0tf3p{border:12px solid transparent;border-radius:50%;border-top:12px solid #3d72e4;width:150px;height:150px;-webkit-animation:svelte-1r0tf3p-spin 0.6s linear infinite;animation:svelte-1r0tf3p-spin 0.6s linear infinite}@-webkit-keyframes svelte-1r0tf3p-spin{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes svelte-1r0tf3p-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}",
-	map: "{\"version\":3,\"file\":\"Loading.svelte\",\"sources\":[\"Loading.svelte\"],\"sourcesContent\":[\"<style>\\r\\n    .loader {\\r\\n        border: 12px solid transparent;\\r\\n        border-radius: 50%;\\r\\n        border-top: 12px solid #3d72e4;\\r\\n        width: 150px;\\r\\n        height: 150px;\\r\\n        -webkit-animation: spin 0.6s linear infinite; /* Safari */\\r\\n        animation: spin 0.6s linear infinite;\\r\\n    }\\r\\n\\r\\n    /* Safari */\\r\\n    @-webkit-keyframes spin {\\r\\n        0% {\\r\\n            -webkit-transform: rotate(0deg);\\r\\n        }\\r\\n        100% {\\r\\n            -webkit-transform: rotate(360deg);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    @keyframes spin {\\r\\n        0% {\\r\\n            transform: rotate(0deg);\\r\\n        }\\r\\n        100% {\\r\\n            transform: rotate(360deg);\\r\\n        }\\r\\n    }\\r\\n</style>\\r\\n<script>\\r\\n    export let data;\\r\\n    export let type\\r\\n</script>\\r\\n<div class:xl:mt-40={type===\\\"inline\\\"} class:xl:ml-100={type===\\\"inline\\\"} class:h-screen-90={!type} class=\\\"bg-fixed bg-no-repeat flex items-center justify-center\\\">\\r\\n    <div class=\\\"pb-20\\\">\\r\\n        <div class=\\\"loader\\\"></div>\\r\\n        {#if data}\\r\\n            <h2 class=\\\"text-center text-3xl font-bold pt-4\\\">{data}</h2>\\r\\n        {:else}\\r\\n            <h2 class=\\\"text-center text-3xl font-bold pt-4\\\">Loading...</h2>\\r\\n        {/if}\\r\\n    </div>\\r\\n</div>\"],\"names\":[],\"mappings\":\"AACI,OAAO,eAAC,CAAC,AACL,MAAM,CAAE,IAAI,CAAC,KAAK,CAAC,WAAW,CAC9B,aAAa,CAAE,GAAG,CAClB,UAAU,CAAE,IAAI,CAAC,KAAK,CAAC,OAAO,CAC9B,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,iBAAiB,CAAE,mBAAI,CAAC,IAAI,CAAC,MAAM,CAAC,QAAQ,CAC5C,SAAS,CAAE,mBAAI,CAAC,IAAI,CAAC,MAAM,CAAC,QAAQ,AACxC,CAAC,AAGD,mBAAmB,mBAAK,CAAC,AACrB,EAAE,AAAC,CAAC,AACA,iBAAiB,CAAE,OAAO,IAAI,CAAC,AACnC,CAAC,AACD,IAAI,AAAC,CAAC,AACF,iBAAiB,CAAE,OAAO,MAAM,CAAC,AACrC,CAAC,AACL,CAAC,AAED,WAAW,mBAAK,CAAC,AACb,EAAE,AAAC,CAAC,AACA,SAAS,CAAE,OAAO,IAAI,CAAC,AAC3B,CAAC,AACD,IAAI,AAAC,CAAC,AACF,SAAS,CAAE,OAAO,MAAM,CAAC,AAC7B,CAAC,AACL,CAAC\"}"
+    for (let c of ca) {
+
+        while (c.charAt(0) === " ") {
+            c = c.substring(1, c.length);
+        }
+
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+/* src\components\GuideCard.svelte generated by Svelte v3.31.0 */
+
+const css$g = {
+	code: "b.svelte-1fof41a{color:#3d72e4;font-weight:400}.scrollbar.svelte-1fof41a::-webkit-scrollbar{width:18px;height:18px;cursor:pointer}.scrollbar.svelte-1fof41a::-webkit-scrollbar-thumb{height:3px;border:6px solid rgba(0, 0, 0, 0);background-clip:padding-box;-webkit-border-radius:15px;background-color:#1C1C2C;-webkit-box-shadow:inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05)}",
+	map: "{\"version\":3,\"file\":\"GuideCard.svelte\",\"sources\":[\"GuideCard.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    import cookie from \\\"cookie\\\";\\r\\n    import { getCookie } from \\\"../utils/getCookie\\\";\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n\\r\\n    export let page = \\\"\\\";\\r\\n    let isCardVisible = false;\\r\\n    let hiddenCardsList;\\r\\n\\r\\n    onMount(() => {\\r\\n        hiddenCardsList = JSON.parse(decodeURI(getCookie(\\\"hideCards\\\")).replace(/%2C/g, \\\",\\\"));\\r\\n\\r\\n        if (!hiddenCardsList || !hiddenCardsList.includes(page)) isCardVisible = true;\\r\\n    });\\r\\n\\r\\n\\r\\n    function handleClose() {\\r\\n        isCardVisible = false;\\r\\n\\r\\n        if (hiddenCardsList) {\\r\\n            !hiddenCardsList.includes(page) ? hiddenCardsList.push(page) : null;\\r\\n        } else {\\r\\n            hiddenCardsList = [page];\\r\\n        }\\r\\n\\r\\n        document.cookie = cookie.serialize(\\r\\n            \\\"hideCards\\\",\\r\\n            JSON.stringify(hiddenCardsList),\\r\\n            {\\r\\n                maxAge: 15552000,\\r\\n                sameSite: \\\"lax\\\",\\r\\n                path: \\\"/\\\"\\r\\n            }\\r\\n        );\\r\\n\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        color: #3d72e4;\\r\\n        font-weight: 400;\\r\\n    }\\r\\n\\r\\n    .scrollbar::-webkit-scrollbar {\\r\\n        width: 18px;\\r\\n        height: 18px;\\r\\n        cursor: pointer;\\r\\n\\r\\n        /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/\\r\\n\\r\\n    }\\r\\n\\r\\n    .scrollbar::-webkit-scrollbar-thumb {\\r\\n        height: 3px;\\r\\n        border: 6px solid rgba(0, 0, 0, 0);\\r\\n        background-clip: padding-box;\\r\\n        -webkit-border-radius: 15px;\\r\\n        background-color: #1C1C2C;\\r\\n        -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);\\r\\n        /*outline: 1px solid slategrey;*/\\r\\n    }\\r\\n</style>\\r\\n\\r\\n{#if isCardVisible}\\r\\n    <div class=\\\"absolute z-50 top-0 bottom-0 left-0 right-0     h-screen\\\">\\r\\n        <div class=\\\"w-full md:w-3/4   fixed top-1/2 left-1/2  px-5 md:px-0\\\"\\r\\n             style=\\\"transform: translate(-50%, -46.5%);\\\" transition:fly={{ y: 300, duration: 350 }}>\\r\\n            <div\\r\\n                class=\\\"w-full max-h-screen-85   border border-primary rounded-lg bg-background    flex flex-col justify-center\\\">\\r\\n\\r\\n                <div class=\\\"overflow-y-auto scrollbar p-6 md:p-10 pb-7\\\">\\r\\n                    <button class=\\\"absolute top-0 right-5 xl:right-0  p-4 text-mid-light hover:text-font\\\"\\r\\n                            on:click={() => handleClose()}>\\r\\n                        <svg class=\\\"fill-current w-4\\\" viewBox=\\\"0 0 24 24\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                            <path\\r\\n                                d=\\\"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z\\\" />\\r\\n                        </svg>\\r\\n                    </button>\\r\\n                    {#if page === \\\"play\\\"}\\r\\n                        <h2 class=\\\"text-center text-5xl\\\">PLAY PAGE GUIDE</h2>\\r\\n\\r\\n                        <section class=\\\"md:flex justify-between mt-8\\\">\\r\\n                            <div>\\r\\n                                <p class=\\\"text-3xl text-legendary\\\">Game modes section</p>\\r\\n                                <p><b>Click </b> on the game mode <b>you want to play</b> !</p>\\r\\n                            </div>\\r\\n                            <img class=\\\"w-full mt-2 md:mt-0 md:w-1/2 md:h-41 object-cover\\\"\\r\\n                                 src=\\\"/assets/GuidesImages/game_modes_section.png\\\"\\r\\n                                 alt=\\\"Game modes section\\\">\\r\\n                        </section>\\r\\n\\r\\n                        <section class=\\\"md:flex justify-between mt-16 mb-4\\\">\\r\\n                            <img class=\\\"hidden md:block w-1/2 h-41 object-cover object-left-top\\\"\\r\\n                                 src=\\\"/assets/GuidesImages/quests_section.png\\\"\\r\\n                                 alt=\\\"\\\">\\r\\n                            <div class=\\\"md:ml-10\\\">\\r\\n                                <p class=\\\"text-3xl text-legendary\\\">Quests section</p>\\r\\n                                <p>Here you will find the <b>quests</b> that Winhalla proposes. <b>Complete them</b> by\\r\\n                                    playing\\r\\n                                    Brawlhalla, and you will <b>earn</b> W coins!\\r\\n                                    <br> <span class=\\\"text-xl leading-tight italic text-mid-light\\\">Click or hover on a quest to see how much you will earn ;)</span>\\r\\n                                </p>\\r\\n                            </div>\\r\\n                            <img class=\\\"md:hidden block w-full mt-5\\\"\\r\\n                                 src=\\\"/assets/GuidesImages/quests_section.png\\\"\\r\\n                                 alt=\\\"Quests section\\\">\\r\\n                        </section>\\r\\n                    {:else if page === \\\"ffa\\\"}\\r\\n                        <h2 class=\\\"text-center text-5xl\\\">FFA PAGE GUIDE</h2>\\r\\n\\r\\n                        <section class=\\\"mt-10 md:mt-16 text-center text-green\\\"><p>Only Brawlhalla <u>ranked games will\\r\\n                            count</u>\\r\\n                            in this game mode. You can play <u>1vs1</u> or <u>2vs2!</u></p></section>\\r\\n\\r\\n                        <section class=\\\"md:flex justify-between mt-12\\\">\\r\\n                            <div>\\r\\n                                <p class=\\\"text-3xl text-legendary\\\">Player cards</p>\\r\\n                                <p><b>Each player</b> that will join the lobby will be represented by a <b>player\\r\\n                                    card</b> ,\\r\\n                                    with a username, and the <b>number of games</b> he played in this FFA match. You\\r\\n                                    will see\\r\\n                                    your <b>number of wins</b> on <b>your</b> player card.</p>\\r\\n                            </div>\\r\\n                            <img\\r\\n                                class=\\\"mt-2 w-5/6 mx-auto block max-w-xs px-8  md:px-0 md:max-w-full  md:mt-0 md:mx-0 md:w-1/2 md:h-64 object-contain \\\"\\r\\n                                src=\\\"/assets/GuidesImages/ffa_player_card.png\\\"\\r\\n                                alt=\\\"FFA player card example\\\">\\r\\n                        </section>\\r\\n\\r\\n                        <section class=\\\"md:flex justify-between mt-8 mb-2\\\">\\r\\n                            <img class=\\\"hidden md:block  w-1/2 h-41 object-contain object-left-top\\\"\\r\\n                                 src=\\\"/assets/GuidesImages/ffa_buttons.png\\\"\\r\\n                                 alt=\\\"FFA action buttons\\\">\\r\\n                            <div class=\\\"md:ml-10\\\">\\r\\n                                <p class=\\\"text-3xl text-legendary\\\">Action buttons</p>\\r\\n                                <p>The <b>QUIT</b> button let you <b>quit the lobby</b> when you still <b>haven't\\r\\n                                    played\\r\\n                                    any games</b>.\\r\\n                                    <br> When you <b>click</b> the <b>REFRESH DATA</b> button, your <b>player card</b>\\r\\n                                    will be\\r\\n                                    <b>updated</b> for <b>you</b> and the <b>other players</b> in the lobby.\\r\\n                                    <br> <span class=\\\"text-xl leading-tight italic text-mid-light\\\">If your data doesn't get updated when you click on the button, wait around 5 minutes before clicking it again!</span>\\r\\n                                </p>\\r\\n                            </div>\\r\\n                            <img class=\\\"block max-w-xs md:max-w-full  md:hidden   w-full mt-5 \\\"\\r\\n                                 src=\\\"/assets/GuidesImages/ffa_buttons.png\\\"\\r\\n                                 alt=\\\"FFA action buttons\\\">\\r\\n                        </section>\\r\\n                    {/if}\\r\\n\\r\\n\\r\\n                    <button class=\\\"button button-brand mt-10 w-full ml-2 md:ml-0\\\"\\r\\n                            on:click={() => handleClose()}>LET'S\\r\\n                        GO!\\r\\n                    </button>\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n\\r\\n\\r\\n    </div>\\r\\n{:else}\\r\\n    <div class=\\\"flex lg:block justify-center\\\">\\r\\n        <button class=\\\"absolute fixed bottom-0  flex items-center  mx-24 py-3 focus:outline-none\\\"\\r\\n                in:fly={{ y: 100, duration: 400 }} out:fly|local={{ y: 100, duration: 900 }}\\r\\n                on:click={() => isCardVisible = true}>\\r\\n\\r\\n            <div class=\\\"py-2 px-2 rounded-full bg-primary mb-1\\\">\\r\\n                <svg\\r\\n                    class=\\\"w-3 h-3 fill-current my-auto\\\"\\r\\n                    viewBox=\\\"0 0 17 24\\\"\\r\\n                    xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                    <path\\r\\n                        d=\\\"m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z\\\" />\\r\\n                </svg>\\r\\n            </div>\\r\\n\\r\\n            <div class=\\\"ml-2 text-xl\\\">\\r\\n                Show guide\\r\\n            </div>\\r\\n        </button>\\r\\n    </div>\\r\\n\\r\\n{/if}\\r\\n\\r\\n\"],\"names\":[],\"mappings\":\"AAyCI,CAAC,eAAC,CAAC,AACC,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,GAAG,AACpB,CAAC,AAED,yBAAU,mBAAmB,AAAC,CAAC,AAC3B,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,OAAO,AAInB,CAAC,AAED,yBAAU,yBAAyB,AAAC,CAAC,AACjC,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClC,eAAe,CAAE,WAAW,CAC5B,qBAAqB,CAAE,IAAI,CAC3B,gBAAgB,CAAE,OAAO,CACzB,kBAAkB,CAAE,KAAK,CAAC,IAAI,CAAC,IAAI,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,IAAI,CAAC,CAAC,CAAC,KAAK,CAAC,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,IAAI,CAAC,AAEtG,CAAC\"}"
 };
 
-const Loading = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { data } = $$props;
-	let { type } = $$props;
-	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
-	if ($$props.type === void 0 && $$bindings.type && type !== void 0) $$bindings.type(type);
-	$$result.css.add(css$d);
+const GuideCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { page = "" } = $$props;
+	let isCardVisible = false;
+	let hiddenCardsList;
 
-	return `<div class="${[
-		"bg-fixed bg-no-repeat flex items-center justify-center",
-		(type === "inline" ? "xl:mt-40" : "") + " " + (type === "inline" ? "xl:ml-100" : "") + " " + (!type ? "h-screen-90" : "")
-	].join(" ").trim()}"><div class="${"pb-20"}"><div class="${"loader svelte-1r0tf3p"}"></div>
-        ${data
-	? `<h2 class="${"text-center text-3xl font-bold pt-4"}">${escape(data)}</h2>`
-	: `<h2 class="${"text-center text-3xl font-bold pt-4"}">Loading...</h2>`}</div></div>`;
+	onMount(() => {
+		hiddenCardsList = JSON.parse(decodeURI(getCookie("hideCards")).replace(/%2C/g, ","));
+		if (!hiddenCardsList || !hiddenCardsList.includes(page)) isCardVisible = true;
+	});
+
+	if ($$props.page === void 0 && $$bindings.page && page !== void 0) $$bindings.page(page);
+	$$result.css.add(css$g);
+
+	return `${isCardVisible
+	? `<div class="${"absolute z-50 top-0 bottom-0 left-0 right-0     h-screen"}"><div class="${"w-full md:w-3/4   fixed top-1/2 left-1/2  px-5 md:px-0"}" style="${"transform: translate(-50%, -46.5%);"}"><div class="${"w-full max-h-screen-85   border border-primary rounded-lg bg-background    flex flex-col justify-center"}"><div class="${"overflow-y-auto scrollbar p-6 md:p-10 pb-7 svelte-1fof41a"}"><button class="${"absolute top-0 right-5 xl:right-0  p-4 text-mid-light hover:text-font"}"><svg class="${"fill-current w-4"}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"}"></path></svg></button>
+                    ${page === "play"
+		? `<h2 class="${"text-center text-5xl"}">PLAY PAGE GUIDE</h2>
+
+                        <section class="${"md:flex justify-between mt-8"}"><div><p class="${"text-3xl text-legendary"}">Game modes section</p>
+                                <p><b class="${"svelte-1fof41a"}">Click </b> on the game mode <b class="${"svelte-1fof41a"}">you want to play</b> !</p></div>
+                            <img class="${"w-full mt-2 md:mt-0 md:w-1/2 md:h-41 object-cover"}" src="${"/assets/GuidesImages/game_modes_section.png"}" alt="${"Game modes section"}"></section>
+
+                        <section class="${"md:flex justify-between mt-16 mb-4"}"><img class="${"hidden md:block w-1/2 h-41 object-cover object-left-top"}" src="${"/assets/GuidesImages/quests_section.png"}" alt="${""}">
+                            <div class="${"md:ml-10"}"><p class="${"text-3xl text-legendary"}">Quests section</p>
+                                <p>Here you will find the <b class="${"svelte-1fof41a"}">quests</b> that Winhalla proposes. <b class="${"svelte-1fof41a"}">Complete them</b> by
+                                    playing
+                                    Brawlhalla, and you will <b class="${"svelte-1fof41a"}">earn</b> W coins!
+                                    <br> <span class="${"text-xl leading-tight italic text-mid-light"}">Click or hover on a quest to see how much you will earn ;)</span></p></div>
+                            <img class="${"md:hidden block w-full mt-5"}" src="${"/assets/GuidesImages/quests_section.png"}" alt="${"Quests section"}"></section>`
+		: `${page === "ffa"
+			? `<h2 class="${"text-center text-5xl"}">FFA PAGE GUIDE</h2>
+
+                        <section class="${"mt-10 md:mt-16 text-center text-green"}"><p>Only Brawlhalla <u>ranked games will
+                            count</u>
+                            in this game mode. You can play <u>1vs1</u> or <u>2vs2!</u></p></section>
+
+                        <section class="${"md:flex justify-between mt-12"}"><div><p class="${"text-3xl text-legendary"}">Player cards</p>
+                                <p><b class="${"svelte-1fof41a"}">Each player</b> that will join the lobby will be represented by a <b class="${"svelte-1fof41a"}">player
+                                    card</b> ,
+                                    with a username, and the <b class="${"svelte-1fof41a"}">number of games</b> he played in this FFA match. You
+                                    will see
+                                    your <b class="${"svelte-1fof41a"}">number of wins</b> on <b class="${"svelte-1fof41a"}">your</b> player card.</p></div>
+                            <img class="${"mt-2 w-5/6 mx-auto block max-w-xs px-8  md:px-0 md:max-w-full  md:mt-0 md:mx-0 md:w-1/2 md:h-64 object-contain "}" src="${"/assets/GuidesImages/ffa_player_card.png"}" alt="${"FFA player card example"}"></section>
+
+                        <section class="${"md:flex justify-between mt-8 mb-2"}"><img class="${"hidden md:block  w-1/2 h-41 object-contain object-left-top"}" src="${"/assets/GuidesImages/ffa_buttons.png"}" alt="${"FFA action buttons"}">
+                            <div class="${"md:ml-10"}"><p class="${"text-3xl text-legendary"}">Action buttons</p>
+                                <p>The <b class="${"svelte-1fof41a"}">QUIT</b> button let you <b class="${"svelte-1fof41a"}">quit the lobby</b> when you still <b class="${"svelte-1fof41a"}">haven&#39;t
+                                    played
+                                    any games</b>.
+                                    <br> When you <b class="${"svelte-1fof41a"}">click</b> the <b class="${"svelte-1fof41a"}">REFRESH DATA</b> button, your <b class="${"svelte-1fof41a"}">player card</b>
+                                    will be
+                                    <b class="${"svelte-1fof41a"}">updated</b> for <b class="${"svelte-1fof41a"}">you</b> and the <b class="${"svelte-1fof41a"}">other players</b> in the lobby.
+                                    <br> <span class="${"text-xl leading-tight italic text-mid-light"}">If your data doesn&#39;t get updated when you click on the button, wait around 5 minutes before clicking it again!</span></p></div>
+                            <img class="${"block max-w-xs md:max-w-full  md:hidden   w-full mt-5 "}" src="${"/assets/GuidesImages/ffa_buttons.png"}" alt="${"FFA action buttons"}"></section>`
+			: ``}`}
+
+
+                    <button class="${"button button-brand mt-10 w-full ml-2 md:ml-0"}">LET&#39;S
+                        GO!
+                    </button></div></div></div></div>`
+	: `<div class="${"flex lg:block justify-center"}"><button class="${"absolute fixed bottom-0  flex items-center  mx-24 py-3 focus:outline-none"}"><div class="${"py-2 px-2 rounded-full bg-primary mb-1"}"><svg class="${"w-3 h-3 fill-current my-auto"}" viewBox="${"0 0 17 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z"}"></path></svg></div>
+
+            <div class="${"ml-2 text-xl"}">Show guide
+            </div></button></div>`}`;
+});
+
+/* src\components\AdblockAlert.svelte generated by Svelte v3.31.0 */
+
+const AdblockAlert = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { user = {} } = $$props;
+	let { quests = {} } = $$props;
+	let adblocker = false;
+
+	onMount(() => {
+		//Adblock detector
+		setTimeout(
+			() => {
+				if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
+					if (!document.getElementById("vdngZEmaYJWQ")) {
+						//Is blocking ads
+						adblocker = true;
+					}
+				}
+			},
+			7000
+		);
+	});
+
+	if ($$props.user === void 0 && $$bindings.user && user !== void 0) $$bindings.user(user);
+	if ($$props.quests === void 0 && $$bindings.quests && quests !== void 0) $$bindings.quests(quests);
+
+	return `<div><script src="${"/adblocker.js"}"></script></div>
+${adblocker
+	? `<div class="${"text-legendary"}">Please disable your adblocker, we use ads revenue to gift you free items :)</div>`
+	: ``}`;
 });
 
 /* src\routes\play\index.svelte generated by Svelte v3.31.0 */
@@ -1743,6 +2931,7 @@ const Play = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		gameModes = [
 			{
 				name: "ffa",
+				displayName: "Solo vs All",
 				description: "Fight against <b>9</b> players!",
 				goal: "Be the one who has the <b>most wins</b> out of <b>10 games</b>!",
 				duration: "<b>30</b> - <b>50</b> minutes",
@@ -1750,6 +2939,7 @@ const Play = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 			},
 			{
 				name: "2vs2",
+				displayName: "Team",
 				description: "Fight against an other <b>team</b>!",
 				goal: "Be the team that has the <b>most wins</b> out of <b>5 games</b>!",
 				duration: "<b>20</b> - <b>30</b> minutes",
@@ -1762,12 +2952,13 @@ const Play = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 			let gameModesStatus = await callApi("get", "/status");
 
 			if (gameModesStatus instanceof Error && gameModesStatus.response.status !== 403) {
-				gameModesError = `<p class='text-accent'>Wow, unexpected error occured while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : We'll fix this ASAP. But let us finish our cup of tea first </p><p class='text-2xl text-light'>${gameModesStatus.toString()}</p>`;
+				gameModesError = `<p class="text-accent">Wow, an unexpected error occurred while processing gamemodes data, details for geeks below.</p> <p class="text-2xl mt-4">Note : This will be fix as fast as possible!</p><p class="text-2xl text-light">${gameModesStatus.toString()}</p>`;
 			}
 
 			if (gameModesStatus && !gameModesError) {
 				gameModesStatus = gameModesStatus.find(s => s.name === "GAMEMODES STATUS");
 				gameModesStatus = gameModesStatus.value;
+				console.log(gameModes, gameModesStatus);
 
 				Object.keys(gameModesStatus).forEach(gameModeName => {
 					const gameMode = gameModes.find(g => g.name === gameModeName.toLowerCase());
@@ -1781,14 +2972,17 @@ const Play = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 			if (quests instanceof Error && quests.response.status !== 403) throw quests;
 			if (quests instanceof Error && quests.response.status === 403) return;
-			quests = quests.solo;
 
-			if (!quests.lastDaily || !quests.lastWeekly) {
+			if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
 				quests = await callApi("get", "/solo");
 				if (quests instanceof Error && gameModesStatus.response.status !== 403) throw quests;
 				quests = quests.solo;
+			} else {
+				quests = quests.solo;
 			}
 		} catch(err) {
+			console.log(err);
+
 			if (err.response) {
 				if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
 					error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -1799,14 +2993,17 @@ const Play = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 				}
 			}
 
-			error = `<p class='text-accent'>Wow, unexpected error occured while processing quests data, details for geeks below.</p><p class="text-2xl mt-4">Note : This often means that an incompetent trainee broke something, let us fire him, then fix this ASAP</p> <p class='text-xl text-light mt-2'>${err.toString()}</p>`;
+			error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 		}
 	});
 
-	return `${($$result.head += `${($$result.title = `<title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>`, "")}<meta name="${"description"}" content="${"Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!\r\n        | Choose your game mode here | Winhalla play page "}" data-svelte="svelte-1w4eifo"><link rel="${"canonical"}" href="${"https://winhalla.app/play"}" data-svelte="svelte-1w4eifo"><script src="${"https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"}" id="${"purpleads-client"}" data-svelte="svelte-1w4eifo"></script>`, "")}
+	return `${($$result.head += `${($$result.title = `<title>Play - Winhalla, Play Brawlhalla. Earn rewards.</title>`, "")}<meta name="${"description"}" content="${"Play Brawlhala. Earn rewards. | Legit & Free In-Game objects!\r\n        | Choose your gamemode here | Winhalla Play page"}" data-svelte="svelte-10bzsa"><script async src="${"https://cdn.stat-rock.com/player.js"}" data-svelte="svelte-10bzsa"></script><link rel="${"canonical"}" href="${"https://winhalla.app/play"}" data-svelte="svelte-10bzsa">`, "")}
+${(!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)
+	? `<div>${validate_component(Loading, "Loading").$$render($$result, { duration: 500 }, {}, {})}</div>`
+	: ``}
 ${gameModesError && error
-	? `<div class="${"w-full content-center lg:mt-60 mt-25"}"><div class="${"text-center"}"><h2 class="${"lg:text-5xl text-3xl text-center text-legendary"}">Woooow, this page entirely crashed. Did you
-                broke grandma&#39;s porcelain bowls ?</h2>
+	? `<div class="${"w-full lg:mt-60 mt-25"}"><div class="${"text-center"}"><h2 class="${"lg:text-5xl text-3xl text-center text-legendary"}">Woooow, this page entirely crashed. Did you
+                broke grandma&#39;s porcelain bowls?</h2>
             <h3 class="${"text-center lg:text-3xl text-2xl"}"><a href="${"/"}" class="${"underline text-primary"}">Wanna go to
                 homepage</a> then ?</h3>
             <p class="${"text-light text-center pt-10"}">If this occurs regularly, maybe clear your cookies and cache. <br>
@@ -1817,20 +3014,26 @@ ${gameModesError && error
         <p class="${["text-light",  "hidden" ].join(" ").trim()}">${error} <br><br> ${gameModesError}</p></div>`
 	: `<div class="${"lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full"}"><div class="${"text-center lg:text-left"}"><h1 class="${"text-6xl leading-snug lg:leading-normal"}">Choose a game mode
             </h1></div>
-
-        <div class="${"flex flex-col items-center lg:items-start lg:flex-wrap\r\n        lg:flex-row"}">${gameModesError
-		? `<div class="${"lg:w-40% content-center lg:mt-60 mt-25 pb-20"}"><h2 class="${"lg:text-3xl text-2xl text-center"}">${gameModesError}</h2></div>`
+        ${validate_component(AdblockAlert, "AdblockAlert").$$render($$result, { quests }, {}, {})}
+        <div class="${"flex flex-col items-center lg:flex-wrap\r\n        lg:flex-row"}">${gameModesError
+		? `<div class="${"lg:w-40% z-50 content-center lg:mt-60 mt-25 pb-20"}"><h2 class="${"lg:text-3xl text-2xl text-center"}">${gameModesError}</h2></div>`
 		: `${gameModes
 			? `<div class="${"lg:mb-10 lg:mr- mt-10 text-center\r\n            flex flex-col items-center md:flex-row lg:items-start"}">${validate_component(GameModeCards, "GameModeCards").$$render($$result, { gameModes }, {}, {})}</div>`
 			: ``}`}
-            <div class="${"pb-16"}">${error
-		? `<div class="${"w-full content-center lg:mt-60 mt-25 "}"><h2 class="${"lg:text-3xl text-2xl text-center"}">${error}</h2></div>`
+            <div class="${"pb-16 flex-grow lg:-ml-15"}">${error
+		? `<div class="${"px-5 w-full content-center md:mt-15  lg:px-0  w-full"}"><h2 class="${"lg:text-3xl text-2xl text-center"}">${error}</h2></div>`
 		: `${quests
-			? `${validate_component(Quests, "Quests").$$render($$result, { data: quests }, {}, {})}`
-			: `${validate_component(Loading, "Loading").$$render($$result, { type: "inline" }, {}, {})}`}`}</div></div></div>`}`;
+			? `
+                    ${quests.lastDaily && quests.lastWeekly
+				? `<div class="${"lg:ml-15"}">${validate_component(Quests, "Quests").$$render($$result, { data: quests }, {}, {})}</div>`
+				: ``}`
+			: ``}`}</div></div></div>
+
+    ${validate_component(GuideCard, "GuideCard").$$render($$result, { page: "play" }, {}, {})}`}
+`;
 });
 
-var component_12 = /*#__PURE__*/Object.freeze({
+var component_13 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Play
 });
@@ -1845,6 +3048,7 @@ const Ffa = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 		try {
 			id = await callApi("get", "/lobby");
+			if (id instanceof Error) throw id;
 			console.log("id", id);
 
 			if (!id) {
@@ -1867,16 +3071,16 @@ const Ffa = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: `${validate_component(Loading, "Loading").$$render($$result, { data: "Finding game..." }, {}, {})}`}`;
 });
 
-var component_13 = /*#__PURE__*/Object.freeze({
+var component_14 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Ffa
 });
 
 /* src\components\FfaEnd.svelte generated by Svelte v3.31.0 */
 
-const css$e = {
+const css$h = {
 	code: "b.svelte-10uecpl{@apply text-primary font-normal;}.ffa-player.svelte-10uecpl{@apply relative w-53 h-88 text-center;}.ffa-player.svelte-10uecpl::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.68) 0%,\r\n                rgba(23, 23, 26, 0.88),\r\n                rgba(23, 23, 26, 0.95) 75%,\r\n                rgba(23, 23, 26, 0.98) 100%\r\n        )}.player-name.svelte-10uecpl{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;@apply absolute z-10 top-16 left-0 right-0;}.stats.svelte-10uecpl{@apply absolute left-0 right-0 z-10;}.user.svelte-10uecpl{@apply w-60 h-100;}.user.svelte-10uecpl::after{background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.55) 0%,\r\n                rgba(23, 23, 26, 0.75),\r\n                rgba(23, 23, 26, 0.85) 75%,\r\n                rgba(23, 23, 26, 0.93) 100%\r\n        )}",
-	map: "{\"version\":3,\"file\":\"FfaEnd.svelte\",\"sources\":[\"FfaEnd.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let players;\\r\\n    export let winners;\\r\\n    const data = winners.map(w => {\\r\\n        let array = [];\\r\\n        w.forEach((e, i) => {\\r\\n            //TODO: faire la même mais avec l'array winners au lieu de players\\r\\n            if (e == \\\"\\\") return\\r\\n            const winnerInPlayers = players.find(p => p.steamId == e.steamId);\\r\\n            array.push({\\r\\n                username: winnerInPlayers.username,\\r\\n                avatarURL: winnerInPlayers.avatarURL,\\r\\n                legends: winnerInPlayers.legends,\\r\\n                wins: winnerInPlayers.wins,\\r\\n                coinsEarned: e.coins,\\r\\n                multiplier: e.multiplier\\r\\n            });\\r\\n        });\\r\\n        return array;\\r\\n    });\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-primary font-normal;\\r\\n    }\\r\\n\\r\\n    .ffa-player {\\r\\n        @apply relative w-53 h-88 text-center;\\r\\n    }\\r\\n\\r\\n    .ffa-player::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.68) 0%,\\r\\n                rgba(23, 23, 26, 0.88),\\r\\n                rgba(23, 23, 26, 0.95) 75%,\\r\\n                rgba(23, 23, 26, 0.98) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    .player-name {\\r\\n        text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 10px;\\r\\n        @apply absolute z-10 top-16 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute left-0 right-0 z-10;\\r\\n    }\\r\\n\\r\\n    .user {\\r\\n        @apply w-60 h-100;\\r\\n    }\\r\\n\\r\\n    .user::after {\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.55) 0%,\\r\\n                rgba(23, 23, 26, 0.75),\\r\\n                rgba(23, 23, 26, 0.85) 75%,\\r\\n                rgba(23, 23, 26, 0.93) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n\\r\\n    .timer {\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"\\\">\\r\\n    <div class=\\\"pl-7 lg:pl-24 pt-8 lg:pt-12\\\">\\r\\n        <div class=\\\"mode-timer lg:flex items-end\\\">\\r\\n            <h1 class=\\\"text-6xl\\\">Match Ended</h1>\\r\\n        </div>\\r\\n    </div>\\r\\n\\r\\n    <div class=\\\"flex flex-col lg:items-center mt-8 lg:mt-0 relative lg:ml-24\\\">\\r\\n\\r\\n        <div class=\\\"flex flex-col items-center lg:flex-row\\\">\\r\\n\\r\\n            <!--Winner card-->\\r\\n            {#each data[0] as winner,i}\\r\\n                <div class:lg:ml-10={i>0} >\\r\\n                    <div>\\r\\n                        <div class=\\\"ffa-player card user\\\">\\r\\n                            <img\\r\\n                                src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                alt={winner.legends}\\r\\n                                class=\\\"block\\\" />\\r\\n\\r\\n                            <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                            <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                <p>\\r\\n                                    Games won: <b>{winner.wins}</b>/8\\r\\n                                </p>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/each}\\r\\n\\r\\n            <!--2nd card-->\\r\\n            <!--If there is a 2nd (impossible if there is 2 1st)-->\\r\\n            {#if data[1] !== \\\"\\\"}\\r\\n                {#each data[1] as winner,i}\\r\\n                    <div class=\\\"mt-10 lg:ml-10\\\">\\r\\n                        <div>\\r\\n                            <div class=\\\"ffa-player card user\\\">\\r\\n                                <img\\r\\n                                    src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                    alt={winner.legends}\\r\\n                                    class=\\\"block\\\" />\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                                <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games won: <b>{winner.wins}</b>/8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                {/each}\\r\\n            {/if}\\r\\n\\r\\n            <!--3rd card-->\\r\\n            <!--If there is a third (impossible if there is 2 2nd)-->\\r\\n            {#if data[2] !== \\\"\\\"}\\r\\n                {#each data[2] as winner,i}\\r\\n                    <div class=\\\"mt-10 lg:mt-20 lg:ml-10\\\">\\r\\n                        <div>\\r\\n                            <div class=\\\"ffa-player card user\\\">\\r\\n                                <img\\r\\n                                    src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                    alt={winner.legends}\\r\\n                                    class=\\\"block\\\" />\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                                <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games won: <b>{winner.wins}</b>/8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                {/each}\\r\\n            {/if}\\r\\n        </div>\\r\\n        <div>\\r\\n            <div class=\\\"overflow-x-scroll lg:overflow-auto pl-6 lg:pl-0 pb-4 lg:pb-8 \\\">\\r\\n                <div>\\r\\n                    <table class=\\\"card px-4 overflow-hidden mt-10 lg:mt-20\\\">\\r\\n                        <thead class=\\\"bg-primary \\\">\\r\\n                        <tr>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Rank\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Player\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Wins\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Earned\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Multiplier\\r\\n                            </td>\\r\\n                        </tr>\\r\\n                        </thead>\\r\\n                        <tbody class=\\\"divide-y-4 divide-background text-l\\\">\\r\\n                        <!--For each rank-->\\r\\n                        {#each data as winners,i}\\r\\n                            <!--For each player in rank-->\\r\\n                            {#each winners as winner}\\r\\n                                {#if winner.avatarURL || winner.username}\\r\\n                                    <tr>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            <b class=\\\"font-normal\\\">{i+1}</b>\\r\\n                                        </td>\\r\\n                                        <td class=\\\"flex items-center px-6 py-2\\\">\\r\\n                                            <img class=\\\"block w-10 h-10 rounded-full\\\" src={winner.avatarURL}\\r\\n                                                 alt={winner.legends}>\\r\\n                                            <p class=\\\"pl-2\\\">{winner.username}</p>\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            <b class=\\\"text-primary font-normal\\\">{winner.wins}</b>/8\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            {winner.coinsEarned}\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            {winner.multiplier}\\r\\n                                        </td>\\r\\n                                    </tr>\\r\\n                                {/if}\\r\\n                            {/each  }\\r\\n                        {/each}\\r\\n                        </tbody>\\r\\n                    </table>\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n\\r\\n    </div>\\r\\n\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAuBI,CAAC,eAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAED,WAAW,eAAC,CAAC,AACT,OAAO,QAAQ,CAAC,IAAI,CAAC,IAAI,CAAC,WAAW,CAAC,AAC1C,CAAC,AAED,0BAAW,OAAO,AAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,YAAY,eAAC,CAAC,AACV,WAAW,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAClD,OAAO,QAAQ,CAAC,IAAI,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,AAC/C,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,IAAI,CAAC,AACxC,CAAC,AAED,KAAK,eAAC,CAAC,AACH,OAAO,IAAI,CAAC,KAAK,CAAC,AACtB,CAAC,AAED,oBAAK,OAAO,AAAC,CAAC,AACV,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"FfaEnd.svelte\",\"sources\":[\"FfaEnd.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let players;\\r\\n    export let winners;\\r\\n    const data = winners.map(w => {\\r\\n        let array = [];\\r\\n        w.forEach((e, i) => {\\r\\n            if (e == \\\"\\\") return\\r\\n            const winnerInPlayers = players.find(p => p.steamId == e.steamId);\\r\\n            array.push({\\r\\n                username: winnerInPlayers.username,\\r\\n                avatarURL: winnerInPlayers.avatarURL,\\r\\n                legends: winnerInPlayers.legends,\\r\\n                wins: winnerInPlayers.wins,\\r\\n                coinsEarned: e.coins,\\r\\n                multiplier: e.multiplier\\r\\n            });\\r\\n        });\\r\\n        return array;\\r\\n    });\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-primary font-normal;\\r\\n    }\\r\\n\\r\\n    .ffa-player {\\r\\n        @apply relative w-53 h-88 text-center;\\r\\n    }\\r\\n\\r\\n    .ffa-player::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.68) 0%,\\r\\n                rgba(23, 23, 26, 0.88),\\r\\n                rgba(23, 23, 26, 0.95) 75%,\\r\\n                rgba(23, 23, 26, 0.98) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    .player-name {\\r\\n        text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 10px;\\r\\n        @apply absolute z-10 top-16 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute left-0 right-0 z-10;\\r\\n    }\\r\\n\\r\\n    .user {\\r\\n        @apply w-60 h-100;\\r\\n    }\\r\\n\\r\\n    .user::after {\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.55) 0%,\\r\\n                rgba(23, 23, 26, 0.75),\\r\\n                rgba(23, 23, 26, 0.85) 75%,\\r\\n                rgba(23, 23, 26, 0.93) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n\\r\\n    .timer {\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<div class=\\\"\\\">\\r\\n    <div class=\\\"pl-7 lg:pl-24 pt-8 lg:pt-12\\\">\\r\\n        <div class=\\\"mode-timer lg:flex items-end\\\">\\r\\n            <h1 class=\\\"text-6xl\\\">Match Ended</h1>\\r\\n        </div>\\r\\n    </div>\\r\\n\\r\\n    <div class=\\\"flex flex-col lg:items-center mt-8 lg:mt-0 relative lg:ml-24\\\">\\r\\n\\r\\n        <div class=\\\"flex flex-col items-center lg:flex-row\\\">\\r\\n\\r\\n            <!--Winner card-->\\r\\n            {#each data[0] as winner,i}\\r\\n                <div class:lg:ml-10={i>0} >\\r\\n                    <div>\\r\\n                        <div class=\\\"ffa-player card user\\\">\\r\\n                            <img\\r\\n                                src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                alt={winner.legends}\\r\\n                                class=\\\"block\\\" />\\r\\n\\r\\n                            <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                            <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                <p>\\r\\n                                    Games won: <b>{winner.wins}</b>/8\\r\\n                                </p>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/each}\\r\\n\\r\\n            <!--2nd card-->\\r\\n            <!--If there is a 2nd (impossible if there is 2 1st)-->\\r\\n            {#if data[1] !== \\\"\\\"}\\r\\n                {#each data[1] as winner,i}\\r\\n                    <div class=\\\"mt-10 lg:ml-10\\\">\\r\\n                        <div>\\r\\n                            <div class=\\\"ffa-player card user\\\">\\r\\n                                <img\\r\\n                                    src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                    alt={winner.legends}\\r\\n                                    class=\\\"block\\\" />\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                                <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games won: <b>{winner.wins}</b>/8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                {/each}\\r\\n            {/if}\\r\\n\\r\\n            <!--3rd card-->\\r\\n            <!--If there is a third (impossible if there is 2 2nd)-->\\r\\n            {#if data[2] !== \\\"\\\"}\\r\\n                {#each data[2] as winner,i}\\r\\n                    <div class=\\\"mt-10 lg:mt-20 lg:ml-10\\\">\\r\\n                        <div>\\r\\n                            <div class=\\\"ffa-player card user\\\">\\r\\n                                <img\\r\\n                                    src=\\\"/assets/CharactersBanners/{winner.legends}.png\\\"\\r\\n                                    alt={winner.legends}\\r\\n                                    class=\\\"block\\\" />\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">{winner.username}</p>\\r\\n                                <div class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games won: <b>{winner.wins}</b>/8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                {/each}\\r\\n            {/if}\\r\\n        </div>\\r\\n        <div>\\r\\n            <div class=\\\"overflow-x-scroll lg:overflow-auto pl-6 lg:pl-0 pb-4 lg:pb-8 \\\">\\r\\n                <div>\\r\\n                    <table class=\\\"card px-4 overflow-hidden mt-10 lg:mt-20\\\">\\r\\n                        <thead class=\\\"bg-primary \\\">\\r\\n                        <tr>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Rank\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Player\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Wins\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Earned\\r\\n                            </td>\\r\\n                            <td class=\\\"px-6 py-3\\\">\\r\\n                                Multiplier\\r\\n                            </td>\\r\\n                        </tr>\\r\\n                        </thead>\\r\\n                        <tbody class=\\\"divide-y-4 divide-background text-l\\\">\\r\\n                        <!--For each rank-->\\r\\n                        {#each data as winners,i}\\r\\n                            <!--For each player in rank-->\\r\\n                            {#each winners as winner}\\r\\n                                {#if winner.avatarURL || winner.username}\\r\\n                                    <tr class=\\\"text-center\\\">\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            <b class=\\\"font-normal\\\">{i + 1}</b>\\r\\n                                        </td>\\r\\n                                        <td class=\\\"flex items-center px-6 py-2\\\">\\r\\n                                            <img class=\\\"block w-10 h-10 rounded-full\\\" src={winner.avatarURL}\\r\\n                                                 alt={winner.username}>\\r\\n                                            <p class=\\\"pl-2\\\">{winner.username}</p>\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            <b class=\\\"text-primary font-normal\\\">{winner.wins}</b>/8\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            {winner.coinsEarned}\\r\\n                                        </td>\\r\\n                                        <td class=\\\"px-6 py-2\\\">\\r\\n                                            {winner.multiplier}\\r\\n                                        </td>\\r\\n                                    </tr>\\r\\n                                {/if}\\r\\n                            {/each  }\\r\\n                        {/each}\\r\\n                        </tbody>\\r\\n                    </table>\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n\\r\\n    </div>\\r\\n\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AAsBI,CAAC,eAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAED,WAAW,eAAC,CAAC,AACT,OAAO,QAAQ,CAAC,IAAI,CAAC,IAAI,CAAC,WAAW,CAAC,AAC1C,CAAC,AAED,0BAAW,OAAO,AAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,YAAY,eAAC,CAAC,AACV,WAAW,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAClD,OAAO,QAAQ,CAAC,IAAI,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,AAC/C,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,IAAI,CAAC,AACxC,CAAC,AAED,KAAK,eAAC,CAAC,AACH,OAAO,IAAI,CAAC,KAAK,CAAC,AACtB,CAAC,AAED,oBAAK,OAAO,AAAC,CAAC,AACV,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC\"}"
 };
 
 const FfaEnd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1887,9 +3091,7 @@ const FfaEnd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		let array = [];
 
 		w.forEach((e, i) => {
-			//TODO: faire la même mais avec l'array winners au lieu de players
 			if (e == "") return;
-
 			const winnerInPlayers = players.find(p => p.steamId == e.steamId);
 
 			array.push({
@@ -1907,7 +3109,7 @@ const FfaEnd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 	if ($$props.players === void 0 && $$bindings.players && players !== void 0) $$bindings.players(players);
 	if ($$props.winners === void 0 && $$bindings.winners && winners !== void 0) $$bindings.winners(winners);
-	$$result.css.add(css$e);
+	$$result.css.add(css$h);
 
 	return `<div class="${""}"><div class="${"pl-7 lg:pl-24 pt-8 lg:pt-12"}"><div class="${"mode-timer lg:flex items-end"}"><h1 class="${"text-6xl"}">Match Ended</h1></div></div>
 
@@ -1956,8 +3158,8 @@ const FfaEnd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                         <tbody class="${"divide-y-4 divide-background text-l"}">
                         ${each(data, (winners, i) => `
                             ${each(winners, winner => `${winner.avatarURL || winner.username
-	? `<tr><td class="${"px-6 py-2"}"><b class="${"font-normal svelte-10uecpl"}">${escape(i + 1)}</b></td>
-                                        <td class="${"flex items-center px-6 py-2"}"><img class="${"block w-10 h-10 rounded-full"}"${add_attribute("src", winner.avatarURL, 0)}${add_attribute("alt", winner.legends, 0)}>
+	? `<tr class="${"text-center"}"><td class="${"px-6 py-2"}"><b class="${"font-normal svelte-10uecpl"}">${escape(i + 1)}</b></td>
+                                        <td class="${"flex items-center px-6 py-2"}"><img class="${"block w-10 h-10 rounded-full"}"${add_attribute("src", winner.avatarURL, 0)}${add_attribute("alt", winner.username, 0)}>
                                             <p class="${"pl-2"}">${escape(winner.username)}</p></td>
                                         <td class="${"px-6 py-2"}"><b class="${"text-primary font-normal svelte-10uecpl"}">${escape(winner.wins)}</b>/8
                                         </td>
@@ -1967,99 +3169,299 @@ const FfaEnd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	: ``}`)}`)}</tbody></table></div></div></div></div></div>`;
 });
 
-/* src\routes\play\ffa\[id].svelte generated by Svelte v3.31.0 */
+/* src\components\PlayAdButton.svelte generated by Svelte v3.31.0 */
 
-const css$f = {
-	code: "b.svelte-zio6ya{@apply text-primary font-normal;}.ffa-player.svelte-zio6ya{@apply relative w-53 h-88 text-center;}.ffa-player.svelte-zio6ya::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.68) 0%,\r\n                rgba(23, 23, 26, 0.88),\r\n                rgba(23, 23, 26, 0.95) 75%,\r\n                rgba(23, 23, 26, 0.98) 100%\r\n        )}.player-name.svelte-zio6ya{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;@apply absolute z-10 top-16 left-0 right-0;}.stats.svelte-zio6ya{@apply absolute left-0 right-0 z-10;}.user.svelte-zio6ya{@apply w-60 h-100;}.user.svelte-zio6ya::after{background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.55) 0%,\r\n                rgba(23, 23, 26, 0.75),\r\n                rgba(23, 23, 26, 0.85) 75%,\r\n                rgba(23, 23, 26, 0.93) 100%\r\n        )}.timer.svelte-zio6ya{margin-bottom:0.35rem}.quit.svelte-zio6ya{@apply bg-legendary px-7;}",
-	map: "{\"version\":3,\"file\":\"[id].svelte\",\"sources\":[\"[id].svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\r\\n    export async function preload({params}) {\\r\\n        let id = params.id;\\r\\n\\r\\n        return {\\r\\n            id\\r\\n        };\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<script>\\r\\n    import { onMount } from \\\"svelte\\\";\\r\\n    import { callApi } from \\\"../../../utils/api\\\";\\r\\n    import { goto } from \\\"@sapper/app\\\";\\r\\n\\r\\n    import RefreshButton from \\\"../../../components/RefreshButton.svelte\\\";\\r\\n    import FfaEnd from \\\"../../../components/FfaEnd.svelte\\\";\\r\\n    import Loading from \\\"../../../components/Loading.svelte\\\";\\r\\n    import { counter } from \\\"../../../components/store\\\";\\r\\n    import io from \\\"socket.io-client\\\";\\r\\n    import { apiUrl } from \\\"../../../utils/config\\\";\\r\\n    import {fly} from \\\"svelte/transition\\\"\\r\\n\\r\\n    export let id;\\r\\n\\r\\n    let user;\\r\\n    let match;\\r\\n    let isMatchEnded;\\r\\n    let countDown;\\r\\n\\r\\n    let userPlayer;\\r\\n    let players;\\r\\n    let error;\\r\\n    let pushError\\r\\n    onMount(async () => {\\r\\n        let unsub = counter.subscribe((value) => {\\r\\n            user = value.content;\\r\\n\\r\\n        });\\r\\n        unsub();\\r\\n\\r\\n        //await user\\r\\n        //user = user.steam\\r\\n        try {\\r\\n            user = await user;\\r\\n            user = user.steam;\\r\\n            match = await callApi(\\\"get\\\", `/getMatch/${id}`);\\r\\n            if (match instanceof Error) {\\r\\n                throw match\\r\\n            }\\r\\n            isMatchEnded = match.finished;\\r\\n            //Start the countdown\\r\\n\\r\\n            filterUsers(false);\\r\\n            const d = new Date(userPlayer.joinDate);\\r\\n            const endsIn = -(\\r\\n                (new Date().getTime() -\\r\\n                    new Date(d.setHours(d.getHours() + 3)).getTime()) /\\r\\n                1000\\r\\n            );\\r\\n            if (endsIn < 1) {\\r\\n                countDown = \\\"Waiting for others to finish (you can start a new game from the play page)\\\";\\r\\n            } else {\\r\\n                startTimer(endsIn);\\r\\n            }\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n\\r\\n            let socket = io.io(apiUrl);\\r\\n            socket.on(\\\"connection\\\", (status) => {\\r\\n                console.log(status);\\r\\n                socket.emit(\\\"match connection\\\", \\\"FFA\\\" + id);\\r\\n            });\\r\\n\\r\\n            socket.on(\\\"join match\\\", (status) => {\\r\\n                console.log(status);\\r\\n            });\\r\\n\\r\\n            socket.on(\\\"lobbyUpdate\\\", (value) => {\\r\\n                match = value;\\r\\n                filterUsers(true);\\r\\n            });\\r\\n        } catch (err) {\\r\\n            if (err.response) {\\r\\n                if (err.response.status === 400 && err.response.data.includes(\\\"Play at least one ranked\\\")) {\\r\\n                    error = \\\"You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)\\\";\\r\\n                    return\\r\\n                } else if (err.response.status === 400 && err.response.data.includes(\\\"Play at least one\\\")) {\\r\\n                    error = \\\"You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)\\\";\\r\\n                    return\\r\\n                } else if (err.response.status === 404) error = \\\"<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>\\\";\\r\\n                return\\r\\n            }\\r\\n            error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`\\r\\n        }\\r\\n\\r\\n    });\\r\\n\\r\\n    const filterUsers = (isFromSocket) => {\\r\\n        //Find user's object\\r\\n        if (isFromSocket === false) {\\r\\n            userPlayer = match.players.find(p => p.steamId === parseInt(user.id));\\r\\n        } else {\\r\\n            let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));\\r\\n            match.players[playerIndex].wins = userPlayer.wins;\\r\\n            userPlayer = match.players[playerIndex];\\r\\n        }\\r\\n        //Delete user's object from array.\\r\\n        players = [...match.players];\\r\\n        players.splice(\\r\\n            match.players.findIndex(p => p.steamId === parseInt(user.id)),\\r\\n            1\\r\\n        );\\r\\n    };\\r\\n\\r\\n    //Function that starts a timer with a date, and refreshes it every second\\r\\n\\r\\n    function startTimer(duration) {\\r\\n        let timer = duration,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n        setInterval(function() {\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n\\r\\n            countDown = hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n\\r\\n            if (--timer < 0) {\\r\\n                timer = duration;\\r\\n            }\\r\\n        }, 1000);\\r\\n    }\\r\\n\\r\\n    //Function that handles the refresh button on click event\\r\\n    let isRefreshingStats = false;\\r\\n    const handleRefresh = async () => {\\r\\n        isRefreshingStats = true;\\r\\n        let winNb = userPlayer.gamesPlayed;\\r\\n\\r\\n        match = await callApi(\\\"get\\\", `/getMatch/${id}`);\\r\\n\\r\\n        filterUsers(false);\\r\\n        if (userPlayer.gamesPlayed !== winNb) {\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n        } else if (match.finished && isMatchEnded === false) {\\r\\n            isMatchEnded = true;\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n        }\\r\\n        isRefreshingStats = false;\\r\\n    };\\r\\n\\r\\n    const handleQuit = async () => {\\r\\n        try {\\r\\n            const exitStatus = await callApi(\\\"post\\\", `/exitMatch`);\\r\\n            if (exitStatus instanceof Error) throw exitStatus\\r\\n            goto(`/play`);\\r\\n        } catch (e) {\\r\\n            pushError = e.response.data.message?e.response.data.message:e.response.data?e.response.data.toString():e.toString();\\r\\n            setTimeout(() => {\\r\\n                pushError = undefined\\r\\n            }, 8000)\\r\\n        }\\r\\n    };\\r\\n\\r\\n    let isInfoDropdownOpen = false;\\r\\n\\r\\n    function handleInfoDropdown() {\\r\\n        isInfoDropdownOpen = !isInfoDropdownOpen;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-primary font-normal;\\r\\n    }\\r\\n\\r\\n    .ffa-player {\\r\\n        @apply relative w-53 h-88 text-center;\\r\\n    }\\r\\n\\r\\n    .ffa-player::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.68) 0%,\\r\\n                rgba(23, 23, 26, 0.88),\\r\\n                rgba(23, 23, 26, 0.95) 75%,\\r\\n                rgba(23, 23, 26, 0.98) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    .player-name {\\r\\n        text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 10px;\\r\\n        @apply absolute z-10 top-16 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute left-0 right-0 z-10;\\r\\n    }\\r\\n\\r\\n    .user {\\r\\n        @apply w-60 h-100;\\r\\n    }\\r\\n\\r\\n    .user::after {\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.55) 0%,\\r\\n                rgba(23, 23, 26, 0.75),\\r\\n                rgba(23, 23, 26, 0.85) 75%,\\r\\n                rgba(23, 23, 26, 0.93) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    .timer {\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n    .quit {\\r\\n        @apply bg-legendary px-7;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Winhalla | FFA match</title>\\r\\n    <script src=\\\"https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b\\\"\\r\\n            id=\\\"purpleads-client\\\"></script>\\r\\n</svelte:head>\\r\\n{#if error}\\r\\n    <div class=\\\"w-full content-center lg:mt-60 mt-25 \\\">\\r\\n        <h2 class=\\\"lg:text-5xl text-3xl text-center\\\">{@html error}</h2>\\r\\n        <a href=\\\"/play\\\"><p class=\\\"underline lg:text-3xl pt-4 text-2xl  text-center text-primary\\\">Go to play page</p></a>\\r\\n    </div>\\r\\n{:else}\\r\\n    <div class=\\\"h-full  \\\">\\r\\n        {#if match}\\r\\n            {#if isMatchEnded}\\r\\n                <FfaEnd players={match.players} winners={match.winners}/>\\r\\n            {:else}\\r\\n                <div class=\\\"h-full flex items-center flex-col lg:block lg:ml-24\\\">\\r\\n                    <div\\r\\n                            class=\\\"flex flex-col justify-center lg:flex-row\\r\\n                    lg:justify-between items-center lg:mt-12 mt-7\\\">\\r\\n                        <div\\r\\n                                class=\\\"mode-timer flex justify-center lg:justify-start\\r\\n                        items-end w-60 \\\">\\r\\n                            <h1 class=\\\"text-6xl leading-none\\\">FFA</h1>\\r\\n                            <p\\r\\n                                    class=\\\"timer text-primary ml-5 text-3xl leading-none\\\">\\r\\n                                {#if countDown}{countDown}{:else}Loading...{/if}\\r\\n                            </p>\\r\\n                        </div>\\r\\n\\r\\n                        <div\\r\\n                                class=\\\"lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row\\r\\n                        items-center\\\">\\r\\n                            <RefreshButton\\r\\n                                    on:click={() => handleRefresh()}\\r\\n                                    isRefreshing={isRefreshingStats}\\r\\n                                    refreshMessage={'Refresh data'}/>\\r\\n                            {#if userPlayer.gamesPlayed == 0}\\r\\n                                <button\\r\\n                                        class=\\\"button button-brand quit lg:ml-4 mt-2\\r\\n                                lg:mt-0\\\"\\r\\n                                        on:click={() => handleQuit()}>\\r\\n                                    Quit lobby\\r\\n                                </button>\\r\\n                                {#if pushError}\\r\\n                                    <div class=\\\"z-20 absolute right-0 top-5 lg:top-30 mr-6 w-auto h-auto p-5 bg-background border rounded-lg border-legendary\\\"\\r\\n                                         transition:fly={{ x:200, duration: 500 }}>\\r\\n                                        <h3 class=\\\"text-legendary\\\">There was an error exiting the match.</h3>\\r\\n                                        <p class=\\\"text-light text-base\\\">{pushError}</p>\\r\\n                                    </div>\\r\\n                                {/if}\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    </div>\\r\\n\\r\\n                    <div\\r\\n                            class=\\\"flex items-center flex-col lg:flex-row lg:items-start\\r\\n                    h-full\\\">\\r\\n                        <!--Main Player-->\\r\\n                        {#if userPlayer}\\r\\n                            <div class=\\\"mt-8 lg:mt-25 ffa-player card user\\\">\\r\\n                                <img\\r\\n                                        src=\\\"/assets/CharactersBanners/{userPlayer.legends}.png\\\"\\r\\n                                        alt={userPlayer.legends}\\r\\n                                        class=\\\"block\\\"/>\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">\\r\\n                                    {userPlayer.username}\\r\\n                                </p>\\r\\n                                <div\\r\\n                                        class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games played:\\r\\n                                        <b>{userPlayer.gamesPlayed}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                    <p>\\r\\n                                        Games won:\\r\\n                                        <b>{userPlayer.wins}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/if}\\r\\n\\r\\n                        <!--Other Players-->\\r\\n                        {#if players}\\r\\n                            <div\\r\\n                                    class=\\\"flex flex-col justify-center lg:justify-start\\r\\n                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0\\\">\\r\\n                                {#each players as player}\\r\\n                                    <div class=\\\"ffa-player card lg:mr-12 mb-8\\\">\\r\\n                                        <img\\r\\n                                                src=\\\"/assets/CharactersBanners/{player.legends}.png\\\"\\r\\n                                                alt={player.legends}\\r\\n                                                class=\\\"block\\\"/>\\r\\n\\r\\n                                        <p class=\\\"player-name text-3xl\\\">\\r\\n                                            {player.username}\\r\\n                                        </p>\\r\\n                                        <div\\r\\n                                                class=\\\"stats text-xl bottom-5\\r\\n                                        text-ultra-light\\\">\\r\\n                                            <p>\\r\\n                                                Games played:\\r\\n                                                <b>{player.gamesPlayed}</b>\\r\\n                                                /8\\r\\n                                            </p>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            </div>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n            <div class:pb-4={isInfoDropdownOpen} class=\\\"absolute fixed bottom-0 w-full bg-background bg-opacity-90 \\\">\\r\\n                <button class=\\\"flex lg:ml-20 px-6 py-3 items-center text-lg\\\" on:click={() => handleInfoDropdown()}>\\r\\n                    { !isInfoDropdownOpen ? \\\"Show\\\" : \\\"Hide\\\" } information\\r\\n                    <svg class:hidden={isInfoDropdownOpen} class=\\\"fill-current w-4 ml-2\\\" viewBox=\\\"0 0 24 24\\\"\\r\\n                         xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path d=\\\"m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z\\\"/>\\r\\n                    </svg>\\r\\n                    <svg class:hidden={!isInfoDropdownOpen} class=\\\"fill-current w-4 ml-2\\\" viewBox=\\\"0 0 24 24\\\"\\r\\n                         xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                        <path d=\\\"m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z\\\"/>\\r\\n                    </svg>\\r\\n                </button>\\r\\n                <div class=\\\"flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5\\\" class:hidden={!isInfoDropdownOpen}>\\r\\n                    <div class=\\\"w-68\\\">\\r\\n                        <p class=\\\"text-primary text-lg \\\">Ranked matches</p>\\r\\n                        <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p>\\r\\n                    </div>\\r\\n                    <div class=\\\"w-68 ml-12 xl:ml-0\\\">\\r\\n                        <p class=\\\"text-primary text-lg \\\">Delay</p>\\r\\n                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla's servers, before updating when\\r\\n                            you click on the \\\"REFRESH DATA\\\" button.</p>\\r\\n                    </div>\\r\\n                    <div class=\\\"w-68 ml-12 xl:ml-0\\\">\\r\\n                        <p class=\\\"text-primary text-lg \\\">Refresh data</p>\\r\\n                        <p>The other players will see your data updated when you click on the \\\"REFRESH DATA\\\" button.</p>\\r\\n                    </div>\\r\\n\\r\\n                    <div class=\\\"w-68 ml-12 xl:ml-0 xl:mr-40\\\">\\r\\n                        <p class=\\\"text-primary text-lg \\\">Quit</p>\\r\\n                        <p>You will be able to quit the match when you click on the \\\"QUIT\\\" button, if you still didn't\\r\\n                            played.</p>\\r\\n                    </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        {:else}\\r\\n            <Loading data={\\\"Loading game data...\\\"}/>\\r\\n        {/if}\\r\\n    </div>\\r\\n{/if}\\r\\n\"],\"names\":[],\"mappings\":\"AAgLI,CAAC,cAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAED,WAAW,cAAC,CAAC,AACT,OAAO,QAAQ,CAAC,IAAI,CAAC,IAAI,CAAC,WAAW,CAAC,AAC1C,CAAC,AAED,yBAAW,OAAO,AAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,YAAY,cAAC,CAAC,AACV,WAAW,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAClD,OAAO,QAAQ,CAAC,IAAI,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,AAC/C,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,IAAI,CAAC,AACxC,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,IAAI,CAAC,KAAK,CAAC,AACtB,CAAC,AAED,mBAAK,OAAO,AAAC,CAAC,AACV,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,aAAa,CAAE,OAAO,AAC1B,CAAC,AAED,KAAK,cAAC,CAAC,AACH,OAAO,YAAY,CAAC,IAAI,CAAC,AAC7B,CAAC\"}"
+const css$i = {
+	code: "button.svelte-1c98j0i{background-color:#3de488}button.svelte-1c98j0i:disabled{@apply bg-disabled text-white;;padding-left:1rem;padding-right:1rem;box-shadow:none;cursor:auto}.FfaWatchAd.svelte-1c98j0i{padding-top:0.75rem;padding-bottom:0.75rem}",
+	map: "{\"version\":3,\"file\":\"PlayAdButton.svelte\",\"sources\":[\"PlayAdButton.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    export let socket;\\r\\n    export let userPlayer;\\r\\n    export let id;\\r\\n    export let adError;\\r\\n    export let info;\\r\\n    export let finished;\\r\\n    export let page;\\r\\n\\r\\n    let started;\\r\\n    let videoSeen;\\r\\n    $: if (videoSeen > 0) {\\r\\n        console.log(\\\"nn\\\");\\r\\n        try {\\r\\n            socket.emit(\\\"advideo\\\", videoSeen === \\\"1\\\" ? {\\r\\n                state: 1,\\r\\n                steamId: userPlayer.steamId,\\r\\n                room: id,\\r\\n                goal: \\\"earnMoreFFA\\\"\\r\\n            } : { state: videoSeen, steamId: userPlayer.steamId });\\r\\n        } catch (e) {\\r\\n            console.log(e);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    socket.on(\\\"advideo\\\", (e) => {\\r\\n        if (!started) return;\\r\\n        if (e.code === \\\"error\\\") {\\r\\n            console.log(e.message);\\r\\n            adError = e.message;\\r\\n            finished = true;\\r\\n            started = false;\\r\\n        } else if (e.code === \\\"success\\\") {\\r\\n            info = e.message;\\r\\n            userPlayer.adsWatched++;\\r\\n            userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;\\r\\n            finished = true;\\r\\n            started = false;\\r\\n        }\\r\\n    });\\r\\n\\r\\n\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    button {\\r\\n        background-color: #3de488;\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled text-white;\\r\\n        padding-left: 1rem;\\r\\n        padding-right: 1rem;\\r\\n        box-shadow: none;\\r\\n        cursor: auto;\\r\\n    }\\r\\n\\r\\n    .FfaWatchAd {\\r\\n        padding-top: 0.75rem;\\r\\n        padding-bottom: 0.75rem;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n\\r\\n<button disabled={userPlayer.adsWatched >= 8} class=\\\"button button-brand lg:mr-8 mt-2\\r\\n                            lg:mt-0 mb-5\\r\\n                            lg:mb-0  text-background\\\" class:FfaWatchAd={page === \\\"FfaWatchAd\\\"}\\r\\n        style=\\\"\\\"\\r\\n        onclick=\\\"playAd()\\\"\\r\\n        on:click={() => started = true}>{userPlayer.adsWatched < 8 ? \\\"Play ad\\\" : \\\"Maximum ads reached\\\"}\\r\\n</button>\\r\\n\\r\\n<input hidden bind:value={videoSeen} id={started ? 'transfer' : Math.random() * 1000} />\\r\\n\\r\\n<div>\\r\\n    <script data-playerPro=\\\"current\\\">\\r\\n        function playAd() {\\r\\n            const init = (api) => {\\r\\n                if (api) {\\r\\n\\r\\n                    api.on(\\\"AdVideoStart\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = 1;\\r\\n                        document.getElementById(\\\"transfer\\\").dispatchEvent(new CustomEvent(\\\"input\\\"));\\r\\n                        //api.setAdVolume(1);\\r\\n                        document.body.onblur = function() {\\r\\n                            //api.pauseAd();\\r\\n                        };\\r\\n                        document.body.onfocus = function() {\\r\\n                            //api.resumeAd();\\r\\n                        };\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoFirstQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = 2;\\r\\n                        document.getElementById(\\\"transfer\\\").dispatchEvent(new CustomEvent(\\\"input\\\"));\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoMidpoint\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = 3;\\r\\n                        document.getElementById(\\\"transfer\\\").dispatchEvent(new CustomEvent(\\\"input\\\"));\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoThirdQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = 4;\\r\\n                        document.getElementById(\\\"transfer\\\").dispatchEvent(new CustomEvent(\\\"input\\\"));\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoComplete\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = 5;\\r\\n                        document.getElementById(\\\"transfer\\\").dispatchEvent(new CustomEvent(\\\"input\\\"));\\r\\n                        document.body.onblur = null;\\r\\n                        document.body.onfocus = null;\\r\\n                    });\\r\\n                } else {\\r\\n                    console.log(\\\"blank\\\");\\r\\n                }\\r\\n            };\\r\\n            var s = document.querySelector(\\\"script[data-playerPro=\\\\\\\"current\\\\\\\"]\\\");\\r\\n            //s.removeAttribute(\\\"data-playerPro\\\");\\r\\n            (playerPro = window.playerPro || []).push({\\r\\n                id: \\\"oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp\\\",\\r\\n                after: s,\\r\\n                init: init\\r\\n            });\\r\\n        }\\r\\n    </script>\\r\\n</div>\\r\\n\"],\"names\":[],\"mappings\":\"AA6CI,MAAM,eAAC,CAAC,AACJ,gBAAgB,CAAE,OAAO,AAC7B,CAAC,AAED,qBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,UAAU,CAAC,CAC9B,YAAY,CAAE,IAAI,CAClB,aAAa,CAAE,IAAI,CACnB,UAAU,CAAE,IAAI,CAChB,MAAM,CAAE,IAAI,AAChB,CAAC,AAED,WAAW,eAAC,CAAC,AACT,WAAW,CAAE,OAAO,CACpB,cAAc,CAAE,OAAO,AAC3B,CAAC\"}"
 };
 
-async function preload$2({ params }) {
-	let id = params.id;
-	return { id };
-}
-
-const U5Bidu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+const PlayAdButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { socket } = $$props;
+	let { userPlayer } = $$props;
 	let { id } = $$props;
+	let { adError } = $$props;
+	let { info } = $$props;
+	let { finished } = $$props;
+	let { page } = $$props;
+	let videoSeen;
+
+	socket.on("advideo", e => {
+		return;
+	});
+
+	if ($$props.socket === void 0 && $$bindings.socket && socket !== void 0) $$bindings.socket(socket);
+	if ($$props.userPlayer === void 0 && $$bindings.userPlayer && userPlayer !== void 0) $$bindings.userPlayer(userPlayer);
+	if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
+	if ($$props.adError === void 0 && $$bindings.adError && adError !== void 0) $$bindings.adError(adError);
+	if ($$props.info === void 0 && $$bindings.info && info !== void 0) $$bindings.info(info);
+	if ($$props.finished === void 0 && $$bindings.finished && finished !== void 0) $$bindings.finished(finished);
+	if ($$props.page === void 0 && $$bindings.page && page !== void 0) $$bindings.page(page);
+	$$result.css.add(css$i);
+
+	return `<button ${userPlayer.adsWatched >= 8 ? "disabled" : ""} class="${[
+		"button button-brand lg:mr-8 mt-2\r\n                            lg:mt-0 mb-5\r\n                            lg:mb-0  text-background svelte-1c98j0i",
+		page === "FfaWatchAd" ? "FfaWatchAd" : ""
+	].join(" ").trim()}" style="${""}" onclick="${"playAd()"}">${escape(userPlayer.adsWatched < 8
+	? "Play ad"
+	: "Maximum ads reached")}</button>
+
+<input hidden${add_attribute("id",  Math.random() * 1000, 0)}${add_attribute("value", videoSeen, 1)}>
+
+<div><script data-playerPro="${"current"}">function playAd() {
+            const init = (api) => {
+                if (api) {
+
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = 1;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                        //api.setAdVolume(1);
+                        document.body.onblur = function() {
+                            //api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            //api.resumeAd();
+                        };
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = 2;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = 3;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = 4;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = 5;
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\\"current\\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script></div>`;
+});
+
+/* src\components\FfaWatchAd.svelte generated by Svelte v3.31.0 */
+
+const css$j = {
+	code: "b.svelte-50ouvz{@apply font-normal text-primary;}strong.svelte-50ouvz{@apply font-normal text-green;}",
+	map: "{\"version\":3,\"file\":\"FfaWatchAd.svelte\",\"sources\":[\"FfaWatchAd.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import PlayAdButton from \\\"./PlayAdButton.svelte\\\";\\r\\n    import { fade, fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    let randomInfo = Math.floor(Math.random() * 2);\\r\\n\\r\\n    export let socket;\\r\\n    export let userPlayer;\\r\\n    export let id;\\r\\n    export let adError;\\r\\n    export let info;\\r\\n\\r\\n    let finished;\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply font-normal text-primary;\\r\\n    }\\r\\n\\r\\n    strong {\\r\\n        @apply font-normal text-green;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n{#if !finished}\\r\\n    <div class=\\\"sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden\\\">\\r\\n\\r\\n        <!--TRANSPARENT PART-->\\r\\n        <div class=\\\"hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5 bg-background bg-opacity-70\\\"\\r\\n             out:fade={{duration: 350}}></div>\\r\\n        <!--<svg class=\\\"hidden lg:block inset-y-0 h-full w-48 absolute text-primary transform translate-x-1/2 right-1/2\\\" fill=\\\"currentColor\\\"\\r\\n             viewBox=\\\"0 0 100 100\\\" preserveAspectRatio=\\\"none\\\" aria-hidden=\\\"true\\\" xstyle=\\\"margin-right: -10.2rem\\\">\\r\\n            <polygon class=\\\"border-l border-primary\\\" points=\\\"50,0 100,0 50,100 0,100\\\"></polygon>\\r\\n        </svg>\\r\\n        <svg class=\\\"hidden lg:block inset-y-0 h-full w-48 z-10 text-background transform translate-x-1/2\\\" fill=\\\"currentColor\\\"\\r\\n             viewBox=\\\"0 0 100 100\\\" preserveAspectRatio=\\\"none\\\" aria-hidden=\\\"true\\\">\\r\\n            <polygon class=\\\"border-l border-primary\\\" points=\\\"50,0 100,0 50,100 0,100\\\"></polygon>\\r\\n        </svg>-->\\r\\n\\r\\n        <!--TEXT-->\\r\\n        <div class=\\\"bg-background w-full md:w-3/4  lg:w-1/2   2xl:w-2/5    h-full   md:border-l-2 border-primary\\\"\\r\\n             in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>\\r\\n            <div class=\\\"sm:flex sm:flex-col items-center justify-between mx-7 h-full\\\">\\r\\n                <div class=\\\"text-center md:text-left\\\">\\r\\n                    <h1 class=\\\" text-6xl   mt-8 sm:mt-13\\\">MULTIPLY YOUR REWARDS</h1>\\r\\n                    <p class=\\\"text-3xl mt-7 lg:mt-12 max-w-md   \\\">Want to obtain a first <b>x5 boost</b> on the\\r\\n                        <b>coins</b>\\r\\n                        you\\r\\n                        will\\r\\n                        <b>win</b> by playing this match?</p>\\r\\n                    <p class=\\\"text-2xl mt-4 text-mid-light italic\\\">Watch a short video by clicking the button below!</p>\\r\\n                </div>\\r\\n                {#if randomInfo == 1}\\r\\n                    <div class=\\\"card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10\\\"\\r\\n                         style=\\\"max-width: 27.5rem\\\">\\r\\n                        <p class=\\\"mb-4 text-4xl text-primary\\\">Did you know?</p>\\r\\n                        <p>Watching at least <strong>2 videos per match</strong> will <u>divide</u> the time to earn a\\r\\n                            battle\\r\\n                            pass by <strong>10\\r\\n                                hours</strong>\\r\\n                    </div>\\r\\n                {:else}\\r\\n                    <div class=\\\"card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10\\\"\\r\\n                         style=\\\"max-width: 27.5rem\\\">\\r\\n                        <p class=\\\"mb-4 text-4xl text-primary\\\">Did you know?</p>\\r\\n                        <p>If you are first and you watch <strong>2 videos</strong> this match you will earn <strong>1000\\r\\n                            coins</strong> vs <b style=\\\"color: #fc1870\\\">100 coins</b> if you watch <b\\r\\n                            style=\\\"color: #fc1870\\\">0 video</b>\\r\\n                    </div>\\r\\n                {/if}\\r\\n\\r\\n\\r\\n                <div class=\\\"mt-12 sm:mt-0 sm:mb-24\\\">\\r\\n                    <div class=\\\"mt-4 flex flex-col items-center sm:items-start sm:flex-row\\\">\\r\\n                        <PlayAdButton socket={socket} id={id} page={\\\"FfaWatchAd\\\"} bind:userPlayer={userPlayer}\\r\\n                                      bind:adError={adError} bind:info={info} bind:finished={finished} />\\r\\n                        <!--<button class=\\\"button button-brand sm:mr-6 text-background items-center\\\"\\r\\n                                style=\\\"display: flex; background-color: #3de488; padding: 0.75rem 1.5rem\\\">\\r\\n                            <svg class=\\\"fill-current w-4 mr-2\\\" viewBox=\\\"0 0 24 24\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\">\\r\\n                                <path\\r\\n                                    d=\\\"m.001 1.165v21.669c.052.661.601 1.177 1.271 1.177.225 0 .436-.058.62-.16l-.006.003 21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672 0-1.223.521-1.27 1.181v.004z\\\" />\\r\\n                            </svg>\\r\\n                            WATCH VIDEO\\r\\n\\r\\n                        </button>-->\\r\\n                        <button class=\\\"button button-brand mt-5 sm:mt-0 mb-1\\\"\\r\\n                                style=\\\"background-color: #fc1870; padding: 0.75rem 1.5rem\\\"\\r\\n                                on:click={() => finished = true}>\\r\\n                            Continue\\r\\n                            to match\\r\\n                        </button>\\r\\n                    </div>\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\\r\\n\"],\"names\":[],\"mappings\":\"AAgBI,CAAC,cAAC,CAAC,AACC,OAAO,WAAW,CAAC,YAAY,CAAC,AACpC,CAAC,AAED,MAAM,cAAC,CAAC,AACJ,OAAO,WAAW,CAAC,UAAU,CAAC,AAClC,CAAC\"}"
+};
+
+const FfaWatchAd = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let randomInfo = Math.floor(Math.random() * 2);
+	let { socket } = $$props;
+	let { userPlayer } = $$props;
+	let { id } = $$props;
+	let { adError } = $$props;
+	let { info } = $$props;
+	let finished;
+	if ($$props.socket === void 0 && $$bindings.socket && socket !== void 0) $$bindings.socket(socket);
+	if ($$props.userPlayer === void 0 && $$bindings.userPlayer && userPlayer !== void 0) $$bindings.userPlayer(userPlayer);
+	if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
+	if ($$props.adError === void 0 && $$bindings.adError && adError !== void 0) $$bindings.adError(adError);
+	if ($$props.info === void 0 && $$bindings.info && info !== void 0) $$bindings.info(info);
+	$$result.css.add(css$j);
+	let $$settled;
+	let $$rendered;
+
+	do {
+		$$settled = true;
+
+		$$rendered = `${!finished
+		? `<div class="${"sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden"}">
+        <div class="${"hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5 bg-background bg-opacity-70"}"></div>
+        
+
+        
+        <div class="${"bg-background w-full md:w-3/4  lg:w-1/2   2xl:w-2/5    h-full   md:border-l-2 border-primary"}"><div class="${"sm:flex sm:flex-col items-center justify-between mx-7 h-full"}"><div class="${"text-center md:text-left"}"><h1 class="${" text-6xl   mt-8 sm:mt-13"}">MULTIPLY YOUR REWARDS</h1>
+                    <p class="${"text-3xl mt-7 lg:mt-12 max-w-md   "}">Want to obtain a first <b class="${"svelte-50ouvz"}">x5 boost</b> on the
+                        <b class="${"svelte-50ouvz"}">coins</b>
+                        you
+                        will
+                        <b class="${"svelte-50ouvz"}">win</b> by playing this match?</p>
+                    <p class="${"text-2xl mt-4 text-mid-light italic"}">Watch a short video by clicking the button below!</p></div>
+                ${randomInfo == 1
+			? `<div class="${"card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10"}" style="${"max-width: 27.5rem"}"><p class="${"mb-4 text-4xl text-primary"}">Did you know?</p>
+                        <p>Watching at least <strong class="${"svelte-50ouvz"}">2 videos per match</strong> will <u>divide</u> the time to earn a
+                            battle
+                            pass by <strong class="${"svelte-50ouvz"}">10
+                                hours</strong></p></div>`
+			: `<div class="${"card py-6 px-6 w-full mt-10 sm:mt-0 sm:w-auto sm:py-8 sm:px-10"}" style="${"max-width: 27.5rem"}"><p class="${"mb-4 text-4xl text-primary"}">Did you know?</p>
+                        <p>If you are first and you watch <strong class="${"svelte-50ouvz"}">2 videos</strong> this match you will earn <strong class="${"svelte-50ouvz"}">1000
+                            coins</strong> vs <b style="${"color: #fc1870"}" class="${"svelte-50ouvz"}">100 coins</b> if you watch <b style="${"color: #fc1870"}" class="${"svelte-50ouvz"}">0 video</b></p></div>`}
+
+
+                <div class="${"mt-12 sm:mt-0 sm:mb-24"}"><div class="${"mt-4 flex flex-col items-center sm:items-start sm:flex-row"}">${validate_component(PlayAdButton, "PlayAdButton").$$render(
+				$$result,
+				{
+					socket,
+					id,
+					page: "FfaWatchAd",
+					userPlayer,
+					adError,
+					info,
+					finished
+				},
+				{
+					userPlayer: $$value => {
+						userPlayer = $$value;
+						$$settled = false;
+					},
+					adError: $$value => {
+						adError = $$value;
+						$$settled = false;
+					},
+					info: $$value => {
+						info = $$value;
+						$$settled = false;
+					},
+					finished: $$value => {
+						finished = $$value;
+						$$settled = false;
+					}
+				},
+				{}
+			)}
+                        
+                        <button class="${"button button-brand mt-5 sm:mt-0 mb-1"}" style="${"background-color: #fc1870; padding: 0.75rem 1.5rem"}">Continue
+                            to match
+                        </button></div></div></div></div></div>`
+		: ``}`;
+	} while (!$$settled);
+
+	return $$rendered;
+});
+
+/* src\routes\play\ffa\[id].svelte generated by Svelte v3.31.0 */
+
+const css$k = {
+	code: "b.svelte-1mdraz6{@apply text-variant font-normal;}.ffa-player.svelte-1mdraz6{@apply relative w-53 h-88 text-center;}.ffa-player.svelte-1mdraz6::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom right,\r\n                rgba(23, 23, 26, 0.08) 0%,\r\n                rgba(23, 23, 26, 0.12),\r\n                rgba(23, 23, 26, 0.18) 75%,\r\n                rgba(23, 23, 26, 0.23) 100%\r\n        )}.player-name.svelte-1mdraz6{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;@apply absolute z-10 top-16 left-0 right-0;}.stats.svelte-1mdraz6{@apply absolute left-0 right-0 z-10;}.timer.svelte-1mdraz6{margin-bottom:0.35rem}",
+	map: "{\"version\":3,\"file\":\"[id].svelte\",\"sources\":[\"[id].svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { onDestroy, onMount } from \\\"svelte\\\";\\r\\n    import { callApi } from \\\"../../../utils/api\\\";\\r\\n    import { goto, stores } from \\\"@sapper/app\\\";\\r\\n\\r\\n    import RefreshButton from \\\"../../../components/RefreshButton.svelte\\\";\\r\\n    import FfaEnd from \\\"../../../components/FfaEnd.svelte\\\";\\r\\n    import Loading from \\\"../../../components/Loading.svelte\\\";\\r\\n\\r\\n    import ErrorAlert from \\\"../../../components/ErrorAlert.svelte\\\";\\r\\n    import Infos from \\\"../../../components/Infos.svelte\\\";\\r\\n    import GuideCard from \\\"../../../components/GuideCard.svelte\\\";\\r\\n    import AdblockAlert from \\\"../../../components/AdblockAlert.svelte\\\";\\r\\n\\r\\n    import { counter } from \\\"../../../components/store\\\";\\r\\n    import io from \\\"socket.io-client\\\";\\r\\n    import { apiUrl } from \\\"../../../utils/config\\\";\\r\\n    import PlayAdButton from \\\"../../../components/PlayAdButton.svelte\\\";\\r\\n    import FfaWatchAd from \\\"../../../components/FfaWatchAd.svelte\\\";\\r\\n\\r\\n    const { page } = stores();\\r\\n\\r\\n    let id;\\r\\n\\r\\n\\r\\n    let pages;\\r\\n    let user;\\r\\n    let match;\\r\\n    let isMatchEnded;\\r\\n    let countDown;\\r\\n\\r\\n    let userPlayer;\\r\\n    let players;\\r\\n    let info;\\r\\n    $: if (info) {\\r\\n        setTimeout(() => {\\r\\n            info = undefined;\\r\\n        }, 5000);\\r\\n    }\\r\\n\\r\\n    let adError;\\r\\n    $: if (adError) {\\r\\n        setTimeout(() => {\\r\\n            adError = undefined;\\r\\n        }, 25000);\\r\\n    }\\r\\n\\r\\n    let error;\\r\\n    let pushError;\\r\\n    let socket;\\r\\n    let isSpectator;\\r\\n    let isLoadingOpen = true;\\r\\n\\r\\n    onMount(() => {\\r\\n        pages = page.subscribe(async value => {\\r\\n            isSpectator = value.query.spectator === \\\"true\\\";\\r\\n            user = undefined;\\r\\n            match = undefined;\\r\\n            isMatchEnded = undefined;\\r\\n            userPlayer = undefined;\\r\\n            players = undefined;\\r\\n            error = undefined;\\r\\n            socket = undefined;\\r\\n            id = value.params.id;\\r\\n\\r\\n\\r\\n            if (!value.params.id && !value.path.includes(\\\"/ffa/\\\")) return console.log(\\\"not a ffa match\\\");\\r\\n            else console.log(\\\"ffa match\\\");\\r\\n            let unsub = counter.subscribe((user1) => {\\r\\n                user = user1.content;\\r\\n            });\\r\\n\\r\\n            unsub();\\r\\n\\r\\n\\r\\n            try {\\r\\n                user = await user;\\r\\n                user = user.steam;\\r\\n                match = await callApi(\\\"get\\\", `/getMatch/${id}`);\\r\\n\\r\\n                if (match instanceof Error) {\\r\\n                    throw match;\\r\\n                }\\r\\n                isMatchEnded = match.finished;\\r\\n\\r\\n                //Start the countdown\\r\\n                filterUsers(false);\\r\\n                const d = new Date(userPlayer.joinDate);\\r\\n                const endsIn = -(\\r\\n                    (new Date().getTime() -\\r\\n                        new Date(d.setHours(d.getHours() + 3)).getTime()) /\\r\\n                    1000\\r\\n                );\\r\\n                if (endsIn < 1) {\\r\\n                    countDown = \\\"Waiting for others to finish (you can start a new game from the play page)\\\";\\r\\n                } else {\\r\\n                    startTimer(endsIn);\\r\\n                }\\r\\n                counter.set({ \\\"refresh\\\": true });\\r\\n\\r\\n                socket = io.io(apiUrl);\\r\\n                socket.on(\\\"connection\\\", (status) => {\\r\\n                    console.log(status);\\r\\n                    socket.emit(\\\"match connection\\\", \\\"FFA\\\" + id);\\r\\n                });\\r\\n\\r\\n                socket.on(\\\"join match\\\", (status) => {\\r\\n                    console.log(status);\\r\\n                });\\r\\n\\r\\n                socket.on(\\\"lobbyUpdate\\\", (value) => {\\r\\n                    match = value;\\r\\n                    filterUsers(true);\\r\\n                });\\r\\n                isLoadingOpen = false;\\r\\n            } catch (err) {\\r\\n                console.log(err);\\r\\n                if (err.response) {\\r\\n                    if (err.response.status === 400 && err.response.data.includes(\\\"Play at least one ranked\\\")) {\\r\\n                        error = \\\"You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)\\\";\\r\\n                        return;\\r\\n                    } else if (err.response.status === 400 && err.response.data.includes(\\\"Play at least one\\\")) {\\r\\n                        error = \\\"You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)\\\";\\r\\n                        return;\\r\\n                    } else if (err.response.status === 404) error = \\\"<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>\\\";\\r\\n                    return;\\r\\n                }\\r\\n                error = `<p class=\\\"text-accent\\\">Wow, unexpected error occured, details for geeks below.</p> <p class=\\\"text-2xl\\\">${err.toString()}</p>`;\\r\\n            }\\r\\n        });\\r\\n    });\\r\\n\\r\\n    onDestroy(() => {\\r\\n        if (pages) pages();\\r\\n    });\\r\\n\\r\\n\\r\\n    const filterUsers = (isFromSocket) => {\\r\\n\\r\\n\\r\\n        //Find user's object\\r\\n        if (!isFromSocket) {\\r\\n            userPlayer = match.players.find(p => p.steamId === user.id);\\r\\n        } else {\\r\\n            let playerIndex = match.players.findIndex(p => p.steamId === user.id);\\r\\n            match.players[playerIndex].wins = userPlayer.wins;\\r\\n            userPlayer = match.players[playerIndex];\\r\\n        }\\r\\n        //Delete user's object from array.\\r\\n        players = [...match.players];\\r\\n        for (let player in players) {\\r\\n            const gradientList = [[\\\"\\\", \\\"\\\"]];\\r\\n\\r\\n        }\\r\\n\\r\\n        players.splice(\\r\\n            match.players.findIndex(p => p.steamId === user.id),\\r\\n            1\\r\\n        );\\r\\n\\r\\n    };\\r\\n\\r\\n    //Function that starts a timer with a date, and refreshes it every second\\r\\n    function startTimer(duration) {\\r\\n        let timer = duration,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n        setInterval(function() {\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n\\r\\n            countDown = hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n\\r\\n            if (--timer < 0) {\\r\\n                timer = duration;\\r\\n            }\\r\\n        }, 1000);\\r\\n    }\\r\\n\\r\\n\\r\\n    //Function that handles the refresh button on click event\\r\\n    let isRefreshingStats = false;\\r\\n    const handleRefresh = async () => {\\r\\n        isRefreshingStats = true;\\r\\n        let winNb = userPlayer.gamesPlayed;\\r\\n\\r\\n        match = await callApi(\\\"get\\\", `/getMatch/${id}`);\\r\\n\\r\\n        filterUsers(false);\\r\\n        if (userPlayer.gamesPlayed !== winNb) {\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n        } else if (match.finished && isMatchEnded === false) {\\r\\n            isMatchEnded = true;\\r\\n            counter.set({ \\\"refresh\\\": true });\\r\\n        }\\r\\n        isRefreshingStats = false;\\r\\n    };\\r\\n\\r\\n    const handleQuit = async () => {\\r\\n        try {\\r\\n            const exitStatus = await callApi(\\\"post\\\", `/exitMatch`);\\r\\n            if (exitStatus instanceof Error) throw exitStatus;\\r\\n            goto(`/play`);\\r\\n        } catch (e) {\\r\\n            pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();\\r\\n            setTimeout(() => {\\r\\n                pushError = undefined;\\r\\n            }, 8000);\\r\\n        }\\r\\n    };\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    b {\\r\\n        @apply text-variant font-normal;\\r\\n    }\\r\\n\\r\\n\\r\\n    .ffa-player {\\r\\n        @apply relative w-53 h-88 text-center;\\r\\n    }\\r\\n\\r\\n    .ffa-player::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom right,\\r\\n                rgba(23, 23, 26, 0.08) 0%,\\r\\n                rgba(23, 23, 26, 0.12),\\r\\n                rgba(23, 23, 26, 0.18) 75%,\\r\\n                rgba(23, 23, 26, 0.23) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    .player-name {\\r\\n        text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 10px;\\r\\n        @apply absolute z-10 top-16 left-0 right-0;\\r\\n    }\\r\\n\\r\\n    .stats {\\r\\n        @apply absolute left-0 right-0 z-10;\\r\\n    }\\r\\n\\r\\n    /*.user {\\r\\n        @apply w-60 h-100;\\r\\n    }\\r\\n\\r\\n    .user::after {\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.25) 0%,\\r\\n                rgba(23, 23, 26, 0.35),\\r\\n                rgba(23, 23, 26, 0.40) 75%,\\r\\n                rgba(23, 23, 26, 0.55) 100%\\r\\n        );\\r\\n    }*/\\r\\n\\r\\n    .timer {\\r\\n        margin-bottom: 0.35rem;\\r\\n    }\\r\\n\\r\\n</style>\\r\\n\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Winhalla | FFA match</title>\\r\\n    <script async src=\\\"https://cdn.stat-rock.com/player.js\\\"></script>\\r\\n</svelte:head>\\r\\n\\r\\n\\r\\n{#if isLoadingOpen && !error}\\r\\n    <Loading data={\\\"Loading game data...\\\"} duration={500} />\\r\\n{/if}\\r\\n\\r\\n{#if error}\\r\\n    <div class=\\\"w-full content-center lg:mt-60 mt-25 \\\">\\r\\n        <h2 class=\\\"lg:text-5xl text-3xl text-center\\\">{@html error}</h2>\\r\\n        <a href=\\\"/play\\\"><p class=\\\"underline lg:text-3xl pt-4 text-2xl  text-center text-primary\\\">Go to play page</p></a>\\r\\n    </div>\\r\\n{:else}\\r\\n    {#if info}\\r\\n        <Infos message=\\\"Thanks for watching a video\\\" pushError={info} />\\r\\n    {/if}\\r\\n    <div class=\\\"h-full  \\\">\\r\\n\\r\\n        {#if match}\\r\\n            {#if isMatchEnded}\\r\\n                <FfaEnd players={match.players} winners={match.winners} />\\r\\n            {:else}\\r\\n                <div class=\\\"h-full flex items-center flex-col lg:block lg:ml-24\\\">\\r\\n                    <div\\r\\n                        class=\\\"flex flex-col justify-center lg:flex-row\\r\\n                    lg:justify-between items-center lg:mt-12 mt-7\\\">\\r\\n                        <div\\r\\n                            class=\\\"mode-timer flex justify-center lg:justify-start\\r\\n                        items-end w-52 \\\">\\r\\n                            <h1 class=\\\"text-6xl leading-none\\\">FFA</h1>\\r\\n                            <p\\r\\n                                class=\\\"timer text-primary ml-5 text-3xl leading-none\\\">\\r\\n                                {#if countDown}{countDown}{:else}Loading...{/if}\\r\\n                            </p>\\r\\n                        </div>\\r\\n                        <AdblockAlert user=\\\"{userPlayer}\\\" />\\r\\n                        <div\\r\\n                            class=\\\"lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row\\r\\n                        items-center\\\">\\r\\n                            <p class=\\\"text-center lg:text-left mx-4 mt-1 lg:mt-0\\\">You watched <strong\\r\\n                                class=\\\"text-green font-normal text-3xl\\\">{userPlayer.adsWatched}\\r\\n                                ad{userPlayer.adsWatched > 1 ? \\\"s\\\" : \\\"\\\"}</strong>, earnings will be multiplied by\\r\\n                                <strong class=\\\"text-green text-3xl font-normal\\\">{userPlayer.multiplier / 100}</strong>!\\r\\n                            </p>\\r\\n\\r\\n                            <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}\\r\\n                                          bind:info={info} id={id} />\\r\\n                            <RefreshButton\\r\\n                                on:click={() => handleRefresh()}\\r\\n                                isRefreshing={isRefreshingStats}\\r\\n                                refreshMessage={'Refresh data'} />\\r\\n                            {#if userPlayer.gamesPlayed == 0}\\r\\n                                <button\\r\\n                                    class=\\\"button button-brand quit lg:ml-4 mt-3\\r\\n                                lg:mt-0\\\" style=\\\"background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;\\\"\\r\\n\\r\\n                                    on:click={() => handleQuit()}>\\r\\n                                    Quit lobby\\r\\n                                </button>\\r\\n                                {#if pushError}\\r\\n                                    <ErrorAlert message=\\\"There was an error exiting the match\\\" pushError={pushError} />\\r\\n                                {/if}\\r\\n                            {/if}\\r\\n\\r\\n                        </div>\\r\\n                    </div>\\r\\n\\r\\n                    <div\\r\\n                        class=\\\"flex items-center flex-col lg:flex-row lg:items-start\\r\\n                    h-full lg:mt-6 lg:mb-24\\\">\\r\\n                        <!--Main Player-->\\r\\n                        {#if userPlayer}\\r\\n                            <!--<div class=\\\"mt-8 lg:mt-25 ffa-player card user\\\">\\r\\n                                <div class=\\\"max-w-full h-full\\\" style=\\\"background-color: #fc1870\\\"></div>\\r\\n                                <img\\r\\n                                    src=\\\"/assets/CharactersBanners/{userPlayer.legends}.png\\\"\\r\\n                                    alt={userPlayer.legends}\\r\\n                                    class=\\\"block\\\" />\\r\\n\\r\\n                                <p class=\\\"player-name text-4xl\\\">\\r\\n                                    {userPlayer.username}\\r\\n                                </p>\\r\\n                                <div\\r\\n                                    class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games played:\\r\\n                                        <b>{userPlayer.gamesPlayed}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                    <p>\\r\\n                                        Games won:\\r\\n                                        <b>{userPlayer.wins}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>-->\\r\\n                            <div class=\\\"mt-25 text-center relative border rounded outline-none w-60 h-100\\\" style=\\\"\\\">\\r\\n                                <div class=\\\"max-w-full h-full \\\"\\r\\n                                     style=\\\"background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);\\\"> <!--style=\\\"background-color: #E5E5F7;\\r\\n                                        filter: blur(0px);\\r\\nopacity: 0.8;\\r\\nbackground-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #E5E5F7 82px ), repeating-linear-gradient( #444CF755, #444CF7);\\\">--></div>\\r\\n                                <!--<img class=\\\"block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary\\\" style=\\\"filter: blur(3px)\\\" src=\\\"{userPlayer.avatarURL}\\\" alt=\\\"\\\">-->\\r\\n                                <p class=\\\"player-name text-4xl\\\">\\r\\n                                    {userPlayer.username}\\r\\n                                </p>\\r\\n                                <div\\r\\n                                    class=\\\"stats text-2xl bottom-5 text-ultra-light\\\">\\r\\n                                    <p>\\r\\n                                        Games played:\\r\\n                                        <b>{userPlayer.gamesPlayed}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                    <p>\\r\\n                                        Games won:\\r\\n                                        <b>{userPlayer.wins}</b>\\r\\n                                        /8\\r\\n                                    </p>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        {/if}\\r\\n\\r\\n                        <!--Other Players-->\\r\\n                        {#if players}\\r\\n                            <div\\r\\n                                class=\\\"flex flex-col justify-center lg:justify-start\\r\\n                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12 lg:mb-0\\\">\\r\\n                                {#each players as player}\\r\\n                                    <div class=\\\"ffa-player card lg:mr-12 mb-8 border\\\">\\r\\n                                        <div class=\\\"max-w-full h-full \\\"\\r\\n                                             style=\\\"background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);\\\"></div>\\r\\n                                        <!--<img class=\\\"block w-16 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full /border /border-primary\\\" style=\\\"filter: blur(3px)\\\" src=\\\"{player.avatarURL}\\\" alt=\\\"\\\">-->\\r\\n\\r\\n                                        <!--<img\\r\\n                                            src=\\\"/assets/CharactersBanners/{player.legends}.png\\\"\\r\\n                                            alt={player.legends}\\r\\n                                            class=\\\"block\\\" />-->\\r\\n\\r\\n                                        <p class=\\\"player-name text-3xl\\\">\\r\\n                                            {player.username}\\r\\n                                        </p>\\r\\n                                        <div\\r\\n                                            class=\\\"stats text-xl bottom-5\\r\\n                                        text-ultra-light\\\">\\r\\n                                            <p>\\r\\n                                                Games played:\\r\\n                                                <b>{player.gamesPlayed}</b>\\r\\n                                                /8\\r\\n                                            </p>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            </div>\\r\\n                        {/if}\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n\\r\\n            <GuideCard page=\\\"ffa\\\" />\\r\\n            <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError} bind:info={info} />\\r\\n        {:else}\\r\\n            <Loading data={\\\"Loading game data...\\\"} />\\r\\n        {/if}\\r\\n\\r\\n\\r\\n    </div>\\r\\n{/if}\\r\\n\\r\\n<div>\\r\\n    {#if adError}\\r\\n        <ErrorAlert message=\\\"An error occurred while watching the ad\\\" pushError={adError} />\\r\\n    {/if}\\r\\n</div>\"],\"names\":[],\"mappings\":\"AA0NI,CAAC,eAAC,CAAC,AACC,OAAO,YAAY,CAAC,WAAW,CAAC,AACpC,CAAC,AAGD,WAAW,eAAC,CAAC,AACT,OAAO,QAAQ,CAAC,IAAI,CAAC,IAAI,CAAC,WAAW,CAAC,AAC1C,CAAC,AAED,0BAAW,OAAO,AAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC,KAAK,CAAC;gBAChB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,EAAE,CAAC;gBAC1B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,YAAY,eAAC,CAAC,AACV,WAAW,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,IAAI,CAClD,OAAO,QAAQ,CAAC,IAAI,CAAC,MAAM,CAAC,MAAM,CAAC,OAAO,CAAC,AAC/C,CAAC,AAED,MAAM,eAAC,CAAC,AACJ,OAAO,QAAQ,CAAC,MAAM,CAAC,OAAO,CAAC,IAAI,CAAC,AACxC,CAAC,AAgBD,MAAM,eAAC,CAAC,AACJ,aAAa,CAAE,OAAO,AAC1B,CAAC\"}"
+};
+
+const U5Bidu5D$2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	const { page } = stores$1();
+	let id;
+	let pages;
 	let user;
 	let match;
 	let isMatchEnded;
 	let countDown;
 	let userPlayer;
 	let players;
+	let info;
+	let adError;
 	let error;
+	let socket;
+	let isSpectator;
+	let isLoadingOpen = true;
 
-	onMount(async () => {
-		let unsub = counter.subscribe(value => {
-			user = value.content;
+	onMount(() => {
+		pages = page.subscribe(async value => {
+			isSpectator = value.query.spectator === "true";
+			user = undefined;
+			match = undefined;
+			isMatchEnded = undefined;
+			userPlayer = undefined;
+			players = undefined;
+			error = undefined;
+			socket = undefined;
+			id = value.params.id;
+			if (!value.params.id && !value.path.includes("/ffa/")) return console.log("not a ffa match"); else console.log("ffa match");
+
+			let unsub = counter.subscribe(user1 => {
+				user = user1.content;
+			});
+
+			unsub();
+
+			try {
+				user = await user;
+				user = user.steam;
+				match = await callApi("get", `/getMatch/${id}`);
+
+				if (match instanceof Error) {
+					throw match;
+				}
+
+				isMatchEnded = match.finished;
+
+				//Start the countdown
+				filterUsers(false);
+
+				const d = new Date(userPlayer.joinDate);
+				const endsIn = -((new Date().getTime() - new Date(d.setHours(d.getHours() + 3)).getTime()) / 1000);
+
+				if (endsIn < 1) {
+					countDown = "Waiting for others to finish (you can start a new game from the play page)";
+				} else {
+					startTimer(endsIn);
+				}
+
+				counter.set({ "refresh": true });
+				socket = io__default['default'].io(apiUrl);
+
+				socket.on("connection", status => {
+					console.log(status);
+					socket.emit("match connection", "FFA" + id);
+				});
+
+				socket.on("join match", status => {
+					console.log(status);
+				});
+
+				socket.on("lobbyUpdate", value => {
+					match = value;
+					filterUsers(true);
+				});
+
+				isLoadingOpen = false;
+			} catch(err) {
+				console.log(err);
+
+				if (err.response) {
+					if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
+						error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+						return;
+					} else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
+						error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
+						return;
+					} else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+
+					return;
+				}
+
+				error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
+			}
 		});
+	});
 
-		unsub();
-
-		//await user
-		//user = user.steam
-		try {
-			user = await user;
-			user = user.steam;
-			match = await callApi("get", `/getMatch/${id}`);
-
-			if (match instanceof Error) {
-				throw match;
-			}
-
-			isMatchEnded = match.finished;
-
-			//Start the countdown
-			filterUsers(false);
-
-			const d = new Date(userPlayer.joinDate);
-			const endsIn = -((new Date().getTime() - new Date(d.setHours(d.getHours() + 3)).getTime()) / 1000);
-
-			if (endsIn < 1) {
-				countDown = "Waiting for others to finish (you can start a new game from the play page)";
-			} else {
-				startTimer(endsIn);
-			}
-
-			counter.set({ "refresh": true });
-			let socket = io__default['default'].io(apiUrl);
-
-			socket.on("connection", status => {
-				console.log(status);
-				socket.emit("match connection", "FFA" + id);
-			});
-
-			socket.on("join match", status => {
-				console.log(status);
-			});
-
-			socket.on("lobbyUpdate", value => {
-				match = value;
-				filterUsers(true);
-			});
-		} catch(err) {
-			if (err.response) {
-				if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-					error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
-					return;
-				} else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {
-					error = "You have to download brawlhalla and play at least a game (or you are logged in with the wrong account)";
-					return;
-				} else if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
-
-				return;
-			}
-
-			error = `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`;
-		}
+	onDestroy(() => {
+		if (pages) pages();
 	});
 
 	const filterUsers = isFromSocket => {
 		//Find user's object
-		if (isFromSocket === false) {
-			userPlayer = match.players.find(p => p.steamId === parseInt(user.id));
+		if (!isFromSocket) {
+			userPlayer = match.players.find(p => p.steamId === user.id);
 		} else {
-			let playerIndex = match.players.findIndex(p => p.steamId === parseInt(user.id));
+			let playerIndex = match.players.findIndex(p => p.steamId === user.id);
 			match.players[playerIndex].wins = userPlayer.wins;
 			userPlayer = match.players[playerIndex];
 		}
@@ -2067,7 +3469,7 @@ const U5Bidu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
 		//Delete user's object from array.
 		players = [...match.players];
 
-		players.splice(match.players.findIndex(p => p.steamId === parseInt(user.id)), 1);
+		players.splice(match.players.findIndex(p => p.steamId === user.id), 1);
 	};
 
 	//Function that starts a timer with a date, and refreshes it every second
@@ -2094,178 +3496,399 @@ const U5Bidu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
 	//Function that handles the refresh button on click event
 	let isRefreshingStats = false;
 
-	if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
-	$$result.css.add(css$f);
+	$$result.css.add(css$k);
+	let $$settled;
+	let $$rendered;
 
-	return `${($$result.head += `${($$result.title = `<title>Winhalla | FFA match</title>`, "")}<script src="${"https://cdn.purpleads.io/load.js?publisherId=4640a3490c1775718da6cc801e9b32e7:97737d9e720ec100f8147b22591b1a8b73d2131d6a0f6a6d744a8c67ae89f5ed71e3b94009ea0e6bf97e97e6d07853daf83ea62c0cd24822ca9cc406a85f339b"}" id="${"purpleads-client"}" data-svelte="svelte-1jcxa1n"></script>`, "")}
+	do {
+		$$settled = true;
+
+		 {
+			if (info) {
+				setTimeout(
+					() => {
+						info = undefined;
+					},
+					5000
+				);
+			}
+		}
+
+		 {
+			if (adError) {
+				setTimeout(
+					() => {
+						adError = undefined;
+					},
+					25000
+				);
+			}
+		}
+
+		$$rendered = `${($$result.head += `${($$result.title = `<title>Winhalla | FFA match</title>`, "")}<script async src="${"https://cdn.stat-rock.com/player.js"}" data-svelte="svelte-m52iex"></script>`, "")}
+
+
+${isLoadingOpen && !error
+		? `${validate_component(Loading, "Loading").$$render(
+				$$result,
+				{
+					data: "Loading game data...",
+					duration: 500
+				},
+				{},
+				{}
+			)}`
+		: ``}
+
 ${error
-	? `<div class="${"w-full content-center lg:mt-60 mt-25 "}"><h2 class="${"lg:text-5xl text-3xl text-center"}">${error}</h2>
+		? `<div class="${"w-full content-center lg:mt-60 mt-25 "}"><h2 class="${"lg:text-5xl text-3xl text-center"}">${error}</h2>
         <a href="${"/play"}"><p class="${"underline lg:text-3xl pt-4 text-2xl  text-center text-primary"}">Go to play page</p></a></div>`
-	: `<div class="${"h-full  "}">${match
-		? `${isMatchEnded
-			? `${validate_component(FfaEnd, "FfaEnd").$$render(
+		: `${info
+			? `${validate_component(Infos, "Infos").$$render(
 					$$result,
 					{
-						players: match.players,
-						winners: match.winners
+						message: "Thanks for watching a video",
+						pushError: info
 					},
 					{},
 					{}
 				)}`
-			: `<div class="${"h-full flex items-center flex-col lg:block lg:ml-24"}"><div class="${"flex flex-col justify-center lg:flex-row\r\n                    lg:justify-between items-center lg:mt-12 mt-7"}"><div class="${"mode-timer flex justify-center lg:justify-start\r\n                        items-end w-60 "}"><h1 class="${"text-6xl leading-none"}">FFA</h1>
-                            <p class="${"timer text-primary ml-5 text-3xl leading-none svelte-zio6ya"}">${countDown ? `${escape(countDown)}` : `Loading...`}</p></div>
+			: ``}
+    <div class="${"h-full  "}">${match
+			? `${isMatchEnded
+				? `${validate_component(FfaEnd, "FfaEnd").$$render(
+						$$result,
+						{
+							players: match.players,
+							winners: match.winners
+						},
+						{},
+						{}
+					)}`
+				: `<div class="${"h-full flex items-center flex-col lg:block lg:ml-24"}"><div class="${"flex flex-col justify-center lg:flex-row\r\n                    lg:justify-between items-center lg:mt-12 mt-7"}"><div class="${"mode-timer flex justify-center lg:justify-start\r\n                        items-end w-52 "}"><h1 class="${"text-6xl leading-none"}">FFA</h1>
+                            <p class="${"timer text-primary ml-5 text-3xl leading-none svelte-1mdraz6"}">${countDown ? `${escape(countDown)}` : `Loading...`}</p></div>
+                        ${validate_component(AdblockAlert, "AdblockAlert").$$render($$result, { user: userPlayer }, {}, {})}
+                        <div class="${"lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row\r\n                        items-center"}"><p class="${"text-center lg:text-left mx-4 mt-1 lg:mt-0"}">You watched <strong class="${"text-green font-normal text-3xl"}">${escape(userPlayer.adsWatched)}
+                                ad${escape(userPlayer.adsWatched > 1 ? "s" : "")}</strong>, earnings will be multiplied by
+                                <strong class="${"text-green text-3xl font-normal"}">${escape(userPlayer.multiplier / 100)}</strong>!
+                            </p>
 
-                        <div class="${"lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row\r\n                        items-center"}">${validate_component(RefreshButton, "RefreshButton").$$render(
-					$$result,
-					{
-						isRefreshing: isRefreshingStats,
-						refreshMessage: "Refresh data"
-					},
-					{},
-					{}
-				)}
+                            ${validate_component(PlayAdButton, "PlayAdButton").$$render(
+						$$result,
+						{ socket, id, userPlayer, adError, info },
+						{
+							userPlayer: $$value => {
+								userPlayer = $$value;
+								$$settled = false;
+							},
+							adError: $$value => {
+								adError = $$value;
+								$$settled = false;
+							},
+							info: $$value => {
+								info = $$value;
+								$$settled = false;
+							}
+						},
+						{}
+					)}
+                            ${validate_component(RefreshButton, "RefreshButton").$$render(
+						$$result,
+						{
+							isRefreshing: isRefreshingStats,
+							refreshMessage: "Refresh data"
+						},
+						{},
+						{}
+					)}
                             ${userPlayer.gamesPlayed == 0
-				? `<button class="${"button button-brand quit lg:ml-4 mt-2\r\n                                lg:mt-0 svelte-zio6ya"}">Quit lobby
+					? `<button class="${"button button-brand quit lg:ml-4 mt-3\r\n                                lg:mt-0"}" style="${"background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"}">Quit lobby
                                 </button>
                                 ${ ``}`
-				: ``}</div></div>
+					: ``}</div></div>
 
-                    <div class="${"flex items-center flex-col lg:flex-row lg:items-start\r\n                    h-full"}">
+                    <div class="${"flex items-center flex-col lg:flex-row lg:items-start\r\n                    h-full lg:mt-6 lg:mb-24"}">
                         ${userPlayer
-				? `<div class="${"mt-8 lg:mt-25 ffa-player card user svelte-zio6ya"}"><img src="${"/assets/CharactersBanners/" + escape(userPlayer.legends) + ".png"}"${add_attribute("alt", userPlayer.legends, 0)} class="${"block"}">
-
-                                <p class="${"player-name text-4xl svelte-zio6ya"}">${escape(userPlayer.username)}</p>
-                                <div class="${"stats text-2xl bottom-5 text-ultra-light svelte-zio6ya"}"><p>Games played:
-                                        <b class="${"svelte-zio6ya"}">${escape(userPlayer.gamesPlayed)}</b>
+					? `
+                            <div class="${"mt-25 text-center relative border rounded outline-none w-60 h-100"}" style="${""}"><div class="${"max-w-full h-full "}" style="${"background-image: linear-gradient(to bottom right, #3d72e4 10%, #ee38ff); filter: blur(4px);"}"></div>
+                                
+                                <p class="${"player-name text-4xl svelte-1mdraz6"}">${escape(userPlayer.username)}</p>
+                                <div class="${"stats text-2xl bottom-5 text-ultra-light svelte-1mdraz6"}"><p>Games played:
+                                        <b class="${"svelte-1mdraz6"}">${escape(userPlayer.gamesPlayed)}</b>
                                         /8
                                     </p>
                                     <p>Games won:
-                                        <b class="${"svelte-zio6ya"}">${escape(userPlayer.wins)}</b>
+                                        <b class="${"svelte-1mdraz6"}">${escape(userPlayer.wins)}</b>
                                         /8
                                     </p></div></div>`
-				: ``}
+					: ``}
 
                         
                         ${players
-				? `<div class="${"flex flex-col justify-center lg:justify-start\r\n                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0"}">${each(players, player => `<div class="${"ffa-player card lg:mr-12 mb-8 svelte-zio6ya"}"><img src="${"/assets/CharactersBanners/" + escape(player.legends) + ".png"}"${add_attribute("alt", player.legends, 0)} class="${"block"}">
+					? `<div class="${"flex flex-col justify-center lg:justify-start\r\n                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12 lg:mb-0"}">${each(players, player => `<div class="${"ffa-player card lg:mr-12 mb-8 border svelte-1mdraz6"}"><div class="${"max-w-full h-full "}" style="${"background-image: linear-gradient(to bottom right, #3d72e4 10%, #3de488); filter: blur(3px);"}"></div>
+                                        
 
-                                        <p class="${"player-name text-3xl svelte-zio6ya"}">${escape(player.username)}</p>
-                                        <div class="${"stats text-xl bottom-5\r\n                                        text-ultra-light svelte-zio6ya"}"><p>Games played:
-                                                <b class="${"svelte-zio6ya"}">${escape(player.gamesPlayed)}</b>
+                                        
+
+                                        <p class="${"player-name text-3xl svelte-1mdraz6"}">${escape(player.username)}</p>
+                                        <div class="${"stats text-xl bottom-5\r\n                                        text-ultra-light svelte-1mdraz6"}"><p>Games played:
+                                                <b class="${"svelte-1mdraz6"}">${escape(player.gamesPlayed)}</b>
                                                 /8
                                             </p></div>
                                     </div>`)}</div>`
-				: ``}</div></div>`}
-            <div class="${[
-				"absolute fixed bottom-0 w-full bg-background bg-opacity-90 ",
-				 ""
-			].join(" ").trim()}"><button class="${"flex lg:ml-20 px-6 py-3 items-center text-lg"}">${escape( "Show" )} information
-                    <svg class="${["fill-current w-4 ml-2",  ""].join(" ").trim()}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z"}"></path></svg>
-                    <svg class="${["fill-current w-4 ml-2",  "hidden" ].join(" ").trim()}" viewBox="${"0 0 24 24"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z"}"></path></svg></button>
-                <div class="${[
-				"flex justify-between lg:ml-20 px-6 py-3 bg-opacity-5",
-				 "hidden" 
-			].join(" ").trim()}"><div class="${"w-68"}"><p class="${"text-primary text-lg "}">Ranked matches</p>
-                        <p>Only ranked games will count. You can play 1vs1 or 2vs2 ranked games.</p></div>
-                    <div class="${"w-68 ml-12 xl:ml-0"}"><p class="${"text-primary text-lg "}">Delay</p>
-                        <p>Your data may take up to 5 minutes to refresh on Brawlhalla&#39;s servers, before updating when
-                            you click on the &quot;REFRESH DATA&quot; button.</p></div>
-                    <div class="${"w-68 ml-12 xl:ml-0"}"><p class="${"text-primary text-lg "}">Refresh data</p>
-                        <p>The other players will see your data updated when you click on the &quot;REFRESH DATA&quot; button.</p></div>
+					: ``}</div></div>`}
 
-                    <div class="${"w-68 ml-12 xl:ml-0 xl:mr-40"}"><p class="${"text-primary text-lg "}">Quit</p>
-                        <p>You will be able to quit the match when you click on the &quot;QUIT&quot; button, if you still didn&#39;t
-                            played.</p></div></div></div>`
-		: `${validate_component(Loading, "Loading").$$render($$result, { data: "Loading game data..." }, {}, {})}`}</div>`}`;
+            ${validate_component(GuideCard, "GuideCard").$$render($$result, { page: "ffa" }, {}, {})}
+            ${validate_component(FfaWatchAd, "FfaWatchAd").$$render(
+					$$result,
+					{ socket, id, userPlayer, adError, info },
+					{
+						userPlayer: $$value => {
+							userPlayer = $$value;
+							$$settled = false;
+						},
+						adError: $$value => {
+							adError = $$value;
+							$$settled = false;
+						},
+						info: $$value => {
+							info = $$value;
+							$$settled = false;
+						}
+					},
+					{}
+				)}`
+			: `${validate_component(Loading, "Loading").$$render($$result, { data: "Loading game data..." }, {}, {})}`}</div>`}
+
+<div>${adError
+		? `${validate_component(ErrorAlert, "ErrorAlert").$$render(
+				$$result,
+				{
+					message: "An error occurred while watching the ad",
+					pushError: adError
+				},
+				{},
+				{}
+			)}`
+		: ``}</div>`;
+	} while (!$$settled);
+
+	return $$rendered;
 });
 
-var component_14 = /*#__PURE__*/Object.freeze({
+var component_15 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    'default': U5Bidu5D$1,
-    preload: preload$2
+    'default': U5Bidu5D$2
 });
 
 /* src\routes\shop.svelte generated by Svelte v3.31.0 */
 
-const css$g = {
-	code: ".shop-item.svelte-34sil3{position:relative}.shop-item.svelte-34sil3::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.6) 0%,\r\n                rgba(23, 23, 26, 0.75),\r\n                rgba(23, 23, 26, 0.83) 75%,\r\n                rgba(23, 23, 26, 0.92) 100%\r\n        )}button.svelte-34sil3:disabled{@apply bg-disabled;;cursor:not-allowed}",
-	map: "{\"version\":3,\"file\":\"shop.svelte\",\"sources\":[\"shop.svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\r\\n    import {callApi} from \\\"../utils/api\\\";\\r\\n    import {onMount} from \\\"svelte\\\";\\r\\n    import {counter} from \\\"../components/store\\\";\\r\\n    import {goto} from \\\"@sapper/app\\\";\\r\\n\\r\\n    export async function preload() {\\r\\n        try {\\r\\n            let items = await callApi(\\\"get\\\", \\\"/shop\\\");\\r\\n            if (items instanceof Error) {\\r\\n                throw items\\r\\n            }\\r\\n            let player;\\r\\n            let unsub = counter.subscribe((value) => {\\r\\n                player = value.content;\\r\\n            });\\r\\n            unsub();\\r\\n\\r\\n            if (player.user) {\\r\\n                player = player.user.coins;\\r\\n            } else {\\r\\n                player = 0;\\r\\n            }\\r\\n\\r\\n            items.forEach((item, i) => {\\r\\n                items[i].isDescriptionToggled = false;\\r\\n\\r\\n                items[i].unBuyable = false;\\r\\n                item.name = item.name.toLowerCase().replace(/\\\\s/g, \\\"-\\\");\\r\\n                if (item.cost >= player) items[i].unBuyable = true;\\r\\n            });\\r\\n\\r\\n            let featuredItem = await items.find((i) => i.state === 0);\\r\\n            let seasonPacks = await items.filter((i) => i.state === 1);\\r\\n            let packs = await items.filter((i) => i.state === 2);\\r\\n\\r\\n            return {featuredItem, seasonPacks, packs};\\r\\n        } catch (err) {\\r\\n            if (err.response) {\\r\\n                if (err.response.status === 404) return {error: \\\"<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>\\\"};\\r\\n            }\\r\\n            return {error: `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`}\\r\\n        }\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<script>\\r\\n    export let featuredItem;\\r\\n    export let seasonPacks;\\r\\n    export let packs;\\r\\n    export let error;\\r\\n\\r\\n    const handleDescriptionToggle = (seasonPack) => {\\r\\n        seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;\\r\\n        seasonPacks = [...seasonPacks];\\r\\n    };\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .shop-item {\\r\\n        position: relative;\\r\\n    }\\r\\n\\r\\n    .shop-item::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.6) 0%,\\r\\n                rgba(23, 23, 26, 0.75),\\r\\n                rgba(23, 23, 26, 0.83) 75%,\\r\\n                rgba(23, 23, 26, 0.92) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    /*@media (min-width: 450px) {\\r\\n        .receive {\\r\\n            @apply mt-7 -mb-14;\\r\\n        }\\r\\n    }*/\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>\\r\\n    <meta\\r\\n            name=\\\"description\\\"\\r\\n            content=\\\"Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,\\r\\n        Battle Pass and Season packs| Exchange here your coins into rewards |\\r\\n        Winhalla Shop page \\\"/>\\r\\n    <link rel=\\\"canonical\\\" href=\\\"https://winhalla.app/shop\\\"/>\\r\\n</svelte:head>\\r\\n<!--\\r\\n{#if bottomItems}\\r\\n    <div class=\\\"lg:pl-24 lg:pt-6\\\">\\r\\n        <div class=\\\"flex\\\">\\r\\n            <div class=\\\"card featured\\\">\\r\\n                <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{featuredItem.name}.jpg\\\" alt=\\\"{featuredItem.name}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"lg:pl-12\\\">\\r\\n                {#each [0 , 1] as i}\\r\\n                    <div class=\\\"pb-12 right\\\">\\r\\n                        <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{rightItems[i].name}.jpg\\\" alt=\\\"{rightItems[i].name}\\\">\\r\\n                    </div>\\r\\n                {/each}\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class=\\\"flex\\\">\\r\\n            {#each [0 , 1] as i}\\r\\n                <div class=\\\"pb-8 right mr-12\\\">\\r\\n                    <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{bottomItems[i].name}.jpg\\\" alt=\\\"{bottomItems[i].name}\\\">\\r\\n                </div>\\r\\n            {/each}\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\\r\\n-->\\r\\n{#if error}\\r\\n    <div class=\\\"w-full content-center lg:mt-60 mt-25 \\\">\\r\\n        <h2 class=\\\"lg:text-5xl text-3xl text-center\\\">{@html error}</h2>\\r\\n        <a href=\\\"/\\\"><p class=\\\"underline lg:text-3xl pt-4 text-2xl  text-center text-primary\\\">Go to homepage</p></a>\\r\\n    </div>\\r\\n{:else}\\r\\n    <div class=\\\"xl:flex xl:relative pb-16\\\">\\r\\n        <div>\\r\\n            {#if packs}\\r\\n                <div class=\\\"mt-7 lg:mt-12 lg:ml-24\\\">\\r\\n                    <div class=\\\"xl:w-71/100 2xl:w-62/100\\\">\\r\\n                        <h1 class=\\\"text-6xl text-center lg:text-left\\\">\\r\\n                            Battle pass\\r\\n                        </h1>\\r\\n                        <div\\r\\n                                class=\\\"card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item\\\">\\r\\n                            <img\\r\\n                                    class=\\\"w-full h-full block object-cover\\\"\\r\\n                                    src=\\\"assets/ShopItems/{featuredItem.name}.jpg\\\"\\r\\n                                    alt={featuredItem.name}/>\\r\\n                            <div\\r\\n                                    class=\\\"absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full\\\">\\r\\n                                <div\\r\\n                                        class=\\\"md:flex justify-between w-full md:items-center\\\">\\r\\n                                    <p class=\\\"text-accent text-6xl\\\">\\r\\n                                        {featuredItem.name\\r\\n                                            .toLowerCase()\\r\\n                                            .replace(/\\\\-/g, ' ')}\\r\\n                                    </p>\\r\\n                                    <div class=\\\"flex justify-end md:block pb-1\\\">\\r\\n                                        <button\\r\\n                                                disabled={featuredItem.unBuyable}\\r\\n                                                on:click={() => callApi('post', `/buy/${featuredItem.id}`)}\\r\\n                                                class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                            <p class=\\\"text-2xl\\\">\\r\\n                                                <b\\r\\n                                                        class=\\\"mr-1 font-normal\\\">{featuredItem.cost}</b>$\\r\\n                                            </p>\\r\\n                                        </button>\\r\\n                                    </div>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                    <div class=\\\"pt-8 lg:pt-16\\\">\\r\\n                        <h2 class=\\\"text-6xl text-center lg:text-left\\\">\\r\\n                            Season packs\\r\\n                        </h2>\\r\\n                        <div\\r\\n                                class=\\\"mt-2 flex flex-col items-center lg:flex-row lg:items-start\\\">\\r\\n                            {#if seasonPacks.forEach}\\r\\n                                {#each seasonPacks as seasonPack, i}\\r\\n                                    <div\\r\\n                                            class=\\\"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem\\\">\\r\\n                                        <img\\r\\n                                                class=\\\"w-full h-full block \\\"\\r\\n                                                src=\\\"assets/ShopItems/{seasonPack.name}.jpg\\\"\\r\\n                                                alt={seasonPack.name}/>\\r\\n                                        <div\\r\\n                                                class=\\\"absolute bottom-0 z-10 pl-5 pb-3 w-full\\\">\\r\\n                                            <p\\r\\n                                                    class:hidden={seasonPack.isDescriptionToggled}\\r\\n                                                    class:-mb-1={!seasonPack.isDescriptionToggled}\\r\\n                                                    class=\\\"text-accent text-5xl md:mb-0 md:block\\\">\\r\\n                                                {seasonPack.name\\r\\n                                                    .toLowerCase()\\r\\n                                                    .replace(/\\\\-/g, ' ')}\\r\\n                                            </p>\\r\\n                                            <p\\r\\n                                                    class:hidden={!seasonPack.isDescriptionToggled}\\r\\n                                                    class=\\\"block xl:mt-0\\\">\\r\\n                                                {seasonPack.description}\\r\\n                                            </p>\\r\\n\\r\\n                                            <div\\r\\n                                                    class=\\\"flex justify-between w-full items-end pr-4 md:pr-5 pb-1\\\">\\r\\n                                                <div class=\\\"-mb-2 md:mb-0\\\">\\r\\n                                                    <div>\\r\\n                                                        <p\\r\\n                                                                class=\\\"hidden xl:block mr-1 -mb-2\\\">\\r\\n                                                            {seasonPack.description}\\r\\n                                                        </p>\\r\\n                                                        <button\\r\\n                                                                class=\\\"focus:outline-none xl:hidden -mb-10\\\"\\r\\n                                                                on:click={() => handleDescriptionToggle(seasonPack)}>\\r\\n                                                            <p\\r\\n                                                                    class=\\\" text-light text-lg underline leading-none\\\">\\r\\n                                                                {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}\\r\\n                                                            </p>\\r\\n                                                        </button>\\r\\n                                                    </div>\\r\\n                                                </div>\\r\\n                                                <button\\r\\n                                                        disabled={seasonPack.unBuyable}\\r\\n                                                        on:click={() => callApi('post', `/buy/${seasonPack.id}`)}\\r\\n                                                        class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                                    <p class=\\\"text-2xl\\\">\\r\\n                                                        <b\\r\\n                                                                class=\\\"mr-1 font-normal\\\">{seasonPack.cost}</b>$\\r\\n                                                    </p>\\r\\n                                                </button>\\r\\n                                            </div>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    </div>\\r\\n                    <div class=\\\"pt-8 lg:pt-20 lg:pb-6\\\">\\r\\n                        <h2 class=\\\"text-6xl text-center lg:text-left\\\">Packs</h2>\\r\\n                        <div\\r\\n                                class=\\\"mt-2 flex flex-col items-center lg:flex-row lg:items-start\\\">\\r\\n                            {#if packs.forEach}\\r\\n                                {#each packs as pack}\\r\\n                                    <div\\r\\n                                            class=\\\"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item\\\">\\r\\n                                        <img\\r\\n                                                class=\\\"w-full h-full block object-cover\\\"\\r\\n                                                src=\\\"assets/ShopItems/{pack.name}.jpg\\\"\\r\\n                                                alt={pack.name}/>\\r\\n                                        <div\\r\\n                                                class=\\\"absolute bottom-0 z-10 px-5 pb-3 w-full\\\">\\r\\n                                            <p class=\\\"text-accent text-5xl\\\">\\r\\n                                                {pack.name\\r\\n                                                    .toLowerCase()\\r\\n                                                    .replace(/\\\\-/g, ' ')}\\r\\n                                            </p>\\r\\n\\r\\n                                            <div\\r\\n                                                    class=\\\"flex justify-between w-full items-end pb-1\\\">\\r\\n                                                <div>\\r\\n                                                    <div>\\r\\n                                                        <p class=\\\"block mr-1 -mb-2\\\">\\r\\n                                                            {pack.description}\\r\\n                                                        </p>\\r\\n                                                    </div>\\r\\n                                                </div>\\r\\n                                                <button\\r\\n                                                        disabled={pack.unBuyable}\\r\\n                                                        on:click={() => callApi('post', `/buy/${pack.id}`)}\\r\\n                                                        class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                                    <p class=\\\"text-2xl\\\">\\r\\n                                                        <b\\r\\n                                                                class=\\\"mr-1 font-normal\\\">{pack.cost}</b>$\\r\\n                                                    </p>\\r\\n                                                </button>\\r\\n                                            </div>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n        <div\\r\\n                class=\\\"mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3\\\">\\r\\n            <h3 class=\\\"text-5xl lg:mr-12 text-center lg:text-left\\\">\\r\\n                How does it works ?\\r\\n            </h3>\\r\\n            <div class=\\\"pt-4\\\">\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">1.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Click</p>\\r\\n                    <p\\r\\n                            class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0\\\">\\r\\n                        Click on the item you want to purchase\\r\\n                    </p>\\r\\n                </div>\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">2.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Add</p>\\r\\n                    <p\\r\\n                            class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0\\\">\\r\\n                        Add the Winhalla Steam account to your friend list\\r\\n                    </p>\\r\\n                </div>\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">3.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Receive</p>\\r\\n                    <p\\r\\n                            class=\\\"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7\\\">\\r\\n                        You will receive the item you purchased within 1 week to 1 month\\r\\n                    </p>\\r\\n                </div>\\r\\n                <div class=\\\"mt-40\\\">\\r\\n                <h3 class=\\\"text-5xl lg:mr-12 text-center lg:text-left\\\">\\r\\n                    Lottery\\r\\n                </h3>\\r\\n                <div class=\\\"pt-4\\\">\\r\\n                    <div class=\\\"mt-4 flex items-end\\\">\\r\\n                        <p class=\\\"text-4xl leading-none text-accent\\\">1.</p>\\r\\n                        <p class=\\\"text-4xl text-primary ml-2 leading-none\\\"><br>Buy a ticket</p>\\r\\n                        <p\\r\\n                                class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0\\\">\\r\\n                            A ticket will give you a chance to win the prize you have chosen.\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div class=\\\"mt-4 flex items-end\\\">\\r\\n                        <p class=\\\"text-4xl leading-none text-accent\\\">2.</p>\\r\\n                        <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Multiple tickets</p>\\r\\n                        <p\\r\\n                                class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0\\\">\\r\\n                            The more tickets you buy, the more chances to win you have !\\r\\n                        </p>\\r\\n                    </div>\\r\\n                    <div class=\\\"mt-4 flex items-end\\\">\\r\\n                        <p class=\\\"text-4xl leading-none text-accent\\\">3.</p>\\r\\n                        <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Win</p>\\r\\n                        <p\\r\\n                                class=\\\"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7\\\">\\r\\n                            If you win a prize, an email will be sent to the adress you specified when you created the account\\r\\n                        </p>\\r\\n                    </div>\\r\\n                </div>\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\\r\\n<div hidden class=\\\"-mb-1\\\"></div>\"],\"names\":[],\"mappings\":\"AA2DI,UAAU,cAAC,CAAC,AACR,QAAQ,CAAE,QAAQ,AACtB,CAAC,AAED,wBAAU,OAAO,AAAC,CAAC,AACf,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE,CAAC;gBACzB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,oBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC\"}"
+const css$l = {
+	code: ".shop-item.svelte-1p2l4cr{position:relative}.shop-item.svelte-1p2l4cr::after{position:absolute;content:\"\";height:100%;width:100%;top:0;left:0;background:linear-gradient(\r\n                to bottom,\r\n                rgba(23, 23, 26, 0.6) 0%,\r\n                rgba(23, 23, 26, 0.75),\r\n                rgba(23, 23, 26, 0.83) 75%,\r\n                rgba(23, 23, 26, 0.92) 100%\r\n        )}button.svelte-1p2l4cr:disabled{@apply bg-disabled;;cursor:not-allowed}.mask.svelte-1p2l4cr::after{position:absolute;content:\"\";top:0;left:0;background:#1a1a21}",
+	map: "{\"version\":3,\"file\":\"shop.svelte\",\"sources\":[\"shop.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\r\\n    //* Required for videoAd\\r\\n    import ErrorAlert from \\\"../components/ErrorAlert.svelte\\\";\\r\\n    import Infos from \\\"../components/Infos.svelte\\\";\\r\\n    import { onDestroy, onMount } from \\\"svelte\\\";\\r\\n    import io from \\\"socket.io-client\\\";\\r\\n    import { apiUrl } from \\\"../utils/config\\\";\\r\\n    import AdblockAlert from \\\"../components/AdblockAlert.svelte\\\";\\r\\n    import { callApi } from \\\"../utils/api\\\";\\r\\n    import { counter } from \\\"../components/store\\\";\\r\\n    import { fly } from \\\"svelte/transition\\\";\\r\\n\\r\\n    let featuredItem;\\r\\n    let seasonPacks;\\r\\n    let packs;\\r\\n    let error;\\r\\n\\r\\n    let adError;\\r\\n    let info;\\r\\n    let userPlayer;\\r\\n    let ticketsNb = 100;\\r\\n    let isLoadingTicket = false;\\r\\n    let countDown = \\\"Loading...\\\";\\r\\n    let interval;\\r\\n    let loaded;\\r\\n\\r\\n    function startTimer(duration) {\\r\\n        let timer = duration,\\r\\n            hours,\\r\\n            minutes,\\r\\n            seconds;\\r\\n        return setInterval(function() {\\r\\n            seconds = Math.floor(timer % 60);\\r\\n            minutes = Math.floor((timer / 60) % 60);\\r\\n            hours = Math.floor(timer / (60 * 60));\\r\\n\\r\\n            minutes = minutes < 10 ? \\\"0\\\" + minutes : minutes;\\r\\n            seconds = seconds < 10 ? \\\"0\\\" + seconds : seconds;\\r\\n\\r\\n            if (hours > 0) countDown = hours + \\\":\\\" + minutes + \\\":\\\" + seconds;\\r\\n            else countDown = minutes + \\\":\\\" + seconds;\\r\\n\\r\\n            if (--timer < 0) {\\r\\n                timer = duration;\\r\\n            }\\r\\n        }, 1000);\\r\\n    }\\r\\n\\r\\n    let unsub;\\r\\n    onMount(async () => {\\r\\n        let socket;\\r\\n        let interval;\\r\\n        let items;\\r\\n        try {\\r\\n            items = await callApi(\\\"get\\\", \\\"/shop\\\");\\r\\n            if (items instanceof Error) {\\r\\n                throw items;\\r\\n            }\\r\\n        } catch (err) {\\r\\n            if (err.response) {\\r\\n                if (err.response.status === 404) error = \\\"<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>\\\";\\r\\n            }\\r\\n            error = `<p class=\\\"text-accent\\\">Wow, unexpected error occured, details for geeks below.</p> <p class=\\\"text-2xl\\\">${err.toString()}</p>`;\\r\\n        }\\r\\n        let player;\\r\\n        unsub = counter.subscribe(async (value) => {\\r\\n            if(value.refresh === true ) return\\r\\n            player = await value.content;\\r\\n            console.log(player);\\r\\n            if (player.user) {\\r\\n                player = player.user.coins;\\r\\n            } else {\\r\\n                player = 0;\\r\\n            }\\r\\n            items.forEach((item, i) => {\\r\\n                items[i].isDescriptionToggled = false;\\r\\n\\r\\n                items[i].unBuyable = false;\\r\\n                item.name = item.name.toLowerCase().replace(/\\\\s/g, \\\"-\\\");\\r\\n                if (item.cost > player) items[i].unBuyable = true;\\r\\n            });\\r\\n\\r\\n            featuredItem = items.find((i) => i.state === 0);\\r\\n            seasonPacks = items.filter((i) => i.state === 1);\\r\\n            packs = items.filter((i) => i.state === 2);\\r\\n            if (value.refresh === true) return;\\r\\n            userPlayer = await value.content;\\r\\n            clearInterval(interval);\\r\\n            if (!userPlayer.user.lastVideoAd) return countDown = undefined;\\r\\n\\r\\n            if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;\\r\\n\\r\\n            if (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 > Date.now()) {\\r\\n                const endsIn = ((userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000) - Date.now()) / 1000;\\r\\n                interval = startTimer(endsIn);\\r\\n            } else {\\r\\n                countDown = undefined;\\r\\n            }\\r\\n            loaded = true;\\r\\n        });\\r\\n        socket = io.io(apiUrl);\\r\\n        let stop = 0;\\r\\n        let advideostate = 0;\\r\\n        let tempNb;\\r\\n        let goal;\\r\\n        interval = setInterval(() => {\\r\\n            console.log(\\\"interval\\\")\\r\\n            try {\\r\\n                if (stop > 0) {\\r\\n                    return stop--;\\r\\n                }\\r\\n                tempNb = JSON.parse(document.getElementById(\\\"transfer\\\").value);\\r\\n                goal = tempNb.goal ? tempNb.goal : goal;\\r\\n                tempNb = tempNb.state;\\r\\n                if (tempNb !== advideostate) {\\r\\n                    console.log(tempNb)\\r\\n                    socket.emit(\\\"advideo\\\", tempNb === 1 ? {\\r\\n                        state: 1,\\r\\n                        steamId: userPlayer.steam.id,\\r\\n                        shopItemId: 0,\\r\\n                        goal: goal\\r\\n                    } : { state: tempNb, steamId: userPlayer.steam.id });\\r\\n                }\\r\\n                advideostate = tempNb;\\r\\n            } catch (e) {\\r\\n\\r\\n            }\\r\\n        }, 1200);\\r\\n        socket.on(\\\"advideo\\\", (e) => {\\r\\n            console.log(e);\\r\\n            if (e.code === \\\"error\\\") {\\r\\n                console.log(e.message);\\r\\n                stop = 2;\\r\\n                advideostate = 0;\\r\\n                tempNb = 0;\\r\\n                adError = e.message;\\r\\n                setTimeout(() => {\\r\\n                    adError = undefined;\\r\\n                }, 12000);\\r\\n            } else if (e.code === \\\"success\\\") {\\r\\n                countDown = \\\"Wait a second...\\\";\\r\\n                stop = 2;\\r\\n                info = e.message;\\r\\n                advideostate = 0;\\r\\n                tempNb;\\r\\n                setTimeout(() => {\\r\\n                    info = undefined;\\r\\n                }, 5000);\\r\\n                counter.set({ refresh: true });\\r\\n            } else {\\r\\n                console.log(\\\"code not supported\\\");\\r\\n            }\\r\\n\\r\\n        });\\r\\n\\r\\n    });\\r\\n    onDestroy(() => {\\r\\n        if (unsub) unsub();\\r\\n    });\\r\\n\\r\\n    //* End of required for videoAd\\r\\n\\r\\n    async function buyTickets() {\\r\\n        try {\\r\\n            isLoadingTicket = true;\\r\\n            const { won, coins } = await callApi(\\\"post\\\", `/lottery/enter?nb=${ticketsNb}&id=${0}`);\\r\\n            info = `You have successfully put ${ticketsNb} ,${won > 0 ? \\\"You have won a battle pass! Check your mails for more information.\\\" : coins > 0 ? \\\"You have won \\\" + coins + \\\" coins\\\" : \\\"You have won nothing, better luck next time\\\"}`;\\r\\n            counter.set({ refresh: true });\\r\\n            isLoadingTicket = false;\\r\\n            setTimeout(() => {\\r\\n                info = undefined;\\r\\n            }, 5000);\\r\\n        } catch (e) {\\r\\n\\r\\n        }\\r\\n    }\\r\\n\\r\\n    const handleDescriptionToggle = (seasonPack) => {\\r\\n        seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;\\r\\n        seasonPacks = [...seasonPacks];\\r\\n    };\\r\\n    async function buyItem (id) {\\r\\n        const itemBuyed = await callApi('post', `/buy/${id}`)\\r\\n        if(itemBuyed instanceof Error) console.log(\\\"ERR\\\")\\r\\n        else {\\r\\n            counter.set({refresh:true})\\r\\n            console.log(\\\"SUCCESSFULLY BOUGHT\\\")\\r\\n        }\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<style>\\r\\n    .shop-item {\\r\\n        position: relative;\\r\\n    }\\r\\n\\r\\n    .shop-item::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        height: 100%;\\r\\n        width: 100%;\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: linear-gradient(\\r\\n                to bottom,\\r\\n                rgba(23, 23, 26, 0.6) 0%,\\r\\n                rgba(23, 23, 26, 0.75),\\r\\n                rgba(23, 23, 26, 0.83) 75%,\\r\\n                rgba(23, 23, 26, 0.92) 100%\\r\\n        );\\r\\n    }\\r\\n\\r\\n    button:disabled {\\r\\n        @apply bg-disabled;\\r\\n        cursor: not-allowed;\\r\\n    }\\r\\n\\r\\n    /*@media (min-width: 450px) {\\r\\n        .receive {\\r\\n            @apply mt-7 -mb-14;\\r\\n        }\\r\\n    }*/\\r\\n\\r\\n    .mask::after {\\r\\n        position: absolute;\\r\\n        content: \\\"\\\";\\r\\n        top: 0;\\r\\n        left: 0;\\r\\n        background: #1a1a21;\\r\\n    }\\r\\n</style>\\r\\n\\r\\n<svelte:head>\\r\\n    <title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>\\r\\n    <meta\\r\\n        name=\\\"description\\\"\\r\\n        content=\\\"Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,\\r\\n        Battle Pass and Season packs| Exchange here your coins into rewards |\\r\\n        Winhalla Shop page \\\" />\\r\\n    <link rel=\\\"canonical\\\" href=\\\"https://winhalla.app/shop\\\" />\\r\\n    <script async src=\\\"https://cdn.stat-rock.com/player.js\\\"></script>\\r\\n</svelte:head>\\r\\n<!--\\r\\n{#if bottomItems}\\r\\n    <div class=\\\"lg:pl-24 lg:pt-6\\\">\\r\\n        <div class=\\\"flex\\\">\\r\\n            <div class=\\\"card featured\\\">\\r\\n                <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{featuredItem.name}.jpg\\\" alt=\\\"{featuredItem.name}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"lg:pl-12\\\">\\r\\n                {#each [0 , 1] as i}\\r\\n                    <div class=\\\"pb-12 right\\\">\\r\\n                        <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{rightItems[i].name}.jpg\\\" alt=\\\"{rightItems[i].name}\\\">\\r\\n                    </div>\\r\\n                {/each}\\r\\n\\r\\n            </div>\\r\\n        </div>\\r\\n        <div class=\\\"flex\\\">\\r\\n            {#each [0 , 1] as i}\\r\\n                <div class=\\\"pb-8 right mr-12\\\">\\r\\n                    <img class=\\\"w-full h-full block object-cover\\\" src=\\\"assets/ShopItems/{bottomItems[i].name}.jpg\\\" alt=\\\"{bottomItems[i].name}\\\">\\r\\n                </div>\\r\\n            {/each}\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\\r\\n-->\\r\\n{#if error}\\r\\n    <div class=\\\"w-full content-center lg:mt-60 mt-25 \\\">\\r\\n        <h2 class=\\\"lg:text-5xl text-3xl text-center\\\">{@html error}</h2>\\r\\n        <a href=\\\"/\\\"><p class=\\\"underline lg:text-3xl pt-4 text-2xl  text-center text-primary\\\">Go to homepage</p></a>\\r\\n    </div>\\r\\n{:else}\\r\\n    <div class=\\\"xl:flex xl:relative pb-16\\\" out:fly={{ y: -450, duration: 400 }}>\\r\\n        {#if info}\\r\\n            <Infos message=\\\"Thanks for watching a video\\\" pushError={info} />\\r\\n        {/if}\\r\\n        <div>\\r\\n            {#if packs}\\r\\n                <div class=\\\"mt-7 lg:mt-12 lg:ml-24\\\">\\r\\n                    <div class=\\\"xl:w-71/100 2xl:w-62/100\\\">\\r\\n                        <h1 class=\\\"text-6xl text-center lg:text-left\\\">\\r\\n                            Battle pass\\r\\n                        </h1>\\r\\n                        <div\\r\\n                            class=\\\"card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item      mask\\\">\\r\\n                            <img\\r\\n                                class=\\\"w-full h-full block object-cover\\\"\\r\\n                                src=\\\"assets/ShopItems/{featuredItem.name}.jpg\\\"\\r\\n                                alt={featuredItem.name} />\\r\\n\\r\\n                            <div\\r\\n                                class=\\\"absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full\\\">\\r\\n                                <div\\r\\n                                    class=\\\"md:flex justify-between w-full md:items-center\\\">\\r\\n                                    <p class=\\\"text-accent text-6xl\\\">\\r\\n                                        {featuredItem.name\\r\\n                                            .toLowerCase()\\r\\n                                            .replace(/\\\\-/g, ' ')}\\r\\n                                    </p>\\r\\n                                    <div class=\\\"flex justify-end md:block pb-1\\\">\\r\\n                                        <button\\r\\n                                            disabled={featuredItem.unBuyable}\\r\\n                                            on:click={() => buyItem(featuredItem.id)}\\r\\n                                            class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                            <p class=\\\"text-2xl\\\">\\r\\n                                                <b\\r\\n                                                    class=\\\"mr-1 font-normal\\\">{featuredItem.cost}</b>$\\r\\n                                            </p>\\r\\n                                        </button>\\r\\n                                    </div>\\r\\n                                </div>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                    <div class=\\\"pt-8 lg:pt-16\\\">\\r\\n                        <h2 class=\\\"text-6xl text-center lg:text-left\\\">\\r\\n                            Season packs\\r\\n                        </h2>\\r\\n                        <div\\r\\n                            class=\\\"mt-2 flex flex-col items-center lg:flex-row lg:items-start\\\">\\r\\n                            {#if seasonPacks.forEach}\\r\\n                                {#each seasonPacks as seasonPack, i}\\r\\n                                    <div\\r\\n                                        class=\\\"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12  shop-item xl:w-shopItemLarge 2xl:w-shopItem      mask\\\">\\r\\n                                        <img\\r\\n                                            class=\\\"w-full h-full block \\\"\\r\\n                                            src=\\\"assets/ShopItems/{seasonPack.name}.jpg\\\"\\r\\n                                            alt={seasonPack.name} />\\r\\n                                        <div\\r\\n                                            class=\\\"absolute bottom-0 z-10 pl-5 pb-3 w-full\\\">\\r\\n                                            <p\\r\\n                                                class:hidden={seasonPack.isDescriptionToggled}\\r\\n                                                class:-mb-1={!seasonPack.isDescriptionToggled}\\r\\n                                                class=\\\"text-accent text-5xl md:mb-0 md:block\\\">\\r\\n                                                {seasonPack.name\\r\\n                                                    .toLowerCase()\\r\\n                                                    .replace(/\\\\-/g, ' ')}\\r\\n                                            </p>\\r\\n                                            <p\\r\\n                                                class:hidden={!seasonPack.isDescriptionToggled}\\r\\n                                                class=\\\"block xl:mt-0\\\">\\r\\n                                                {seasonPack.description}\\r\\n                                            </p>\\r\\n\\r\\n                                            <div\\r\\n                                                class=\\\"flex justify-between w-full items-end pr-4 md:pr-5 pb-1\\\">\\r\\n                                                <div class=\\\"-mb-2 md:mb-0\\\">\\r\\n                                                    <div>\\r\\n                                                        <p\\r\\n                                                            class=\\\"hidden xl:block mr-1 -mb-2\\\">\\r\\n                                                            {seasonPack.description}\\r\\n                                                        </p>\\r\\n                                                        <button\\r\\n                                                            class=\\\"focus:outline-none xl:hidden -mb-10\\\"\\r\\n                                                            on:click={() => handleDescriptionToggle(seasonPack)}>\\r\\n                                                            <p\\r\\n                                                                class=\\\" text-light text-lg underline leading-none\\\">\\r\\n                                                                {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}\\r\\n                                                            </p>\\r\\n                                                        </button>\\r\\n                                                    </div>\\r\\n                                                </div>\\r\\n                                                <button\\r\\n                                                    disabled={seasonPack.unBuyable}\\r\\n                                                    on:click={() => callApi('post', `/buy/${seasonPack.id}`)}\\r\\n                                                    class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                                    <p class=\\\"text-2xl\\\">\\r\\n                                                        <b\\r\\n                                                            class=\\\"mr-1 font-normal\\\">{seasonPack.cost}</b>$\\r\\n                                                    </p>\\r\\n                                                </button>\\r\\n                                            </div>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    </div>\\r\\n                    <div class=\\\"pt-8 lg:pt-20 lg:pb-6\\\">\\r\\n                        <h2 class=\\\"text-6xl text-center lg:text-left\\\">Packs</h2>\\r\\n                        <div\\r\\n                            class=\\\"mt-2 flex flex-col items-center lg:flex-row lg:items-start\\\">\\r\\n                            {#if packs.forEach}\\r\\n                                {#each packs as pack}\\r\\n                                    <div\\r\\n                                        class=\\\"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item       mask\\\">\\r\\n                                        <img\\r\\n                                            class=\\\"w-full h-full block object-cover\\\"\\r\\n                                            src=\\\"assets/ShopItems/{pack.name}.jpg\\\"\\r\\n                                            alt={pack.name} />\\r\\n                                        <div\\r\\n                                            class=\\\"absolute bottom-0 z-10 px-5 pb-3 w-full\\\">\\r\\n                                            <p class=\\\"text-accent text-5xl\\\">\\r\\n                                                {pack.name\\r\\n                                                    .toLowerCase()\\r\\n                                                    .replace(/\\\\-/g, ' ')}\\r\\n                                            </p>\\r\\n\\r\\n                                            <div\\r\\n                                                class=\\\"flex justify-between w-full items-end pb-1\\\">\\r\\n                                                <div>\\r\\n                                                    <div>\\r\\n                                                        <p class=\\\"block mr-1 -mb-2\\\">\\r\\n                                                            {pack.description}\\r\\n                                                        </p>\\r\\n                                                    </div>\\r\\n                                                </div>\\r\\n                                                <button\\r\\n                                                    disabled={pack.unBuyable}\\r\\n                                                    on:click={() => callApi('post', `/buy/${pack.id}`)}\\r\\n                                                    class=\\\"px-4 py-1 bg-primary rounded\\\">\\r\\n                                                    <p class=\\\"text-2xl\\\">\\r\\n                                                        <b\\r\\n                                                            class=\\\"mr-1 font-normal\\\">{pack.cost}</b>$\\r\\n                                                    </p>\\r\\n                                                </button>\\r\\n                                            </div>\\r\\n                                        </div>\\r\\n                                    </div>\\r\\n                                {/each}\\r\\n                            {/if}\\r\\n                        </div>\\r\\n                    </div>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n        <div\\r\\n            class=\\\"mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3\\\">\\r\\n            {#if userPlayer}\\r\\n                <AdblockAlert class=\\\"lg:mr-12 text-center lg:text-left\\\" user=\\\"{userPlayer.user}\\\" />\\r\\n            {/if}\\r\\n            <h3 class=\\\"text-5xl lg:mr-12 text-center lg:text-left\\\">\\r\\n                How does it works ?\\r\\n            </h3>\\r\\n            <div class=\\\"pt-4\\\">\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">1.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Click</p>\\r\\n                    <p\\r\\n                        class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0\\\">\\r\\n                        Click on the item you want to purchase\\r\\n                    </p>\\r\\n                </div>\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">2.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Add</p>\\r\\n                    <p\\r\\n                        class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0\\\">\\r\\n                        Add the Winhalla Steam account to your friend list\\r\\n                    </p>\\r\\n                </div>\\r\\n                <div class=\\\"mt-4 flex items-end\\\">\\r\\n                    <p class=\\\"text-4xl leading-none text-accent\\\">3.</p>\\r\\n                    <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Receive</p>\\r\\n                    <p\\r\\n                        class=\\\"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7\\\">\\r\\n                        You will receive the item you purchased within 1 week to 1 month\\r\\n                    </p>\\r\\n                </div>\\r\\n                <!--<div class=\\\"mt-30\\\">\\r\\n                    <h3 class=\\\"text-5xl lg:mr-12 text-center lg:text-left\\\">\\r\\n                        Lottery\\r\\n                    </h3>\\r\\n                    <div class=\\\"pt-4\\\">\\r\\n                        <div class=\\\"mt-4 flex items-end\\\">\\r\\n                            <p class=\\\"text-4xl leading-none text-accent\\\">1.</p>\\r\\n                            <p class=\\\"text-4xl text-primary ml-2 leading-none\\\"><br>Buy a ticket</p>\\r\\n                            <p\\r\\n                                class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0\\\">\\r\\n                                A ticket will give you a chance to win the prize you have chosen.\\r\\n                            </p>\\r\\n                        </div>\\r\\n                        <div class=\\\"mt-4 flex items-end\\\">\\r\\n                            <p class=\\\"text-4xl leading-none text-accent\\\">2.</p>\\r\\n                            <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Multiple tickets</p>\\r\\n                            <p\\r\\n                                class=\\\"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0\\\">\\r\\n                                The more tickets you buy, the more chances to win you have !\\r\\n                            </p>\\r\\n                        </div>\\r\\n                        <div class=\\\"mt-4 flex items-end\\\">\\r\\n                            <p class=\\\"text-4xl leading-none text-accent\\\">3.</p>\\r\\n                            <p class=\\\"text-4xl text-primary ml-2 leading-none\\\">Win</p>\\r\\n                            <p\\r\\n                                class=\\\"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7\\\">\\r\\n                                If you win a prize, an email will be sent to the adress you specified when you\\r\\n                                created\\r\\n                                the account\\r\\n                            </p>\\r\\n                        </div>\\r\\n                        <div class=\\\"block mt-10\\\">\\r\\n                            <div class=\\\"flex\\\">\\r\\n                                <input class=\\\"mr-3\\\" type=\\\"range\\\" step=\\\"100\\\" min=\\\"100\\\" max=\\\"10000\\\" bind:value={ticketsNb}>\\r\\n                                <RefreshButton on:click={buyTickets}\\r\\n                                               refreshMessage={`Put ${ticketsNb} in the lottery`}\\r\\n                                               isRefreshing={isLoadingTicket} />\\r\\n                            </div>\\r\\n\\r\\n                            <div class=\\\"flex mt-8\\\">\\r\\n                                <button class=\\\"button button-brand\\\" onclick=\\\"playAd('enterLottery')\\\">Play ad for\\r\\n                                    lottery\\r\\n                                </button>\\r\\n                                <button class=\\\"button button-brand ml-4\\\" onclick=\\\"playAd('earnCoins')\\\"\\r\\n                                        disabled={!!countDown}>\\r\\n                                    {!!countDown ? countDown : \\\"Play ad for money\\\"}\\r\\n                                </button>\\r\\n                            </div>\\r\\n                        </div>\\r\\n                    </div>\\r\\n                </div>-->\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n{/if}\\r\\n<div>\\r\\n    <input id=\\\"transfer\\\" value=\\\"0\\\" hidden />\\r\\n    {#if adError}\\r\\n        <ErrorAlert message=\\\"An error occured while watching the ad\\\" pushError={adError} />\\r\\n    {/if}\\r\\n    <script data-playerPro=\\\"current\\\">\\r\\n        function playAd(goal) {\\r\\n            const init = (api) => {\\r\\n                if (api) {\\r\\n                    api.on(\\\"AdVideoStart\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 1, goal });\\r\\n                        //api.setAdVolume(1);\\r\\n                        document.body.onblur = function() {\\r\\n                            //api.pauseAd();\\r\\n                        };\\r\\n                        document.body.onfocus = function() {\\r\\n                            //api.resumeAd();\\r\\n                        };\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoFirstQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 2 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoMidpoint\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 3 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoThirdQuartile\\\", () => {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 4 });\\r\\n                    });\\r\\n                    api.on(\\\"AdVideoComplete\\\", function() {\\r\\n                        document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 5 });\\r\\n                        setTimeout(() => {\\r\\n                            document.getElementById(\\\"transfer\\\").value = JSON.stringify({ state: 0 });\\r\\n                        }, 1200);\\r\\n                        document.body.onblur = null;\\r\\n                        document.body.onfocus = null;\\r\\n                    });\\r\\n                } else {\\r\\n                    console.log(\\\"blank\\\");\\r\\n                }\\r\\n            };\\r\\n            var s = document.querySelector(\\\"script[data-playerPro=\\\\\\\"current\\\\\\\"]\\\");\\r\\n            //s.removeAttribute(\\\"data-playerPro\\\");\\r\\n            (playerPro = window.playerPro || []).push({\\r\\n                id: \\\"oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp\\\",\\r\\n                after: s,\\r\\n                init: init\\r\\n            });\\r\\n        }\\r\\n    </script>\\r\\n</div>\\r\\n<div hidden class=\\\"-mb-1\\\"></div>\"],\"names\":[],\"mappings\":\"AAiMI,UAAU,eAAC,CAAC,AACR,QAAQ,CAAE,QAAQ,AACtB,CAAC,AAED,yBAAU,OAAO,AAAC,CAAC,AACf,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE;gBACJ,EAAE,CAAC,MAAM,CAAC;gBACV,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE,CAAC;gBACzB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC;gBACvB,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,GAAG,CAAC;gBAC3B,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI;SAClC,AACL,CAAC,AAED,qBAAM,SAAS,AAAC,CAAC,AACb,OAAO,WAAW,CAAC,CACnB,MAAM,CAAE,WAAW,AACvB,CAAC,AAQD,oBAAK,OAAO,AAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,UAAU,CAAE,OAAO,AACvB,CAAC\"}"
 };
 
-async function preload$3() {
-	try {
-		let items = await callApi("get", "/shop");
+const Shop = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let featuredItem;
+	let seasonPacks;
+	let packs;
+	let error;
+	let adError;
+	let info;
+	let userPlayer;
+	let countDown = "Loading...";
 
-		if (items instanceof Error) {
-			throw items;
+	function startTimer(duration) {
+		let timer = duration, hours, minutes, seconds;
+
+		return setInterval(
+			function () {
+				seconds = Math.floor(timer % 60);
+				minutes = Math.floor(timer / 60 % 60);
+				hours = Math.floor(timer / (60 * 60));
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				seconds = seconds < 10 ? "0" + seconds : seconds;
+				if (hours > 0) countDown = hours + ":" + minutes + ":" + seconds; else countDown = minutes + ":" + seconds;
+
+				if (--timer < 0) {
+					timer = duration;
+				}
+			},
+			1000
+		);
+	}
+
+	let unsub;
+
+	onMount(async () => {
+		let socket;
+		let interval;
+		let items;
+
+		try {
+			items = await callApi("get", "/shop");
+
+			if (items instanceof Error) {
+				throw items;
+			}
+		} catch(err) {
+			if (err.response) {
+				if (err.response.status === 404) error = "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>";
+			}
+
+			error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
 		}
 
 		let player;
 
-		let unsub = counter.subscribe(value => {
-			player = value.content;
+		unsub = counter.subscribe(async value => {
+			if (value.refresh === true) return;
+			player = await value.content;
+			console.log(player);
+
+			if (player.user) {
+				player = player.user.coins;
+			} else {
+				player = 0;
+			}
+
+			items.forEach((item, i) => {
+				items[i].isDescriptionToggled = false;
+				items[i].unBuyable = false;
+				item.name = item.name.toLowerCase().replace(/\s/g, "-");
+				if (item.cost > player) items[i].unBuyable = true;
+			});
+
+			featuredItem = items.find(i => i.state === 0);
+			seasonPacks = items.filter(i => i.state === 1);
+			packs = items.filter(i => i.state === 2);
+			if (value.refresh === true) return;
+			userPlayer = await value.content;
+			clearInterval(interval);
+			if (!userPlayer.user.lastVideoAd) return countDown = undefined;
+			if (userPlayer.user.lastVideoAd.earnCoins.nb < 2) return countDown = undefined;
+
+			if (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 > Date.now()) {
+				const endsIn = (userPlayer.user.lastVideoAd.earnCoins.timestamp + 3600 * 1000 - Date.now()) / 1000;
+				interval = startTimer(endsIn);
+			} else {
+				countDown = undefined;
+			}
 		});
 
-		unsub();
+		socket = io__default['default'].io(apiUrl);
+		let stop = 0;
+		let advideostate = 0;
+		let tempNb;
+		let goal;
 
-		if (player.user) {
-			player = player.user.coins;
-		} else {
-			player = 0;
-		}
+		interval = setInterval(
+			() => {
+				console.log("interval");
 
-		items.forEach((item, i) => {
-			items[i].isDescriptionToggled = false;
-			items[i].unBuyable = false;
-			item.name = item.name.toLowerCase().replace(/\s/g, "-");
-			if (item.cost >= player) items[i].unBuyable = true;
+				try {
+					if (stop > 0) {
+						return stop--;
+					}
+
+					tempNb = JSON.parse(document.getElementById("transfer").value);
+					goal = tempNb.goal ? tempNb.goal : goal;
+					tempNb = tempNb.state;
+
+					if (tempNb !== advideostate) {
+						console.log(tempNb);
+
+						socket.emit("advideo", tempNb === 1
+						? {
+								state: 1,
+								steamId: userPlayer.steam.id,
+								shopItemId: 0,
+								goal
+							}
+						: {
+								state: tempNb,
+								steamId: userPlayer.steam.id
+							});
+					}
+
+					advideostate = tempNb;
+				} catch(e) {
+					
+				}
+			},
+			1200
+		);
+
+		socket.on("advideo", e => {
+			console.log(e);
+
+			if (e.code === "error") {
+				console.log(e.message);
+				stop = 2;
+				advideostate = 0;
+				tempNb = 0;
+				adError = e.message;
+
+				setTimeout(
+					() => {
+						adError = undefined;
+					},
+					12000
+				);
+			} else if (e.code === "success") {
+				countDown = "Wait a second...";
+				stop = 2;
+				info = e.message;
+				advideostate = 0;
+
+				setTimeout(
+					() => {
+						info = undefined;
+					},
+					5000
+				);
+
+				counter.set({ refresh: true });
+			} else {
+				console.log("code not supported");
+			}
 		});
+	});
 
-		let featuredItem = await items.find(i => i.state === 0);
-		let seasonPacks = await items.filter(i => i.state === 1);
-		let packs = await items.filter(i => i.state === 2);
-		return { featuredItem, seasonPacks, packs };
-	} catch(err) {
-		if (err.response) {
-			if (err.response.status === 404) return {
-				error: "<p class='text-accent'>404, that's an error.</p> <p>Match not found</p>"
-			};
-		}
+	onDestroy(() => {
+		if (unsub) unsub();
+	});
 
-		return {
-			error: `<p class='text-accent'>Wow, unexpected error occured, details for geeks below.</p> <p class='text-2xl'>${err.toString()}</p>`
-		};
-	}
-}
+	$$result.css.add(css$l);
 
-const Shop = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { featuredItem } = $$props;
-	let { seasonPacks } = $$props;
-	let { packs } = $$props;
-	let { error } = $$props;
-
-	if ($$props.featuredItem === void 0 && $$bindings.featuredItem && featuredItem !== void 0) $$bindings.featuredItem(featuredItem);
-	if ($$props.seasonPacks === void 0 && $$bindings.seasonPacks && seasonPacks !== void 0) $$bindings.seasonPacks(seasonPacks);
-	if ($$props.packs === void 0 && $$bindings.packs && packs !== void 0) $$bindings.packs(packs);
-	if ($$props.error === void 0 && $$bindings.error && error !== void 0) $$bindings.error(error);
-	$$result.css.add(css$g);
-
-	return `${($$result.head += `${($$result.title = `<title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>`, "")}<meta name="${"description"}" content="${"Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,\r\n        Battle Pass and Season packs| Exchange here your coins into rewards |\r\n        Winhalla Shop page "}" data-svelte="svelte-16751g8"><link rel="${"canonical"}" href="${"https://winhalla.app/shop"}" data-svelte="svelte-16751g8">`, "")}
+	return `${($$result.head += `${($$result.title = `<title>Shop - Winhalla, Play Brawlhalla. Earn rewards.</title>`, "")}<meta name="${"description"}" content="${"Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,\r\n        Battle Pass and Season packs| Exchange here your coins into rewards |\r\n        Winhalla Shop page "}" data-svelte="svelte-1ri6x5y"><link rel="${"canonical"}" href="${"https://winhalla.app/shop"}" data-svelte="svelte-1ri6x5y"><script async src="${"https://cdn.stat-rock.com/player.js"}" data-svelte="svelte-1ri6x5y"></script>`, "")}
 
 ${error
 	? `<div class="${"w-full content-center lg:mt-60 mt-25 "}"><h2 class="${"lg:text-5xl text-3xl text-center"}">${error}</h2>
         <a href="${"/"}"><p class="${"underline lg:text-3xl pt-4 text-2xl  text-center text-primary"}">Go to homepage</p></a></div>`
-	: `<div class="${"xl:flex xl:relative pb-16"}"><div>${packs
+	: `<div class="${"xl:flex xl:relative pb-16"}">${info
+		? `${validate_component(Infos, "Infos").$$render(
+				$$result,
+				{
+					message: "Thanks for watching a video",
+					pushError: info
+				},
+				{},
+				{}
+			)}`
+		: ``}
+        <div>${packs
 		? `<div class="${"mt-7 lg:mt-12 lg:ml-24"}"><div class="${"xl:w-71/100 2xl:w-62/100"}"><h1 class="${"text-6xl text-center lg:text-left"}">Battle pass
                         </h1>
-                        <div class="${"card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item svelte-34sil3"}"><img class="${"w-full h-full block object-cover"}" src="${"assets/ShopItems/" + escape(featuredItem.name) + ".jpg"}"${add_attribute("alt", featuredItem.name, 0)}>
+                        <div class="${"card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item      mask svelte-1p2l4cr"}"><img class="${"w-full h-full block object-cover"}" src="${"assets/ShopItems/" + escape(featuredItem.name) + ".jpg"}"${add_attribute("alt", featuredItem.name, 0)}>
+
                             <div class="${"absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full"}"><div class="${"md:flex justify-between w-full md:items-center"}"><p class="${"text-accent text-6xl"}">${escape(featuredItem.name.toLowerCase().replace(/\-/g, " "))}</p>
-                                    <div class="${"flex justify-end md:block pb-1"}"><button ${featuredItem.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-34sil3"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(featuredItem.cost)}</b>$
+                                    <div class="${"flex justify-end md:block pb-1"}"><button ${featuredItem.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-1p2l4cr"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(featuredItem.cost)}</b>$
                                             </p></button></div></div></div></div></div>
                     <div class="${"pt-8 lg:pt-16"}"><h2 class="${"text-6xl text-center lg:text-left"}">Season packs
                         </h2>
                         <div class="${"mt-2 flex flex-col items-center lg:flex-row lg:items-start"}">${seasonPacks.forEach
-			? `${each(seasonPacks, (seasonPack, i) => `<div class="${"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem svelte-34sil3"}"><img class="${"w-full h-full block "}" src="${"assets/ShopItems/" + escape(seasonPack.name) + ".jpg"}"${add_attribute("alt", seasonPack.name, 0)}>
+			? `${each(seasonPacks, (seasonPack, i) => `<div class="${"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12  shop-item xl:w-shopItemLarge 2xl:w-shopItem      mask svelte-1p2l4cr"}"><img class="${"w-full h-full block "}" src="${"assets/ShopItems/" + escape(seasonPack.name) + ".jpg"}"${add_attribute("alt", seasonPack.name, 0)}>
                                         <div class="${"absolute bottom-0 z-10 pl-5 pb-3 w-full"}"><p class="${[
 					"text-accent text-5xl md:mb-0 md:block",
 					(seasonPack.isDescriptionToggled ? "hidden" : "") + " " + (!seasonPack.isDescriptionToggled ? "-mb-1" : "")
@@ -2273,30 +3896,41 @@ ${error
                                             <p class="${["block xl:mt-0", !seasonPack.isDescriptionToggled ? "hidden" : ""].join(" ").trim()}">${escape(seasonPack.description)}</p>
 
                                             <div class="${"flex justify-between w-full items-end pr-4 md:pr-5 pb-1"}"><div class="${"-mb-2 md:mb-0"}"><div><p class="${"hidden xl:block mr-1 -mb-2"}">${escape(seasonPack.description)}</p>
-                                                        <button class="${"focus:outline-none xl:hidden -mb-10 svelte-34sil3"}"><p class="${" text-light text-lg underline leading-none"}">${escape(seasonPack.isDescriptionToggled
+                                                        <button class="${"focus:outline-none xl:hidden -mb-10 svelte-1p2l4cr"}"><p class="${" text-light text-lg underline leading-none"}">${escape(seasonPack.isDescriptionToggled
 				? "Hide description"
 				: "Show description")}
                                                             </p></button>
                                                     </div></div>
-                                                <button ${seasonPack.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-34sil3"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(seasonPack.cost)}</b>$
+                                                <button ${seasonPack.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-1p2l4cr"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(seasonPack.cost)}</b>$
                                                     </p></button>
                                             </div></div>
                                     </div>`)}`
 			: ``}</div></div>
                     <div class="${"pt-8 lg:pt-20 lg:pb-6"}"><h2 class="${"text-6xl text-center lg:text-left"}">Packs</h2>
                         <div class="${"mt-2 flex flex-col items-center lg:flex-row lg:items-start"}">${packs.forEach
-			? `${each(packs, pack => `<div class="${"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item svelte-34sil3"}"><img class="${"w-full h-full block object-cover"}" src="${"assets/ShopItems/" + escape(pack.name) + ".jpg"}"${add_attribute("alt", pack.name, 0)}>
+			? `${each(packs, pack => `<div class="${"mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item       mask svelte-1p2l4cr"}"><img class="${"w-full h-full block object-cover"}" src="${"assets/ShopItems/" + escape(pack.name) + ".jpg"}"${add_attribute("alt", pack.name, 0)}>
                                         <div class="${"absolute bottom-0 z-10 px-5 pb-3 w-full"}"><p class="${"text-accent text-5xl"}">${escape(pack.name.toLowerCase().replace(/\-/g, " "))}</p>
 
                                             <div class="${"flex justify-between w-full items-end pb-1"}"><div><div><p class="${"block mr-1 -mb-2"}">${escape(pack.description)}</p>
                                                     </div></div>
-                                                <button ${pack.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-34sil3"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(pack.cost)}</b>$
+                                                <button ${pack.unBuyable ? "disabled" : ""} class="${"px-4 py-1 bg-primary rounded svelte-1p2l4cr"}"><p class="${"text-2xl"}"><b class="${"mr-1 font-normal"}">${escape(pack.cost)}</b>$
                                                     </p></button>
                                             </div></div>
                                     </div>`)}`
 			: ``}</div></div></div>`
 		: ``}</div>
-        <div class="${"mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3"}"><h3 class="${"text-5xl lg:mr-12 text-center lg:text-left"}">How does it works ?
+        <div class="${"mb-20 md:mb-8 mx-5 xl:right-0 mt-7 lg:mt-16 lg:ml-24 lg:mx-0 xl:fixed xl:w-1/4 2xl:w-1/3"}">${userPlayer
+		? `${validate_component(AdblockAlert, "AdblockAlert").$$render(
+				$$result,
+				{
+					class: "lg:mr-12 text-center lg:text-left",
+					user: userPlayer.user
+				},
+				{},
+				{}
+			)}`
+		: ``}
+            <h3 class="${"text-5xl lg:mr-12 text-center lg:text-left"}">How does it works ?
             </h3>
             <div class="${"pt-4"}"><div class="${"mt-4 flex items-end"}"><p class="${"text-4xl leading-none text-accent"}">1.</p>
                     <p class="${"text-4xl text-primary ml-2 leading-none"}">Click</p>
@@ -2310,36 +3944,78 @@ ${error
                     <p class="${"text-4xl text-primary ml-2 leading-none"}">Receive</p>
                     <p class="${"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7"}">You will receive the item you purchased within 1 week to 1 month
                     </p></div>
-                <div class="${"mt-40"}"><h3 class="${"text-5xl lg:mr-12 text-center lg:text-left"}">Lottery
-                </h3>
-                <div class="${"pt-4"}"><div class="${"mt-4 flex items-end"}"><p class="${"text-4xl leading-none text-accent"}">1.</p>
-                        <p class="${"text-4xl text-primary ml-2 leading-none"}"><br>Buy a ticket</p>
-                        <p class="${"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 2xl:mt-0 2xl:mb-0"}">A ticket will give you a chance to win the prize you have chosen.
-                        </p></div>
-                    <div class="${"mt-4 flex items-end"}"><p class="${"text-4xl leading-none text-accent"}">2.</p>
-                        <p class="${"text-4xl text-primary ml-2 leading-none"}">Multiple tickets</p>
-                        <p class="${"-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0"}">The more tickets you buy, the more chances to win you have !
-                        </p></div>
-                    <div class="${"mt-4 flex items-end"}"><p class="${"text-4xl leading-none text-accent"}">3.</p>
-                        <p class="${"text-4xl text-primary ml-2 leading-none"}">Win</p>
-                        <p class="${"receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7"}">If you win a prize, an email will be sent to the adress you specified when you created the account
-                        </p></div></div></div></div></div></div>`}
+                </div></div></div>`}
+<div><input id="${"transfer"}" value="${"0"}" hidden>
+    ${adError
+	? `${validate_component(ErrorAlert, "ErrorAlert").$$render(
+			$$result,
+			{
+				message: "An error occured while watching the ad",
+				pushError: adError
+			},
+			{},
+			{}
+		)}`
+	: ``}
+    <script data-playerPro="${"current"}">function playAd(goal) {
+            const init = (api) => {
+                if (api) {
+                    api.on("AdVideoStart", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 1, goal });
+                        //api.setAdVolume(1);
+                        document.body.onblur = function() {
+                            //api.pauseAd();
+                        };
+                        document.body.onfocus = function() {
+                            //api.resumeAd();
+                        };
+                    });
+                    api.on("AdVideoFirstQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 2 });
+                    });
+                    api.on("AdVideoMidpoint", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 3 });
+                    });
+                    api.on("AdVideoThirdQuartile", () => {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 4 });
+                    });
+                    api.on("AdVideoComplete", function() {
+                        document.getElementById("transfer").value = JSON.stringify({ state: 5 });
+                        setTimeout(() => {
+                            document.getElementById("transfer").value = JSON.stringify({ state: 0 });
+                        }, 1200);
+                        document.body.onblur = null;
+                        document.body.onfocus = null;
+                    });
+                } else {
+                    console.log("blank");
+                }
+            };
+            var s = document.querySelector("script[data-playerPro=\\"current\\"]");
+            //s.removeAttribute("data-playerPro");
+            (playerPro = window.playerPro || []).push({
+                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                after: s,
+                init: init
+            });
+        }
+    </script></div>
 <div hidden class="${"-mb-1"}"></div>`;
 });
 
-var component_15 = /*#__PURE__*/Object.freeze({
+var component_16 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    'default': Shop,
-    preload: preload$3
+    'default': Shop
 });
 
 /* src\routes\test.svelte generated by Svelte v3.31.0 */
 
 const Test = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	return ``;
+
+	return `<body><button class="${"button"}">Refresh</button></body>`;
 });
 
-var component_16 = /*#__PURE__*/Object.freeze({
+var component_17 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     'default': Test
 });
@@ -2387,10 +4063,19 @@ const manifest = {
 		},
 
 		{
+			// feltrom/admin.svelte
+			pattern: /^\/feltrom\/admin\/?$/,
+			parts: [
+				null,
+				{ name: "feltrom_admin", file: "feltrom/admin.svelte", component: component_4 }
+			]
+		},
+
+		{
 			// offline.svelte
 			pattern: /^\/offline\/?$/,
 			parts: [
-				{ name: "offline", file: "offline.svelte", component: component_4 }
+				{ name: "offline", file: "offline.svelte", component: component_5 }
 			]
 		},
 
@@ -2398,7 +4083,7 @@ const manifest = {
 			// privacy.svelte
 			pattern: /^\/privacy\/?$/,
 			parts: [
-				{ name: "privacy", file: "privacy.svelte", component: component_5 }
+				{ name: "privacy", file: "privacy.svelte", component: component_6 }
 			]
 		},
 
@@ -2406,7 +4091,7 @@ const manifest = {
 			// status.svelte
 			pattern: /^\/status\/?$/,
 			parts: [
-				{ name: "status", file: "status.svelte", component: component_6 }
+				{ name: "status", file: "status.svelte", component: component_7 }
 			]
 		},
 
@@ -2414,7 +4099,7 @@ const manifest = {
 			// about.svelte
 			pattern: /^\/about\/?$/,
 			parts: [
-				{ name: "about", file: "about.svelte", component: component_7 }
+				{ name: "about", file: "about.svelte", component: component_8 }
 			]
 		},
 
@@ -2422,15 +4107,16 @@ const manifest = {
 			// terms.svelte
 			pattern: /^\/terms\/?$/,
 			parts: [
-				{ name: "terms", file: "terms.svelte", component: component_8 }
+				{ name: "terms", file: "terms.svelte", component: component_9 }
 			]
 		},
 
 		{
-			// tests.svelte
-			pattern: /^\/tests\/?$/,
+			// tests/[id].svelte
+			pattern: /^\/tests\/([^/]+?)\/?$/,
 			parts: [
-				{ name: "tests", file: "tests.svelte", component: component_9 }
+				null,
+				{ name: "tests_$id", file: "tests/[id].svelte", component: component_10, params: match => ({ id: d(match[1]) }) }
 			]
 		},
 
@@ -2438,7 +4124,7 @@ const manifest = {
 			// help.svelte
 			pattern: /^\/help\/?$/,
 			parts: [
-				{ name: "help", file: "help.svelte", component: component_10 }
+				{ name: "help", file: "help.svelte", component: component_11 }
 			]
 		},
 
@@ -2447,7 +4133,7 @@ const manifest = {
 			pattern: /^\/link\/([^/]+?)\/?$/,
 			parts: [
 				null,
-				{ name: "link_$id", file: "link/[id].svelte", component: component_11, params: match => ({ id: d(match[1]) }) }
+				{ name: "link_$id", file: "link/[id].svelte", component: component_12, params: match => ({ id: d(match[1]) }) }
 			]
 		},
 
@@ -2455,7 +4141,7 @@ const manifest = {
 			// play/index.svelte
 			pattern: /^\/play\/?$/,
 			parts: [
-				{ name: "play", file: "play/index.svelte", component: component_12 }
+				{ name: "play", file: "play/index.svelte", component: component_13 }
 			]
 		},
 
@@ -2464,7 +4150,7 @@ const manifest = {
 			pattern: /^\/play\/ffa\/?$/,
 			parts: [
 				null,
-				{ name: "play_ffa", file: "play/ffa/index.svelte", component: component_13 }
+				{ name: "play_ffa", file: "play/ffa/index.svelte", component: component_14 }
 			]
 		},
 
@@ -2474,7 +4160,7 @@ const manifest = {
 			parts: [
 				null,
 				null,
-				{ name: "play_ffa_$id", file: "play/ffa/[id].svelte", component: component_14, params: match => ({ id: d(match[1]) }) }
+				{ name: "play_ffa_$id", file: "play/ffa/[id].svelte", component: component_15, params: match => ({ id: d(match[1]) }) }
 			]
 		},
 
@@ -2482,7 +4168,7 @@ const manifest = {
 			// shop.svelte
 			pattern: /^\/shop\/?$/,
 			parts: [
-				{ name: "shop", file: "shop.svelte", component: component_15 }
+				{ name: "shop", file: "shop.svelte", component: component_16 }
 			]
 		},
 
@@ -2490,7 +4176,7 @@ const manifest = {
 			// test.svelte
 			pattern: /^\/test\/?$/,
 			parts: [
-				{ name: "test", file: "test.svelte", component: component_16 }
+				{ name: "test", file: "test.svelte", component: component_17 }
 			]
 		}
 	],
@@ -7398,7 +9084,7 @@ function noop$1() { }
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 let throttler = [];
-express__default['default']() // You can also use Express
+const app = express__default['default']() // You can also use Express
     .use((req, res, next) => {
         if (req.path.includes("assets") || req.path.includes("css")) return next();
         let i = throttler.findIndex(e => e.ip == req.ip);
@@ -7418,10 +9104,19 @@ express__default['default']() // You can also use Express
             next();
         }
     })
+    .use((req,res,next)=>{
+        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
+        next();
+    })
     .use(
         compression__default['default']({ threshold: 0 }),
         sirv__default['default']("static", { dev }),
         middleware()
     )
-    .set("x-powered-by", false)
-    .listen(80);
+    .set("x-powered-by", false);
+let server = https__default['default'].createServer({
+    key: fs__default['default'].readFileSync('/etc/letsencrypt/live/winhalla.app/privkey.pem'),
+    cert: fs__default['default'].readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
+},app);
+server.listen(443);
+app.listen(80);

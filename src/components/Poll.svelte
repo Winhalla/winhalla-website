@@ -1,117 +1,103 @@
 <script>
-    const poll = {
-        name: "Should we add a 2vs2 game mode ?",
-        isMCQ: true,
-        options: [
-            "Yes", "I don't care", "No"
-        ]
-    };
+    import { callApi } from "../utils/api";
+    import { fly } from "svelte/transition";
+
+    export let poll;
+    export let preview = false;
+
 
     let answer;
+    let answered = false;
+
+    let isPollOpen = preview;
+
+    function handleClick() {
+        isPollOpen = !isPollOpen;
+    }
 
     function handleChoose(number) {
-        /*if(answer === number) {
-            return answer = undefined;
-        }*/
-
         answer = number;
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
+        answered = true;
+        await callApi("post", `/pollresponse?answer=${answer}&name=${poll.name}`);
+        setTimeout(() => {
+            poll = undefined;
+        }, 2000);
     }
 </script>
 
-<style>
 
-</style>
+{#if poll && poll !== "network err"}
+    <div class:pb-4={isPollOpen} class="bg-background rounded-lg border border-primary"
+         transition:fly={{ x:200, duration: 300 }}>
+        <button class="flex justify-between cursor-pointer focus:outline-none w-full" on:click={() => handleClick()}>
+            <p class="text-xl pl-3 pt-1.5 text-gray-400">POLL</p>
+            <p class:pb-4={!isPollOpen} class="pl-2 pt-5">{poll.name}</p>
+            <!--Svg icon-->
+            <div class="ml-5 mr-3 mt-6">
+                <svg class:hidden={isPollOpen} class="fill-current w-5" style="margin-bottom: 0.14rem;"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                </svg>
+                <svg class:hidden={!isPollOpen} class="fill-current w-5" style="margin-bottom: 0.14rem;"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                </svg>
+            </div>
 
-<div class="text-default bg-background px-6 border-b-2 border-l-2 border-r-2 border-background text-font /py-8 flex flex-col items-center justify-center gxl:w-1/3 g2xl:w-1/4 poll-container rounded-b-lg">
-    <!--
-    <p class="text-3xl mb-2 text-center px-4  md:px-0 md:text-left">{poll.name}</p>
-
-    {#if poll.isMCQ}
-        <div class="w-full">
-            {#each poll.options as option, i}
-                <button
-                    class:border-primary={answer === i}
-                    class="w-full p-4 bg-variant my-3 rounded-lg border-2 border-transparent hover:border-primary focus:outline-none focus:border-primary"
-                    on:click={() => handleChoose(i)}>
-
-                    <label class="block flex items-center cursor-pointer">
-                        <input class="opacity-0 fixed pointer-events-none w-4 h-4" type="radio" value={option}>
-
-                        {#if answer === i}
-                            <svg class="w-4 fill-current text-primary" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z" />
-                            </svg>
-                        {:else}
-                            <svg class="w-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z" />
-                            </svg>
-                        {/if}
-
-
-                        <p class="ml-2" style="line-height: 0; margin-bottom: -0.20rem">{option}</p>
-                    </label>
-
-                </button>
-
-            {/each}
-        </div>
-
-    {:else}
-        <div class="py-3 w-full h-42">
-            <textarea class="text-background w-full h-full  px-2 py-1 rounded-sm" name={poll.name} id="" ></textarea>
-        </div>
-
-    {/if}
-    <button on:submit={handleSubmit()} class="button button-brand mt-4 w-full">
-        SUBMIT
-    </button>
-    <div class="flex items-center">
-        <p class="text-3xl text-center px-4  md:px-0 md:text-left">{poll.name}</p>
-        <button on:submit={handleSubmit()} class="button button-brand w-24 ml-4" style="padding: 0.5rem 0.75rem">
-            SUBMIT
         </button>
-    </div>-->
-    {#if poll.isMCQ}
-        <div class="w-full flex justify-around py-4">
-            {#each poll.options as option, i}
-                <button
-                    class:border-primary={answer === i}
-                    class="w-ful p-4 bg-variant my-3 rounded-lg border-2 border-transparent hover:border-primary focus:outline-none focus:border-primary text-"
-                    on:click={() => handleChoose(i)}>
 
-                    <label class="block flex items-center cursor-pointer">
-                        <input class="opacity-0 fixed pointer-events-none w-4 h-4" type="radio" value={option}>
+        <div class:hidden={!isPollOpen} class="px-5">
+            {#if answered === false}
+                {#if poll.isMCQ}
+                    <div class="">
 
-                        {#if answer === i}
-                            <svg class="w-4 fill-current text-primary" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z" />
-                            </svg>
-                        {:else}
-                            <svg class="w-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z" />
-                            </svg>
-                        {/if}
+                        {#each poll.options as option, i}
+                            <div on:click={()=>{handleChoose(i)}}
+                                 class:border-primary={answer === i}
+                                 class="p-4 bg-variant my-3 rounded-lg border-2 border-transparent hover:border-primary focus:outline-none focus:border-primary block flex items-center cursor-pointer">
+
+                                <input class="opacity-0 fixed pointer-events-none w-4 h-4" type="radio" value={option}>
+
+                                {#if answer === i}
+                                    <svg class="w-4 fill-current text-primary" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z" />
+                                    </svg>
+                                {:else}
+                                    <svg class="w-4 fill-current" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z" />
+                                    </svg>
+                                {/if}
 
 
-                        <p class="ml-2" style="line-height: 0; margin-bottom: -0.20rem">{option}</p>
-                    </label>
+                                <p class="ml-2" style="line-height: 0; margin-bottom: -0.20rem">{option}</p>
 
+                            </div>
+
+                        {/each}
+
+                    </div>
+                {:else}
+                    <textarea class="px-3 py-2 text-black" bind:value={answer}></textarea>
+                {/if}
+                <button on:click={()=>{ if(!preview){handleSubmit()}}} class="button button-brand w-24 mt-2 w-full">
+                    SUBMIT
                 </button>
-
-            {/each}
+            {:else}
+                <p class="text-3xl text-center mx-auto rounded-lg focus:outline-none block text-primary mt-2">
+                    Thanks
+                    for your
+                    answer!</p>
+            {/if}
         </div>
+    </div>
 
-    {:else}
-        <div class="py-3 w-full h-30">
-            <textarea class="text-background w-full h-full  px-2 py-1 rounded-sm" name={poll.name} id="" ></textarea>
-        </div>
-
-    {/if}
-</div>
+{/if}

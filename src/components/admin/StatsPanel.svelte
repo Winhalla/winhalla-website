@@ -104,7 +104,7 @@
     }
 </style>
 <div>
-    <div class="flex justify-evenly">
+    <div class="lg:flex lg:justify-evenly">
         {#if stats}
             {#each stats as stat}
                 <div>

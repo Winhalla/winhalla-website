@@ -104,7 +104,7 @@
     }
 </style>
 <div>
-    <div class="lg:flex lg:justify-evenly">
+    <div class="grid 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1">
         {#if stats}
             {#each stats as stat}
                 <div>

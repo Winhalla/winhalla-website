@@ -159,7 +159,7 @@ module.exports = {
             },
             colors: {
                 background: "#17171a",
-                variant: "#1a1a21",
+                variant: "#1b1b27",
 
                 primary: "#3d72e4",
                 accent: "#ff8f0f",

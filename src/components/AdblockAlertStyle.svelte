@@ -63,7 +63,7 @@
             transition:fly={{ y: 300, duration: 350 }}>
 
             <h1 class="text-5xl md:text-6xl text-center text-font">Please disable your adblocker</h1>
-            <p class="mt-7    text-3xl md:text-4xl text-green text-center leading-8">We use ads revenue to make this
+            <p class="mt-8    text-3xl md:text-4xl text-green text-center leading-8">We use ads revenue to make this
                 website happen!</p>
 
             <p class="mt-6    text-default md:text-2xl text-primary    leading-7">Here are some guides to help you turn
@@ -117,8 +117,9 @@
                     {/if}
                 {/each}
             </div>
-            <div class="flex">
-                <button class="button button-brand mx-auto mt-4" onClick="window.location.href=window.location.href">Refresh Page
+            <div class="flex mt-8">
+                <button class="button button-brand mx-auto" onClick="window.location.href=window.location.href">
+                    Refresh Page
                 </button>
             </div>
         </div>

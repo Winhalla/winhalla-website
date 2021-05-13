@@ -10,7 +10,7 @@
     export let adError;
     export let info;
 
-    let finished;
+    export let visible;
 </script>
 
 <style>
@@ -23,8 +23,8 @@
     }
 </style>
 
-{#if !finished}
-    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+{#if visible}
+    <div class="sm:flex md:absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
 
         <!--TRANSPARENT PART-->
         <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5 bg-background bg-opacity-70"
@@ -70,10 +70,10 @@
                 <div class="mt-12 sm:mt-0 sm:mb-24">
                     <div class="mt-4 flex flex-col items-center sm:items-start sm:flex-row">
                         <PlayAdButton socket={socket} id={id} page="FfaWatchAd" bind:userPlayer={userPlayer}
-                                      bind:adError={adError} bind:info={info} bind:finished={finished} />
+                                      bind:adError={adError} bind:info={info} bind:finished={visible} />
                         <button class="button button-brand mt-5 sm:mt-0 mb-1"
                                 style="background-color: #fc1870; padding: 0.75rem 1.5rem"
-                                on:click={() => finished = true}>
+                                on:click={() => visible = false}>
                             Continue
                             to match
                         </button>

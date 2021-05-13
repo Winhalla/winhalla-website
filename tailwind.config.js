@@ -1,6 +1,8 @@
 module.exports = {
     purge: {
-        enabled: false,
+        options: {
+            safelist: ["from-primary", "from-epic", "from-green", "from-legendary", "to-epic", "to-green", "to-legendary", "to-primary"]
+        }
     },
     theme: {
         extend: {

@@ -51,6 +51,11 @@
         }, 25000);
     }
 
+    let isFfaWatchAdVisible = true;
+    $: if (isFfaWatchAdVisible) {
+        console.log(isFfaWatchAdVisible);
+    }
+
     let error;
     let pushError;
     let socket;
@@ -228,7 +233,6 @@
     };
 
     let isQuestsPanelOpen = false;
-
     function handleQuestsPanel() {
         isQuestsPanelOpen = !isQuestsPanelOpen;
     }
@@ -320,7 +324,8 @@
             {#if isMatchEnded}
                 <FfaEnd players={match.players} winners={match.winners} />
             {:else}
-                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0">
+                <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0"
+                     class:hidden={isFfaWatchAdVisible || isQuestsPanelOpen}>
                     <div
                         class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
@@ -435,44 +440,19 @@
                             </div>
                         {/if}
                     </div>
+                    <GuideCard page="ffa" />
                 </div>
+
             {/if}
 
-            <GuideCard page="ffa" />
+
             {#if !isSpectator && !isMatchEnded}
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} />
+                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
             {/if}
             {#if quests}
-                <!--{#if isQuestsPanelOpen}
-                    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
-
-                        &lt;!&ndash;TRANSPARENT PART&ndash;&gt;
-                        <div class="hidden md:block md:w-1/4 lg:w-1/2 2xl:w-3/5 bg-background bg-opacity-70"
-                             out:fade={{duration: 350}}></div>
-
-                            <div class="bg-background w-full md:w-3/4  lg:w-auto   /min-w-max   h-full   md:border-l-2 border-primary flex justify-center items-center"
-                             in:fly={{x: 500, duration: 400}} out:fly={{x: 500, duration: 350}}>
-                                <div class="">
-                                    <div class="">
-                                        <Quests data={quests} />
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                {:else}
-                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
-                        <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
-                            <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
-                            </svg>
-                        </button>
-                    </div>
-                {/if}-->
                 {#if isQuestsPanelOpen}
-                    <div class="sm:flex absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+                    <div class="lg:flex md:absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
 
                         <!--TRANSPARENT PART-->
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
@@ -482,7 +462,7 @@
                             in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
                             <div class="lg:-mt-32 lg:flex items-center h-full">
                                 <button
-                                    class="fixed lg:relative z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"
+                                    class="fixed lg:static z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"
                                     on:click={() => handleQuestsPanel()}>
                                     <svg class="hidden lg:block w-6 fill-current ml-8 text-font" viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -507,11 +487,12 @@
                         </div>
                     </div>
                 {:else}
-                    <div class="fixed md:absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
+                    <div class="fixed md:absolute right-0 top-1/2 transform -translate-y-1/2     mr-4"
+                         class:hidden={isFfaWatchAdVisible}>
                         <div class="relative">
                             {#if isToolTipVisible}
                                 <span
-                                    class="tooltip absolute -left-16 bottom-14     px-6 py-2 bg-primary  rounded  text-left     flex items-center justify-center z-40"
+                                    class="hidden lg:block tooltip absolute -left-16 bottom-14     px-6 py-2 bg-primary  rounded  text-left     flex items-center justify-center z-40"
                                     transition:fade>
                                     Quests
                                 </span>

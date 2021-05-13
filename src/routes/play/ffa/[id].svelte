@@ -1,4 +1,5 @@
 <script>
+
     import { onDestroy, onMount } from "svelte";
     import { callApi } from "../../../utils/api";
     import { goto, stores } from "@sapper/app";
@@ -55,6 +56,7 @@
     let socket;
     let isSpectator;
     let isLoadingOpen = true;
+    let isToolTipVisible = false;
 
     let gradientList;
     onMount(() => {
@@ -241,6 +243,7 @@
     .card {
         box-shadow: rgba(0, 0, 0, 0.55) 5px 5px 8px;
     }
+
     .ffa-player {
         @apply relative w-53 h-88 text-center;
     }
@@ -278,6 +281,16 @@
         margin-bottom: 0.35rem;
     }
 
+    .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 98%;
+        right: 20%;
+        margin-left: -6px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #3d72e4 transparent transparent transparent;
+    }
 </style>
 
 
@@ -395,8 +408,9 @@
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
                                 {#each players as player, i}
                                     <div class="ffa-player card lg:mr-12 mb-8">
-                                        <div class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
-                                             ></div>
+                                        <div
+                                            class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                        ></div>
                                         <div
                                             class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
                                         <img
@@ -494,14 +508,28 @@
                     </div>
                 {:else}
                     <div class="fixed md:absolute right-0 top-1/2 transform -translate-y-1/2     mr-4">
-                        <button class="focus:outline-none" on:click={() => handleQuestsPanel()}>
-                            <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
-                            </svg>
-                        </button>
+                        <div class="relative">
+                            {#if isToolTipVisible}
+                                <span
+                                    class="tooltip absolute -left-16 bottom-14     px-6 py-2 bg-primary  rounded  text-left     flex items-center justify-center z-40"
+                                    transition:fade>
+                                    Quests
+                                </span>
+                            {/if}
+
+                            <button class="focus:outline-none" on:click={() => handleQuestsPanel()}
+                                    on:mouseover={() => isToolTipVisible = true}
+                                    on:mouseout={() => isToolTipVisible = false}>
+                                <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
+
+
                 {/if}
 
             {/if}

@@ -3314,7 +3314,9 @@ const AdblockAlertStyle = create_ssr_component(($$result, $$props, $$bindings, s
 		? `<div class="${"ml-8 mb-5  text-default text-light"}"><ol class="${"list-outside list-decimal"}">${each(value.steps, step => `<li class="${"mt-2 text-primary"}"><b class="${"font-normal text-light"}">${escape(step)}</b>
                                     </li>`)}</ol>
                         </div>`
-		: ``}`)}</div></div></div>`
+		: ``}`)}</div>
+            <div class="${"flex"}"><button class="${"button button-brand mx-auto"}" onClick="${"window.location.href=window.location.href"}">Refresh Page
+                </button></div></div></div>`
 	: ``}`;
 });
 

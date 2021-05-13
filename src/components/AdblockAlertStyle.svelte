@@ -117,6 +117,10 @@
                     {/if}
                 {/each}
             </div>
+            <div class="flex">
+                <button class="button button-brand mx-auto" onClick="window.location.href=window.location.href">Refresh Page
+                </button>
+            </div>
         </div>
 
     </div>

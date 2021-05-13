@@ -272,15 +272,15 @@
                             <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}" otp={otp} />
                         </div>
                     {/if}
-                    {:else if activePanel === "stats"}
-                    <StatsPanel pwd="{pwd}" otp={otp}/>
+                {:else if activePanel === "stats"}
+                    <StatsPanel pwd="{pwd}" otp={otp} />
                 {/if}
 
 
                 <PopupAdmin bind:popup={popup} bind:configs={configs} bind:newConfig={newConfig} pwd={pwd} otp={otp} />
             </div>
         </div>
-        {#if JSON.stringify(newConfig.map(e => e.value)) !== JSON.stringify(configs.map(e => e.value))}
+        {#if JSON.stringify(newConfig.filter(e => e.name !== "IDs BANNED").map(e => e.value)) !== JSON.stringify(configs.filter(e => e.name !== "IDs BANNED").map(e => e.value))}
             <div
                 class="fixed top-screen-90 w-full">
                 <div transition:fly|local={{y:150, duration:500}}

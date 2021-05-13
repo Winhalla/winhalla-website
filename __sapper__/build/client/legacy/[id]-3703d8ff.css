@@ -1,0 +1,21 @@
+b.svelte-13oz88a{font-weight:400;--tw-text-opacity:1;color:rgba(61, 114, 228, var(--tw-text-opacity))}.card.svelte-13oz88a{box-shadow:rgba(0, 0, 0, 0.55) 5px 5px 8px}.ffa-player.svelte-13oz88a{height:22rem;position:relative;text-align:center;width:13.25rem}.ffa-player.svelte-13oz88a::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.25) 0%,
+                rgba(23, 23, 26, 0.35),
+                rgba(23, 23, 26, 0.45) 75%,
+                rgba(23, 23, 26, 0.5) 100%
+        )}.player-name.svelte-13oz88a{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;position:absolute;right:0px;left:0px;top:4rem;z-index:10}.stats.svelte-13oz88a{position:absolute;right:0px;left:0px;z-index:10}.user.svelte-13oz88a{height:25rem;width:15rem}.user.svelte-13oz88a::after{background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.25) 0%,
+                rgba(23, 23, 26, 0.35),
+                rgba(23, 23, 26, 0.45) 75%,
+                rgba(23, 23, 26, 0.5) 100%
+        )}.tooltip.svelte-13oz88a::after{content:"";position:absolute;top:100%;right:20%;margin-left:-5px;border-width:5px;border-style:solid;border-color:black transparent transparent transparent}li.svelte-13oz88a{line-height:1.25}
+b.svelte-vxaowk{font-weight:400;--tw-text-opacity:1;color:rgba(61, 114, 228, var(--tw-text-opacity))}strong.svelte-vxaowk{font-weight:400;--tw-text-opacity:1;color:rgba(61, 228, 136, var(--tw-text-opacity))}
+b.svelte-1r9up0b{font-weight:400;--tw-text-opacity:1;color:rgba(27, 27, 39, var(--tw-text-opacity))}.card.svelte-1r9up0b{box-shadow:rgba(0, 0, 0, 0.55) 5px 5px 8px}.ffa-player.svelte-1r9up0b{height:22rem;position:relative;text-align:center;width:13.25rem}.ffa-player.svelte-1r9up0b::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
+                to bottom,
+                rgba(23, 23, 26, 0.25) 0%,
+                rgba(23, 23, 26, 0.39),
+                rgba(23, 23, 26, 0.33) 75%,
+                rgba(23, 23, 26, 0.38) 100%
+        )}.player-name.svelte-1r9up0b{text-shadow:rgba(255, 255, 255, 0.4) 0px 0px 10px;position:absolute;right:0px;left:0px;top:4rem;z-index:10}.stats.svelte-1r9up0b{position:absolute;right:0px;left:0px;z-index:10}.user.svelte-1r9up0b{height:25rem;width:15rem}.timer.svelte-1r9up0b{margin-bottom:0.35rem}.tooltip.svelte-1r9up0b::after{content:"";position:absolute;top:98%;right:20%;margin-left:-6px;border-width:6px;border-style:solid;border-color:#3d72e4 transparent transparent transparent}

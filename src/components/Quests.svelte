@@ -164,7 +164,7 @@
             waitingAd = undefined;
             waitingAdAccept = undefined;
             counter.set({ "refresh": true });
-            data.collected[type].push(...data.finished[type].splice(id, 1));
+            data.collected[type].push(...data.finished[type].splice(data.finished[type].findIndex(e => e.id === id), 1));
             data = data;
         }
     }

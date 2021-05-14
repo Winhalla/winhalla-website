@@ -115,6 +115,9 @@
             <td class="px-4 py-3">
                 SteamId
             </td>
+            <td class="px-4 py-3">
+                Email
+            </td>
 
         {/if}
     </tr>
@@ -223,6 +226,7 @@
                     on:click={()=>isVerifyingSteamId = {isDoing:true,steamId: user.steamId}}>
                     {user.steamId}
                 </td>
+                <td class="px-4 py-3">{user.email}</td>
             {/if}
         </tr>
         {#if user.isDetailsOpen}

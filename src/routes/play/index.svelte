@@ -126,7 +126,7 @@
 
         <div
             class="flex flex-col items-center lg:flex-wrap
-        lg:flex-row">
+        lg:flex-row xl:items-start">
 
             {#if gameModesError}
                 <div class="lg:w-40% z-50 content-center lg:mt-60 mt-25 pb-20">

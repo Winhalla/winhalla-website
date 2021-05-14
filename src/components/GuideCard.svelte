@@ -146,7 +146,7 @@
     </div>
 {:else}
     <div class="flex lg:block justify-center">
-        <button class="absolute fixed bottom-0  flex items-center  mx-24 py-3 focus:outline-none"
+        <button class="absolute fixed bottom-0  flex items-center  mx-24 md:mx-0 py-3 focus:outline-none"
                 in:fly={{ y: 100, duration: 400 }} out:fly|local={{ y: 100, duration: 900 }}
                 on:click={() => isCardVisible = true}>
 

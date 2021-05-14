@@ -492,7 +492,7 @@
                         <div class="relative">
                             {#if isToolTipVisible}
                                 <span
-                                    class="hidden lg:block tooltip absolute -left-16 bottom-14     px-6 py-2 bg-primary  rounded  text-left     flex items-center justify-center z-40"
+                                    class="hidden lg:block tooltip absolute -left-16 bottom-14 px-6 py-2 bg-primary rounded text-left flex items-center justify-center z-40"
                                     transition:fade>
                                     Quests
                                 </span>

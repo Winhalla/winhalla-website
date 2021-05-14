@@ -178,8 +178,8 @@
             {/if}
         </div>
 
-        <div class="overflow-x-scroll lg:overflow-auto pl-6 lg:pl-0 pb-20 lg:pb-8">
-            <table class="card px-4 /overflow-hidden mt-20">
+        <div class="overflow-x-scroll lg:overflow-auto pl-6 lg:pl-0 pb-20 lg:pb-8 lg:w-full">
+            <table class="card px-4 /overflow-hidden mt-20 lg:mx-auto">
                 <thead class="bg-primary ">
                 <tr>
                     <td class="px-6 py-3">

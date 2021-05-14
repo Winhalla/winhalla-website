@@ -1,7 +1,9 @@
 const purgecss = require("@fullhuman/postcss-purgecss")({
     content: ["./**/**/*.html", "./**/**/*.svelte"],
     options: {
-        safelist: ["text-primary","b-epic","from-primary", "from-epic", "from-green", "from-legendary", "to-epic", "to-green", "to-legendary", "to-primary"]
+        safelist: [
+            "text-epic", "border-epic",
+            "from-primary", "from-epic", "from-green", "from-legendary", "to-epic", "to-green", "to-legendary", "to-primary"]
     },
     whitelistPatterns: [/svelte-/],
 

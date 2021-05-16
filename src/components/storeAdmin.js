@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
 
-let config = writable({ refresh:true });
+let config = writable({test:"lol" });
 
 export { config };

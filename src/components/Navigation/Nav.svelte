@@ -7,7 +7,7 @@
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
     import { fly } from "svelte/transition";
-
+    import {config} from "../storeAdmin"
     import { apiUrl } from "../../utils/config";
     import { callApi } from "../../utils/api";
     import { goto, stores } from "@sapper/app";
@@ -26,8 +26,7 @@
 
     let user;
     let userCoins;
-
-    let firstLoad = true;
+    
     let offline;
     let loaded = false;
 
@@ -35,43 +34,35 @@
     let isEventBannerOpen = false;
     let currentMatch;
 
-    function calculateProperties(value) {
-        const tempUserData = value;
-        if (!tempUserData) return isUserLoggedIn = false;
-        if (tempUserData.offline) offline = true;
-        if (tempUserData instanceof Error) {
-            if (tempUserData.response) if (tempUserData.response.status === 503 || tempUserData.response.status === 502) goto("/status");
+    function calculateProperties(user1) {
+        console.log(user1)
+        if (!user1) return isUserLoggedIn = false;
+        if (user1.offline) offline = true;
+        if (user1 instanceof Error) {
+            if (user1.response) if (user1.response.status === 503 || user1.response.status === 502) goto("/status");
             return isUserLoggedIn = "network";
         }
-        console.log(tempUserData);
-        if (tempUserData.user) {
-            notificationsObj.notifications = tempUserData.user.notifications;
-            notificationsObj.inGame = tempUserData.user.inGame;
+        if (user1.user) {
+            notificationsObj.notifications = user1.user.notifications;
+            notificationsObj.inGame = user1.user.inGame;
             currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
-        user = tempUserData.steam;
+        user = user1.steam;
         if (user._json.steamid === "76561198417157310" || user._json.steamid === "76561198417157310") {
             isAdmin = true;
         }
-        userCoins = tempUserData.user.coins;
+        userCoins = user1.user.coins;
 
-        isUserLoggedIn = tempUserData.user
-            ? true
-            : tempUserData.steam
-                ? "steam"
-                : false;
+        isUserLoggedIn = !!user1.user
     }
 
     const resetNav = async value => {
         if (value.refresh === true) return;
         if (isAdmin && value.preview) return onMountFx(value.preview);
-        user = await value.content;
-        if (firstLoad === true) return (firstLoad = false);
-        calculateProperties(user);
+        calculateProperties(await value.content);
     };
 
-    const unsubscribe = counter.subscribe(resetNav);
-    onDestroy(unsubscribe);
+
 
     function handlePopupClose() {
         if (offline) {
@@ -90,6 +81,7 @@
     }
 
     async function onMountFx(adminData) {
+        counter.subscribe(resetNav);
         try {
             if (!adminData)
                 infos = await callApi("get", "/informations");
@@ -104,7 +96,6 @@
                 let { name, description, percentage } = infos.event;
                 let descParts = description.split("%%");
                 currEvent = { name, descParts, percentage };
-                console.log(descParts);
                 isEventBannerOpen = true;
                 if (isAdmin) {
                     notificationsObj.event = {
@@ -135,11 +126,8 @@
                 poll = "network err";
             }
         }, 1);
-        await user;
-        calculateProperties(user);
         loaded = true;
     }
-
     onMount(onMountFx);
 
 </script>

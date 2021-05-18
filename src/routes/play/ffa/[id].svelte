@@ -223,7 +223,7 @@
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
             if (exitStatus instanceof Error) throw exitStatus;
-            goto(`/play`);
+            goto(`/play?reloadNav=true`);
         } catch (e) {
             pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
             setTimeout(() => {

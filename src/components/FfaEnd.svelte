@@ -12,7 +12,7 @@
                 avatarURL: winnerInPlayers.avatarURL,
                 legends: winnerInPlayers.legends,
                 wins: winnerInPlayers.wins,
-                coinsEarned: e.coins,
+                coinsEarned: Math.floor(e.coins*10)/10,
                 multiplier: e.multiplier,
                 adMultiplier: e.multiplierDetails.ad / 100,
                 linkMultiplier: e.multiplierDetails.link,

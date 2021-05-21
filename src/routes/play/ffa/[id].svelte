@@ -223,7 +223,7 @@
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
             if (exitStatus instanceof Error) throw exitStatus;
-            goto(`/play`);
+            goto(`/play?reloadNav=true`);
         } catch (e) {
             pushError = e.response.data.message ? e.response.data.message : e.response.data ? e.response.data.toString() : e.toString();
             setTimeout(() => {
@@ -528,3 +528,4 @@
         <ErrorAlert message="An error occurred while watching the ad" pushError={adError} />
     {/if}
 </div>
+<div class="text-epic border-epic from-primary from-epic from-green from-legendary to-epic to-green to-legendary to-primary"></div>

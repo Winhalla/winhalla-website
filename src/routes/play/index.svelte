@@ -8,6 +8,7 @@
     import AdblockAlert from "../../components/AdblockAlert.svelte";
     import { goto } from "@sapper/app";
     import { apiUrl } from "../../utils/config";
+    import { counter } from "../../components/store";
 
     let quests;
     let error;
@@ -15,6 +16,9 @@
     let gameModes;
     let errorDetailsOpen = false;
     onMount(async () => {
+        if(new URLSearchParams(window.location.search).get("reloadNav")){
+            counter.set({refresh: true});
+        }
         gameModes = [
             {
                 name: "ffa",

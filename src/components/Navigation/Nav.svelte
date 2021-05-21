@@ -51,7 +51,7 @@
         if (user._json.steamid === "76561198417157310" || user._json.steamid === "76561198417157310") {
             isAdmin = true;
         }
-        userCoins = user1.user.coins;
+        userCoins = Math.floor(user1.user.coins*10)/10;
 
         isUserLoggedIn = !!user1.user
     }

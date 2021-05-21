@@ -528,3 +528,4 @@
         <ErrorAlert message="An error occurred while watching the ad" pushError={adError} />
     {/if}
 </div>
+<div class="text-epic border-epic from-primary from-epic from-green from-legendary to-epic to-green to-legendary to-primary"></div>

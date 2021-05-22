@@ -242,7 +242,7 @@
                                         class="tooltip absolute -left-20 bottom-14     px-4 py-2 bg-black  rounded  text-left h-33 w-48     flex items-center justify-center z-40">
                                         <ul>
 
-                                            <li><b>BASE REWARD:</b>  {winner.coinsEarned ? Math.round(((winner.coinsEarned / winner.adMultiplier) * (1 - (winner.linkMultiplier / 100)) * (1 - (winner.eventMultiplier / 100))) * 10) / 10 : 0 }</li>
+                                            <li><b>BASE REWARD:</b>  {winner.coinsEarned ? (Math.round(((winner.coinsEarned / winner.adMultiplier) * (1 - (winner.linkMultiplier / 100)) * (1 - (winner.eventMultiplier / 100))) * 10) / 10 ): 0 }</li>
                                             <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier + 1}</li>
 
                                             <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">FRIENDS INVITED:</b> +{winner.linkMultiplier}

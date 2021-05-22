@@ -84,22 +84,30 @@
         }
 
         calculateTime();
-        setInterval(calculateTime, 1000);
+        return setInterval(calculateTime, 1000);
     }
 
-    try {
-        for (let i = 0; i < 2; i++) {
-            let d = i === 0 ? data.lastDaily : data.lastWeekly;
-            const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;
-            if (endsIn < 1) {
-                countDown[i] = "";
-            } else {
-                startTimer(endsIn, i);
+    let countDownIds = [];
+
+    function initTimers() {
+        countDownIds.forEach(e => {
+            clearInterval(e);
+        });
+        try {
+            for (let i = 0; i < 2; i++) {
+                let d = i === 0 ? data.lastDaily : data.lastWeekly;
+                const endsIn = ((i === 0 ? d + 3600000 * 24 : d + 3600000 * 168) - Date.now()) / 1000;
+                if (endsIn < 1) {
+                    countDown[i] = "";
+                } else {
+                    countDownIds.push(startTimer(endsIn, i));
+                }
             }
+        } catch (e) {
+            error = e;
         }
-    } catch (e) {
-        error = e;
     }
+    initTimers()
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -136,12 +144,11 @@
     async function handleRefresh() {
         try {
             isRefreshingQuests = true;
-
             const refreshedData = await callApi("get", "solo");
             console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
-
+            initTimers()
             isRefreshingQuests = false;
         } catch (e) {
             isRefreshingQuests = false;
@@ -515,7 +522,8 @@
                     0-12.356 5.78-11.981 12.654z" />
             </svg>
             <p class="text-lg ml-3 lg:ml-2 tip-text text-light">
-                If the quests doesn't refresh, don't worry, come back later to collect them: Brawlhalla's API takes time to refresh
+                If the quests doesn't refresh, don't worry, come back later to collect them: Brawlhalla's API takes time
+                to refresh
             </p>
         </div>
     </div>

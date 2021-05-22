@@ -515,8 +515,7 @@
                     0-12.356 5.78-11.981 12.654z" />
             </svg>
             <p class="text-lg ml-3 lg:ml-2 tip-text text-light">
-                Daily and Weekly quests data may take up to 30 minutes to
-                refresh
+                If the quests doesn't refresh, don't worry, come back later to collect them: Brawlhalla's API takes time to refresh
             </p>
         </div>
     </div>

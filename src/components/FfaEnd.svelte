@@ -12,8 +12,9 @@
                 avatarURL: winnerInPlayers.avatarURL,
                 legends: winnerInPlayers.legends,
                 wins: winnerInPlayers.wins,
-                coinsEarned: Math.floor(e.coins*10)/10,
+                coinsEarned: Math.round(e.coins*10)/10,
                 multiplier: e.multiplier,
+                baseMultiplier: e.multiplierDetails.base,
                 adMultiplier: e.multiplierDetails.ad / 100,
                 linkMultiplier: e.multiplierDetails.link,
                 eventMultiplier: e.multiplierDetails.event
@@ -239,10 +240,10 @@
                                     </div>
                                     {#if winner.areDetailsShown === true}
                                     <span
-                                        class="tooltip absolute -left-20 bottom-14     px-4 py-2 bg-black  rounded  text-left h-33 w-48     flex items-center justify-center z-40">
+                                        class="tooltip absolute -left-20 bottom-14     px-4 py-2 bg-black  rounded  text-left h-33 w-52     flex items-center justify-center z-40">
                                         <ul>
 
-                                            <li><b>BASE REWARD:</b>  {winner.coinsEarned ? (Math.round(((winner.coinsEarned / winner.adMultiplier) * (1 - (winner.linkMultiplier / 100)) * (1 - (winner.eventMultiplier / 100))) * 10) / 10 ): 0 }</li>
+                                            <li><b>BASE REWARD:</b>  {winner.baseMultiplier} </li>
                                             <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier + 1}</li>
 
                                             <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">FRIENDS INVITED:</b> +{winner.linkMultiplier}

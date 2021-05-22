@@ -62,10 +62,11 @@
     let isSpectator;
     let isLoadingOpen = true;
     let isToolTipVisible = false;
-
+    let timerId;
     let gradientList;
     onMount(() => {
         pages = page.subscribe(async value => {
+            if(timerId) clearInterval(timerId)
             isSpectator = value.query.spectator === "true";
             user = undefined;
             match = undefined;
@@ -81,7 +82,6 @@
             let unsub = counter.subscribe((user1) => {
                 user = user1.content;
             });
-
             unsub();
 
 
@@ -184,7 +184,7 @@
             hours,
             minutes,
             seconds;
-        setInterval(function() {
+        timerId = setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));

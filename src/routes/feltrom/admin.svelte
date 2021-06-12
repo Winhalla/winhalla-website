@@ -16,7 +16,7 @@
     let isAuthorizedUser = false;
     let isLoggedIn = false;
     let otp = "";
-    let pwd = "a";
+    let pwd = "";
     let users;
     let activePanel = "stats";
     let newConfig;
@@ -71,6 +71,7 @@
     }
 
     async function login(refresh) {
+        if (!pwd) return
         goldEvent = ["", "", "", ""];
         isLoggedIn = true;
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
@@ -90,7 +91,7 @@
 
 
     function logout() {
-        callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`);
+        callApi("post", `/feltrom/logout?otp=${otp}&pwd=${pwd}`);
         goto("/");
     }
 
@@ -141,16 +142,16 @@
         cursor: not-allowed;
     }
 
-    /*.info {
+    .info {
         @apply text-lg mt-1;
-    }*/
+    }
 
     .input-header {
         @apply text-primary text-3xl;
         margin-bottom: 0.35rem;
     }
 
-    /*.check {
+    .check {
         margin-top: 0.15rem;
         margin-right: 0.4rem;
     }
@@ -173,7 +174,7 @@
         .h1 {
             font-size: 4em;
         }
-    }*/
+    }
 </style>
 <svelte:head>
     {#if isAuthorizedUser}

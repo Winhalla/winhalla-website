@@ -81,7 +81,7 @@
         padding-bottom: 0.75rem;
     }
 </style>
-<button class="button button-brand w-38" disabled
+<button class="button button-brand w-38" disabled class:lg:mr-8={page === "FfaWatchAd"}
         class:FfaWatchAd={page === "FfaWatchAd"}>Ads will be available soon!
 </button>
 <!--

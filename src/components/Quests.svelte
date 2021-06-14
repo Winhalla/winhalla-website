@@ -521,7 +521,7 @@
                     11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884
                     0-12.356 5.78-11.981 12.654z" />
             </svg>
-            <p class="text-lg ml-3 lg:ml-2 tip-text text-light">
+            <p class="text-lg ml-3 lg:ml-2 tip-text text-light  max-w-lg">
                 If the quests doesn't refresh, don't worry, come back later to collect them: Brawlhalla's API takes time
                 to refresh
             </p>

@@ -8,6 +8,11 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 let throttler = [];
 const app = express() // You can also use Express
+    .use((req,res,next)=>{
+        if (req.subdomains[0] === "www") return res.redirect('https://winhalla.app'+req.path)
+        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
+        next()
+    })
     .use((req, res, next) => {
         if (req.path.includes("assets") || req.path.includes("css")) return next();
         let i = throttler.findIndex(e => e.ip == req.ip);
@@ -26,10 +31,6 @@ const app = express() // You can also use Express
             throttler.push({ ip: req.ip, requests: 1, timestamp: Date.now() });
             next();
         }
-    })
-    .use((req,res,next)=>{
-        if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
-        next()
     })
     .use(
         compression({ threshold: 0 }),

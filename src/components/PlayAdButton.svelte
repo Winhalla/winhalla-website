@@ -1,5 +1,5 @@
 <script>
-    import { counter } from "./store";
+    /*import { counter } from "./store";
 
     export let waitingAdAccept;
     export let socket;
@@ -7,9 +7,9 @@
     export let id;
     export let adError;
     export let info;
-    export let finished;
+    export let finished;*/
     export let page;
-    export let goal = "earnMoreFFA";
+    /*export let goal = "earnMoreFFA";
     export let collect;
     export let waitingAd;
     export let data;
@@ -58,7 +58,7 @@
             }, 5000);
 
         }
-    });
+    });*/
 
 </script>
 
@@ -81,7 +81,10 @@
         padding-bottom: 0.75rem;
     }
 </style>
-
+<button class="button button-brand w-38" disabled class:lg:mr-8={page === "FfaWatchAd"}
+        class:FfaWatchAd={page === "FfaWatchAd"}>Ads will be available soon!
+</button>
+<!--
 {#if goal === "earnMoreFFA"}
     <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
                             lg:mt-0 mb-5
@@ -151,3 +154,4 @@
         }
     </script>
 </div>
+-->

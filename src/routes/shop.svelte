@@ -236,9 +236,12 @@
             }
         }, 1);
     };
-    const handleDescriptionToggle = (seasonPack) => {
+    const handleDescriptionToggle = (seasonPack, type) => {
         seasonPack.isDescriptionToggled = !seasonPack.isDescriptionToggled;
-        seasonPacks = [...seasonPacks];
+        if (type === "featured")
+            featuredItem = featuredItem;
+        else
+            seasonPacks = [...seasonPacks];
     };
 
     async function buyItem(id, name, step) {
@@ -355,15 +358,39 @@
                                 src="assets/ShopItems/{featuredItem.name}.jpg"
                                 alt={featuredItem.name} />
                             <div
-                                class="absolute bottom-0 z-10 px-5 md:px-10 pb-3 w-full">
+                                class="absolute bottom-0 z-10 px-5 md:pr-10 pb-3 w-full">
                                 <div
-                                    class="md:flex justify-between w-full md:items-center">
-                                    <p class="text-accent text-6xl">
+                                    class="justify-between w-full md:items-center">
+                                    <p class="text-accent text-5xl lg:text-6xl" style="line-height:1" class:hidden={featuredItem.isDescriptionToggled}>
                                         {featuredItem.name
                                             .toLowerCase()
                                             .replace(/\-/g, ' ')}
                                     </p>
-                                    <div class="flex justify-end md:block pb-1">
+                                    <p
+                                        class:hidden={!featuredItem.isDescriptionToggled}
+                                        class="block xl:mt-0">
+                                        {featuredItem.description}a
+                                    </p>
+
+                                    <div
+                                        class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                        <div class="-mb-2 md:mb-0">
+                                            <div>
+                                                <p
+                                                    class="hidden text-3xl lg:block mr-1 -mb-2">
+                                                    {featuredItem.description}
+                                                </p>
+                                                <button
+                                                    class="focus:outline-none xl:hidden -mb-10"
+                                                    on:click={() => handleDescriptionToggle(featuredItem,"featured")}>
+                                                    <p
+                                                        class=" text-light text-lg underline leading-none">
+                                                        {featuredItem.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                    </p>
+                                                </button>
+                                            </div>
+
+                                        </div>
                                         <button
                                             disabled={featuredItem.unBuyable}
                                             on:click={() => buyItem(featuredItem.id, featuredItem.name)}
@@ -382,124 +409,124 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="pt-8 lg:pt-16">
-                        <h2 class="text-6xl text-center lg:text-left">
-                            Season packs
-                        </h2>
-                        <div
-                            class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
-                            {#if seasonPacks.forEach}
-                                {#each seasonPacks as seasonPack, i}
-                                    <div
-                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
-                                        <img
-                                            class="w-full h-full block "
-                                            src="assets/ShopItems/{seasonPack.name}.jpg"
-                                            alt={seasonPack.name} />
+                        <div class="pt-8 lg:pt-16">
+                            <h2 class="text-6xl text-center lg:text-left">
+                                Season packs
+                            </h2>
+                            <div
+                                class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
+                                {#if seasonPacks.forEach}
+                                    {#each seasonPacks as seasonPack, i}
                                         <div
-                                            class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
-                                            <p
-                                                class:hidden={seasonPack.isDescriptionToggled}
-                                                class:-mb-1={!seasonPack.isDescriptionToggled}
-                                                class="text-accent text-5xl md:mb-0 md:block">
-                                                {seasonPack.name
-                                                    .toLowerCase()
-                                                    .replace(/\-/g, ' ')}
-                                            </p>
-                                            <p
-                                                class:hidden={!seasonPack.isDescriptionToggled}
-                                                class="block xl:mt-0">
-                                                {seasonPack.description}
-                                            </p>
-
+                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
+                                            <img
+                                                class="w-full h-full block "
+                                                src="assets/ShopItems/{seasonPack.name}.jpg"
+                                                alt={seasonPack.name} />
                                             <div
-                                                class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
-                                                <div class="-mb-2 md:mb-0">
-                                                    <div>
-                                                        <p
-                                                            class="hidden xl:block mr-1 -mb-2">
-                                                            {seasonPack.description}
-                                                        </p>
-                                                        <button
-                                                            class="focus:outline-none xl:hidden -mb-10"
-                                                            on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                                                <p
+                                                    class:hidden={seasonPack.isDescriptionToggled}
+                                                    class:-mb-1={!seasonPack.isDescriptionToggled}
+                                                    class="text-accent text-5xl md:mb-0 md:block">
+                                                    {seasonPack.name
+                                                        .toLowerCase()
+                                                        .replace(/\-/g, ' ')}
+                                                </p>
+                                                <p
+                                                    class:hidden={!seasonPack.isDescriptionToggled}
+                                                    class="block xl:mt-0">
+                                                    {seasonPack.description}
+                                                </p>
+
+                                                <div
+                                                    class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                                    <div class="-mb-2 md:mb-0">
+                                                        <div>
                                                             <p
-                                                                class=" text-light text-lg underline leading-none">
-                                                                {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                                class="hidden lg:block mr-1 -mb-2">
+                                                                {seasonPack.description}
                                                             </p>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    disabled={seasonPack.unBuyable}
-                                                    on:click={() => buyItem(seasonPack.id,seasonPack.name)}
-                                                    class="px-4 py-1 bg-primary rounded">
-                                                    <div class="flex  items-center  text-2xl">
-                                                        <b
-                                                            class="mr-2 font-normal"
-                                                            style="padding-top: 0.12rem">{seasonPack.cost}</b>
-                                                        <div class="w-8 mt-1 text-font"
-                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                            <CoinIcon />
+                                                            <button
+                                                                class="focus:outline-none xl:hidden -mb-10"
+                                                                on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                                <p
+                                                                    class=" text-light text-lg underline leading-none">
+                                                                    {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                                </p>
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                </button>
+                                                    <button
+                                                        disabled={seasonPack.unBuyable}
+                                                        on:click={() => buyItem(seasonPack.id,seasonPack.name)}
+                                                        class="px-4 py-1 bg-primary rounded">
+                                                        <div class="flex  items-center  text-2xl">
+                                                            <b
+                                                                class="mr-2 font-normal"
+                                                                style="padding-top: 0.12rem">{seasonPack.cost}</b>
+                                                            <div class="w-8 mt-1 text-font"
+                                                                 style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                                <CoinIcon />
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {/each}
-                            {/if}
+                                    {/each}
+                                {/if}
+                            </div>
                         </div>
-                    </div>
-                    <div class="pt-8 lg:pt-20 lg:pb-6">
-                        <h2 class="text-6xl text-center lg:text-left">Packs</h2>
-                        <div
-                            class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
-                            {#if packs.forEach}
-                                {#each packs as pack}
-                                    <div
-                                        class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
-                                        <img
-                                            class="w-full h-full block object-cover"
-                                            src="assets/ShopItems/{pack.name}.jpg"
-                                            alt={pack.name} />
+                        <div class="pt-8 lg:pt-20 lg:pb-6">
+                            <h2 class="text-6xl text-center lg:text-left">Packs</h2>
+                            <div
+                                class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
+                                {#if packs.forEach}
+                                    {#each packs as pack}
                                         <div
-                                            class="absolute bottom-0 z-10 px-5 pb-3 w-full">
-                                            <p class="text-accent text-5xl">
-                                                {pack.name
-                                                    .toLowerCase()
-                                                    .replace(/\-/g, ' ')}
-                                            </p>
-
+                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 xl:w-shopItem shop-item">
+                                            <img
+                                                class="w-full h-full block object-cover"
+                                                src="assets/ShopItems/{pack.name}.jpg"
+                                                alt={pack.name} />
                                             <div
-                                                class="flex justify-between w-full items-end pb-1">
-                                                <div>
+                                                class="absolute bottom-0 z-10 px-5 pb-3 w-full">
+                                                <p class="text-accent text-5xl">
+                                                    {pack.name
+                                                        .toLowerCase()
+                                                        .replace(/\-/g, ' ')}
+                                                </p>
+
+                                                <div
+                                                    class="flex justify-between w-full items-end pb-1">
                                                     <div>
-                                                        <p class="block mr-1 -mb-2">
-                                                            {pack.description}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    disabled={pack.unBuyable}
-                                                    on:click={() => buyItem(pack.id,pack.name)}
-                                                    class="px-4 py-1 bg-primary rounded">
-                                                    <div class="flex  items-center  text-2xl">
-                                                        <b
-                                                            class="mr-2 font-normal"
-                                                            style="padding-top: 0.12rem">{pack.cost}</b>
-                                                        <div class="w-8 mt-1 text-font"
-                                                             style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                            <CoinIcon />
+                                                        <div>
+                                                            <p class="block mr-1 -mb-2">
+                                                                {pack.description}
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                </button>
+                                                    <button
+                                                        disabled={pack.unBuyable}
+                                                        on:click={() => buyItem(pack.id,pack.name)}
+                                                        class="px-4 py-1 bg-primary rounded">
+                                                        <div class="flex  items-center  text-2xl">
+                                                            <b
+                                                                class="mr-2 font-normal"
+                                                                style="padding-top: 0.12rem">{pack.cost}</b>
+                                                            <div class="w-8 mt-1 text-font"
+                                                                 style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                                <CoinIcon />
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {/each}
-                            {/if}
+                                    {/each}
+                                {/if}
+                            </div>
                         </div>
                     </div>
                 </div>

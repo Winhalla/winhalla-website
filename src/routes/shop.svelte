@@ -346,7 +346,7 @@
                 <div class="mt-7 lg:mt-12 lg:ml-24">
                     <div class="xl:w-71/100 2xl:w-62/100">
                         <h1 class="text-6xl text-center lg:text-left">
-                            Battle pass
+                            Featured item
                         </h1>
                         <div
                             class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item      mask">
@@ -362,6 +362,11 @@
                                         {featuredItem.name
                                             .toLowerCase()
                                             .replace(/\-/g, ' ')}
+                                    </p>
+                                    <p
+                                        class:hidden={!featuredItem.isDescriptionToggled}
+                                        class="block xl:mt-0">
+                                        {featuredItem.description}
                                     </p>
                                     <div class="flex justify-end md:block pb-1">
                                         <button

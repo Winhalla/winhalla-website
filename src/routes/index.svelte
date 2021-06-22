@@ -1,6 +1,15 @@
 <script>
     import { apiUrl } from "../utils/config";
     import { fly } from "svelte/transition";
+    import { onMount } from "svelte";
+    import { callApi } from "../utils/api";
+    import cookie from "cookie";
+
+    onMount(async () => {
+        const urlParams = new URLSearchParams(location.search);
+        if (urlParams.get("source"))
+            document.cookie = cookie.serialize("source", urlParams.get("source"), { maxAge: 15552000, sameSite: "lax", path: "/" });
+    });
 </script>
 
 <style>

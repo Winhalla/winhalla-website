@@ -43,10 +43,11 @@
 
     async function createAccount() {
         waitingTermsAcceptations = false;
-        let cookies = cookie.parse(document.cookie);
-        generatedLink = await callApi("post", "/auth/createAccount?linkId=" + cookies.affiliateLinkId);
+        let {source,affiliateLinkId} = cookie.parse(document.cookie);
+        generatedLink = await callApi("post", `/auth/createAccount?linkId=${affiliateLinkId}&source=${source}`);
         if (generatedLink instanceof Error) return { error, isVisible } = { error: true, isVisible: true };
         document.cookie = cookie.serialize("affiliateLinkId", 0, { maxAge: 1 });
+        document.cookie = cookie.serialize("source", 0, { maxAge: 1 });
         isVisible = true;
         generatedLink = `https://winhalla.app/link/${generatedLink}`;
         counter.set({ refresh: true });

@@ -16,8 +16,8 @@
     let gameModes;
     let errorDetailsOpen = false;
     onMount(async () => {
-        if(new URLSearchParams(window.location.search).get("reloadNav")){
-            counter.set({refresh: true});
+        if (new URLSearchParams(window.location.search).get("reloadNav")) {
+            counter.set({ refresh: true });
         }
         gameModes = [
             {
@@ -48,7 +48,7 @@
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.value;
-                console.log(gameModes,gameModesStatus)
+                console.log(gameModes, gameModesStatus);
                 Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
                         g => g.name === gameModeName.toLowerCase()
@@ -72,7 +72,7 @@
             }
         } catch
             (err) {
-            console.log(err)
+            console.log(err);
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                     error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -96,15 +96,21 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
+<<<<<<< HEAD
     <!--Video ads-->
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 
     <link rel="canonical" href="https://winhalla.app/play" />
 
+=======
+    <script
+        src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+        id="purpleads-client"></script>
+>>>>>>> master
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
-    <div >
-        <Loading duration={500}/>
+    <div>
+        <Loading duration={500} />
     </div>
 {/if}
 {#if gameModesError && error}
@@ -170,7 +176,6 @@
             </div>
         </div>
         <GuideCard page="play" />
-
     </div>
 
 {/if}

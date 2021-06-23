@@ -369,14 +369,8 @@
                                     <p
                                         class:hidden={!featuredItem.isDescriptionToggled}
                                         class="block xl:mt-0">
-<<<<<<< HEAD
                                         {featuredItem.description}
                                     </p>
-                                    <div class="flex justify-end md:block pb-1">
-=======
-                                        {featuredItem.description}a
-                                    </p>
-
                                     <div
                                         class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
                                         <div class="-mb-2 md:mb-0">
@@ -394,9 +388,7 @@
                                                     </p>
                                                 </button>
                                             </div>
-
                                         </div>
->>>>>>> master
                                         <button
                                             disabled={featuredItem.unBuyable}
                                             on:click={() => buyItem(featuredItem.id, featuredItem.name)}

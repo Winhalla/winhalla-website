@@ -176,9 +176,6 @@
             match.players.findIndex(p => p.steamId === user.id),
             1
         );
-        for (let i; i < 8; i++) {
-            if (!players[i]) players[i] = "ad";
-        }
     };
 
     //Function that starts a timer with a date, and refreshes it every second
@@ -418,50 +415,40 @@
                         {#if players}
                             <div
                                 class="flex flex-col justify-center lg:justify-start
-                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0     mb-12">
+                            lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12">
                                 {#each players as player, i}
-                                    {#if player === "ad"}
-                                        <div class="card flex justify-center items-center"
-                                             style="width:240px;height: 240px">
-                                            <div>
-                                                <script
-                                                    src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                                    data-pa-tag async></script>
-                                            </div>
-                                        </div>
-                                    {:else}
-                                        <div class="ffa-player card lg:mr-12 mb-8">
-                                            <div
-                                                class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
-                                            ></div>
-                                            <div
-                                                class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
-                                            <img
-                                                class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-                                                src="{player.avatarURL}" alt="">
+                                    <div class="ffa-player card lg:mr-12 mb-8">
+                                        <div
+                                            class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                        ></div>
+                                        <div
+                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
+                                        <img
+                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                            src="{player.avatarURL}" alt="">
 
 
-                                            <p class="player-name text-3xl">
-                                                {player.username}
-                                            </p>
-                                            <div
-                                                class="stats text-xl bottom-5
+                                        <p class="player-name text-3xl">
+                                            {player.username}
+                                        </p>
+                                        <div
+                                            class="stats text-xl bottom-5
                                         text-ultra-light">
-                                                <p>
-                                                    Games played:
-                                                    <b>{player.gamesPlayed}</b>
-                                                    /8
-                                                </p>
-                                            </div>
+                                            <p>
+                                                Games played:
+                                                <b>{player.gamesPlayed}</b>
+                                                /8
+                                            </p>
                                         </div>
-                                    {/if}
-                                {/each}
-                                <div class="card flex justify-center items-center" style="width:240px;height: 240px">
-                                    <div>
-                                        <script
-                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                            data-pa-tag async></script>
                                     </div>
+                                {/each}
+                                <div class="flex justify-center items-center flex-col">
+                                    {#if players.length < 8}
+                                        <p class="text-4xl mx-6 my-4">Waiting for players</p>
+                                    {/if}
+                                    <script
+                                        src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                        data-pa-tag async></script>
                                 </div>
                             </div>
                         {/if}
@@ -482,7 +469,7 @@
 
                         <!--TRANSPARENT PART-->
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
-                             out:fade={{duration: 350}}></div>
+                             transition:fade={{duration: 350}}></div>
                         <div
                             class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full   lg:border-l-2 border-primary flex justify-center items-center"
                             in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
@@ -490,9 +477,11 @@
                                 <button
                                     class="fixed lg:static z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"
                                     on:click={() => handleQuestsPanel()}>
-                                    <svg class="hidden lg:block w-6 fill-current ml-8 text-font" viewBox="0 0 24 24"
+                                    <svg class="hidden lg:block w-6 fill-current ml-8 text-font"
+                                         viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
-                                        <path d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                                        <path
+                                            d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
                                     </svg>
                                     <svg
                                         class="lg:hidden w-8 h-8 fill-current text-mid-light"

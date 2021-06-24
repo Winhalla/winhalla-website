@@ -82,6 +82,11 @@
     .cards {
         height: calc(100% + 5rem);
     }
+
+    button:disabled {
+        @apply bg-disabled;
+        cursor: not-allowed;
+    }
 </style>
 
 <svelte:head>
@@ -268,7 +273,7 @@
                             on:click={toggleRegisterPopup}>
                         Cancel
                     </button>
-                    <button class="button ml-5 " class:button-brand={valid}
+                    <button class="button ml-5" class:button-brand={valid}
                             on:click={register}
                             disabled={!valid}>
                         Pre-register

@@ -168,7 +168,7 @@
                     </a>
                 </div>
                 <div>
-                    <button class="button button-brand mr-4">Pre-register now</button>
+                    <a href="/#pre-register" class="button button-brand mr-4">Pre-register now</a>
                 </div>
 
             </div>

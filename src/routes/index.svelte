@@ -125,8 +125,9 @@
             </video>
         </div>
 
-        <div
-            class="tip absolute left-0 right-0 bottom-20 text-center hidden
+        <div id="pre-register"
+
+             class="tip absolute left-0 right-0 bottom-20 text-center hidden
             lg:block">
             <p class="text-2xl">Learn more</p>
             <svg

@@ -714,7 +714,7 @@
                         Cancel
                     </button>
                     <button class="button ml-5 w-32" class:button-brand={isBuying.valid}
-                            on:click={buyItem(isBuying.id,isBuying.name,1)}
+                            on:click={()=>buyItem(isBuying.id,isBuying.name,1)}
                             disabled={!isBuying.valid}>
                         Buy
                     </button>

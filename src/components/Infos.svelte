@@ -1,6 +1,5 @@
 <script>
     import {fly} from "svelte/transition"
-
     export let pushError;
     export let message;
 </script>

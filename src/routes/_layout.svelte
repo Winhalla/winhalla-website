@@ -1,6 +1,5 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
-    import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
@@ -112,18 +111,13 @@
 <svelte:window bind:scrollY={scrollY} />
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
     <CookiePopup />
-    <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <main class="text-font text-default min-h-screen h-full relative">
-        <!--Main-->
-
-
+    <div class="text-font text-default">
         <slot class="flex-grow bg-background block-grow" />
-        <!--<GameModeCards page={"play"}/>-->
-    </main>
+    </div>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
         <Poll/>
     </div>-->

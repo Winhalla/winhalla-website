@@ -142,7 +142,7 @@
     </div>
     <div class="pt-14 lg:pt-24">
         <div
-        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+            class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
             <div class="pb-18 lg:pb-0">
                 <div
@@ -293,11 +293,6 @@
     </div>
 {/if}
 {#if info}
-<<<<<<< HEAD
-<Infos pushError="We will keep you in touch!" message="Successfully pre-registered!" />
-{/if}
-<div hidden class="button-brand border-legendary"></div>
-=======
+    <div hidden class="button-brand border-legendary"></div>
     <Infos pushError="We will keep you in touch!" message="Successfully pre-registered!" />
 {/if}
->>>>>>> hype

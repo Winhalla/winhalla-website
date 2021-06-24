@@ -139,12 +139,12 @@
         <div>
             {#if packs}
                 <div class="mt-7 lg:mt-12 lg:ml-24">
-                    <div class="xl:w-71/100 2xl:w-62/100">
+                    <div>
                         <h1 class="text-6xl text-center lg:text-left">
                             Featured item
                         </h1>
                         <div
-                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item      mask">
+                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                             <img
                                 class="w-full h-full block object-cover"
                                 src="assets/ShopItems/{featuredItem.name}.jpg"
@@ -162,8 +162,9 @@
                                     <p
                                         class:hidden={!featuredItem.isDescriptionToggled}
                                         class="block xl:mt-0">
-                                        {featuredItem.description}
+                                        {featuredItem.description}a
                                     </p>
+
                                     <div
                                         class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
                                         <div class="-mb-2 md:mb-0">
@@ -181,6 +182,7 @@
                                                     </p>
                                                 </button>
                                             </div>
+
                                         </div>
                                         <button
                                             disabled

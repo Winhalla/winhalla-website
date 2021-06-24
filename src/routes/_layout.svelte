@@ -104,7 +104,6 @@
 <svelte:window bind:scrollY={scrollY} />
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
     <CookiePopup />
-    <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}

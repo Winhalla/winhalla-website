@@ -29,8 +29,8 @@
         user = await user
         linkConfig = await linkConfig
         if (!user || (user.user && !isVisible)) {
-            console.log("lol");
-            return goto("/play");
+            isVisible = true
+            generatedLink = `http://localhost:3000/link/${user.user.linkId}`;
         }
         if (!user.user) {
             waitingTermsAcceptations = true;
@@ -192,15 +192,15 @@
                             class="text-background  bg-font py-4 px-3 mt-14 flex items-center rounded">
                             <div id="link" class="flex leading-none focus:outline-none text-lg lg:text-default focus:border-none"
                                  style="font-family:'Open Sans', sans-serif"><p>{generatedLink}</p>
-                                <div class="ml-2 w-5 h-5 cursor-pointer hover:text-gray-500">
+                                <div class="ml-2 h-5 cursor-pointer hover:text-gray-500 flex" class:w-5={!hasShareFunction} class:w-12={hasShareFunction}>
                                     {#if hasShareFunction}
-                                        <svg viewBox="0 0 24 24" on:click={share} class="w-5 h-5"
+                                        <svg viewBox="0 0 24 24" on:click={share} class="w-5 h-5" class:mr-1={hasShareFunction}
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="m20.237 15.638c-.001 0-.002 0-.003 0-1.192 0-2.263.515-3.004 1.334l-.003.004-8.948-4.348c0-.167.084-.418.084-.669.002-.029.003-.062.003-.096 0-.176-.032-.344-.09-.499l.003.01 8.948-4.348c.744.823 1.815 1.338 3.007 1.338h.004c2.309 0 4.181-1.872 4.181-4.181s-1.872-4.181-4.181-4.181-4.181 1.872-4.181 4.181c-.002.029-.003.062-.003.096 0 .176.032.344.09.499l-.003-.01-8.948 4.348c-.744-.823-1.815-1.338-3.007-1.338-.001 0-.002 0-.004 0-2.309 0-4.181 1.872-4.181 4.181s1.872 4.181 4.181 4.181h.003c1.192 0 2.263-.515 3.004-1.334l.003-.004 8.948 4.348c0 .167-.084.418-.084.669 0 2.309 1.872 4.181 4.181 4.181s4.181-1.872 4.181-4.181c.001-.027.001-.06.001-.092 0-2.259-1.831-4.09-4.09-4.09-.032 0-.065 0-.097.001z" />
                                         </svg>
-                                    {:else}
-                                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"
+                                    {/if}
+                                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" class:ml-1={hasShareFunction}
                                              on:click={copyText}
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -210,14 +210,13 @@
                                             <path
                                                 d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" />
                                         </svg>
-                                    {/if}
 
                                 </div>
                             </div>
                             {#if toolTipOpen}
                                 <div class="relative">
                                     <span
-                                        class="tooltip absolute px-6 py-2 bg-primary hidden md:block rounded  text-left -left-20 bottom-5 flex items-center justify-center z-40"
+                                        class="tooltip absolute px-6 py-2 bg-primary hidden md:block rounded text-font  text-left -left-20 bottom-5 flex items-center justify-center z-40"
                                         transition:fade>
                                             Copied!
                                     </span>

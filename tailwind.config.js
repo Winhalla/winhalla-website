@@ -154,8 +154,8 @@ module.exports = {
                 "9xl": "7rem",
                 logo: "1.6rem",
                 default: "1.4rem"
-
             },
+
             colors: {
                 background: "#17171a",
                 variant: "#1b1b27",
@@ -215,7 +215,7 @@ module.exports = {
                 "1/2": "50%",
                 "45%": "45%"
             }
-        }
+        },
     },
     variants: {},
     plugins: [require("tailwindcss-textshadow")]

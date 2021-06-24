@@ -283,7 +283,7 @@
                     </button>
                     <button class="button ml-5" class:button-brand={valid}
                             on:click={register}
-                            disabled={valid === false}>
+                            disabled={valid}>
                         Pre-register
                     </button>
                 </div>

@@ -54,6 +54,30 @@
         position: relative;
     }
 
+    @media (min-width: 1536px) {
+        .\32xl\:w-60\% {
+            width: 60%;
+        }
+    }
+
+    @media (min-width: 1536px) {
+        .\32xl\:h-80\% {
+            height: 80%;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .xl\:w-70\% {
+            width: 70%;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .xl\:h-85\% {
+            height: 85%;
+        }
+    }
+
     .shop-item::after {
         position: absolute;
         content: "";
@@ -407,3 +431,4 @@
         </div>
     </div>
 {/if}
+<div class="\32xl\:w-60\% \32xl\:h-80\% xl\:w-70\% xl\:h-85\%" hidden></div>

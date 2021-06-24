@@ -1,6 +1,5 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
-    import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
@@ -94,11 +93,6 @@
 
 <svelte:head>
 
-    <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
-    <!--Adsense-->
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -108,13 +102,9 @@
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <main class="text-font text-default min-h-screen h-full relative">
-        <!--Main-->
-
-
+    <div class="text-font text-default">
         <slot class="flex-grow bg-background block-grow" />
-        <!--<GameModeCards page={"play"}/>-->
-    </main>
+    </div>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
         <Poll/>
     </div>-->

@@ -91,7 +91,7 @@
 </style>
 
 <svelte:head>
-    <title>Shop | Winhalla</title>
+    <title>Shop | Winhalla - Play Brawlhalla, Earn Rewards</title>
     <meta
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free Mammoth coins,

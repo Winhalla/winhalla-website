@@ -25,7 +25,7 @@
 
     async function register() {
         toggleRegisterPopup();
-        await callApi("post", `/preRegistration?email=${email}`);
+        if((await callApi("post", `/preRegistration?email=${email}`)) instanceof Error) return
         info = true;
         setTimeout(() => {
             info = false;
@@ -284,7 +284,7 @@
                     </button>
                     <button class="button ml-5" class:button-brand={valid}
                             on:click={register}
-                            disabled={valid}>
+                            disabled={!valid}>
                         Pre-register
                     </button>
                 </div>

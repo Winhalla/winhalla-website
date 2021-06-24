@@ -281,3 +281,4 @@
 {#if info}
 <Infos pushError="We will keep you in touch!" message="Successfully pre-registered!" />
 {/if}
+<div hidden class="button-brand border-legendary"></div>

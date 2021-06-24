@@ -195,7 +195,7 @@
                         <p class="text-extra-light text-2xl text-left pt-8 px-4">
                             <b class="text-green font-normal">Exchange</b> the <u>coins</u> you earned for some well
                             deserved <b class="text-legendary font-normal">rewards</b>:
-                            <a class="text-light text-xl ml-1" href="/shop">Click here</a>
+                            <a class="text-primary text-xl ml-1" href="/shop">Click here</a>
                         </p>
                     </div>
                 </div>

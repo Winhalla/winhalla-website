@@ -50,7 +50,7 @@
         <div
             class="w-full lg:w-auto flex justify-between items-center py-4
             relative">
-            <div class="pl-7 lg:pl-24 lg:pr-34">
+            <div class="pl-5 lg:pl-24 lg:pr-34">
                 <!--LOGO-->
                 <a class="" href="/">
                     <svg class="fill-current w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
@@ -72,7 +72,10 @@
                     </svg>
                 </a>
             </div>
-            <div class="pr-6 lg:hidden flex -mt-2">
+            <div class="lg:hidden">
+                <a href="/#mob-pre-register" class="button button-brand">Pre-register</a>
+            </div>
+            <div class="pr-4 lg:hidden flex -mt-2">
                 <button
                     class="focus:outline-none"
                     use:clickOutside
@@ -167,7 +170,7 @@
                         SHOP
                     </a>
                 </div>
-                <div>
+                <div class="hidden lg:block">
                     <a href="/#pre-register" class="button button-brand mr-4">Pre-register now</a>
                 </div>
 

@@ -142,7 +142,7 @@
     </div>
     <div class="pt-14 lg:pt-24">
         <div
-            class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
             <div class="pb-18 lg:pb-0">
                 <div
@@ -202,7 +202,7 @@
                 </div>
             </div>
         </div>
-        <div class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
+        <div id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
             <h2 class="text-5xl lg:text-7xl">Ready? Be alerted when the beta launches!</h2>
             <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
                 Pre-register now

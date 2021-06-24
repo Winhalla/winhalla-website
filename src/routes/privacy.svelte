@@ -1,40 +1,14 @@
 <script>
-    import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
-    import { fade } from "svelte/transition";
-    import { apiUrl } from "../utils/config";
 
-    let isEditingConsent = false;
-    let confirmationPopupOpen;
     let pushError;
     let message;
-
-    function makePopup(whatFor) {
-        confirmationPopupOpen = whatFor;
-    }
-
-    async function confirm(what) {
-        if (what === "delete account") {
-            await callApi("delete", "/auth/deleteAccount");
-            actionDone("account deleted");
-        } else if (what === "restrict processing") {
-            await callApi("patch", "/auth/moveAccount");
-            actionDone("account moved");
-        }
-        confirmationPopupOpen = undefined;
-    }
 
     function actionDone(action) {
         if (action === "cookieConsentReset") {
             document.cookie = "hideCookiePopup=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             pushError = "Refresh the page to edit your cookies consent";
             message = "One more step";
-        } else if (action === "account deleted") {
-            pushError = "Steam data may take up to 30 days to be deleted";
-            message = "Account successfully deleted";
-        } else if (action === "account moved") {
-            pushError = "";
-            message = "Data process restriction applied";
         }
         setTimeout(() => {
             pushError = undefined;
@@ -85,26 +59,9 @@
     <p>If you choose to use our Service, then you agree to the collection and use of information in relation with this
         policy. The Personal Information that we collect are used for providing and improving the Service. We will not
         use or share your information with anyone except as described in this Privacy Policy.</p>
-
-    <h2>I. Account data</h2>
-    <p>To access certain functionalities in the Site, you may have to login with a Steam Account. By logging in with
-        your Steam Account and clicking on "Accept Terms And Conditions", we automatically create an account containing
-        : </p>
-    <ul>
-        <li>Your SteamID64</li>
-        <li>Your profile picture URL</li>
-        <li>Your username</li>
-        <li>And other data (including but not limited to : your coins number, your quest in progress...) This
-            information is internal to the Site, is used only by us and in no case disclosed
-        </li>
-    </ul>
-    <p>Your STEAMID64 may be sent to Brawlhalla's API (<a
-        href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) to track your progress in the game and give
-        you coins according to your performance</p>
-    <p>Other account data will not be sent, sold, rented, or traded to any third-party.</p>
-    <p id="analytical">All your account data is kept until you <a href="https://winhalla.app/deleteAccount">delete your
-        account</a> and
-        may be processed by our servers to provide the Service in its entirety</p>
+    <h2>I. Pre-registration</h2>
+    <p>On the main page of the Site, you have access to a button called "Pre-register now"</p>
+    <p>This button when clicked prompts for an email. This email will then be stored on the Site's servers for up to ninety (90) days. The purpose of storing the email is to notify the user when the next version of the Site is released </p>
 
     <h2>II. Analytical software</h2>
     <p>We are using - like any other website - an analytical software. This software helps us to understand our traffic
@@ -135,7 +92,6 @@
         used an anonymous unique identifier. They are stored in your computer's hard drive</p>
     <p>We use cookies for : </p>
     <ul>
-        <li>Authenticating : required, else you cannot use most of the Site's functionalities</li>
         <li>Functionalities : used - among others - to determine if new notifications/alerts has arrived, these are
             required, since they will have a major impact on your experience
         </li>
@@ -155,12 +111,6 @@
                 on:click={()=>actionDone("cookieConsentReset")}>Edit cookie
             consent
         </button>
-        <button class="btn px-2 py-1 mx-6" on:click={()=>makePopup("delete account")}>Delete Account</button>
-        <a class="btn px-2 py-2 mx-6" style="text-decoration: none" href="{apiUrl}/auth/downloadData" download>Download
-            Data</a>
-        <button class="btn px-2 py-1 mx-6" on:click={() =>makePopup('restrict processing')}>Restrict Processing</button>
-        (Restrict processing
-        will make your account unusable but we still keep your data)
     </div>
     <h3 class="text-2xl">Other GDPR-related user rights can be claimed via email <a href="mailto:contact@winhalla.app">here</a>
     </h3>
@@ -175,43 +125,6 @@
     <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a
         href="mailto:contact@winhalla.app">contact@winhalla.app</a></p>
 </div>
-{#if confirmationPopupOpen}
-    <div class="fixed flex w-screen h-screen bg-black opacity-90 z-40 left-0 top-0"
-         transition:fade={{duration:200}}>
-    </div>
-    <div class="fixed flex w-screen h-screen z-50 left-0 top-0"
-         transition:fade={{duration:200}}>
-        <div
-            class="justify-evenly mx-auto mb-auto rounded-lg border bg-background border-primary px-14 py-8"
-            style="margin-top:20vh">
-            <h1 class="text-5xl text-primary">Confirm {confirmationPopupOpen}</h1>
-            {#if confirmationPopupOpen === "delete account"}
-                <p class="ml-4 text-3xl mt-6">Warning: this action is <u>not cancellable</u>. <br> All data will be lost
-                    <u>forever</u></p>
-            {:else if confirmationPopupOpen === "restrict processing"}
-                <p class="ml-4 text-3xl mt-6">Warning: this action will make your account <u>unusable</u>. <br>However,
-                    we will still keep your account data and will be able to restore it if you ask us <a
-                        href="mailto:contact@winhalla.app">here</a> with your steamId and nickname</p>
-            {/if}
-            <div>
-                <div class="overflow-auto max-h-screen-50">
-                    <div class="justify-center w-full flex">
-                        <button class="button button-brand mt-8"
-                                style="background-color:#fc1870"
-                                on:click={()=>confirm(confirmationPopupOpen)}>
-                            Confirm {confirmationPopupOpen}
-                        </button>
-                        <button class="button button-brand mt-8 border ml-5 border-legendary"
-                                style="background-color: #17171a;padding: -1px"
-                                on:click={()=>confirmationPopupOpen=undefined}>
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{/if}
 {#if message}
     <Infos pushError={pushError} message={message} />
 {/if}

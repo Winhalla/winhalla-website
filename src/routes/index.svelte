@@ -263,12 +263,12 @@
                     </div>
                 </div>
                 <div class="justify-center w-full flex mt-8 ">
-                    <button class="button button-brand-alternative w-32"
+                    <button class="button button-brand-alternative"
                             style="background-color: #17171a;padding: -1px"
                             on:click={toggleRegisterPopup}>
                         Cancel
                     </button>
-                    <button class="button ml-5 w-32" class:button-brand={valid}
+                    <button class="button ml-5 " class:button-brand={valid}
                             on:click={register}
                             disabled={!valid}>
                         Pre-register

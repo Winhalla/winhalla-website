@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import CookiePopup from "../components/CookiePopup.svelte";
     import { getCookie } from "../utils/getCookie";
-
+    import Nav from "../components/Nav.svelte";
     //Show error to the user if there is one from an api request
     let error;
     onMount(() => {
@@ -111,13 +111,14 @@
 <svelte:window bind:scrollY={scrollY} />
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
     <CookiePopup />
+    <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <div class="text-font text-default">
+    <main class="text-font text-default">
         <slot class="flex-grow bg-background block-grow" />
-    </div>
+    </main>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
         <Poll/>
     </div>-->

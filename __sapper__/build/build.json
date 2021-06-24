@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.b0053a6c.js"
+    "main": "client.5086f243.js"
   },
   "css": {
     "main": [
@@ -11,29 +11,29 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.093a3631.js",
-      "Infos.9e717a1f.js",
+      "index.c7447bc3.js",
+      "Infos.aa930a72.js",
       "inject_styles.5607aec6.js",
       "index-e7fa1f4a.css"
     ],
     "privacy.svelte": [
-      "privacy.0ff54dba.js",
-      "Infos.9e717a1f.js",
+      "privacy.9318b0ec.js",
+      "Infos.aa930a72.js",
       "inject_styles.5607aec6.js",
       "privacy-ae4b8860.css"
     ],
     "legal.svelte": [
-      "legal.6d5675f3.js",
+      "legal.aa955cfd.js",
       "inject_styles.5607aec6.js",
       "legal-95a0a22d.css"
     ],
     "terms.svelte": [
-      "terms.6c6f5992.js",
+      "terms.6884cd41.js",
       "inject_styles.5607aec6.js",
       "terms-b34a3226.css"
     ],
     "shop.svelte": [
-      "shop.a52dcf4a.js",
+      "shop.0b6a9389.js",
       "inject_styles.5607aec6.js",
       "shop-c7a8891b.css"
     ]

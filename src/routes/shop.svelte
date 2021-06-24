@@ -12,7 +12,7 @@
     let isBuying;
     let userPlayer;
 
-
+    const style = "@media (min-width: 1536px) {.\\32xl\\:w-60\\% {width: 60%;}}@media (min-width: 1536px) {.\\32xl\\:h-80\\% {height: 80%;}}@media (min-width: 1280px) {.xl\\:w-70\\% {width: 70%;}}@media (min-width: 1280px) {.xl\\:h-85\\% {height: 85%;}}"
     onMount(async () => {
         let unsub;
         let items;
@@ -52,30 +52,6 @@
 
     .shop-item {
         position: relative;
-    }
-
-    @media (min-width: 1536px) {
-        .\32xl\:w-60\% {
-            width: 60%;
-        }
-    }
-
-    @media (min-width: 1536px) {
-        .\32xl\:h-80\% {
-            height: 80%;
-        }
-    }
-
-    @media (min-width: 1280px) {
-        .xl\:w-70\% {
-            width: 70%;
-        }
-    }
-
-    @media (min-width: 1280px) {
-        .xl\:h-85\% {
-            height: 85%;
-        }
     }
 
     .shop-item::after {
@@ -168,7 +144,7 @@
                             Featured item
                         </h1>
                         <div
-                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
+                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item" style={style}>
                             <img
                                 class="w-full h-full block object-cover"
                                 src="assets/ShopItems/{featuredItem.name}.jpg"

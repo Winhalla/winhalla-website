@@ -98,64 +98,71 @@
             </svg>
         </div>
     </div>
-    <div class="pt-10">
+    <div class="pt-14 lg:pt-24">
         <div
             class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
-            <div class="pb-10 lg:pb-0">
+            <div class="pb-18 lg:pb-0">
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">1</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
+                        <h3 class="text-4xl leading-9">
                             <b class="text-primary font-normal">Choose</b>
                             a game mode
-                        </p>
-                        <p class="text-light text-xl pt-1">
-                            FFA, solo, 2vs2...
-                        </p>
+                        </h3>
+                        <ul class="text-extra-light text-2xl text-left pt-8 px-4">
+                            <li><b class="text-green font-normal">SOLO</b>: Each participant Play’s <u>8</u> brawlhalla
+                                <u>games</u>: be the one with the <u>most wins</u>.
+                            </li>
+                            <li class="mt-3"><b class="text-green font-normal">DUOS</b>: Work in progress</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="pb-10 lg:pb-0">
+            <div class="pb-18 lg:pb-0">
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">2</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
-                            Complete
-                            the <b class="text-primary font-normal">goal</b> of the game mode
-                        </p>
-                        <p class="text-light text-xl pt-1">
-                            Quests, win goals...
-                        </p>
+                        <h3 class="text-4xl leading-9">
+                            Earn
+                            <b class="text-primary font-normal">coins</b>...
+                        </h3>
+                        <ul class="text-extra-light text-2xl text-left pt-8 px-6">
+                            <li><b class="text-green font-normal">By playing</b> some <u>solo</u> and <u>Duo</u> games
+                            </li>
+                            <li class="mt-3"><b class="text-green font-normal">By completing</b> the <u>quests</u>
+                                available on the website
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div>
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">3</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
-                            Earn
-                            <b class="text-primary font-normal">rewards</b>
+                        <p class="text-4xl leading-9 px-2">
+                            ...and <b class="text-primary font-normal">Spend</b> them in the <b
+                            class="text-primary font-normal">shop</b>!
                         </p>
-                        <p class="text-light text-xl pt-1">
-                            Earn coins that you will be able to spend in the
-                            <a class="underline" href="/shop">shop</a>
-                            !
+                        <p class="text-extra-light text-2xl text-left pt-8 px-4">
+                            <b class="text-green font-normal">Exchange</b> the <u>coins</u> you earned for some well
+                            deserved <b class="text-legendary font-normal">rewards</b>:
+                            <a class="text-primary text-xl ml-1" href="/shop">Click here</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="join-us w-full text-center mt-15 lg:mt-20 pb-10">
+        <div class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
             <h2 class="text-5xl lg:text-7xl">Ready? Start now!</h2>
-            <a class="button button-brand mt-4" href="{apiUrl}/auth/login">
+            <a class="button button-brand mt-8" href="{apiUrl}/auth/login">
                 Login with steam
             </a>
         </div>

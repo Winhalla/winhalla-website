@@ -189,7 +189,7 @@
                                             <div class="flex  items-center  text-2xl">
                                                 <b
                                                     class="mr-2 font-normal"
-                                                    style="padding-top: 0.12rem">{featuredItem.cost}</b>
+                                                    style="padding-top: 0.12rem">XXXXXXX</b>
                                                 <div class="w-8 mt-1 text-font"
                                                      style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                     <CoinIcon />
@@ -254,7 +254,7 @@
                                                         <div class="flex  items-center  text-2xl">
                                                             <b
                                                                 class="mr-2 font-normal"
-                                                                style="padding-top: 0.12rem">{seasonPack.cost}</b>
+                                                                style="padding-top: 0.12rem">XXXXXXX</b>
                                                             <div class="w-8 mt-1 text-font"
                                                                  style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                                 <CoinIcon />
@@ -303,7 +303,7 @@
                                                         <div class="flex  items-center  text-2xl">
                                                             <b
                                                                 class="mr-2 font-normal"
-                                                                style="padding-top: 0.12rem">{pack.cost}</b>
+                                                                style="padding-top: 0.12rem">XXXXXXX</b>
                                                             <div class="w-8 mt-1 text-font"
                                                                  style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                                 <CoinIcon />

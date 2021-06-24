@@ -7,7 +7,7 @@
 
     let isRegisterPopupOpen = false;
     let email;
-    let valid = false;
+    let valid = null;
     let info;
     onMount(async () => {
         const urlParams = new URLSearchParams(location.search);
@@ -28,8 +28,8 @@
         await callApi("post", `/preRegistration?email=${email}`);
         info = true;
         setTimeout(() => {
-            info = false
-        }, 5000)
+            info = false;
+        }, 5000);
     }
 
     const onKeyPressEmail = () => {
@@ -125,8 +125,9 @@
             </video>
         </div>
 
-        <div
-            class="tip absolute left-0 right-0 bottom-20 text-center hidden
+        <div id="pre-register"
+
+             class="tip absolute left-0 right-0 bottom-20 text-center hidden
             lg:block">
             <p class="text-2xl">Learn more</p>
             <svg
@@ -139,64 +140,71 @@
             </svg>
         </div>
     </div>
-    <div class="pt-10">
+    <div class="pt-14 lg:pt-24">
         <div
             class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
-            <div class="pb-10 lg:pb-0">
+            <div class="pb-18 lg:pb-0">
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">1</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
+                        <h3 class="text-4xl leading-9">
                             <b class="text-primary font-normal">Choose</b>
                             a game mode
-                        </p>
-                        <p class="text-light text-xl pt-1">
-                            FFA, solo, 2vs2...
-                        </p>
+                        </h3>
+                        <ul class="text-extra-light text-2xl text-left pt-8 px-4">
+                            <li><b class="text-green font-normal">SOLO</b>: Each participant Play’s <u>8</u> brawlhalla
+                                <u>games</u>: be the one with the <u>most wins</u>.
+                            </li>
+                            <li class="mt-3"><b class="text-green font-normal">DUOS</b>: Work in progress</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="pb-10 lg:pb-0">
+            <div class="pb-18 lg:pb-0">
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">2</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
-                            Complete
-                            the <b class="text-primary font-normal">goal</b> of the game mode
-                        </p>
-                        <p class="text-light text-xl pt-1">
-                            Quests, win goals...
-                        </p>
+                        <h3 class="text-4xl leading-9">
+                            Earn
+                            <b class="text-primary font-normal">coins</b>...
+                        </h3>
+                        <ul class="text-extra-light text-2xl text-left pt-8 px-6">
+                            <li><b class="text-green font-normal">By playing</b> some <u>solo</u> and <u>Duo</u> games
+                            </li>
+                            <li class="mt-3"><b class="text-green font-normal">By completing</b> the <u>quests</u>
+                                available on the website
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div>
                 <div
-                    class="card p-4 w-64 h-84 hover:shadow-card-hover border
+                    class="card p-4 w-78 h-106 hover:shadow-card-hover border
                     border-transparent hover:border-primary">
                     <p class="text-9xl">3</p>
                     <div class="">
-                        <p class="text-3xl leading-9">
-                            Earn
-                            <b class="text-primary font-normal">rewards</b>
+                        <p class="text-4xl leading-9 px-2">
+                            ...and <b class="text-primary font-normal">Spend</b> them in the <b
+                            class="text-primary font-normal">shop</b>!
                         </p>
-                        <p class="text-light text-xl pt-1">
-                            Earn coins that you will be able to spend in the
-                            <a class="underline" href="/shop">shop</a>
-                            !
+                        <p class="text-extra-light text-2xl text-left pt-8 px-4">
+                            <b class="text-green font-normal">Exchange</b> the <u>coins</u> you earned for some well
+                            deserved <b class="text-legendary font-normal">rewards</b>:
+                            <a class="text-primary text-xl ml-1" href="/shop">Click here</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="join-us w-full text-center mt-15 lg:mt-20 pb-10">
-            <h2 class="text-5xl lg:text-7xl">Ready? Start now!</h2>
-            <button class="button button-brand mt-4" on:click={toggleRegisterPopup}>
+        <div class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
+            <h2 class="text-5xl lg:text-7xl">Ready? Be alerted when the beta launches!</h2>
+            <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
                 Pre-register now
             </button>
         </div>
@@ -223,16 +231,17 @@
                         <div>
                             <input
                                 on:keydown={onKeyPressEmail}
+                                on:change={onKeyPressEmail}
                                 type="email"
                                 placeholder="Your email goes here"
                                 bind:value={email}
                                 class:border-legendary={valid === false}
                                 class="w-full text-background bg-font py-3 px-4 rounded focus:outline-none
                             focus:border-primary placeholder-disabled email-input"
-                                style="font-family: 'Roboto', sans-serif;" />
+                                style="font-family: 'Roboto Condensed', sans-serif;" />
 
                             {#if valid}
-                                <div class="flex items-center">
+                                <div class="flex items-center mt-1">
                                     <svg
                                         class="fill-current text-green w-4"
                                         style="margin-top: 0.15rem; margin-right: 0.4rem;"
@@ -245,7 +254,7 @@
                                     <p class="text-green info">VALID EMAIL</p>
                                 </div>
                             {:else if valid === false}
-                                <p class="text-legendary info ">INVALID EMAIL</p>
+                                <p class="text-legendary info mt-1">INVALID EMAIL</p>
                             {/if}
                         </div>
                     </div>
@@ -275,7 +284,7 @@
                     </button>
                     <button class="button ml-5" class:button-brand={valid}
                             on:click={register}
-                            disabled={!valid}>
+                            disabled={valid}>
                         Pre-register
                     </button>
                 </div>
@@ -284,6 +293,11 @@
     </div>
 {/if}
 {#if info}
+<<<<<<< HEAD
 <Infos pushError="We will keep you in touch!" message="Successfully pre-registered!" />
 {/if}
 <div hidden class="button-brand border-legendary"></div>
+=======
+    <Infos pushError="We will keep you in touch!" message="Successfully pre-registered!" />
+{/if}
+>>>>>>> hype

@@ -167,6 +167,9 @@
                         SHOP
                     </a>
                 </div>
+                <div>
+                    <a href="/#pre-register" class="button button-brand mr-4">Pre-register now</a>
+                </div>
 
             </div>
         </div>

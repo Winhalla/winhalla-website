@@ -156,8 +156,8 @@
         </div>
     </div>
     <div class="pt-14 lg:pt-24">
-        <div
-            class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+        <section
+        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
             <div class="pb-18 lg:pb-0">
                 <div
@@ -216,13 +216,61 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
-            <h2 class="text-5xl lg:text-7xl">Ready? Be alerted when the beta launches!</h2>
+        </section>
+        <section class="ml-8 lg:mx-0 mt-20 lg:mt-28  lg:w-full  flex flex-col items-center">
+            <div class="md:flex items-end">
+                <h3 class="text-4.5xl md:text-5xl"><b class="text-legendary font-normal">No download</b> required:</h3>
+                <p class="mt-1 md:mt-0 ml-0 md:ml-3 text-3xl md:text-4xl">
+                    <b class="text-accent font-normal">Use winhalla</b> directly <b class="text-primary font-normal">in your browser</b>
+                </p>
+            </div>
+            <ul class="mt-7 lg:ml-108  text-2xl">
+                <li class="flex items-center"><svg
+                    class="fill-current w-7 mr-2
+                                            text-green"
+                    viewBox="0 0 27 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24
+                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
+                                                1.807-1.807 5.422 5.422
+                                                13.68-13.68 1.811 1.803-15.491
+                                                15.491z" />
+                </svg><p><b class="text-primary font-normal">Saves</b> your <u> computer's resources</u></p></li>
+
+                <li class="flex items-center mt-3 lg:mt-2"><svg
+                    class="fill-current w-7 mr-2
+                                            text-green"
+                    viewBox="0 0 27 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24
+                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
+                                                1.807-1.807 5.422 5.422
+                                                13.68-13.68 1.811 1.803-15.491
+                                                15.491z" />
+                </svg><p><b class="text-primary font-normal">Access</b> the website <u>on your phone</u></p></li>
+
+                <li class="flex items-center mt-3 lg:mt-2"><svg
+                    class="fill-current w-9 md:w-7 mr-2
+                                            text-green"
+                    viewBox="0 0 27 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="m24
+                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
+                                                1.807-1.807 5.422 5.422
+                                                13.68-13.68 1.811 1.803-15.491
+                                                15.491z" />
+                </svg><p><b class="text-primary font-normal">Available</b> for <u>computer</u>, <u>console</u> and <u>mobile</u> players</p></li>
+            </ul>
+        </section>
+        <section id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
+            <h2 class="text-5xl md:text-6xl lg:text-7xl">Ready? Be alerted when the beta launches!</h2>
             <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
                 Pre-register now
             </button>
-        </div>
+        </section>
     </div>
 </div>
 {#if isRegisterPopupOpen}

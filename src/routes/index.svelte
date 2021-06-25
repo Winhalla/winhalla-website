@@ -11,12 +11,14 @@
     let info;
     onMount(async () => {
         const urlParams = new URLSearchParams(location.search);
-        if (urlParams.get("source"))
-            document.cookie = cookie.serialize("source", urlParams.get("source"), {
+        if (urlParams.get("src")) {
+            document.cookie = cookie.serialize("source", urlParams.get("src"), {
                 maxAge: 15552000,
                 sameSite: "lax",
                 path: "/"
             });
+
+        }
     });
 
     function toggleRegisterPopup() {
@@ -25,7 +27,9 @@
 
     async function register() {
         toggleRegisterPopup();
-        if((await callApi("post", `/preRegistration?email=${email}`)) instanceof Error) return
+        let { source } = cookie.parse(document.cookie)
+        if ((await callApi("post", `/preRegistration?email=${email}&source=${source}`)) instanceof Error) return;
+        document.cookie = "source=0;maxAge=1"
         info = true;
         setTimeout(() => {
             info = false;
@@ -81,10 +85,12 @@
     .cards {
         height: calc(100% + 5rem);
     }
+
     button:disabled {
         @apply bg-disabled;
         cursor: not-allowed;
     }
+
     .button2 {
         display: inline-block;
         border-radius: 0.25rem;
@@ -146,7 +152,7 @@
     </div>
     <div class="pt-14 lg:pt-24">
         <div
-        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+            class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
             <div class="pb-18 lg:pb-0">
                 <div

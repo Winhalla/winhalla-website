@@ -17,7 +17,12 @@
                 sameSite: "lax",
                 path: "/"
             });
-
+        } else if (urlParams.get('utm_source')){
+            document.cookie = cookie.serialize("source", urlParams.get("utm_source"), {
+                maxAge: 15552000,
+                sameSite: "lax",
+                path: "/"
+            });
         }
     });
 

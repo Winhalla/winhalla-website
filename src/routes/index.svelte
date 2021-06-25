@@ -38,8 +38,7 @@
             if (email.length > 0) {
                 let regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gm;
                 let exec = regex.exec(email);
-                if (exec) valid = true;
-                else valid = false;
+                valid = !!exec;
             } else {
                 valid = null;
             }
@@ -82,10 +81,15 @@
     .cards {
         height: calc(100% + 5rem);
     }
-
     button:disabled {
         @apply bg-disabled;
         cursor: not-allowed;
+    }
+    .button2 {
+        display: inline-block;
+        border-radius: 0.25rem;
+        font-size: 1.25rem;
+        background-color: #3d72e4;
     }
 </style>
 
@@ -217,7 +221,7 @@
          out:fade={{duration: 350}}>
 
         <div
-            class="max-w-xl    mx-5 my-1 md:mx-0  px-8 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
+            class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
             style="max-height: 95vh;"
             transition:fly={{ y: 300, duration: 350 }}>
             <h2 class="text-4xl md:text-5xl">Pre-register
@@ -276,13 +280,13 @@
                         </p>
                     </div>
                 </div>
-                <div class="justify-center w-full flex mt-8 ">
-                    <button class="button button-brand-alternative"
+                <div class="justify-center w-full flex mt-8 py-3">
+                    <button class="px-8 md:px-10 button2 button-brand-alternative"
                             style="background-color: #17171a;padding: -1px"
                             on:click={toggleRegisterPopup}>
                         Cancel
                     </button>
-                    <button class="button ml-5" class:button-brand={valid}
+                    <button class="px-8 py-3 md:px-10 button2 ml-5" class:button-brand={valid}
                             on:click={register}
                             disabled={!valid}>
                         Pre-register

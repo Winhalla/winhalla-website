@@ -58,7 +58,7 @@
     const faq = [
         {
             question: "How can you give us some <u>paid items</u> for <u>free</u>?",
-            answer: "Unfortunately in life, nothing is free. We use <u>ads revenues</u> to buy the items.",
+            answer: "In life, nothing is free. We use <u>ads revenues</u> to buy the items.",
             opened: false
         },
 
@@ -69,14 +69,14 @@
         },
         {
             question: "<u>How long</u> does it take to get a Brawlhalla Battle Pass? (10$)",
-            answer: "It will take approximately <u>4 to 8 weeks</u> if used regularly. The value might change depending on the time spent on Brawlhalla and Winhalla.",
+            answer: "It will take approximately <u>4 to 8 weeks</u> if used regularly. This value might change depending on the time spent on Brawlhalla and Winhalla.",
             opened: false
-        },
-        {
+        }
+        /*{
             question: "Why data refreshing takes so long?",
             answer: "The Brawlhalla API has a <u>long refreshing rate</u>. Don't worry, come back later and it will be up to date!",
             opened: false
-        }
+        }*/
     ];
 </script>
 
@@ -249,7 +249,7 @@
                     your browser</b>
                 </p>
             </div>
-            <ul class="mt-7 lg:ml-108  text-2xl">
+            <ul class="mt-7 lg:ml-108 text-2xl pr-2">
                 <li class="flex items-center">
                     <svg
                         class="fill-current w-7 mr-2
@@ -304,36 +304,30 @@
             </button>
         </section>
 
-        <section class="mt-18 w-full flex justify-center">
+        <section class="mt-9 pl-8 md:ml-0 w-full flex justify-center">
             <div class="md:w-3/4 xl:w-1/2">
                 <h2 class="text-7xl mb-3 text-primary">FAQ</h2>
 
                 {#each faq as entry}
                     <button
-                        class="w-full flex justify-between items-center  p-3  pr-3 md:pr-6  focus:outline-none"
+                        class="w-full flex justify-start items-center  p-3  pr-3 md:pr-6  focus:outline-none"
                         on:click={() => entry.opened = !entry.opened}>
 
-                        <p class="text-3xl text-left">{@html entry.question}</p>
+                        <p class="text-3xl text-left w-95% md:w-full">{@html entry.question}</p>
 
-
-                        {#if entry.opened}
-                            <svg class="w-4 h-6 fill-current"
+                            <svg class="w-7 h-11 md:w-4 md:h-6 fill-current md:-mt-2 md:-ml-4 md:mr-3"
                                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                                {#if entry.opened}
+                                    <path
+                                        d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                                {:else}
+                                    <path
+                                        d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                                {/if}
                             </svg>
-                        {:else}
-                            <svg
-                                class="w-4 h-6 fill-current"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
-                            </svg>
-                        {/if}
                     </button>
                     {#if entry.opened}
-                        <div class="ml-14 mb-5  text-default text-light ">
+                        <div class="ml-8 md:ml-14 mb-5  text-default text-light ">
                             <p class="text-2xl text-left">{@html entry.answer}</p>
                         </div>
                     {/if}

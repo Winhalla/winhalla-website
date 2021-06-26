@@ -32,7 +32,7 @@
     }
     function toggleFAQ(entryId){
         faq[entryId].opened = !faq[entryId].opened;
-        if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
+        // if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
     }
     async function register() {
         toggleRegisterPopup();

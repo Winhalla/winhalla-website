@@ -17,7 +17,7 @@
                 sameSite: "lax",
                 path: "/"
             });
-        } else if (urlParams.get('utm_source')){
+        } else if (urlParams.get("utm_source")) {
             document.cookie = cookie.serialize("source", urlParams.get("utm_source"), {
                 maxAge: 15552000,
                 sameSite: "lax",
@@ -32,9 +32,9 @@
 
     async function register() {
         toggleRegisterPopup();
-        let { source } = cookie.parse(document.cookie)
+        let { source } = cookie.parse(document.cookie);
         if ((await callApi("post", `/preRegistration?email=${email}&source=${source}`)) instanceof Error) return;
-        document.cookie = "source=0;maxAge=1"
+        document.cookie = "source=0;maxAge=1";
         info = true;
         setTimeout(() => {
             info = false;
@@ -54,6 +54,30 @@
         }, 1);
 
     };
+
+    const faq = [
+        {
+            question: "How can you give us some <u>paid items</u> for <u>free</u>?",
+            answer: "In life, nothing is free. We use <u>ads revenues</u> to buy the items.",
+            opened: false
+        },
+
+        {
+            question: "How do you get my <u>Brawlhalla stats</u>?",
+            answer: "We use the official <u>Brawlhalla API</u> to get your stats.",
+            opened: false
+        },
+        {
+            question: "<u>How long</u> does it take to get a Brawlhalla Battle Pass? (10$)",
+            answer: "It will take approximately <u>4 to 8 weeks</u> if used regularly. This value might change depending on the time spent on Brawlhalla and Winhalla.",
+            opened: false
+        }
+        /*{
+            question: "Why data refreshing takes so long?",
+            answer: "The Brawlhalla API has a <u>long refreshing rate</u>. Don't worry, come back later and it will be up to date!",
+            opened: false
+        }*/
+    ];
 </script>
 
 <style>
@@ -157,7 +181,7 @@
     </div>
     <div class="pt-14 lg:pt-24">
         <section
-        class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
+            class="cards text-center lg:py-0 lg:mx-30 flex flex-col lg:flex-row
             items-center lg:justify-around">
             <div class="pb-18 lg:pb-0">
                 <div
@@ -221,60 +245,56 @@
             <div class="md:flex items-end">
                 <h3 class="text-4/5xl md:text-5xl"><b class="text-legendary font-normal">No download</b> required:</h3>
                 <p class="mt-1 md:mt-0 ml-0 md:ml-3 text-3xl md:text-4xl">
-                    <b class="text-accent font-normal">Use winhalla</b> directly <b class="text-primary font-normal">in your browser</b>
+                    <b class="text-accent font-normal">Use winhalla</b> directly <b class="text-primary font-normal">in
+                    your browser</b>
                 </p>
             </div>
-            <ul class="mt-7 lg:ml-108  text-2xl">
-                <li class="flex items-center"><svg
-                    class="fill-current w-7 mr-2
+            <ul class="mt-7 lg:ml-108 text-2xl pr-2">
+                <li class="flex items-center">
+                    <svg
+                        class="fill-current w-7 mr-2
                                             text-green"
-                    viewBox="0 0 27 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="m24
+                        viewBox="0 0 27 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="m24
                                                 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
                                                 1.807-1.807 5.422 5.422
                                                 13.68-13.68 1.811 1.803-15.491
                                                 15.491z" />
-                </svg><p><b class="text-primary font-normal">Saves</b> your <u> computer's resources</u></p></li>
+                    </svg>
+                    <p><b class="text-primary font-normal">Saves</b> your <u> computer's resources</u></p></li>
 
-                <li class="flex items-center mt-3 lg:mt-2"><svg
-                    class="fill-current w-7 mr-2
+                <li class="flex items-center mt-3 lg:mt-2">
+                    <svg
+                        class="fill-current w-7 mr-2
                                             text-green"
-                    viewBox="0 0 27 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="m24
+                        viewBox="0 0 27 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="m24
                                                 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
                                                 1.807-1.807 5.422 5.422
                                                 13.68-13.68 1.811 1.803-15.491
                                                 15.491z" />
-                </svg><p><b class="text-primary font-normal">Access</b> the website <u>on your phone</u></p></li>
+                    </svg>
+                    <p><b class="text-primary font-normal">Access</b> the website <u>on your phone</u></p></li>
 
-                <li class="flex items-center mt-3 lg:mt-2"><svg
-                    class="fill-current w-9 md:w-7 mr-2
+                <li class="flex items-center mt-3 lg:mt-2">
+                    <svg
+                        class="fill-current w-9 md:w-7 mr-2
                                             text-green"
-                    viewBox="0 0 27 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="m24
+                        viewBox="0 0 27 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="m24
                                                 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
                                                 1.807-1.807 5.422 5.422
                                                 13.68-13.68 1.811 1.803-15.491
                                                 15.491z" />
-                </svg><p><b class="text-primary font-normal">Available</b> for <u>computer</u>, <u>console</u> and <u>mobile</u> players</p></li>
-                <li class="flex items-center mt-3 lg:mt-2"><svg
-                    class="fill-current w-9 md:w-7 mr-2
-                                            text-green"
-                    viewBox="0 0 27 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="m24
-                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
-                                                1.807-1.807 5.422 5.422
-                                                13.68-13.68 1.811 1.803-15.491
-                                                15.491z" />
-                </svg><p><b class="text-primary font-normal">Ad-funded</b></p></li>
+                    </svg>
+                    <p><b class="text-primary font-normal">Available</b> for <u>computer</u>, <u>console</u> and <u>mobile</u>
+                        players</p></li>
             </ul>
         </section>
         <section id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
@@ -282,6 +302,38 @@
             <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
                 Pre-register now
             </button>
+        </section>
+
+        <section class="mt-9 pl-8 md:ml-0 w-full flex justify-center">
+            <div class="md:w-3/4 xl:w-1/2">
+                <h2 class="text-7xl mb-3 text-primary">FAQ</h2>
+
+                {#each faq as entry}
+                    <button
+                        class="w-full flex justify-start items-center  p-3  pr-3 md:pr-6  focus:outline-none"
+                        on:click={() => entry.opened = !entry.opened}>
+
+                        <p class="text-3xl text-left w-95% md:w-full">{@html entry.question}</p>
+
+                            <svg class="w-7 h-11 md:w-4 md:h-6 fill-current md:-mt-2 md:-ml-4 md:mr-3"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                {#if entry.opened}
+                                    <path
+                                        d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                                {:else}
+                                    <path
+                                        d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                                {/if}
+                            </svg>
+                    </button>
+                    {#if entry.opened}
+                        <div class="ml-8 md:ml-14 mb-5  text-default text-light ">
+                            <p class="text-2xl text-left">{@html entry.answer}</p>
+                        </div>
+                    {/if}
+                {/each}
+            </div>
+
         </section>
     </div>
 </div>

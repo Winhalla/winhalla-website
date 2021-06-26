@@ -243,7 +243,7 @@
         </section>
         <section class="ml-8 lg:mx-0 mt-20 lg:mt-28  lg:w-full  flex flex-col items-center">
             <div class="md:flex items-end">
-                <h3 class="text-4.5xl md:text-5xl"><b class="text-legendary font-normal">No download</b> required:</h3>
+                <h3 class="text-4/5xl md:text-5xl"><b class="text-legendary font-normal">No download</b> required:</h3>
                 <p class="mt-1 md:mt-0 ml-0 md:ml-3 text-3xl md:text-4xl">
                     <b class="text-accent font-normal">Use winhalla</b> directly <b class="text-primary font-normal">in
                     your browser</b>

@@ -4,6 +4,7 @@
     import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
     import cookie from "cookie";
+    import { gtagEvent } from "../utils/gtagEvent"
 
     let isRegisterPopupOpen = false;
     let email;
@@ -29,7 +30,10 @@
     function toggleRegisterPopup() {
         isRegisterPopupOpen = !isRegisterPopupOpen;
     }
-
+    function toggleFAQ(entryId){
+        faq[entryId].opened = !faq[entryId].opened;
+        if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
+    }
     async function register() {
         toggleRegisterPopup();
         let { source } = cookie.parse(document.cookie);
@@ -307,11 +311,10 @@
         <section class="mt-9 pl-8 md:ml-0 w-full flex justify-center">
             <div class="md:w-3/4 xl:w-1/2">
                 <h2 class="text-7xl mb-3 text-primary">FAQ</h2>
-
-                {#each faq as entry}
+                {#each faq as entry,i}
                     <button
                         class="w-full flex justify-start items-center  p-3  pr-3 md:pr-6  focus:outline-none"
-                        on:click={() => entry.opened = !entry.opened}>
+                        on:click={()=>toggleFAQ(i)}>
 
                         <p class="text-3xl text-left w-95% md:w-full">{@html entry.question}</p>
 

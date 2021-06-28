@@ -21,12 +21,12 @@
 <div class="lg:px-100 lg:pt-20 px-8 py-4">
     <h1 class="text-5xl text-primary pb-1">Legal</h1>
     <h2>Host provider info</h2>
-    <p>Google Cloud Platform (Google LLC)</p>
-    <p>Address: Googleplex, Mountain View, USA</p>
+    <p>Leafcloud B.V.</p>
+    <p>Moezelhavenweg 9 1043AM Amsterdam The Netherlands</p>
 
     <h2>Publisher info</h2>
     <p>Winhalla SAS</p>
     <p>SAS with a capital of 500 €</p>
-    <p>Address: 7 allée des Arpents - 91470 Limours - France</p>
+    <p>Address: 10 rue Minfeld - 91470 Limours - France</p>
     <a class="underline" href="mailto:contact@winhalla.app">Contact email</a>
 </div>

@@ -26,7 +26,7 @@
 
     <h2>Publisher info</h2>
     <p>Winhalla SAS</p>
-    <p>SAS with a capital of 500 €</p>
     <p>Address: 10 rue Minfeld - 91470 Limours - France</p>
+    <p>SIREN: 900 419 086</p>
     <a class="underline" href="mailto:contact@winhalla.app">Contact email</a>
 </div>

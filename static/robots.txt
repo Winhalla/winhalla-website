@@ -1,4 +1,7 @@
 User-agent: *
 Disallow: /feltrom
 Disallow: /play/ffa
+Disallow: /legal
+Disallow: /privacy
+Disallow: /terms
 Sitemap: https://winhalla.app/sitemap.xml

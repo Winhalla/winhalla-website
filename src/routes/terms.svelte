@@ -82,7 +82,7 @@
 
     <p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the
         revised terms. If you do not agree to the new terms, please stop using the Service.</p>
-    <h2>Account</h2>
+    <!--<h2>Account</h2>
     <p>In order to use the website, you will have to login with an already existing Steam account. By logging in with
         your
         Steam account, you agree that we will create your Account in the website, using the data Steam transmitted to
@@ -91,7 +91,7 @@
     <p></p>
     <p>We may transmit this data to the Brawlhalla API (<a
         href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) in order to process your Brawlhalla
-        statistics.</p>
+        statistics.</p>-->
 
     <h2>Coins and rewards</h2>
     <p><strong>Coins. </strong> Coins in this website are fictional money, they can only be exchanged in our <a

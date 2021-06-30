@@ -1,6 +1,6 @@
 module.exports = {
     purge: {
-        enabled:false
+        enabled: false
     },
     theme: {
         extend: {
@@ -128,6 +128,7 @@ module.exports = {
                 "80%": "80%",
                 "85%": "85%",
                 "90%": "90%",
+                "95%": "95%",
                 "99%": "99%",
                 "60/100":"60%",
                 "70/100":"70%",
@@ -154,7 +155,7 @@ module.exports = {
             },
 
             fontSize: {
-                "4.5xl":"2.5rem",
+                "4/5xl": "2.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",
                 "9xl": "7rem",
@@ -221,7 +222,7 @@ module.exports = {
                 "1/2": "50%",
                 "45%": "45%"
             }
-        },
+        }
     },
     variants: {},
     plugins: [require("tailwindcss-textshadow")]

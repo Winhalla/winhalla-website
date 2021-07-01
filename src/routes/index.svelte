@@ -316,9 +316,6 @@
                 <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
                     Pre-register now
                 </button>
-                <div class="hidden lg:block mt-6">
-                    <a href="{apiUrl}/auth/login/google" class="button button-brand">Pre-register with google</a>
-                </div>
 
         </section>
 

@@ -3,7 +3,7 @@
     import { clickOutside } from "../utils/clickOutside";
     let isNavbarOpen
 
-
+    import { apiUrl } from "../utils/config";
 </script>
 <style>
     svg {
@@ -170,8 +170,13 @@
                         SHOP
                     </a>
                 </div>
-                <div class="hidden lg:block">
-                    <a href="/#pre-register" class="button button-brand mr-4">Pre-register now</a>
+                <div class="flex">
+                    <div class="hidden lg:block">
+                        <a href="{apiUrl}/auth/login/google" class="button button-brand mr-4">Pre-register with google</a>
+                    </div>
+                    <div class="hidden lg:block">
+                        <a href="/#pre-register" class="button button-brand mr-4">Pre-register now</a>
+                    </div>
                 </div>
 
             </div>

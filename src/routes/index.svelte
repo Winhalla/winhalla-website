@@ -27,6 +27,12 @@
                 path: "/"
             });
         }
+        if(urlParams.get("registerSuccess")) {
+            info = true;
+            setTimeout(() => {
+                info = false;
+            }, 5000);
+        }
     });
 
     function toggleRegisterPopup() {

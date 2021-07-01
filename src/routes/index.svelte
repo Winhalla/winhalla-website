@@ -4,7 +4,9 @@
     import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
     import cookie from "cookie";
-    import { gtagEvent } from "../utils/gtagEvent"
+    import { gtagEvent } from "../utils/gtagEvent";
+    import { apiUrl } from "../utils/config";
+
 
     let isRegisterPopupOpen = false;
     let email;
@@ -25,15 +27,23 @@
                 path: "/"
             });
         }
+        if(urlParams.get("registerSuccess")) {
+            info = true;
+            setTimeout(() => {
+                info = false;
+            }, 5000);
+        }
     });
 
     function toggleRegisterPopup() {
         isRegisterPopupOpen = !isRegisterPopupOpen;
     }
-    function toggleFAQ(entryId){
+
+    function toggleFAQ(entryId) {
         faq[entryId].opened = !faq[entryId].opened;
         if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
     }
+
     async function register() {
         toggleRegisterPopup();
         let { source } = cookie.parse(document.cookie);
@@ -303,9 +313,13 @@
         </section>
         <section id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
             <h2 class="text-5xl md:text-6xl lg:text-7xl">Ready? Be alerted when the beta launches!</h2>
-            <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
-                Pre-register now
-            </button>
+                <button class="button button-brand mt-8" on:click={toggleRegisterPopup}>
+                    Pre-register now
+                </button>
+                <div class="hidden lg:block mt-6">
+                    <a href="{apiUrl}/auth/login/google" class="button button-brand">Pre-register with google</a>
+                </div>
+
         </section>
 
         <section class="mt-9 pl-8 md:ml-0 w-full flex justify-center">
@@ -318,16 +332,16 @@
 
                         <p class="text-3xl text-left w-95% md:w-full">{@html entry.question}</p>
 
-                            <svg class="w-7 h-11 md:w-4 md:h-6 fill-current md:-mt-2 md:-ml-4 md:mr-3"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                {#if entry.opened}
-                                    <path
-                                        d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
-                                {:else}
-                                    <path
-                                        d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
-                                {/if}
-                            </svg>
+                        <svg class="w-7 h-11 md:w-4 md:h-6 fill-current md:-mt-2 md:-ml-4 md:mr-3"
+                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            {#if entry.opened}
+                                <path
+                                    d="m21.57 19.2 2.43-2.422-12-11.978-12 11.978 2.43 2.422 9.57-9.547z" />
+                            {:else}
+                                <path
+                                    d="m2.43 4.8-2.43 2.422 12 11.978 12-11.978-2.43-2.422-9.57 9.547z" />
+                            {/if}
+                        </svg>
                     </button>
                     {#if entry.opened}
                         <div class="ml-8 md:ml-14 mb-5  text-default text-light ">

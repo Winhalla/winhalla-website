@@ -383,7 +383,7 @@
                     h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
-                            <div class="mt-8 lg:mt-25 ffa-player card user">
+                            <div class="mt-8 lg:mt-25 ffa-player card user " style="min-width: 14rem">
                                 <div class="max-w-full h-full bg-gradient-to-b {gradientList[0]} rounded-lg"></div>
                                 <div
                                     class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
@@ -416,35 +416,46 @@
                             <div
                                 class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12">
-                                {#each players as player, i}
-                                    <div class="ffa-player card lg:mr-12 mb-8">
-                                        <div
-                                            class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
-                                        ></div>
-                                        <div
-                                            class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
-                                        <img
-                                            class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-                                            src="{player.avatarURL}" alt="">
-
-
-                                        <p class="player-name text-3xl">
-                                            {player.username}
-                                        </p>
-                                        <div
-                                            class="stats text-xl bottom-5
-                                        text-ultra-light">
-                                            <p>
-                                                Games played:
-                                                <b>{player.gamesPlayed}</b>
-                                                /8
-                                            </p>
-                                        </div>
+                                <div class="mx-auto my-auto lg:mx-0 mt-5" style="flex-basis: 21%">
+                                    <div style="max-width: 13rem; max-height: 28rem">
+                                        <script
+                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                            data-pa-tag async></script>
                                     </div>
+                                </div>
+                                {#each players as player, i}
+                                        <div style="flex-basis: 21%">
+                                            <div class="ffa-player card lg:mr-12 mb-8 mx-auto lg:mx-0"
+                                                 style="max-width: 13rem">
+                                                <div
+                                                    class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                                ></div>
+                                                <div
+                                                    class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
+                                                <img
+                                                    class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                                    src="{player.avatarURL}" alt="">
+
+
+                                                <p class="player-name text-3xl">
+                                                    {player.username}
+                                                </p>
+                                                <div
+                                                    class="stats text-xl bottom-5
+                                        text-ultra-light">
+                                                    <p>
+                                                        Games played:
+                                                        <b>{player.gamesPlayed}</b>
+                                                        /8
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                 {/each}
                                 <div class="flex justify-center items-center flex-col">
                                     {#if players.length < 8}
-                                        <p class="text-4xl mx-6 my-4">Waiting for players, you can start playing Brawlhalla</p>
+                                        <p class="text-4xl mx-6 my-4">Waiting for players, you can start playing
+                                            Brawlhalla</p>
                                     {/if}
                                     <script
                                         src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"

@@ -8434,8 +8434,8 @@ function noop$1() { }
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 let throttler = [];
-let app = express__default['default']() // You can also use Express
-	.use((req, res, next) => {
+let app = express__default['default'](); // You can also use Express
+	app.use((req, res, next) => {
 		if (req.path.includes("assets")) return next()
 		let i = throttler.findIndex(e => e.ip == req.ip);
 		let user1 = throttler[i];
@@ -8453,13 +8453,14 @@ let app = express__default['default']() // You can also use Express
 			throttler.push({ ip: req.ip, requests: 1, timestamp: Date.now() });
 			next();
 		}
-	})
-	.use(
+	});
+	app.use(
 		compression__default['default']({ threshold: 0 }),
 		sirv__default['default']('static', { dev }),
 		middleware()
 	);
+app.listen(80);
 require('https').createServer({
 	key: fs__default['default'].readFileSync('/etc/letsencrypt/live/winhalla.app/privkey.pem'),
 	cert: fs__default['default'].readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
-},app);
+},app).listen(443);

@@ -7,7 +7,7 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 let throttler = []
 let app = express() // You can also use Express
-	.use((req, res, next) => {
+	app.use((req, res, next) => {
 		if (req.path.includes("assets")) return next()
 		let i = throttler.findIndex(e => e.ip == req.ip)
 		let user1 = throttler[i]
@@ -26,12 +26,13 @@ let app = express() // You can also use Express
 			next()
 		}
 	})
-	.use(
+	app.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
 		sapper.middleware()
 	)
+app.listen(80)
 require('https').createServer({
 	key: fs.readFileSync('/etc/letsencrypt/live/winhalla.app/privkey.pem'),
 	cert: fs.readFileSync('/etc/letsencrypt/live/winhalla.app/fullchain.pem')
-},app)
+},app).listen(443)

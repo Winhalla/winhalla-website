@@ -51,7 +51,7 @@
         }, 25000);
     }
 
-    let isFfaWatchAdVisible = true;
+    let isFfaWatchAdVisible = false;
     $: if (isFfaWatchAdVisible) {
         console.log(isFfaWatchAdVisible);
     }

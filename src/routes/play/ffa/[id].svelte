@@ -457,12 +457,6 @@
                 </div>
 
             {/if}
-
-
-            {#if !isSpectator && !isMatchEnded}
-                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
-            {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}
                     <div class="lg:flex md:absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">

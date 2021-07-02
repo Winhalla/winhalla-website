@@ -2,11 +2,11 @@ import sirv from 'sirv';
 import express from 'express';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
-
+import fs from "fs"
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 let throttler = []
-express() // You can also use Express
+let app = express() // You can also use Express
 	.use((req, res, next) => {
 		if (req.path.includes("assets")) return next()
 		let i = throttler.findIndex(e => e.ip == req.ip)
@@ -31,6 +31,7 @@ express() // You can also use Express
 		sirv('static', { dev }),
 		sapper.middleware()
 	)
-	.listen(PORT, err => {
-		if (err) console.log('error', err);
-	});
+require('https').createServer({
+	key: fs.readFileSync('/etc/letsencrypt/live/api.winhalla.app/privkey.pem'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/api.winhalla.app/fullchain.pem')
+},app)

@@ -65,7 +65,7 @@ self.addEventListener("fetch", event => {
     if (url.pathname.includes("/play/ffa")) return
 
     // This specify to ignore API responses that are dynamic
-    if (url.host === "api.winhalla.app" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return;
+    if (url.host === "localhost:4000" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return;
     // for pages, you might want to serve a shell `service-worker-index.html` file,
     // which Sapper has generated for you. It's not right for every
     // app, but if it's right for yours then uncomment this section
@@ -94,13 +94,16 @@ self.addEventListener("fetch", event => {
                 // If request is an asset then search for it in cache
                 if (asset) {
                     response = await cache.match(event.request);
+                    if(url.port === "4000") {
+                        console.log("\n\ncache " + url.href + "\n" + response +"\n\n")
+                    }
                 }
                 // If request isn't an asset or is not found in cache then try fetching it to the server
                 if (!response) {
                     try {
                         const response = await fetch(event.request);
-                        console.log("network " + event.request.url);
-                        if (url.host === "api.winhalla.app" && (url.pathname !== "/getSolo" && url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return response;
+                        //console.log("network " + event.request.url);
+                        if (url.host === "localhost" && (url.pathname !== "/getSolo" && url.pathname !== "/shop" || url.pathname !== "/account" || url.pathname !== "/informations" || url.pathname !== "/status")) return response;
                         if(response.status >= 200 && response.status <= 299) cache.put(event.request, response.clone());
                         return response;
                     } catch {

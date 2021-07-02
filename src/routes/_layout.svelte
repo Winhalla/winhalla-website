@@ -1,12 +1,13 @@
 <script>
     import Tailwindcss from "../components/Tailwindcss.svelte";
+    import Nav from "../components/Navigation/Nav.svelte";
     import Footer from "../components/Footer.svelte";
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
     import CookiePopup from "../components/CookiePopup.svelte";
     import { getCookie } from "../utils/getCookie";
-    import Nav from "../components/Nav.svelte";
+
     //Show error to the user if there is one from an api request
     let error;
     onMount(() => {
@@ -92,15 +93,12 @@
 <Tailwindcss />
 
 <svelte:head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2X5EEDMTZE"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-2X5EEDMTZE');
-    </script>
+    <!-- <link rel="stylesheet" href="../../fontisto-master/css/fontisto/fontisto.min.css" /> -->
+    <!--Adsense-->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />
@@ -111,8 +109,12 @@
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <main class="text-font text-default">
+    <main class="text-font text-default min-h-screen h-full relative">
+        <!--Main-->
+
+
         <slot class="flex-grow bg-background block-grow" />
+        <!--<GameModeCards page={"play"}/>-->
     </main>
     <!--<div class="fixed bottom-0 right-20 bg-background border border-b-0 border-green px-12 pt-6 rounded-t-xl">
         <Poll/>

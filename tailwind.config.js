@@ -1,6 +1,6 @@
 module.exports = {
     purge: {
-        enabled: false
+        enabled:false
     },
     theme: {
         extend: {
@@ -128,14 +128,7 @@ module.exports = {
                 "80%": "80%",
                 "85%": "85%",
                 "90%": "90%",
-                "95%": "95%",
                 "99%": "99%",
-                "60/100":"60%",
-                "70/100":"70%",
-                "80/100":"80%",
-                "85/100":"85%",
-                "71/100":"71%",
-                "62/100":"62%",
                 "shopItemLarge": "calc(35% - 1.5rem)",
                 "shopItem": "calc(30% - 1.5rem)"
             },
@@ -155,14 +148,14 @@ module.exports = {
             },
 
             fontSize: {
-                "4/5xl": "2.5rem",
+                "4.5xl":"2.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",
                 "9xl": "7rem",
                 logo: "1.6rem",
                 default: "1.4rem"
-            },
 
+            },
             colors: {
                 background: "#17171a",
                 variant: "#1b1b27",

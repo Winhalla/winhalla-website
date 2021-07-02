@@ -352,7 +352,7 @@
                             Battle pass
                         </h1>
                         <div
-                            class="card xl:w-70% 2xl:w-60% xl:h-85% 2xl:h-80% mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
+                            class="card xl:w-70/100 2xl:w-60/100 xl:h-85/100 2xl:h-80/100 mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                             <img
                                 class="w-full h-full block object-cover"
                                 src="assets/ShopItems/{featuredItem.name}.jpg"

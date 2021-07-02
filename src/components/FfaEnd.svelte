@@ -240,13 +240,13 @@
                                     </div>
                                     {#if winner.areDetailsShown === true}
                                     <span
-                                        class="tooltip absolute -left-20 bottom-14     px-4 py-2 bg-black  rounded  text-left h-33 w-52     flex items-center justify-center z-40">
+                                        class="tooltip absolute -left-22 bottom-14     px-4 py-2 bg-black  rounded  text-left h-33 w-58     flex items-center justify-center z-40">
                                         <ul>
 
                                             <li><b>BASE REWARD:</b>  {winner.baseMultiplier} </li>
                                             <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier + 1}</li>
 
-                                            <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">FRIENDS INVITED:</b> +{winner.linkMultiplier}
+                                            <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">Invited by a friend:</b> +{winner.linkMultiplier}
                                                 %</li>
 
                                             <li class:line-through={!winner.eventMultiplier}><b style="color: #ee38ff">EVENT:</b> +{winner.eventMultiplier}

@@ -60,8 +60,7 @@
 
             //Load quests for user
             quests = await callApi("get", "/getSolo");
-            if (quests instanceof Error && quests.response.status !== 403) await goto(`${apiUrl}/auth/login`);
-            if (quests instanceof Error && quests.response.status === 403) await goto(`${apiUrl}/auth/login`);
+            if (quests instanceof Error && quests.response.status === 403) await goto(`/login`);
 
             if (!quests.solo.lastDaily || !quests.solo.lastWeekly) {
                 quests = await callApi("get", "/solo");

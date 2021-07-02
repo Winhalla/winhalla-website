@@ -32,7 +32,11 @@
         }
     }
 </script>
-
+<style>
+    input {
+        @apply text-background bg-font py-3 px-4 rounded;
+    }
+</style>
 <div class="h-full w-full flex items-center justify-center">
     {#if !isLoggingIn}
         <div class="mt-48 flex flex-col">

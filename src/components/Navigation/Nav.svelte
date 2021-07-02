@@ -7,7 +7,7 @@
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
     import { fly } from "svelte/transition";
-    import {config} from "../storeAdmin"
+    import { config } from "../storeAdmin";
     import { apiUrl } from "../../utils/config";
     import { callApi } from "../../utils/api";
     import { goto, stores } from "@sapper/app";
@@ -26,7 +26,7 @@
 
     let user;
     let userCoins;
-    
+
     let offline;
     let loaded = false;
 
@@ -35,7 +35,7 @@
     let currentMatch;
 
     function calculateProperties(user1) {
-        console.log(user1)
+        console.log(user1);
         if (!user1) return isUserLoggedIn = false;
         if (user1.offline) offline = true;
         if (user1 instanceof Error) {
@@ -48,12 +48,12 @@
             currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
         user = user1.steam;
-        if (user._json.steamid === "76561198417157310" || user._json.steamid === "76561198417157310") {
+        if (user.id === "76561198417157310" || user.id === "76561198417157310") {
             isAdmin = true;
         }
-        userCoins = Math.floor(user1.user.coins*10)/10;
+        userCoins = Math.floor(user1.user.coins * 10) / 10;
 
-        isUserLoggedIn = !!user1.user
+        isUserLoggedIn = !!user1.user;
     }
 
     const resetNav = async value => {
@@ -61,7 +61,6 @@
         if (isAdmin && value.preview) return onMountFx(value.preview);
         calculateProperties(await value.content);
     };
-
 
 
     function handlePopupClose() {
@@ -128,6 +127,7 @@
         }, 1);
         loaded = true;
     }
+
     onMount(onMountFx);
 
 </script>
@@ -388,10 +388,10 @@
                     {/if}
                     {#if isUserLoggedIn}
                         <div class="lg:flex lg:items-center //mt-5 md:mt-0">
-                            {#if user.displayName && user.photos}
+                            {#if user.name && user.pictureMini}
                                 <NavAccount
-                                    username={user.displayName}
-                                    avatar={user.photos[0].value} />
+                                    username={user.name}
+                                    avatar={user.pictureMini} />
                             {/if}
                             {#if notificationsObj}
                                 <div class="hidden lg:flex items-center">

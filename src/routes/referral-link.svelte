@@ -19,7 +19,9 @@
     let waitingTermsAcceptations;
     let generatedLink;
     let waitingBID;
-    let wrongBrawlhallaID = false;
+    let isValidBrawlhallaID = null;
+    let brawlhallaIDError;
+
     let error;
     let toolTipOpen;
     let hasShareFunction;
@@ -78,10 +80,15 @@
 
     async function testBrawlhallaID() {
         const { isValid, reason } = await callApi("get", `/auth/isBIDvalid/${brawlhallaID}`);
-        if (isValid) waitingBID = false;
-        else wrongBrawlhallaID = reason;
+        console.log(isValid, reason);
+        if (isValid) {
+            waitingBID = false;
+        } else {
+            brawlhallaIDError = reason;
+            isValidBrawlhallaID = false;
+        }
         clearInterval(lastInterval);
-        lastInterval = setTimeout(() => wrongBrawlhallaID = false, 4000);
+        lastInterval = setTimeout(() => isValidBrawlhallaID = null, 4000);
     }
 </script>
 <!--
@@ -110,6 +117,10 @@
 
     .accent {
         @apply text-accent;
+    }
+
+    input {
+        @apply w-full text-background bg-font py-3 px-4 rounded;
     }
 </style>
 
@@ -273,11 +284,40 @@
         </div>
     {/if}
 {:else if waitingTermsAcceptations && waitingBID}
-    <p>Enter Brawlhalla ID</p>
-    <input type="text" placeholder="Your Brawlhalla ID goes here" class="px-2 py-1 text-black"
-           bind:value={brawlhallaID}>
-    <button class="button button-brand" on:click={testBrawlhallaID}>Continue</button>
-    <p class:hidden={!wrongBrawlhallaID}>{wrongBrawlhallaID}</p>
+    <div class="flex items-center justify-center md:h-screen-7">
+        <div class="flex flex-col justify-center px-5 md:p-0">
+            <div class="text-center md:text-left mt-7 md:mt-12">
+                <h1
+                    class="text-6xl mb-6 md:mb-8 leading-snug
+                        md:leading-tight">
+                    Register your <br> Brawlhalla ID
+                </h1>
+            </div>
+            <div class="md:mt-4">
+                <div>
+                    <input
+                        type="email"
+                        placeholder="Your Brawlhalla ID goes here"
+                        bind:value={brawlhallaID}
+                        class:border-legendary={isValidBrawlhallaID === false}
+                        class="input-style focus:outline-none
+                            focus:border-primary placeholder-disabled" />
+
+                    {#if isValidBrawlhallaID === false}
+                        <p class="text-legendary info ">{brawlhallaIDError}</p>
+                    {/if}
+                </div>
+            </div>
+            <button
+                on:click={testBrawlhallaID}
+                class:mt-11={isValidBrawlhallaID == null}
+                class="button button-brand mt-3">
+                Continue
+            </button>
+            <p class="mt-8 italic font-xl" style="max-width: 17rem; font-size: 1.25rem; font-family: 'Roboto Condensed', sans-serif">This is your Brawlhalla user id. You will find it by clicking on the box under your username (in Brawlhalla):
+                and then in the top right corner!</p>
+        </div>
+    </div>
 {:else if waitingTermsAcceptations && !waitingBID}
     <div class="flex items-center justify-center mt-30 flex-col">
         <p class="text-3xl">By clicking the button below you accept our <a href="/terms"

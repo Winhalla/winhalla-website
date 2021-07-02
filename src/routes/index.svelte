@@ -162,7 +162,7 @@
         </div>
         <div class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
             <h2 class="text-5xl lg:text-7xl">Ready? Start now!</h2>
-            <a class="button button-brand mt-8" href="{apiUrl}/auth/login">
+            <a class="button button-brand mt-8" href="/login">
                 Login
             </a>
         </div>

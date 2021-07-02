@@ -14,7 +14,7 @@
     export let link;
     onMount(() => {
         document.cookie = cookie.serialize("affiliateLinkId", link, { maxAge: 15552000, sameSite: "lax", path: "/" });
-        goto(apiUrl + "/auth/login");
+        goto("/login");
     });
 
 

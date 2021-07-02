@@ -14,7 +14,7 @@
 
         console.log("id", id);
         if (!id) {
-            goto(`${apiUrl}/auth/login`);
+            goto(`$/login`);
         }
 
 

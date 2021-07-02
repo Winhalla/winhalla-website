@@ -37,6 +37,9 @@
     {#if !isLoggingIn}
         <div class="mt-48 flex flex-col">
             <h2 class="text-6xl text-center  mb-10">LOGIN</h2>
+            <p class="font-ultra-light text-green text-center text-lg mt-1">
+                Recommended for pc players
+            </p>
             <a
                 class="button-brand button" style="display: flex !important;"
                 href="{apiUrl}/auth/login/steam">
@@ -49,12 +52,14 @@
                 </svg>
                 Login with Steam
             </a>
-            <p class="font-ultra-light text-center text-lg mt-1">
+            <p class="font-ultra-light text-legendary text-center text-lg mt-1">
                 Only for pc players
             </p>
-
+            <p class="font-ultra-light text-green text-center text-lg mt-6">
+                Recommended for console/mobile players
+            </p>
             <a
-                class="button-brand-alternative button my-8" style="display: flex !important;"
+                class="button-brand-alternative button mb-8" style="display: flex !important;"
                 href="{apiUrl}/auth/login/google">
                 <svg class="-ml-4 mr-3 w-5" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
                      role="img"

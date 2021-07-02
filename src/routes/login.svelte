@@ -34,15 +34,15 @@
 </script>
 <style>
     input {
-        @apply text-background bg-font py-3 px-4 rounded;
+        @apply w-full text-background bg-font py-3 px-4 rounded;
     }
 </style>
 <div class="h-full w-full flex items-center justify-center">
     {#if !isLoggingIn}
         <div class="mt-48 flex flex-col">
             <h2 class="text-6xl text-center  mb-10">LOGIN</h2>
-            <p class="font-ultra-light text-green text-center text-lg mt-1">
-                Recommended for pc players
+            <p class="font-ultra-light text-green text-center text-lg mt-1 mb-2">
+                PC players:
             </p>
             <a
                 class="button-brand button" style="display: flex !important;"
@@ -56,14 +56,12 @@
                 </svg>
                 Login with Steam
             </a>
-            <p class="font-ultra-light text-legendary text-center text-lg mt-1">
-                Only for pc players
-            </p>
-            <p class="font-ultra-light text-green text-center text-lg mt-6">
-                Recommended for console/mobile players
+
+            <p class="font-ultra-light text-green text-center text-lg mt-10 mb-2">
+                Console/mobile players:
             </p>
             <a
-                class="button-brand-alternative button mb-8" style="display: flex !important;"
+                class="button-brand-alternative button mb-6" style="display: flex !important;"
                 href="{apiUrl}/auth/login/google">
                 <svg class="-ml-4 mr-3 w-5" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
                      role="img"
@@ -80,8 +78,7 @@
                 on:click={startLogin}>
                 <svg class="-ml-4 mr-3 w-6" aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope"
                      role="img"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                >
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path fill="currentColor"
                           d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"
                           class=""></path>
@@ -90,12 +87,65 @@
             </button>
         </div>
     {:else if !usernameSent}
-        <div>
+        <div class="flex items-center justify-center md:h-screen-7">
+            <div class="flex flex-col justify-center px-5 md:p-0" style="min-width: 20rem">
+                <div class="text-center mt-7 md:mt-12">
+                    <h1
+                        class="text-6xl mb-6 md:mb-8 leading-snug
+                        ">
+                        {action === "login" ? "Login" : "Create account"}
+                    </h1>
+                </div>
+                <div class="">
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Enter your username"
+                            bind:value={username}
+                            class="input-style focus:outline-none
+                            focus:border-primary placeholder-disabled" />
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Enter your password"
+                            bind:value={password}
+                            class="input-style focus:outline-none
+                            focus:border-primary placeholder-disabled" />
+
+                        {#if status}
+                            <p class="text-legendary info ">{status}</p>
+                        {/if}
+                    </div>
+                </div>
+                <button
+                    on:click={createAccount}
+                    class="button button-brand mt-10">
+                    Continue
+                </button>
+
+                <div class="mt-4">
+                    {#if action === "login"}
+                        <p>Don't have an account?
+                            <button class="text-primary underline" on:click={switchToCreateAccount}>create an account</button>
+                        </p>
+                    {:else}
+                        <p>Already have an account ?
+                            <button class="text-primary underline" on:click={switchToCreateAccount}>login</button>
+                        </p>
+                    {/if}
+                </div>
+
+            </div>
+        </div>
+        <!--<div>
             <div class="text-center md:text-left mt-7 md:mt-12">
                 <h1
                     class="text-6xl mb-6 md:mb-8 leading-snug
                         md:leading-normal">
-                    {action === "login" ? "Login with Username/password" : "Create account"}
+                    {action === "login" ? "Login" : "Create account"}
                 </h1>
             </div>
             <p class="text-green" class:hidden={!accountCreated}>Account created successfully, you can now login.</p>
@@ -114,7 +164,7 @@
                     <button class="text-primary underline" on:click={switchToCreateAccount}>login</button>
                 </p>
             {/if}
-        </div>
+        </div>-->
     {/if}
 
 </div>

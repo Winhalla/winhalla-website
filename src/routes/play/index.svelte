@@ -24,7 +24,7 @@
         if (params.get("hasEndedMatch")) {
             setTimeout(() => {
                 info = { pushError: "You can now start another one", message: "Match exited successfully" };
-            },500)
+            },750)
             setTimeout(() => {
                 info = null
             }, 5000)

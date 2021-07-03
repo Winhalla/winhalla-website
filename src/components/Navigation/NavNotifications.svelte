@@ -11,7 +11,7 @@
     let opened = false;
     let isDropdownOpen = false;
     let matchesLength;
-
+    let timerIds = []
     function handleClick() {
         isDropdownOpen = !isDropdownOpen;
         opened = true;
@@ -22,7 +22,7 @@
             let d = new Date(match.Date);
             const endsIn = -(
                 (new Date().getTime() -
-                    new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                    new Date(d.setHours(d.getHours() + 1)).getTime()) /
                 1000
             );
             if (endsIn < 1) {
@@ -60,11 +60,15 @@
     });
 
     function startTimer(duration, i) {
+        for (const i in timerIds){
+            clearInterval(i)
+        }
+        timerIds = []
         let timer = duration,
             hours,
             minutes,
             seconds;
-        setInterval(function() {
+        timerIds.push(setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
             hours = Math.floor(timer / (60 * 60));
@@ -77,7 +81,7 @@
             if (--timer < 0) {
                 timer = duration;
             }
-        }, 1000);
+        }, 1000));
     }
 
     const idToType = id => {

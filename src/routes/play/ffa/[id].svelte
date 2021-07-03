@@ -67,7 +67,6 @@
     let gradientList;
     onMount(() => {
         pages = page.subscribe(async value => {
-            if (timerId) clearInterval(timerId);
             isSpectator = value.query.spectator === "true";
             user = undefined;
             match = undefined;
@@ -104,7 +103,7 @@
                 const d = new Date(userPlayer.joinDate);
                 const endsIn = -(
                     (new Date().getTime() -
-                        new Date(d.setHours(d.getHours() + 3)).getTime()) /
+                        new Date(d.setHours(d.getHours() + 1)).getTime()) /
                     1000
                 );
                 if (endsIn < 1) {
@@ -185,6 +184,7 @@
             hours,
             minutes,
             seconds;
+        if (timerId) clearInterval(timerId);
         timerId = setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);

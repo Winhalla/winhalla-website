@@ -398,7 +398,7 @@
                                             {#if tooltipOpen}
                                                 <span
                                                     class="absolute right-24 w-50 top-4 px-6 py-2 bg-green text-background rounded text-left flex items-center justify-center z-40"
-                                                    transition:fade>Exit the match before it ends to start another one, useful if you want ot start another match before this one ended
+                                                    transition:fade>Exit the match before it ends to start another one, useful if you want to start another match before this one ended
                                                 </span>
                                             {/if}
                                         </div>

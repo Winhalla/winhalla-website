@@ -9,15 +9,25 @@
     import { goto } from "@sapper/app";
     import { apiUrl } from "../../utils/config";
     import { counter } from "../../components/store";
+    import Infos from "../../components/Infos.svelte";
 
     let quests;
     let error;
     let gameModesError;
     let gameModes;
     let errorDetailsOpen = false;
+    let info;
     onMount(async () => {
-        if (new URLSearchParams(window.location.search).get("reloadNav")) {
+        let params = new URLSearchParams(window.location.search);
+        if (params.get("reloadNav"))
             counter.set({ refresh: true });
+        if (params.get("hasEndedMatch")) {
+            setTimeout(() => {
+                info = { pushError: "You can now start another one", message: "Match exited successfully" };
+            },500)
+            setTimeout(() => {
+                info = null
+            }, 5000)
         }
         gameModes = [
             {
@@ -166,10 +176,14 @@
                 {/if}
             </div>
         </div>
-        <div class="mt-6"><script 
-            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-            data-pa-tag async></script></div>
+        <div class="mt-6">
+            <script
+                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                data-pa-tag async></script>
+        </div>
         <GuideCard page="play" />
     </div>
-
+{/if}
+{#if info}
+    <Infos {...info} />
 {/if}

@@ -255,7 +255,7 @@
                                                 Percentage <strong class="font-normal"
                                                                    class:text-legendary={(option.nb/poll.totalAnswers ||0)<0.25}
                                                                    class:text-green={(option.nb/poll.totalAnswers ||0)>=0.5}
-                                                                   class:text-accent={(option.nb/poll.totalAnswers ||0)>=0.25 && option.nb/poll.totalAnswers<0.5}> {option.nb / poll.totalAnswers * 100 || 0}
+                                                                   class:text-accent={(option.nb/poll.totalAnswers ||0)>=0.25 && option.nb/poll.totalAnswers<0.5}> {(option.nb / poll.totalAnswers * 100 ).toFixed(1)|| 0}
                                                     %</strong></p>
                                         </div>
                                     {/each}

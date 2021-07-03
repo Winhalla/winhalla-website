@@ -179,7 +179,7 @@
     };
 
     //Function that starts a timer with a date, and refreshes it every second
-    function startTimer(duration) {
+    function startTimer(duration) { 
         let timer = duration,
             hours,
             minutes,
@@ -196,7 +196,7 @@
             countDown = hours + ":" + minutes + ":" + seconds;
 
             if (--timer < 0) {
-                timer = duration;
+                timer = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
             }
         }, 1000);
     }

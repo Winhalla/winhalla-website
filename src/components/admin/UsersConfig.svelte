@@ -57,7 +57,7 @@
             <p class="text-3xl mt-5 mb-2 ml-2">
                 <d class="text-accent">{totalCoins}</d>
                 W In circulation equals
-                <d class="text-accent">{parseFloat((totalCoins / 5000).toFixed(4))}</d>
+                <d class="text-accent">{parseFloat((totalCoins / 6000).toFixed(4))}</d>
                 €
             </p>
             {#if suspiciousBitches.length > 0}

@@ -79,6 +79,11 @@
     }
 
     async function testBrawlhallaID() {
+        if(isNaN(parseInt(brawlhallaID))) {
+            brawlhallaIDError = "The brawlhalla id is a number (not your brawlhalla username)"
+            isValidBrawlhallaID = false
+            return;
+        }
         const { isValid, reason } = await callApi("get", `/auth/isBIDvalid/${brawlhallaID}`);
         console.log(isValid, reason);
         if (isValid) {

@@ -155,7 +155,7 @@
                     <GameModeCards {gameModes} />
                 </div>
             {/if}
-            <div class="pb-16 flex-grow lg:-ml-15">
+            <div class="pb-8 lg:pb-16 flex-grow lg:-ml-15">
 
                 {#if error}
                     <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
@@ -176,12 +176,12 @@
                 {/if}
             </div>
         </div>
+        <GuideCard page="play" />
         <div class="mt-6">
             <script
                 src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
                 data-pa-tag async></script>
         </div>
-        <GuideCard page="play" />
     </div>
 {/if}
 {#if info}

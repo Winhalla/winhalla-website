@@ -51,7 +51,7 @@
 
         </button>
 
-        <div class:hidden={!isPollOpen} class="px-5">
+        <div class:hidden={!isPollOpen} class="px-5 max-h-screen-65 overflow-y-scroll">
             {#if answered === false}
                 {#if poll.isMCQ}
                     <div class="">

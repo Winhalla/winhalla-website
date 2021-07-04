@@ -4,6 +4,10 @@ module.exports = {
     },
     theme: {
         extend: {
+            maxHeight: {
+                'screen-90': "90vh",
+                'screen-65': "65vh"
+            },
             maxWidth: {
                 60: "15rem"
             },

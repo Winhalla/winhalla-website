@@ -28,7 +28,14 @@
     }
 </script>
 
+<style>
 
+    @media screen and (max-height: 600px) {
+        .answer-container {
+            max-height: 65vh;
+        }
+    }
+</style>
 {#if poll && poll !== "network err"}
     <div class:pb-4={isPollOpen} class="bg-background rounded-lg border border-primary"
          transition:fly={{ x:200, duration: 300 }}>
@@ -51,7 +58,7 @@
 
         </button>
 
-        <div class:hidden={!isPollOpen} class="px-5">
+        <div class:hidden={!isPollOpen} class="px-5 answer-container overflow-y-scroll">
             {#if answered === false}
                 {#if poll.isMCQ}
                     <div class="">

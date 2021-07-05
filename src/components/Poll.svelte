@@ -67,25 +67,26 @@
                             <div on:click={()=>{handleChoose(i)}}
                                  class:border-primary={answer === i}
                                  class="p-4 bg-variant my-3 rounded-lg border-2 border-transparent hover:border-primary focus:outline-none focus:border-primary block flex items-center cursor-pointer">
+                                <div class="w-4">
+                                    <input class="opacity-0 fixed pointer-events-none w-4 h-4"
+                                           type="radio" value={option}>
 
-                                <input class="opacity-0 fixed pointer-events-none w-4 h-4" type="radio" value={option}>
+                                    {#if answer === i}
+                                        <svg class="w-4 fill-current text-primary" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z" />
+                                        </svg>
+                                    {:else}
+                                        <svg class="w-4 fill-current" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z" />
+                                        </svg>
+                                    {/if}
+                                </div>
 
-                                {#if answer === i}
-                                    <svg class="w-4 fill-current text-primary" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m0 12c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-6.624-.008-11.992-5.376-12-11.999zm2.4 0c0 5.302 4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6-4.298-9.6-9.6-9.6c-5.299.006-9.594 4.301-9.6 9.599v.001zm4 0c0-3.093 2.507-5.6 5.6-5.6s5.6 2.507 5.6 5.6-2.507 5.6-5.6 5.6c-3.093 0-5.6-2.507-5.6-5.6z" />
-                                    </svg>
-                                {:else}
-                                    <svg class="w-4 fill-current" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12c-.008 6.624-5.376 11.992-11.999 12zm0-21.6c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6c-.006-5.299-4.301-9.594-9.599-9.6h-.001z" />
-                                    </svg>
-                                {/if}
-
-
-                                <p class="ml-2" style="line-height: 0; margin-bottom: -0.20rem">{option}</p>
+                                <p class="ml-2" style="line-height: 1; margin-bottom: -0.20rem">{option}</p>
 
                             </div>
 

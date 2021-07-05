@@ -73,11 +73,6 @@
         <td class="px-4 py-3">
             Name
         </td>
-        {#if !banned && type !== "simple" }
-            <td class="px-4 py-3">
-                In game?
-            </td>
-        {/if}
         {#if type !== "simple"}
             <td class="px-4 py-3">
                 Games played
@@ -139,13 +134,6 @@
                     </p>
                 </div>
             </td>
-            {#if !banned && type !== "simple"}
-                <td class="px-2 py-2">
-                    <b class:text-legendary={user.inGame.findIndex(e => !e.isFinished) === -1}
-                       class:text-green={user.inGame.findIndex(e => !e.isFinished) !== -1}
-                       class="font-normal">{user.inGame.findIndex(e => !e.isFinished) === -1 ? "No" : "Yes"}</b>
-                </td>
-            {/if}
             {#if type !== "simple"}
                 <td class="px-2 py-2">
                     {user.stats.ffa.gamesPlayed}

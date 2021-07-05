@@ -516,7 +516,7 @@
             {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}
-                    <div class="lg:flex md:absolute top-0 bottom-0 left-0 right-0 z-10 overflow-x-hidden">
+                    <div class="lg:flex md:absolute top-0 bottom-0 left-0 right-0 z-40 overflow-x-hidden">
 
                         <!--TRANSPARENT PART-->
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"

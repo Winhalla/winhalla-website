@@ -24,10 +24,10 @@
         if (params.get("hasEndedMatch")) {
             setTimeout(() => {
                 info = { pushError: "You can now start another one", message: "Match exited successfully" };
-            },750)
+            }, 750);
             setTimeout(() => {
-                info = null
-            }, 5000)
+                info = null;
+            }, 5000);
         }
         gameModes = [
             {
@@ -118,12 +118,12 @@
     <div class="w-full lg:mt-60 mt-25">
 
         <div class="text-center">
-            <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed. Did you
-                broke grandma's porcelain bowls?</h2>
+            <h2 class="lg:text-5xl text-3xl text-center text-legendary">Woooow, this page entirely crashed</h2>
             <h3 class="text-center lg:text-3xl text-2xl"><a href="/" class="underline text-primary">Wanna go to
                 homepage</a> then ?</h3>
             <p class="text-light text-center pt-10">If this occurs regularly, maybe clear your cookies and cache. <br>
-                If nothing works, just wait! we are surely working on an <b class="text-primary font-normal">AMAZING
+                If nothing works, just wait (and report this bug)! we are surely working on an <b
+                    class="text-primary font-normal">AMAZING
                     UPDATE</b></p>
         </div>
         <div class="font-normal cursor-pointer button text-center"
@@ -139,7 +139,13 @@
                 Choose a game mode
             </h1>
         </div>
-
+        {#if quests}
+            {#if window.innerWidth < 1024}
+                <div class="flex w-full">
+                    <a href="/play#quests" class="button mx-auto button-brand">Go to quests</a>
+                </div>
+            {/if}
+        {/if}
         <div
             class="flex flex-col items-center lg:flex-wrap
         lg:flex-row xl:items-start">
@@ -168,6 +174,7 @@
                         </div>
                     {/if}-->
                     {#if quests.lastDaily && quests.lastWeekly}
+                        <div id="quests" class="relative bottom-10"></div>
                         <div class="lg:ml-15">
                             <Quests data={quests} />
                         </div>

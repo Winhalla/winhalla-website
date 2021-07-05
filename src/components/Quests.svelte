@@ -163,9 +163,12 @@
 
     async function collect(type, id, possibleAd) {
         if (possibleAd) {
-            if (!socket) socket = io(apiUrl);
-            waitingAdAccept = true;
-            waitingAd = { type, index: id };
+            // if (!socket) socket = io(apiUrl);
+            // waitingAdAccept = true;
+            // waitingAd = { type, index: id };
+            //* to remove to reactivate ads
+            collect(type, id, false) //*
+            //*
         } else {
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;

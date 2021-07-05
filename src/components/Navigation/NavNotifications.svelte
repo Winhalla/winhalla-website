@@ -8,15 +8,18 @@
     export let page;
     export let data;
     let newNotifications = false;
-    let opened = false;
     let isDropdownOpen = false;
     let matchesLength;
-    let timerIds = []
-    function handleClick() {
-        isDropdownOpen = !isDropdownOpen;
-        opened = true;
-    }
+    let timerIds = [];
 
+    function handleClick() {
+            isDropdownOpen = !isDropdownOpen
+    }
+    function toggleDropDown(){
+        setTimeout(() => {
+        isDropdownOpen = false
+        },1)
+    }
     function calculateTimers() {
         data.inGame.forEach((match, i) => {
             let d = new Date(match.Date);
@@ -60,10 +63,10 @@
     });
 
     function startTimer(duration, i) {
-        for (const i in timerIds){
-            clearInterval(i)
+        for (const i in timerIds) {
+            clearInterval(i);
         }
-        timerIds = []
+        timerIds = [];
         let timer = duration,
             hours,
             minutes,
@@ -225,7 +228,7 @@
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
         border-primary overflow-y-auto max-h-screen-60 scrollbar"
             use:clickOutside
-            on:click_outside={() => (isDropdownOpen = false)}>
+            on:click_outside={toggleDropDown}>
             <div>
                 {#if data.event}
                     <div class="">
@@ -253,7 +256,7 @@
                         class="mt-5"
                         on:click={() => {
                         setTimeout(() => {
-                            if (opened === true) {
+                            if (isDropdownOpen === true) {
                                 document.cookie = cookie.serialize(
                                     'notificationNb',
                                     data.notifications.length,
@@ -265,7 +268,7 @@
                                 );
                                 newNotifications = false;
                             }
-                        }, 10);
+                        }, 1);
                     }}>
                         {#if data.notifications.length > 0}
                             <p class="ml-1">Notifications</p>

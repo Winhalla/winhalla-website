@@ -118,7 +118,7 @@
                             <p class="player-name text-4xl">{winner.username}</p>
                             <div class="stats text-2xl bottom-5 text-ultra-light">
                                 <p>
-                                    Games won: <b>{winner.wins}</b>/8
+                                    Games won: <b>{winner.wins}</b>/7
                                 </p>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                 <p class="player-name text-4xl">{winner.username}</p>
                                 <div class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
-                                        Games won: <b>{winner.wins}</b>/8
+                                        Games won: <b>{winner.wins}</b>/7
                                     </p>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                                 <p class="player-name text-4xl">{winner.username}</p>
                                 <div class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
-                                        Games won: <b>{winner.wins}</b>/8
+                                        Games won: <b>{winner.wins}</b>/7
                                     </p>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                                     <p class="pl-2">{winner.username}</p>
                                 </td>
                                 <td class="px-6 py-2">
-                                    <b class="font-normal">{winner.wins}</b>/8
+                                    <b class="font-normal">{winner.wins}</b>/7
                                 </td>
                                 <td class="px-6 py-2">
                                     {winner.coinsEarned}

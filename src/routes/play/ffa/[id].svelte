@@ -431,12 +431,12 @@
                                     <p>
                                         Games played:
                                         <b>{userPlayer.gamesPlayed}</b>
-                                        /8
+                                        /7
                                     </p>
                                     <p>
                                         Games won:
                                         <b>{userPlayer.wins}</b>
-                                        /8
+                                        /7
                                     </p>
                                 </div>
                             </div>
@@ -477,7 +477,7 @@
                                                 <p>
                                                     Games played:
                                                     <b>{player.gamesPlayed}</b>
-                                                    /8
+                                                    /7
                                                 </p>
                                             </div>
                                         </div>

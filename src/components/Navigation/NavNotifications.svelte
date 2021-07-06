@@ -13,13 +13,15 @@
     let timerIds = [];
 
     function handleClick() {
-            isDropdownOpen = !isDropdownOpen
+        isDropdownOpen = !isDropdownOpen;
     }
-    function toggleDropDown(){
+
+    function toggleDropDown() {
         setTimeout(() => {
-        isDropdownOpen = false
-        },1)
+            isDropdownOpen = false;
+        }, 1);
     }
+
     function calculateTimers() {
         data.inGame.forEach((match, i) => {
             let d = new Date(match.Date);
@@ -289,11 +291,13 @@
                                                 </p>
                                             {/if}
                                         </div>
+                                        {#if idToType(notification.id)}
                                         <span
                                             class="quest-goal text-sm text-font px-2
-                                    py-1 bg-legendary rounded-lg b">
-                                    {idToType(notification.id)}
-                                </span>
+                                            py-1 bg-legendary rounded-lg b">
+                                            {idToType(notification.id)}
+                                        </span>
+                                        {/if}
                                         <a href="{page}"
                                            on:click={() => delNotif(notification._id,i)}
                                            class="p-2 absolute top-0 right-0 text-light

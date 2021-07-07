@@ -21,13 +21,13 @@
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
-            if (reward === 20) return "primary";
-            if (reward === 40) return "epic";
-            if (reward === 60) return "legendary";
+            if (reward === 10) return "primary";
+            if (reward === 20) return "epic";
+            if (reward === 30) return "legendary";
         } else {
-            if (reward === 100) return "primary";
-            if (reward === 200) return "epic";
-            if (reward === 400) return "legendary";
+            if (reward === 50) return "primary";
+            if (reward === 100) return "epic";
+            if (reward === 200) return "legendary";
         }
     };
 

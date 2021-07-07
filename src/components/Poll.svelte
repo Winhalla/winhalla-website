@@ -29,10 +29,13 @@
 </script>
 
 <style>
+    .answer-container {
+        max-height: 70vh;
+    }
 
     @media screen and (max-height: 600px) {
         .answer-container {
-            max-height: 65vh;
+            max-height: 65vh !important;
         }
     }
 </style>

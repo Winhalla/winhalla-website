@@ -52,7 +52,7 @@
         border: 6px solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
         -webkit-border-radius: 15px;
-        background-color: #2a2a36;
+        background-color: #1b1b27;
         -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
         /*outline: 1px solid slategrey;*/
     }

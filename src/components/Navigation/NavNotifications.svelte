@@ -298,12 +298,12 @@
                                             {idToType(notification.id)}
                                         </span>
                                         {/if}
-                                        <a href="{page}"
+                                        <a href="#delNotif"
                                            on:click={() => delNotif(notification._id,i)}
-                                           class="p-2 absolute top-0 right-0 text-light
+                                           class="-mt-2 -mr-2 lg:mt-0 lg:mr-0 absolute top-0 right-0 text-light
                                     hover:text-font">
                                             <svg
-                                                class="w-3 h-3 fill-current "
+                                                class="m-3 lg:m-1 w-5 h-5 lg:w-4 lg:h-4 fill-current "
                                                 viewBox="0 0 28 24"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path

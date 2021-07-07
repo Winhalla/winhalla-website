@@ -35,7 +35,7 @@
                 displayName: "Solo",
                 description: "Fight against <b>7</b> players!",
                 goal:
-                    "Be the one who has the <b>most wins</b> out of <b>8 games</b>!",
+                    "Be the one who has the <b>most wins</b> out of <b>7 games</b>!",
                 duration: "<b>30</b> - <b>50</b> minutes",
                 available: true
             },

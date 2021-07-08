@@ -202,7 +202,7 @@
                             a game mode
                         </h3>
                         <ul class="text-extra-light text-2xl text-left pt-8 px-4">
-                            <li><b class="text-green font-normal">SOLO</b>: Each participant Play’s <u>8</u> brawlhalla
+                            <li><b class="text-green font-normal">SOLO</b>: Each participant Play’s <u>7</u> brawlhalla
                                 <u>games</u>: be the one with the <u>most wins</u>.
                             </li>
                             <li class="mt-3"><b class="text-green font-normal">DUOS</b>: Work in progress</li>

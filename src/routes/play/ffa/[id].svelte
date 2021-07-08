@@ -100,17 +100,23 @@
 
                 //Start the countdown
                 filterUsers(false);
-                const d = new Date(userPlayer.joinDate);
-                const endsIn = -(
-                    (new Date().getTime() -
-                        new Date(d.setHours(d.getHours() + 1)).getTime()) /
-                    1000
-                );
-                if (endsIn < 1) {
+                if (userPlayer.gamesPlayed === 7) {
                     countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
                 } else {
-                    startTimer(endsIn);
+                    const d = new Date(userPlayer.joinDate);
+                    const endsIn = -(
+                        (new Date().getTime() -
+                            new Date(d.setHours(d.getHours() + 1)).getTime()) /
+                        1000
+                    );
+                    if (endsIn < 1) {
+                        countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
+                    } else {
+                        startTimer(endsIn);
+                    }
                 }
+
+
                 counter.set({ "refresh": true });
 
                 socket = io(apiUrl);
@@ -179,7 +185,7 @@
     };
 
     //Function that starts a timer with a date, and refreshes it every second
-    function startTimer(duration) { 
+    function startTimer(duration) {
         let timer = duration,
             hours,
             minutes,
@@ -213,6 +219,9 @@
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
             counter.set({ "refresh": true });
+            clearInterval(timerId);
+            if (userPlayer.gamesPlayed === 7) countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
+
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
             counter.set({ "refresh": true });
@@ -377,7 +386,7 @@
                                         <ErrorAlert message="There was an error exiting the match"
                                                     pushError={pushError} />
                                     {/if}
-                                {:else if userPlayer.gamesPlayed <7}
+                                {:else if userPlayer.gamesPlayed !== 7}
                                     <button
                                         class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
@@ -403,8 +412,9 @@
                                             {/if}
                                         </div>
                                     </button>
-                                    {:else}
-                                    <a href="/play/ffa" class="button button-brand" style="background-color: #fc1870;">Start another match</a>
+                                {:else}
+                                    <a href="/play/ffa" class="button button-brand text-background lg:ml-4 mt-3
+                                    lg:mt-0" style="background-color: #3de488;">Start another match</a>
                                 {/if}
 
                             </div>
@@ -492,8 +502,8 @@
                                     {/if}
                                     <div class="hidden lg:block">
                                         <script
-                                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                                data-pa-tag async></script>
+                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                            data-pa-tag async></script>
                                     </div>
 
                                 </div>
@@ -504,8 +514,8 @@
 
                     <div class="block lg:hidden mt-6">
                         <script
-                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                data-pa-tag async></script>
+                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                            data-pa-tag async></script>
                     </div>
                 </div>
 

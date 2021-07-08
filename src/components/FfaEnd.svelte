@@ -212,7 +212,7 @@
                                 <p class="pl-2">{winner.username}</p>
                             </td>
                             <td class="px-6 py-2">
-                                <b class="font-normal">{winner.wins}</b>/8
+                                <b class="font-normal">{winner.wins}</b>/7
                             </td>
                             <td class="px-6 py-2">
                                 {winner.coinsEarned}

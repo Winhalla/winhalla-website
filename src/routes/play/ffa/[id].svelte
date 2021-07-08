@@ -1,8 +1,8 @@
 <script>
 
-    import {onDestroy, onMount} from "svelte";
-    import {callApi} from "../../../utils/api";
-    import {goto, stores} from "@sapper/app";
+    import { onDestroy, onMount } from "svelte";
+    import { callApi } from "../../../utils/api";
+    import { goto, stores } from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
@@ -13,17 +13,17 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
-    import {fade, fly} from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
 
-    import {counter} from "../../../components/store";
-    import {io} from "socket.io-client";
-    import {apiUrl} from "../../../utils/config";
+    import { counter } from "../../../components/store";
+    import { io } from "socket.io-client";
+    import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
 
-    const {page} = stores();
+    const { page } = stores();
 
     let id;
 
@@ -212,7 +212,6 @@
     let isRefreshingStats = false;
     const handleRefresh = async () => {
         isRefreshingStats = true;
-        //faudrait changer le nom ça porte à confusion vu que c les games played
         let winNb = userPlayer.gamesPlayed;
 
         match = await callApi("get", `/getMatch/${id}`);
@@ -521,7 +520,7 @@
 
             {#if !isSpectator && !isMatchEnded}
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} bind:visible={isFfaWatchAdVisible}/>
+                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
             {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}
@@ -529,10 +528,10 @@
 
                         <!--TRANSPARENT PART-->
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
-                             transition:fade={{duration: 350}}></div>
+                             in:fly={{x: 1000, duration: 800}} out:fly={{x: 1800, duration: 1400}}></div>
                         <div
-                                class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full   lg:border-l-2 border-primary flex justify-center items-center"
-                                in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
+                            class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full  z-10 lg:border-l-2 border-primary flex justify-center items-center"
+                            in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
                             <div class="lg:-mt-32 lg:flex items-center h-full">
                                 <button
                                         class="fixed lg:static z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"

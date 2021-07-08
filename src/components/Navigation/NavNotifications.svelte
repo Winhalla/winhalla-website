@@ -22,8 +22,10 @@
         }, 1);
     }
 
-    function calculateTimers() {
-        data.inGame.forEach((match, i) => {
+    function calculateTimers(e) {
+        if (!e) e = data;
+        matchesLength = e.inGame.length;
+        e.inGame.forEach((match, i) => {
             let d = new Date(match.Date);
             const endsIn = -(
                 (new Date().getTime() -
@@ -31,7 +33,7 @@
                 1000
             );
             if (endsIn < 1) {
-                data.inGame[i].timer = "";
+                e.inGame[i].timer = "";
             } else {
                 startTimer(endsIn, i);
             }
@@ -52,21 +54,23 @@
         matchesLength = data.inGame.length;
         calculateTimers();
 
+        counter.subscribe(async (e) => {
+            if (e.refresh) return;
+            e = await e.content;
+            if (e.inGame) {
+                if (e.inGame.length !== matchesLength) {
+                    calculateTimers(e);
+                }
+            }
+        });
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
     //TODO: on peut opti ça en utilisant la data de export let data au lieu de resubscribe pour save de la ram
-    counter.subscribe(() => {
-        if (data.inGame) {
-            if (data.inGame.length !== matchesLength) {
-                calculateTimers();
-            }
-        }
-    });
 
     function startTimer(duration, i) {
-        for (const i in timerIds) {
-            clearInterval(i);
+        for (const ii in timerIds) {
+            clearInterval(ii);
         }
         timerIds = [];
         let timer = duration,
@@ -298,7 +302,7 @@
                                             {idToType(notification.id)}
                                         </span>
                                         {/if}
-                                        <a href="#delNotif"
+                                        <a href="#d"
                                            on:click={() => delNotif(notification._id,i)}
                                            class="-mt-2 -mr-2 lg:mt-0 lg:mr-0 absolute top-0 right-0 text-light
                                     hover:text-font">
@@ -334,11 +338,13 @@
                                             <p class="ml-2 mr-6 lg:mr-12 text-2xl">
                                                 {match.type}
                                             </p>
-                                            <p
-                                                class="ml-2 mr-6 lg:mr-12 text-light
-                                        text-lg">
-                                                {match.timer}
-                                            </p>
+                                            {#if match.timer}
+                                                <p
+                                                    class="ml-2 mr-6 lg:mr-12 text-light
+                                                text-lg">
+                                                    {match.timer}
+                                                </p>
+                                            {/if}
                                         </div>
                                         <p class="quest-goal text-xl text-primary">
                                             <!--{#if match.hasStarted}{/if}-->

@@ -377,7 +377,7 @@
                                         <ErrorAlert message="There was an error exiting the match"
                                                     pushError={pushError} />
                                     {/if}
-                                {:else}
+                                {:else if userPlayer.gamesPlayed <7}
                                     <button
                                         class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
@@ -403,6 +403,8 @@
                                             {/if}
                                         </div>
                                     </button>
+                                    {:else}
+                                    <a href="/play/ffa" class="button button-brand" style="background-color: #fc1870;">Start another match</a>
                                 {/if}
 
                             </div>
@@ -520,9 +522,9 @@
 
                         <!--TRANSPARENT PART-->
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
-                             transition:fade={{duration: 350}}></div>
+                             in:fly={{x: 1000, duration: 800}} out:fly={{x: 1800, duration: 1400}}></div>
                         <div
-                            class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full   lg:border-l-2 border-primary flex justify-center items-center"
+                            class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full  z-10 lg:border-l-2 border-primary flex justify-center items-center"
                             in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
                             <div class="lg:-mt-32 lg:flex items-center h-full">
                                 <button

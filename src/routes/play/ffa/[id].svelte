@@ -404,7 +404,7 @@
                                         </div>
                                     </button>
                                     {:else}
-                                    <a href="/play/ffa" class="button button-brand" style="background-color: #fc1870;">Start another match</a>
+                                    <a href="/play/ffa" class="button button-brand text-background lg:mt-0 lg:ml-4 mt-3" style="background-color: #3de488;">Start another match</a>
                                 {/if}
 
                             </div>

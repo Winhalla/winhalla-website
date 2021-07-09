@@ -539,7 +539,7 @@
                                 <h2 class="text-4xl md:text-5xl">The number of games has not been updated
                                 </h2>
 
-                                <p class="text-accent text-5xl md:text-6xl">What happened ?</p>
+                                <p class="text-accent    text-5xl md:text-6xl">What happened ?</p>
                                 <div class="ml-6 my-6">
                                 <p>The data takes on average 10 minutes to refresh, but it can be longer</p>
                                 <p>We observed that it usually instantly refreshes after the 7th game, try to play the 7 games then click the refresh button</p>

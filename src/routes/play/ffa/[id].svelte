@@ -248,6 +248,8 @@
             sameSite: "lax",
             path: "/"
         });
+
+        isGamesAlertPopupOpen = false;
     };
     const handleQuit = async () => {
         try {

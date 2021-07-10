@@ -8,6 +8,7 @@
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
     import { serialize } from "cookie";
+    import {getCookie} from "../utils/getCookie";
 
     let countDown = [{}, {}];
     export let data;
@@ -153,10 +154,13 @@
             console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
-            if (lastData === JSON.stringify(data)&& !questsAlertAlreadyShown) {
-                isAlertNoRefreshOpen = true
-                questsAlertAlreadyShown = true
+
+            let questsAlertCookie = getCookie("questsAlertState");
+            if (lastData === JSON.stringify(data) && questsAlertCookie !== "disabled" && !questsAlertAlreadyShown) {
+                isAlertNoRefreshOpen = true;
+                questsAlertAlreadyShown = true;
             }
+
             initTimers();
             isRefreshingQuests = false;
         } catch (e) {
@@ -190,7 +194,7 @@
 
     function deactivateAlert() {
         isAlertNoRefreshOpen = false;
-        serialize("gamesAlertState", "disabled", {
+        document.cookie = serialize("questsAlertState", "disabled", {
             maxAge: 15552000,
             sameSite: "lax",
             path: "/"

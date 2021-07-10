@@ -7,6 +7,7 @@
     import PlayAdButton from "./PlayAdButton.svelte";
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
+    import { serialize } from "cookie";
 
     let countDown = [{}, {}];
     export let data;
@@ -18,6 +19,8 @@
     let waitingAd;
     let waitingAdAccept = false;
     let interval;
+    let questsAlertAlreadyShown;
+    let isAlertNoRefreshOpen;
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -107,7 +110,8 @@
             error = e;
         }
     }
-    initTimers()
+
+    initTimers();
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -143,12 +147,17 @@
 
     async function handleRefresh() {
         try {
+            let lastData = JSON.stringify(data);
             isRefreshingQuests = true;
             const refreshedData = await callApi("get", "solo");
             console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
-            initTimers()
+            if (lastData === JSON.stringify(data)&& !questsAlertAlreadyShown) {
+                isAlertNoRefreshOpen = true
+                questsAlertAlreadyShown = true
+            }
+            initTimers();
             isRefreshingQuests = false;
         } catch (e) {
             isRefreshingQuests = false;
@@ -167,7 +176,7 @@
             // waitingAdAccept = true;
             // waitingAd = { type, index: id };
             //* to remove to reactivate ads
-            collect(type, id, false) //*
+            collect(type, id, false); //*
             //*
         } else {
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
@@ -177,6 +186,15 @@
             data.collected[type].push(...data.finished[type].splice(data.finished[type].findIndex(e => e.id === id), 1));
             data = data;
         }
+    }
+
+    function deactivateAlert() {
+        isAlertNoRefreshOpen = false;
+        serialize("gamesAlertState", "disabled", {
+            maxAge: 15552000,
+            sameSite: "lax",
+            path: "/"
+        });
     }
 </script>
 
@@ -531,3 +549,33 @@
         </div>
     </div>
 </div>
+{#if isAlertNoRefreshOpen}
+    <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+         style="z-index: 100"
+         in:fade={{duration: 200}}
+         out:fade={{duration: 350}}>
+
+        <div
+            class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
+            style="max-height: 95vh;"
+            transition:fly={{ y: 300, duration: 350 }}>
+            <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b style="color: #fc1870">updated</b>
+            </h2>
+
+            <p class="mt-1 text-green    text-4xl">Why ?</p>
+            <div class="ml-6 my-6 text-mid-light text-2xl">
+                <p>- The quests takes on average <u>3 hours</u> to update, but it can be <u>longer</u></p>
+                <p class="mt-3 font-normal">- Don't worry if they don't refresh, we <b style="color: #3d72e4">automatically
+                    collect them</b> just before the <b style="color: #3d72e4">timer expires</b>: Come tomorrow to collect them!</p>
+            </div>
+            <div class="mt-8">
+                <button class="button button-brand w-full md:w-auto" on:click={() =>isAlertNoRefreshOpen = false}>Got
+                    it!
+                </button>
+                <button class="button button-brand-alternative /hover:underline md:ml-4 w-full md:w-auto mt-4 md:mt-0"
+                        on:click={deactivateAlert}>Don't show this again
+                </button>
+            </div>
+        </div>
+    </div>
+{/if}

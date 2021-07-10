@@ -22,6 +22,8 @@
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
+    import { getCookie } from "../../../utils/getCookie";
+    import { serialize } from "cookie";
 
     const { page } = stores();
 
@@ -65,6 +67,9 @@
     let isToolTipVisible = false;
     let timerId;
     let gradientList;
+    let isGamesAlertPopupOpen;
+    let gameAlertAlreadyShown;
+
     onMount(() => {
         pages = page.subscribe(async value => {
             isSpectator = value.query.spectator === "true";
@@ -226,9 +231,24 @@
             isMatchEnded = true;
             counter.set({ "refresh": true });
         }
+
+        //0 games refreshed MODAL
+        let gamesAlert = getCookie("gamesAlertState");
+        if (userPlayer.gamesPlayed === 0 && gamesAlert !== "disabled" && !gameAlertAlreadyShown) {
+            isGamesAlertPopupOpen = true;
+            gameAlertAlreadyShown = true
+        }
+
         isRefreshingStats = false;
     };
-
+    const deactivate0GamesAlert = () => {
+        isGamesAlertPopupOpen = false;
+        serialize("gamesAlertState", "disabled", {
+            maxAge: 15552000,
+            sameSite: "lax",
+            path: "/"
+        });
+    };
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
@@ -512,6 +532,31 @@
                     </div>
                     <GuideCard page="ffa" />
 
+                    {#if isGamesAlertPopupOpen}
+                        <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+                             style="z-index: 100"
+                             in:fade={{duration: 200}}
+                             out:fade={{duration: 350}}>
+
+                            <div
+                                class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
+                                style="max-height: 95vh;"
+                                transition:fly={{ y: 300, duration: 350 }}>
+                                <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b style="color: #fc1870">updated</b>
+                                </h2>
+
+                                <p class="mt-1 text-green    text-4xl">Why ?</p>
+                                <div class="ml-6 my-6 text-mid-light text-2xl">
+                                    <p>- The number of games takes on average <u>10 minutes</u> to actualise, but it can be <u>longer</u></p>
+                                    <p class="mt-3 font-normal">- We observed that it usually <b style="color: #3d72e4">instantly updates</b> after the <b style="color: #3d72e4">7th game</b>: try to play the 7 games then click the refresh button</p>
+                                </div>
+                                <div class="mt-8">
+                                    <button class="button button-brand w-full md:w-auto" on:click={() =>isGamesAlertPopupOpen = false}>Got it!</button>
+                                    <button class="button button-brand-alternative /hover:underline md:ml-4 w-full md:w-auto mt-4 md:mt-0" on:click={() =>deactivate0GamesAlert}>Don't show this again</button>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
                     <div class="block lg:hidden mt-6">
                         <script
                             src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"

@@ -7,13 +7,12 @@
     import { onMount } from "svelte";
     import CookiePopup from "../components/CookiePopup.svelte";
     import { getCookie } from "../utils/getCookie";
-    import {stores} from "@sapper/app"
-    const {page} = stores()
+
     //Show error to the user if there is one from an api request
     let error;
     onMount(() => {
-        eventEmitter.subscribe(e => {
-            e = e.error
+        eventEmitter.subscribe(async e => {
+            e = e.error;
             if (!e) return;
             if (e instanceof Error) {
                 if (e.response) {
@@ -24,10 +23,6 @@
                 }
             }
         });
-        page.subscribe(e=>{
-            error = undefined
-        })
-
 
         const acceptedCookieList = getCookie("acceptedCookieList");
         if (acceptedCookieList === "true") {

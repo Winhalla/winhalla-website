@@ -22,6 +22,8 @@
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
+    import { getCookie } from "../../../utils/getCookie";
+    import { serialize } from "cookie";
 
     const { page } = stores();
 
@@ -65,6 +67,8 @@
     let isToolTipVisible = false;
     let timerId;
     let gradientList;
+    let isGamesAlertPopupOpen;
+
     onMount(() => {
         pages = page.subscribe(async value => {
             isSpectator = value.query.spectator === "true";
@@ -226,9 +230,20 @@
             isMatchEnded = true;
             counter.set({ "refresh": true });
         }
+        let gamesAlert = getCookie("gamesAlertState");
+        if (userPlayer.gamesPlayed === 0 && gamesAlert !== "disabled") {
+            isGamesAlertPopupOpen = true;
+        }
         isRefreshingStats = false;
     };
-
+    const deactivate0GamesAlert = () => {
+        isGamesAlertPopupOpen = false;
+        serialize("gamesAlertState", "disabled", {
+            maxAge: 15552000,
+            sameSite: "lax",
+            path: "/"
+        });
+    };
     const handleQuit = async () => {
         try {
             const exitStatus = await callApi("post", `/exitMatch`);
@@ -318,7 +333,7 @@
     <script
         src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
         id="purpleads-client"></script>
-    <title>Winhalla | FFA match</title>
+    <title>Winhalla | Solo match</title>
     <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
 </svelte:head>
 
@@ -352,7 +367,7 @@
                         <div
                             class="flex justify-center lg:justify-start
                         items-end ">
-                            <h1 class="text-6xl leading-none">FFA</h1>
+                            <h1 class="text-6xl leading-none">Solo</h1>
                             <p
                                 class="timer text-primary ml-5 text-3xl leading-none">
                                 {#if countDown}{@html countDown}{:else}Loading...{/if}
@@ -511,7 +526,31 @@
                         {/if}
                     </div>
                     <GuideCard page="ffa" />
+                    {#if isGamesAlertPopupOpen}
+                        <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+                             style="z-index: 100"
+                             in:fade={{duration: 200}}
+                             out:fade={{duration: 350}}>
 
+                            <div
+                                class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
+                                style="max-height: 95vh;"
+                                transition:fly={{ y: 300, duration: 350 }}>
+                                <h2 class="text-4xl md:text-5xl">The number of games has not been updated
+                                </h2>
+
+                                <p class="text-accent    text-5xl md:text-6xl">What happened ?</p>
+                                <div class="ml-6 my-6">
+                                <p>The data takes on average 10 minutes to refresh, but it can be longer</p>
+                                <p>We observed that it usually instantly refreshes after the 7th game, try to play the 7 games then click the refresh button</p>
+                                </div>
+                                <div>
+                                    <button class="button button-brand" on:click={() =>isGamesAlertPopupOpen = false}>Got it!</button>
+                                    <button class="hover:underline ml-4" on:click={() =>deactivate0GamesAlert}>Don't show this again</button>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
                     <div class="block lg:hidden mt-6">
                         <script
                             src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"

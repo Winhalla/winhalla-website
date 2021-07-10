@@ -7,10 +7,10 @@
     import PlayAdButton from "./PlayAdButton.svelte";
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
+    import { serialize } from "cookie";
 
     let countDown = [{}, {}];
     export let data;
-    console.log(data);
     let error;
     let socket;
     let adError;
@@ -18,6 +18,16 @@
     let waitingAd;
     let waitingAdAccept = false;
     let interval;
+    let isRefreshQuestsPanelOpen;
+
+    function deactivateFailedRefresh(){
+        isRefreshQuestsPanelOpen = false;
+        serialize("questsAlertState", "disabled", {
+            maxAge: 15552000,
+            sameSite: "lax",
+            path: "/"
+        });
+    }
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -107,7 +117,8 @@
             error = e;
         }
     }
-    initTimers()
+
+    initTimers();
 
     function calculateOrder(object) {
         //Reorder quests by rarety
@@ -143,13 +154,18 @@
 
     async function handleRefresh() {
         try {
+            let questsData = JSON.stringify(data)
             isRefreshingQuests = true;
             const refreshedData = await callApi("get", "solo");
             console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
-            initTimers()
+            if(JSON.stringify(data) === questsData){
+                isRefreshQuestsPanelOpen = true
+            }
+            initTimers();
             isRefreshingQuests = false;
+
         } catch (e) {
             isRefreshingQuests = false;
         }
@@ -167,7 +183,7 @@
             // waitingAdAccept = true;
             // waitingAd = { type, index: id };
             //* to remove to reactivate ads
-            collect(type, id, false) //*
+            collect(type, id, false); //*
             //*
         } else {
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
@@ -531,3 +547,29 @@
         </div>
     </div>
 </div>
+{#if isRefreshQuestsPanelOpen}
+    <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+         style="z-index: 100"
+         in:fade={{duration: 200}}
+         out:fade={{duration: 350}}>
+
+        <div
+            class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
+            style="max-height: 95vh;"
+            transition:fly={{ y: 300, duration: 350 }}>
+            <h2 class="text-4xl md:text-5xl">The quests has not been updated
+            </h2>
+
+            <p class="text-accent text-5xl md:text-6xl">What happened ?</p>
+            <div class="ml-6 my-6">
+                <p>The data takes on average 3 hours to refresh, but it can be longer</p>
+                <p>Don't worry, the quests are automatically refreshed and completed just before they expire if you have fulfilled their goal</p>
+            </div>
+            <div>
+                <button class="button button-brand" on:click={() =>isRefreshQuestsPanelOpen = false}>Got it!</button>
+                <button class="hover:underline ml-4" on:click={deactivateFailedRefresh}>Don't show this again
+                </button>
+            </div>
+        </div>
+    </div>
+{/if}

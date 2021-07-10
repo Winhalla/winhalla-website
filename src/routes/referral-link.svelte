@@ -147,7 +147,7 @@
                         <p class="text-6xl mt-6">You</p>
                         <p class="leading-7 mt-13 text-2xl">
                             will get
-                            <b>{linkConfig.boost}%</b>
+                            <b>{linkConfig.boost/2}%</b>
                             of the coins that
                             <b>each people</b>
                             who

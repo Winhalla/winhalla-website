@@ -281,15 +281,14 @@
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
         <div
             class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
-            <div class="lg:flex">
+            <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
-                    class="text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
-                    lg:pt-6" class:text-xl={countDown[0].finished}>
+                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[0].finished}>
                     {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
             </div>
-            <div class="quests-container">
+            <div class="quests-container mt-1">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
@@ -386,15 +385,14 @@
         <div
             class="ml-5 mr-5 mt-12 md:ml-5 md:mr-0
             md:mt-0">
-            <div class="lg:flex">
+            <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
-                    class="text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
-                    lg:pt-6" class:text-xl={countDown[1].finished}>
+                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[1].finished}>
                     {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
             </div>
-            <div class="quests-container">
+            <div class="quests-container mt-1">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}

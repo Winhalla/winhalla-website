@@ -526,6 +526,7 @@
                         {/if}
                     </div>
                     <GuideCard page="ffa" />
+
                     {#if isGamesAlertPopupOpen}
                         <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
                              style="z-index: 100"
@@ -533,20 +534,20 @@
                              out:fade={{duration: 350}}>
 
                             <div
-                                class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-scroll md:overflow-y-auto"
+                                class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
                                 style="max-height: 95vh;"
                                 transition:fly={{ y: 300, duration: 350 }}>
-                                <h2 class="text-4xl md:text-5xl">The number of games has not been updated
+                                <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b style="color: #fc1870">updated</b>
                                 </h2>
 
-                                <p class="text-accent    text-5xl md:text-6xl">What happened ?</p>
-                                <div class="ml-6 my-6">
-                                <p>The data takes on average 10 minutes to refresh, but it can be longer</p>
-                                <p>We observed that it usually instantly refreshes after the 7th game, try to play the 7 games then click the refresh button</p>
+                                <p class="mt-1 text-green    text-4xl">Why ?</p>
+                                <div class="ml-6 my-6 text-mid-light text-2xl">
+                                    <p>- The data takes on average <u>10 minutes</u> to refresh, but it can be <u>longer</u></p>
+                                    <p class="mt-3 font-normal">- We observed that it usually <b style="color: #3d72e4">instantly refreshes</b> after the <b style="color: #3d72e4">7th game</b>: try to play the 7 games then click the refresh button</p>
                                 </div>
-                                <div>
-                                    <button class="button button-brand" on:click={() =>isGamesAlertPopupOpen = false}>Got it!</button>
-                                    <button class="hover:underline ml-4" on:click={() =>deactivate0GamesAlert}>Don't show this again</button>
+                                <div class="mt-8">
+                                    <button class="button button-brand w-full md:w-auto" on:click={() =>isGamesAlertPopupOpen = false}>Got it!</button>
+                                    <button class="button button-brand-alternative /hover:underline md:ml-4 w-full md:w-auto mt-4 md:mt-0" on:click={() =>deactivate0GamesAlert}>Don't show this again</button>
                                 </div>
                             </div>
                         </div>

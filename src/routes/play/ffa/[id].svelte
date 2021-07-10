@@ -68,6 +68,7 @@
     let timerId;
     let gradientList;
     let isGamesAlertPopupOpen;
+    let gameAlertAlreadyShown;
 
     onMount(() => {
         pages = page.subscribe(async value => {
@@ -233,8 +234,9 @@
 
         //0 games refreshed MODAL
         let gamesAlert = getCookie("gamesAlertState");
-        if (userPlayer.gamesPlayed === 0 && gamesAlert !== "disabled") {
+        if (userPlayer.gamesPlayed === 0 && gamesAlert !== "disabled" && !gameAlertAlreadyShown) {
             isGamesAlertPopupOpen = true;
+            gameAlertAlreadyShown = true
         }
 
         isRefreshingStats = false;
@@ -545,8 +547,8 @@
 
                                 <p class="mt-1 text-green    text-4xl">Why ?</p>
                                 <div class="ml-6 my-6 text-mid-light text-2xl">
-                                    <p>- The data takes on average <u>10 minutes</u> to refresh, but it can be <u>longer</u></p>
-                                    <p class="mt-3 font-normal">- We observed that it usually <b style="color: #3d72e4">instantly refreshes</b> after the <b style="color: #3d72e4">7th game</b>: try to play the 7 games then click the refresh button</p>
+                                    <p>- The number of games takes on average <u>10 minutes</u> to actualise, but it can be <u>longer</u></p>
+                                    <p class="mt-3 font-normal">- We observed that it usually <b style="color: #3d72e4">instantly updates</b> after the <b style="color: #3d72e4">7th game</b>: try to play the 7 games then click the refresh button</p>
                                 </div>
                                 <div class="mt-8">
                                     <button class="button button-brand w-full md:w-auto" on:click={() =>isGamesAlertPopupOpen = false}>Got it!</button>

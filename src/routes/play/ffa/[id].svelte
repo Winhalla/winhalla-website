@@ -177,9 +177,9 @@
         if (!isFromSocket) {
             userPlayer = match.players.find(p => p.steamId === user.id);
         } else {
-            let playerIndex = match.players.findIndex(p => p.steamId === user.id);
-            match.players[playerIndex].wins = userPlayer.wins;
-            userPlayer = match.players[playerIndex];
+            let userWins = userPlayer.wins
+            userPlayer = {...match.players.find(p => p.steamId === user.id),wins:userWins}
+
         }
         //Delete user's object from array.
         players = [...match.players];

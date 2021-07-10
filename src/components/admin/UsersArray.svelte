@@ -218,16 +218,16 @@
             {/if}
         </tr>
         {#if user.isDetailsOpen}
-
             <tr class="w-full py-5 ">
                 <td></td>
-                <td class="w-full" colspan="4">
+                <td class="w-full" colspan="3">
                     {#if user.solo?.logs.length !== 0}
                         <div class="w-full">
                             <h1 class="text-green text-4xl p-4">Quests History</h1>
                             {#each user.solo?.logs as quest, ii}
                                 {#if ii < 5}
                                     <div class="p-2 pl-4">
+                                        <p>Total earned via quests:<span class="text-primary">{user.solo.logs.reduce((a,b)=>a+b.reward)}</span></p>
                                         <h3 class="text-3xl text-primary">Quest {ii + 1}:</h3>
                                         <p class="text-xl">Type : {quest.type}</p>
                                         <p class="text-xl">Goal : {quest.name}</p>
@@ -237,6 +237,7 @@
                                            class:text-green={Math.floor(quest.time / 60) > 1}>
                                             Time : {Math.floor(quest.time / 60)}
                                             h {quest.time - Math.floor(quest.time / 60) * 60}m</p>
+                                        <p class="text-xl">Reward: {quest.reward}</p>
                                     </div>
                                 {/if}
                             {/each}

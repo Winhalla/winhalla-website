@@ -230,10 +230,13 @@
             isMatchEnded = true;
             counter.set({ "refresh": true });
         }
+
+        //0 games refreshed MODAL
         let gamesAlert = getCookie("gamesAlertState");
         if (userPlayer.gamesPlayed === 0 && gamesAlert !== "disabled") {
             isGamesAlertPopupOpen = true;
         }
+
         isRefreshingStats = false;
     };
     const deactivate0GamesAlert = () => {

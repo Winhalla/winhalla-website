@@ -557,7 +557,7 @@
             class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
             style="max-height: 95vh;"
             transition:fly={{ y: 300, duration: 350 }}>
-            <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b style="color: #fc1870">updated</b>
+            <h2 class="text-4xl md:text-5xl">The quests data hasn't been <b style="color: #fc1870">updated</b>
             </h2>
 
             <p class="mt-1 text-green    text-4xl">Why ?</p>

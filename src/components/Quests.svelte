@@ -8,6 +8,7 @@
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
     import { serialize } from "cookie";
+    import {getCookie} from "../utils/getCookie";
 
     let countDown = [{}, {}];
     export let data;
@@ -153,10 +154,13 @@
             console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
-            if (lastData === JSON.stringify(data)&& !questsAlertAlreadyShown) {
-                isAlertNoRefreshOpen = true
-                questsAlertAlreadyShown = true
+
+            let questsAlertCookie = getCookie("questsAlertState");
+            if (lastData === JSON.stringify(data) && questsAlertCookie !== "disabled" && !questsAlertAlreadyShown) {
+                isAlertNoRefreshOpen = true;
+                questsAlertAlreadyShown = true;
             }
+
             initTimers();
             isRefreshingQuests = false;
         } catch (e) {
@@ -190,11 +194,13 @@
 
     function deactivateAlert() {
         isAlertNoRefreshOpen = false;
-        serialize("gamesAlertState", "disabled", {
+        document.cookie = serialize("questsAlertState", "disabled", {
             maxAge: 15552000,
             sameSite: "lax",
             path: "/"
         });
+
+        isAlertNoRefreshOpen = false;
     }
 </script>
 
@@ -299,15 +305,14 @@
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
         <div
             class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
-            <div class="lg:flex">
+            <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
-                    class="text-{countDown[0].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
-                    lg:pt-6" class:text-xl={countDown[0].finished}>
+                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[0].finished}>
                     {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
             </div>
-            <div class="quests-container">
+            <div class="quests-container mt-1">
                 {#if data.finished && data.finished.daily}
                     <div class="pb-1 ">
                         {#each data.finished.daily as quest, i}
@@ -404,15 +409,14 @@
         <div
             class="ml-5 mr-5 mt-12 md:ml-5 md:mr-0
             md:mt-0">
-            <div class="lg:flex">
+            <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
-                    class="text-{countDown[1].speed} text-center lg:text-center lg:ml-5 text-3xl leading-none
-                    lg:pt-6" class:text-xl={countDown[1].finished}>
+                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[1].finished}>
                     {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
             </div>
-            <div class="quests-container">
+            <div class="quests-container mt-1">
                 {#if data.finished && data.finished.weekly}
                     <div class="pb-1">
                         {#each data.finished.weekly as quest, i}
@@ -559,7 +563,7 @@
             class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
             style="max-height: 95vh;"
             transition:fly={{ y: 300, duration: 350 }}>
-            <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b style="color: #fc1870">updated</b>
+            <h2 class="text-4xl md:text-5xl">The quests data hasn't been <b style="color: #fc1870">updated</b>
             </h2>
 
             <p class="mt-1 text-green    text-4xl">Why ?</p>

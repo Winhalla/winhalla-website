@@ -318,7 +318,7 @@
     <script
         src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
         id="purpleads-client"></script>
-    <title>Winhalla | Solo match</title>
+    <title>Winhalla | FFA match</title>
     <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
 </svelte:head>
 
@@ -352,7 +352,7 @@
                         <div
                             class="flex justify-center lg:justify-start
                         items-end ">
-                            <h1 class="text-6xl leading-none">Solo</h1>
+                            <h1 class="text-6xl leading-none">FFA</h1>
                             <p
                                 class="timer text-primary ml-5 text-3xl leading-none">
                                 {#if countDown}{@html countDown}{:else}Loading...{/if}

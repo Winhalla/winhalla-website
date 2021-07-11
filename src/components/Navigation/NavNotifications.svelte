@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import cookie from "cookie";
     import { counter } from "../store";
+    import { goto } from "@sapper/app";
 
     export let page;
     export let data;
@@ -11,6 +12,11 @@
     let isDropdownOpen = false;
     let matchesLength;
     let timerIds = [];
+
+    function go(id,matchId) {
+        if(id === 0) goto("/play/ffa/"+matchId)
+        else if (id === 1) goto("/play")
+    }
 
     function handleClick() {
         isDropdownOpen = !isDropdownOpen;
@@ -66,6 +72,7 @@
         //document.cookie = cookie.serialize("notificationNb",cookies.notificationNb,{maxAge:15552000,sameSite:"lax"})
         //document.cookie = cookie.serialize(cookies)
     });
+
     //TODO: on peut opti ça en utilisant la data de export let data au lieu de resubscribe pour save de la ram
 
     function startTimer(duration, i) {
@@ -280,8 +287,9 @@
                             <p class="ml-1">Notifications</p>
                             <div>
                                 {#each data.notifications as notification, i}
-                                    <a href="/{notification.id === 0?`play/ffa/${notification.matchId}`:notification.id === 1?'play':''}"
-                                       class="card notification flex items-center
+                                    <button
+                                        on:click={()=>go(notification.id,notification?.matchId)}
+                                        class="card notification flex items-center
                                 relative" class:cursor-default={notification.id === 2}>
                                         <div class="progress-container">
                                             <p class="mr-6 lg:mr-12 text-2xl">
@@ -302,7 +310,7 @@
                                             {idToType(notification.id)}
                                         </span>
                                         {/if}
-                                        <a href="#d"
+                                        <button
                                            on:click={() => delNotif(notification._id,i)}
                                            class="-mt-2 -mr-2 lg:mt-0 lg:mr-0 absolute top-0 right-0 text-light
                                     hover:text-font">
@@ -316,8 +324,8 @@
                                             2.4 2.4 9.6-9.6 9.6 9.6
                                             2.4-2.4-9.6-9.6z" />
                                             </svg>
-                                        </a>
-                                    </a>
+                                        </button>
+                                    </button>
                                 {/each}
                             </div>
                         {:else}

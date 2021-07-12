@@ -35,7 +35,6 @@
     let currentMatch;
 
     function calculateProperties(user1) {
-        console.log(user1);
         if (!user1) return isUserLoggedIn = false;
         if (user1.offline) offline = true;
         if (user1 instanceof Error) {

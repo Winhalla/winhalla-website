@@ -69,7 +69,6 @@
         stats = await callApi("get", `/feltrom/stats?otp=${otp}&pwd=${pwd}`);
         setTimeout(async () => {
             stats.forEach((e, i) => {
-                console.log(e.name);
                 let canvas = document.getElementById(e.name).getContext("2d");
                 const data = {
                     labels: e.date,

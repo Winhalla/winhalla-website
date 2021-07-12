@@ -19,7 +19,6 @@
         }*/
 
         answer = number;
-        console.log(answer)
     }
 
     setInterval(() => {

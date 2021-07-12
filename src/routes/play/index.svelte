@@ -58,7 +58,6 @@
             }
             if (gameModesStatus && !gameModesError) {
                 gameModesStatus = gameModesStatus.value;
-                console.log(gameModes, gameModesStatus);
                 Object.keys(gameModesStatus).forEach(gameModeName => {
                     const gameMode = gameModes.find(
                         g => g.name === gameModeName.toLowerCase()

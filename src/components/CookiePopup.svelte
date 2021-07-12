@@ -55,7 +55,6 @@
             //Unblock only the accepted cookies
 
             for (const [key, value] of Object.entries(settings)) {
-                console.log(key, value);
 
                 if (value.accepted) {
                     acceptedCookieList = acceptedCookieList.concat(value.urls);

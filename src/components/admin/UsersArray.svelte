@@ -22,7 +22,6 @@
     function isSteamIdValid() {
         setTimeout(() => {
             isVerifyingSteamId.isValid = parseInt(isVerifyingSteamId.tempSteamId) === isVerifyingSteamId.steamId;
-            console.log(isVerifyingSteamId.tempSteamId, isVerifyingSteamId.steamId);
         }, 1);
     }
 

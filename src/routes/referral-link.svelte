@@ -85,7 +85,6 @@
             return;
         }
         const { isValid, reason } = await callApi("get", `/auth/isBIDvalid/${brawlhallaID}`);
-        console.log(isValid, reason);
         if (isValid) {
             waitingBID = false;
         } else {

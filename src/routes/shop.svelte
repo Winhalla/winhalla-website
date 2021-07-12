@@ -32,7 +32,6 @@
         unsub = counter.subscribe(async (value) => {
             if (value.refresh === true) return;
             player = await value.content;
-            console.log(player);
             if (player.user) {
                 player = player.user.coins;
             } else {

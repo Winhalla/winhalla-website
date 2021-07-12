@@ -10,6 +10,7 @@ Component that detects if the adblock popup needs to be shown and if it has been
 
     let unique = {};
 
+    //if component has been destroy rebuild it
     let hasBeenDestroyed;
     $: if (hasBeenDestroyed) {
         //regenerate component cause every {} is unique

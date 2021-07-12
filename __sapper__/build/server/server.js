@@ -2490,15 +2490,16 @@ const AdblockAlert = create_ssr_component(($$result, $$props, $$bindings, slots)
 	onMount(() => {
 		//Adblock detector
 		setTimeout(
-			() => {
+			async () => {
 				if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
-					if (!window.hasAdblockerDisabled) {
-						//Is blocking ads
+					try {
+						await axios__default['default'].get(`https://winhalla.app/ads.txt`);
+					} catch(e) {
 						adblocker = true;
 					}
 				}
 			},
-			5000
+			2500
 		);
 	});
 
@@ -2512,8 +2513,6 @@ const AdblockAlert = create_ssr_component(($$result, $$props, $$bindings, slots)
 
 		$$rendered = `
 
-
-${($$result.head += `<script src="${"/ad-blocker.js"}" type="${"text/javascript"}" data-svelte="svelte-mjavb0"></script>`, "")}
 
 ${validate_component(AdblockAlertStyle, "AdblockAlertStyle").$$render(
 			$$result,

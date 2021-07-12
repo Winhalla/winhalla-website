@@ -121,7 +121,6 @@
             delete newConfig[4].value.expDate;
             newConfig[4].value.expiration = expiration;
             newConfig[3].value[newConfig[3].value.findIndex(e => e.type === "event")].expiration = expiration;
-            console.log(expiration);
         }
         await callApi("post", `/feltrom/save?otp=${otp}&pwd=${pwd}`, newConfig);
         login({ users: true, commands: false });

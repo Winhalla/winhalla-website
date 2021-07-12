@@ -8,6 +8,7 @@
             username: e.username,
             avatarURL: e.avatarURL,
             wins: e.wins,
+            games:e.gamesPlayed,
             rank: e.rank,
             coinsEarned: Math.round(e.rewards * 10) / 10,
             multiplier: e.multiplier,
@@ -148,7 +149,6 @@
             {/if}
 
             <!--3rd card-->
-            <!--If there is a third (impossible if there is 2 2nd)-->
             {#if data.find(e => e.rank === 2) }
                 {#each [data.find(e => e.rank === 2)] as winner,i}
                     <div class="mt-10 lg:mt-20 lg:ml-10">
@@ -171,6 +171,7 @@
                         </div>
                     </div>
                 {/each}
+
             {/if}
         </div>
 
@@ -186,6 +187,9 @@
                     </td>
                     <td class="px-6 py-3">
                         Wins
+                    </td>
+                    <td class="px-6 py-3">
+                        Games played
                     </td>
                     <td class="px-6 py-3">
                         Earned
@@ -213,6 +217,9 @@
                             </td>
                             <td class="px-6 py-2">
                                 <b class="font-normal">{winner.wins}</b>/7
+                            </td>
+                            <td class="px-6 py-2">
+                                <b class="font-normal">{winner.gamesPlayed}</b>/7
                             </td>
                             <td class="px-6 py-2">
                                 {winner.coinsEarned}

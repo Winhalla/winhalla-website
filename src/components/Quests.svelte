@@ -12,7 +12,6 @@
 
     let countDown = [{}, {}];
     export let data;
-    console.log(data);
     let error;
     let socket;
     let adError;
@@ -151,7 +150,6 @@
             let lastData = JSON.stringify(data);
             isRefreshingQuests = true;
             const refreshedData = await callApi("get", "solo");
-            console.log(refreshedData);
             calculateOrder(refreshedData.solo);
             data = refreshedData.solo;
 

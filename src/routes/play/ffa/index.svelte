@@ -10,15 +10,13 @@
         let id;
         try {
             id = await callApi("get", "/lobby");
-        if(id instanceof Error) throw id
-
-        console.log("id", id);
-        if (!id) {
-            goto(`$/login`);
-        }
+            if (id instanceof Error) return error = id.response.data;
+            if (!id) {
+                goto(`$/login`);
+            }
 
 
-        goto(`/play/ffa/${id}`);
+            goto(`/play/ffa/${id}`);
         } catch (err) {
             if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
                 error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
@@ -30,9 +28,12 @@
 </script>
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
-        <h2 class="lg:text-4xl text-3xl text-center">{error}</h2>
+        <h2 class="lg:text-5xl text-3xl text-center">
+        <p class="text-accent ">Wow, unexpected error occured, details for geeks below.</p>
+        <p class="text-2xl lg:text-3xl">{error}</p>
+        </h2>
         <a href="/play"><p class="underline lg:text-3xl text-2xl  text-center text-primary">Go to play page</p></a>
     </div>
 {:else}
-    <Loading data={"Finding game..."}/>
+    <Loading data={"Finding game..."} />
 {/if}

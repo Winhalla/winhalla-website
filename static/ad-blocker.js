@@ -1,1 +1,0 @@
-window.hasAdblockerDisabled = true

@@ -4,6 +4,7 @@ Component that detects if the adblock popup needs to be shown and if it has been
 <script>
     import { onMount } from "svelte";
     import AdblockAlertStyle from "./AdblockAlertStyle.svelte";
+    import axios from "axios";
 
     export let user = {};
     export let quests = {};
@@ -20,21 +21,20 @@ Component that detects if the adblock popup needs to be shown and if it has been
     let adblocker = false;
     onMount(() => {
         //Adblock detector
-        setTimeout(()=>{
+
+        setTimeout( async ()=>{
             if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
-                if (!window.hasAdblockerDisabled) {
-                    //Is blocking ads
-                    adblocker = true;
+                try {
+                    await axios.get(`https://winhalla.app/ads.txt`)
+                } catch (e) {
+                    adblocker = true
                 }
             }
-        },5000)
+        },2500)
 
     });
-</script>
 
-<svelte:head>
-    <script src="/ad-blocker.js" type="text/javascript"></script>
-</svelte:head>
+</script>
 
 {#key unique}
     <AdblockAlertStyle isVisible="{adblocker}" bind:hasBeenDestroyed="{hasBeenDestroyed}" />

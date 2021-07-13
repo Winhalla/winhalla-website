@@ -8,7 +8,7 @@
             username: e.username,
             avatarURL: e.avatarURL,
             wins: e.wins,
-            games:e.gamesPlayed,
+            gamesPlayed:e.gamesPlayed,
             rank: e.rank,
             coinsEarned: Math.round(e.rewards * 10) / 10,
             multiplier: e.multiplier,

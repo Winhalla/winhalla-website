@@ -189,19 +189,17 @@
     //Function that starts a timer with a date, and refreshes it every second
     function startTimer(duration) {
         let timer = duration,
-            hours,
             minutes,
             seconds;
         if (timerId) clearInterval(timerId);
         timerId = setInterval(function() {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
-            hours = Math.floor(timer / (60 * 60));
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            countDown = hours + ":" + minutes + ":" + seconds;
+            countDown = minutes + ":" + seconds;
 
             if (--timer < 0) {
                 timer = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";

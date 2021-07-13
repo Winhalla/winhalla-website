@@ -32,17 +32,21 @@
         unsub = counter.subscribe(async (value) => {
             if (value.refresh === true) return;
             player = await value.content;
-            if (player.user) {
-                player = player.user.coins;
-            } else {
-                player = 0;
-            }
+            if (!player?.user) player = { user: { coins: 0 } };
+            let playerPlatform = /([a-zA-Z]+)(.+)/gm.exec(player.steam.id)[1];
+            console.log(player.steam.id)
+            console.log(playerPlatform);
             items.forEach((item, i) => {
                 items[i].isDescriptionToggled = false;
 
                 items[i].unBuyable = false;
                 item.name = item.name.toLowerCase().replace(/\s/g, "-");
-                if (item.cost > player) items[i].unBuyable = true;
+                if (item.cost > player.user.coins)
+                    items[i].unBuyable = "Not enough coins";
+
+                if (!item.platforms.some(name => name === playerPlatform || name === "all"))
+                    items[i].unBuyable = "Platform not compatible";
+
             });
 
             featuredItem = items.find((i) => i.state === 0);
@@ -295,6 +299,25 @@
     .email-input::placeholder {
         font-family: "Bebas Neue", sans-serif;
     }
+
+    .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: 25%;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #fc1870 transparent transparent transparent;
+    }
+    .tooltip-alt::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: 40%;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #fc1870 transparent transparent transparent;
+    }
 </style>
 
 <svelte:head>
@@ -348,7 +371,7 @@
                 <div class="mt-7 lg:mt-12 lg:ml-24">
                     <div>
                         <h1 class="text-6xl text-center lg:text-left">
-                            Battle pass
+                            Featured
                         </h1>
                         <div
                             class="card xl:w-70/100 2xl:w-60/100 xl:h-85/100 2xl:h-80/100 mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
@@ -360,7 +383,8 @@
                                 class="absolute bottom-0 z-10 px-5 md:pr-10 pb-3 w-full">
                                 <div
                                     class="justify-between w-full md:items-center">
-                                    <p class="text-accent text-5xl lg:text-6xl" style="line-height:1" class:hidden={featuredItem.isDescriptionToggled}>
+                                    <p class="text-accent text-5xl lg:text-6xl" style="line-height:1"
+                                       class:hidden={featuredItem.isDescriptionToggled}>
                                         {featuredItem.name
                                             .toLowerCase()
                                             .replace(/\-/g, ' ')}
@@ -372,7 +396,7 @@
                                     </p>
 
                                     <div
-                                        class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                        class="flex justify-between w-full items-end md:pr-5 pb-1">
                                         <div class="-mb-2 md:mb-0">
                                             <div>
                                                 <p
@@ -390,20 +414,34 @@
                                             </div>
 
                                         </div>
-                                        <button
-                                            disabled={featuredItem.unBuyable}
-                                            on:click={() => buyItem(featuredItem.id, featuredItem.name)}
-                                            class="px-4 py-1 bg-primary rounded">
-                                            <div class="flex  items-center  text-2xl">
-                                                <b
-                                                    class="mr-2 font-normal"
-                                                    style="padding-top: 0.12rem">{featuredItem.cost}</b>
-                                                <div class="w-8 mt-1 text-font"
-                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                    <CoinIcon />
+                                        <div
+                                            on:mouseenter={() => featuredItem.tooltipOpen = true}
+                                            on:mouseleave={() => featuredItem.tooltipOpen = false}>
+                                            <button
+                                                disabled={!!featuredItem.unBuyable}
+                                                on:click={() => buyItem(featuredItem.id, featuredItem.name)}
+                                                on:mouseenter={() => featuredItem.tooltipOpen = true}
+                                                on:mouseleave={() => featuredItem.tooltipOpen = false}
+                                                class="px-4 py-1 bg-primary rounded">
+                                                <div class="flex  items-center  text-2xl">
+                                                    <b
+                                                        class="mr-2 font-normal"
+                                                        style="padding-top: 0.12rem">{featuredItem.cost.toLocaleString()}</b>
+                                                    <div class="w-8 mt-1 text-font"
+                                                         style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                        <CoinIcon />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </button>
+                                                {#if featuredItem.tooltipOpen && featuredItem.unBuyable}
+                                                    <span
+                                                        class="tooltip absolute bottom-15 right-1 lg:right-11 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
+                                                        style="width:fit-content;"
+                                                        transition:fade>
+                                                        {featuredItem.unBuyable}
+                                                    </span>
+                                                {/if}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -427,7 +465,7 @@
                                                 <p
                                                     class:hidden={seasonPack.isDescriptionToggled}
                                                     class:-mb-1={!seasonPack.isDescriptionToggled}
-                                                    class="text-accent text-5xl md:mb-0 md:block">
+                                                    class="text-accent text-4xl lg:text-5xl md:mb-0 md:block">
                                                     {seasonPack.name
                                                         .toLowerCase()
                                                         .replace(/\-/g, ' ')}
@@ -456,20 +494,34 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <button
-                                                        disabled={seasonPack.unBuyable}
-                                                        on:click={() => buyItem(seasonPack.id,seasonPack.name)}
-                                                        class="px-4 py-1 bg-primary rounded">
-                                                        <div class="flex  items-center  text-2xl">
-                                                            <b
-                                                                class="mr-2 font-normal"
-                                                                style="padding-top: 0.12rem">{seasonPack.cost}</b>
-                                                            <div class="w-8 mt-1 text-font"
-                                                                 style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                                <CoinIcon />
+                                                    <div on:mouseenter={() => seasonPack.tooltipOpen = true}
+                                                         on:mouseleave={() => seasonPack.tooltipOpen = false}>
+                                                        <button
+                                                            disabled={!!seasonPack.unBuyable}
+                                                            on:click={() => buyItem(seasonPack.id,seasonPack.name)}
+                                                            class="px-4 py-1 bg-primary rounded">
+                                                            <div class="flex  items-center  text-2xl">
+                                                                <b
+                                                                    class="mr-2 font-normal"
+                                                                    style="padding-top: 0.12rem">{seasonPack.cost.toLocaleString()}</b>
+                                                                <div class="w-8 mt-1 text-font"
+                                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                                    <CoinIcon />
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </button>
+                                                            {#if seasonPack.tooltipOpen && seasonPack.unBuyable}
+
+                                                                <span
+                                                                    class="tooltip text-center absolute bottom-15 right-1 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
+                                                                    class:tooltip={window.innerWidth < 1024}
+                                                                    class:tooltip-alt={window.innerWidth > 1024}
+                                                                    style="width:fit-content;"
+                                                                    transition:fade>
+                                                                    {seasonPack.unBuyable}
+                                                                </span>
+                                                            {/if}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -501,25 +553,38 @@
                                                     class="flex justify-between w-full items-end pb-1">
                                                     <div>
                                                         <div>
-                                                            <p class="block mr-1 -mb-2">
+                                                            <p class="mr-1 -mb-2">
                                                                 {pack.description}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <button
-                                                        disabled={pack.unBuyable}
-                                                        on:click={() => buyItem(pack.id,pack.name)}
-                                                        class="px-4 py-1 bg-primary rounded">
-                                                        <div class="flex  items-center  text-2xl">
-                                                            <b
-                                                                class="mr-2 font-normal"
-                                                                style="padding-top: 0.12rem">{pack.cost}</b>
-                                                            <div class="w-8 mt-1 text-font"
-                                                                 style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                                <CoinIcon />
+                                                    <div
+                                                        on:mouseenter={() => pack.tooltipOpen = true}
+                                                        on:mouseleave={() => pack.tooltipOpen = false}>
+                                                        <button
+                                                            disabled={!!pack.unBuyable}
+                                                            on:click={() => buyItem(pack.id,pack.name)}
+                                                            class="px-4 py-1 bg-primary rounded">
+                                                            <div class="flex  items-center  text-2xl">
+                                                                <b
+                                                                    class="mr-2 font-normal"
+                                                                    style="padding-top: 0.12rem">{pack.cost.toLocaleString()}</b>
+                                                                <div class="w-8 mt-1 text-font"
+                                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                                    <CoinIcon />
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                    </button>
+                                                            {#if pack.tooltipOpen && pack.unBuyable}
+                                                                <span
+                                                                    class="tooltip absolute bottom-15 right-1 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
+                                                                    style="width:fit-content;"
+                                                                    transition:fade>
+                                                                    {pack.unBuyable}
+                                                                </span>
+                                                            {/if}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -547,10 +612,10 @@
                 </div>
                 <div class="mt-4 flex items-end">
                     <p class="text-4xl leading-none text-accent">2.</p>
-                    <p class="text-4xl text-primary ml-2 leading-none">Add</p>
+                    <p class="text-4xl text-primary ml-2 leading-none">Follow</p>
                     <p
                         class="-mb-7 mt-8 md:mt-0 md:mb-0 text-light leading-tight ml-2 xl:-mb-7 xl:mt-8 2xl:mt-0 2xl:mb-0">
-                        Add the Winhalla Steam account to your friend list
+                        Follow the instructions we'll send you by email
                     </p>
                 </div>
                 <div class="mt-4 flex items-end">
@@ -558,7 +623,7 @@
                     <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
                     <p
                         class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                        You will receive the item you purchased within 1 week to 1 month
+                        Recieved what you buyed (it may take an average time of a week depending of the item)
                     </p>
                 </div>
                 <!--<div class="mt-30">

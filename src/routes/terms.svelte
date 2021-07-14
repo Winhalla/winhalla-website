@@ -28,7 +28,7 @@
         These Terms apply to all visitors, users and others who access or use the Service.</p>
     <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the
         terms then you may not access the Service.</p>
-    <h2>Links To Other Websites</h2>
+    <h2 id="3rdParty">Links To Other Websites</h2>
 
     <p>Our Service may contain links to third-party websites or services that are not owned or controlled by
         winhalla.app.</p>
@@ -50,6 +50,18 @@
         provide an index with links to the Service's Web pages, only to the extent such unlicensed "fair use" is allowed
         by applicable copyright law. Search Engines are not permitted to query or search information protected by a
         security verification system ("captcha") which limits access to human users.</p>
+
+    <p>Trying to harm in any way the service (including but not limited to : DDOS, XSS, CSRF) or buying items in the
+        <a href="/shop">shop</a> with coins earned via hacking or without having enough coins is strictly prohibited</p>
+
+    <p>We grant you a limited, non-exclusive, non-transferable, revocable license to use and enjoy the Service
+        for your individual, non-commercial, expressly
+        conditioned upon your compliance with these Terms. If we terminate your account, any license granted by us to
+        you in the Service ends immediately. Unless otherwise expressly authorized by us
+        in a signed written contract, you may not sell, copy, exchange, loan, reverse engineer, decompile, derive source
+        code from, translate, lease, grant a security interest in, transfer, publish, assign or otherwise distribute any
+        of the Service or any of winhalla.app's intellectual property, including any of our computer code </p>
+
     <h2>Termination</h2>
 
     <p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason

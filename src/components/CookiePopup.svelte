@@ -34,12 +34,6 @@
             opened: false,
             accepted: false,
             urls: ["/www\\.googletagmanager\\.com/"]
-        },
-        "ads personalization": {
-            description: "These cookies are used to display ads that are relevant and engaging for the user.",
-            opened: false,
-            accepted: false,
-            urls: []
         }
     };
 

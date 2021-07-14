@@ -411,8 +411,8 @@
                                         <div class="flex">
                                             <p>End match</p>
                                             <div class="py-2 px-2 ml-2 rounded-full bg-primary mb-1"
-                                                 on:mouseover={() => tooltipOpen = true}
-                                                 on:mouseout={() => tooltipOpen = false}>
+                                                 on:mouseenter={() => tooltipOpen = true}
+                                                 on:mouseleave={() => tooltipOpen = false}>
                                                 <svg
                                                     class="w-3 h-3 fill-current my-auto"
                                                     viewBox="0 0 17 24"
@@ -629,8 +629,8 @@
                             {/if}
 
                             <button class="focus:outline-none" on:click={() => handleQuestsPanel()}
-                                    on:mouseover={() => isToolTipVisible = true}
-                                    on:mouseout={() => isToolTipVisible = false}>
+                                    on:mouseenter={() => isToolTipVisible = true}
+                                    on:mouseleave={() => isToolTipVisible = false}>
                                 <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path

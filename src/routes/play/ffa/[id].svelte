@@ -332,9 +332,14 @@
 
 
 <svelte:head>
-    <script
-        src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-        id="purpleads-client"></script>
+
+
+    <script type="text/javascript">
+        window._mNHandle = window._mNHandle || {};
+        window._mNHandle.queue = window._mNHandle.queue || [];
+        medianet_versionId = "3121199";
+    </script>
+    <script src="https://contextual.media.net/dmedianet.js?cid=8CU5V6G78" async="async"></script>
     <title>Winhalla | Solo match</title>
     <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
 </svelte:head>
@@ -476,13 +481,13 @@
                             <div
                                 class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12">
-                                <div class="mx-auto lg:mx-0 my-5 lg:my:0" style="flex-basis: 21%">
+                                <!--<div class="mx-auto lg:mx-0 my-5 lg:my:0" style="flex-basis: 21%">
                                     <div style="max-width: 13rem; max-height: 28rem">
                                         <script
                                             src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
                                             data-pa-tag async></script>
                                     </div>
-                                </div>
+                                </div>-->
                                 {#each players as player, i}
                                     <div style="flex-basis: 21%">
                                         <div class="ffa-player card lg:mr-12 mb-8 mx-auto lg:mx-0"
@@ -517,11 +522,20 @@
                                         <p class="text-4xl mx-6 my-4">Waiting for players, you can start playing
                                             Brawlhalla</p>
                                     {/if}
-                                    <div class="hidden lg:block">
-                                        <script
-                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                            data-pa-tag async></script>
-                                    </div>
+                                    {#if window.innerWidth > 1024}
+                                        <div class="">
+                                            <div id="182308150">
+                                                <script type="text/javascript">
+                                                    try {
+                                                        window._mNHandle.queue.push(function() {
+                                                            window._mNDetails.loadTag("182308150", "970x90", "182308150");
+                                                        });
+                                                    } catch (error) {
+                                                    }
+                                                </script>
+                                            </div>
+                                        </div>
+                                    {/if}
 
                                 </div>
                             </div>
@@ -564,11 +578,20 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="block lg:hidden mt-6">
-                        <script
-                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                            data-pa-tag async></script>
-                    </div>
+                    {#if window.innerWidth < 1024}
+                        <div class="mt-6">
+                            <div id="182308150">
+                                <script type="text/javascript">
+                                    try {
+                                        window._mNHandle.queue.push(function() {
+                                            window._mNDetails.loadTag("182308150", "970x90", "182308150");
+                                        });
+                                    } catch (error) {
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    {/if}
                 </div>
 
             {/if}

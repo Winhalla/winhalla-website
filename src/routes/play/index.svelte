@@ -104,9 +104,13 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
-    <script
-        src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-        id="purpleads-client"></script>
+
+    <script type="text/javascript">
+        window._mNHandle = window._mNHandle || {};
+        window._mNHandle.queue = window._mNHandle.queue || [];
+        medianet_versionId = "3121199";
+    </script>
+    <script src="https://contextual.media.net/dmedianet.js?cid=8CU5V6G78" async="async"></script>
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
     <div>
@@ -184,9 +188,16 @@
         </div>
         <GuideCard page="play" />
         <div class="mt-6">
-            <script
-                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                data-pa-tag async></script>
+            <div id="182308150">
+                <script type="text/javascript">
+                    try {
+                        window._mNHandle.queue.push(function (){
+                            window._mNDetails.loadTag("182308150", "970x90", "182308150");
+                        });
+                    }
+                    catch (error) {}
+                </script>
+            </div>
         </div>
     </div>
 {/if}

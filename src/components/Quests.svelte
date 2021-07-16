@@ -8,7 +8,8 @@
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
     import { serialize } from "cookie";
-    import {getCookie} from "../utils/getCookie";
+    import { getCookie } from "../utils/getCookie";
+    import Infos from "./Infos.svelte";
 
     let countDown = [{}, {}];
     export let data;
@@ -168,18 +169,13 @@
 
     function denyAd() {
         collect(waitingAd.type, waitingAd.index, false);
-        waitingAd = undefined;
-        waitingAdAccept = false;
     }
 
     async function collect(type, id, possibleAd) {
         if (possibleAd) {
-            // if (!socket) socket = io(apiUrl);
-            // waitingAdAccept = true;
-            // waitingAd = { type, index: id };
-            //* to remove to reactivate ads
-            collect(type, id, false); //*
-            //*
+            if (!socket) socket = io(apiUrl);
+            waitingAdAccept = true;
+            waitingAd = { type, index: id };
         } else {
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;
@@ -306,7 +302,8 @@
             <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
-                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[0].finished}>
+                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none"
+                    class:text-xl={countDown[0].finished}>
                     {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
             </div>
@@ -410,7 +407,8 @@
             <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
-                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[1].finished}>
+                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none"
+                    class:text-xl={countDown[1].finished}>
                     {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
             </div>
@@ -568,7 +566,8 @@
             <div class="ml-6 my-6 text-mid-light text-2xl">
                 <p>- The quests takes on average <u>3 hours</u> to update, but it can be <u>longer</u></p>
                 <p class="mt-3 font-normal">- Don't worry if they don't refresh, we <b style="color: #3d72e4">automatically
-                    collect them</b> just before the <b style="color: #3d72e4">timer expires</b>: Come tomorrow to collect them!</p>
+                    collect them</b> just before the <b style="color: #3d72e4">timer expires</b>: Come tomorrow to
+                    collect them!</p>
             </div>
             <div class="mt-8">
                 <button class="button button-brand w-full md:w-auto" on:click={() =>isAlertNoRefreshOpen = false}>Got
@@ -580,4 +579,7 @@
             </div>
         </div>
     </div>
+{/if}
+{#if info}
+    <Infos message="Thanks for watching a video" pushError={info} />
 {/if}

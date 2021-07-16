@@ -336,7 +336,7 @@
         src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
         id="purpleads-client"></script>
     <title>Winhalla | Solo match</title>
-    <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 
 
@@ -379,15 +379,15 @@
                             <div
                                 class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                                <!--<p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
                                     class="text-green font-normal text-3xl">{userPlayer.adsWatched}
                                     ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
                                     <strong
                                         class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                                 </p>
 
-                                <PlayAdButton socket={socket} bind:userPlayer={userPlayer} bind:adError={adError}
-                                              bind:info={info} />-->
+                                <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
+                                              bind:info={info} />
                                 <RefreshButton
                                     on:click={() => handleRefresh()}
                                     isRefreshing={isRefreshingStats}

@@ -105,6 +105,11 @@
     <p id="analytical">All your account data is kept until you <a href="https://winhalla.app/deleteAccount">delete your
         account</a> and
         may be processed by our servers to provide the Service in its entirety</p>
+    <p>If you choose to login with Google, you accept that we will store your Email in the top of the data mentioned
+        above (excluding SteamID)</p>
+    <p>If you choose to login with another provider than Steam, you will be prompted to enter your Brawlhalla ID. By
+        submitting the Brawlhalla ID, you certify that you own the account with the Brawlhalla ID you mentioned.
+        Otherwise your account and access to the Service may be terminated</p>
 
     <h2>II. Analytical software</h2>
     <p>We are using - like any other website - an analytical software. This software helps us to understand our traffic
@@ -117,16 +122,14 @@
         to allow us to use this data </p>
 
     <h2>III. Advertising</h2>
-    <p>We are using ads, because a website doesn't update and hosts itself!</p>
-    <p>You can choose to enable or disable ad personalization via cookies on your first visit (you can always edit your
-        consent <a href="/privacy#edit_consent">here</a>). Disabling ad personalisation still deposits cookies, but
-        these are
-        necessary for the Site, since advertising is.</p>
-    <p>You can read their privacy policy here :<a href="https://policies.google.com/technologies/partner-sites">https://policies.google.com/technologies/partner-sites</a>
+    <p>We are using ads, because a website doesn't update and hosts itself! Our ads are provided by third-party services
+        (To read our policy about thrd-party services, <a href="/terms#3rdParty">click here</a>)</p>
+
+    <p>We use prupleads as our banner ad provider</p>
+    <p>You can read their privacy policy here : <a href="https://adplayer.pro/privacy">https://purpleads.io/privacy/</a>
     </p>
 
-    <p>We also use adplayer.pro as rewarded ads provider. They declared they doesn't use any personal information or
-        cookies</p>
+    <p>We also use adplayer.pro as rewarded ads provider.</p>
     <p>You can read their privacy policy here : <a href="https://adplayer.pro/privacy">https://adplayer.pro/privacy</a>
     </p>
 
@@ -139,11 +142,8 @@
         <li>Functionalities : used - among others - to determine if new notifications/alerts has arrived, these are
             required, since they will have a major impact on your experience
         </li>
-        <li>Analytical : as said <a href="/privacy#analytical">here</a>, they are not required an can be disabled</li>
-        <li>Advertising cookies : as said <a href="/privacy#advertising">here</a> they are not required and can be
-            disabled,
-            however you
-            cannot disable ads, they will be un-personalized if you opt-out to cookies
+        <li>Analytical : as said <a href="/privacy#analytical">here</a>, these cookies are not required an can be
+            disabled
         </li>
     </ul>
     <p>For more general information on cookies, please read <a
@@ -191,7 +191,8 @@
             {:else if confirmationPopupOpen === "restrict processing"}
                 <p class="ml-4 text-3xl mt-6">Warning: this action will make your account <u>unusable</u>. <br>However,
                     we will still keep your account data and will be able to restore it if you ask us <a
-                        href="mailto:contact@winhalla.app">here</a> with your steamId and nickname</p>
+                        href="mailto:contact@winhalla.app">here</a> with you account ID you can obtain by downloading
+                    you data (download it before restricting processing of your account)</p>
             {/if}
             <div>
                 <div class="overflow-auto max-h-screen-50">

@@ -229,8 +229,8 @@
                                 <div class="flex">
                                     <p>{winner.multiplier}</p>
                                     <div class="py-2 ml-3 px-2 rounded-full bg-primary mb-1"
-                                         on:mouseover={() =>winner.areDetailsShown = true}
-                                         on:mouseout={() =>winner.areDetailsShown = false}>
+                                         on:mouseenter={() =>winner.areDetailsShown = true}
+                                         on:mouseleave={() =>winner.areDetailsShown = false}>
                                         <svg
                                             class="w-3 h-3 fill-current my-auto"
                                             viewBox="0 0 17 24"

@@ -4,15 +4,17 @@
     import { callApi } from "../utils/api";
     import { onMount } from "svelte";
     import CoinIcon from "../components/CoinIcon.svelte";
+    import Infos from "../components/Infos.svelte";
 
     let featuredItem;
     let seasonPacks;
     let packs;
     let error;
-
+    let info;
     let isBuying;
-    let userPlayer;
-
+    let player;
+    let coinsPerDollar;
+    let paypalItemId;
 
     onMount(async () => {
         let unsub;
@@ -28,15 +30,20 @@
             }
             error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
         }
-        let player;
         unsub = counter.subscribe(async (value) => {
             if (value.refresh === true) return;
             player = await value.content;
             if (!player?.user) player = { user: { coins: 0 } };
             let playerPlatform = /([a-zA-Z]+)(.+)/gm.exec(player.steam.id)[1];
-            console.log(player.steam.id)
+            console.log(player.steam.id);
             console.log(playerPlatform);
             items.forEach((item, i) => {
+                if (item.type === "paypal") {
+                    items.splice(i, 1);
+                    paypalItemId = item.id;
+                    coinsPerDollar = item.cost;
+                    return;
+                }
                 items[i].isDescriptionToggled = false;
 
                 items[i].unBuyable = false;
@@ -52,8 +59,7 @@
             featuredItem = items.find((i) => i.state === 0);
             seasonPacks = items.filter((i) => i.state === 1);
             packs = items.filter((i) => i.state === 2);
-            if (value.refresh === true) return;
-            userPlayer = await value.content;
+            player = player.user;
         });
     });
     //* Required for videoAd
@@ -249,21 +255,35 @@
 
     async function buyItem(id, name, step) {
         if (!step) return isBuying = { id, name };
-        const itemBuyed = await callApi("post", `/buy/${id}?email=${isBuying.email}`);
-        if (itemBuyed instanceof Error) console.log("ERR");
+        const numberStr = id === paypalItemId ? `&number=${currentAmount}` : "";
+        const itemBuyed = await callApi("post", `/buy/${id}?email=${isBuying.email}${numberStr}`);
+        if (itemBuyed instanceof Error) isBuying = { id, name, error: itemBuyed?.response.data };
         else {
             counter.set({ refresh: true });
             isBuying = false;
+            info = true;
+            setTimeout(() => {
+                info = false;
+            }, 5000);
         }
     }
 
     let currentAmount = 0;
     $: if (currentAmount) {
-        handlePaypalConversion()
+        handlePaypalConversion();
     }
-    let amountToCoins = 0;
-    async function handlePaypalConversion() {
-        amountToCoins = currentAmount * 6400
+    let amountToCoins = { text: 0, isBuyable: false };
+
+    function handlePaypalConversion() {
+        if (currentAmount < 1) {
+            console.log(currentAmount);
+            return amountToCoins = { text: "Min 1 $", isBuyable: false };
+        }
+        amountToCoins = {
+            text: currentAmount * coinsPerDollar,
+            isBuyable: player.coins > currentAmount * coinsPerDollar
+        };
+
     }
 </script>
 
@@ -318,6 +338,7 @@
         border-style: solid;
         border-color: #fc1870 transparent transparent transparent;
     }
+
     .tooltip-alt::after {
         content: "";
         position: absolute;
@@ -457,7 +478,7 @@
                         </div>
                         <div class="pt-8 lg:pt-16">
                             <div class="flex items-center">
-                                <h2  class="text-6xl text-center lg:text-left">
+                                <h2 class="text-6xl text-center lg:text-left">
                                     Paypal Credit
                                 </h2>
                                 <img class="w-24 -ml-2 -mt-2" src="/assets/Paypal_Logo.png" alt="">
@@ -466,43 +487,38 @@
 
                             <div class="bg-variant max-w-max rounded-xl  p-8 relative  mt-10">
                                 <p class="absolute -top-3 left-8 text-primary  text-2xl">Coin TRADER</p>
-                                <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b> for <b class="font-normal text-epic">real money</b></p>
+                                <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b> for <b
+                                    class="font-normal text-epic">real money</b></p>
                                 <p class="text-mid-light">Min amount: 1$</p>
-                                <p class="mt-3">You need to have a <a href="https://www.paypal.com/" class="text-primary">Paypal account</a></p>
+                                <p class="mt-3">You need to have a <a href="https://www.paypal.com/"
+                                                                      class="text-primary">Paypal account</a></p>
                                 <div class="flex items-center  mt-2">
 
-                                    <div>
-                                        <input bind:value={currentAmount} class="p-2 pl-4 text-background  rounded w-32" type="number" min="1" step="any" placeholder="Amount in $"/>
+                                    <div class="flex">
+                                        <input bind:value={currentAmount} class="p-2 pl-4 text-background  rounded w-16"
+                                               type="number" min="1" step="any" placeholder="Amount in $" />
+                                        <p class="text-4xl ml-1 my-auto">$</p>
                                     </div>
-                                    <svg class="mx-4 fill-current w-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m24 12.16-5.76-5.76v4.24h-18.24v3.04h18.24v4.24z"/></svg>
+                                    <svg class="mx-4 fill-current w-8" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m24 12.16-5.76-5.76v4.24h-18.24v3.04h18.24v4.24z" />
+                                    </svg>
 
 
-                                    <div
-                                            on:mouseenter={() => featuredItem.tooltipOpen = true}
-                                            on:mouseleave={() => featuredItem.tooltipOpen = false}>
+                                    <div>
                                         <button
-                                                disabled={!!featuredItem.unBuyable}
-                                                on:click={() => buyItem(featuredItem.id, featuredItem.name)}
-                                                on:mouseenter={() => featuredItem.tooltipOpen = true}
-                                                on:mouseleave={() => featuredItem.tooltipOpen = false}
-                                                class="px-4 py-1 bg-primary rounded">
+                                            disabled={!amountToCoins.isBuyable}
+                                            on:click={() => buyItem(paypalItemId, "paypal credit")}
+                                            class="px-4 py-1 bg-primary rounded">
                                             <div class="flex  items-center  text-2xl">
                                                 <b
-                                                        class="mr-2 font-normal"
-                                                        style="padding-top: 0.12rem">{amountToCoins}</b>
+                                                    class="mr-2 font-normal"
+                                                    style="padding-top: 0.12rem">{amountToCoins.text}</b>
                                                 <div class="w-8 mt-1 text-font"
                                                      style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                     <CoinIcon />
                                                 </div>
                                             </div>
-                                            {#if featuredItem.tooltipOpen && featuredItem.unBuyable}
-                                                    <span
-                                                            class="tooltip absolute bottom-15 right-1 lg:right-11 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
-                                                            style="width:fit-content;"
-                                                            transition:fade>
-                                                        {featuredItem.unBuyable}
-                                                    </span>
-                                            {/if}
                                         </button>
                                     </div>
                                 </div>
@@ -514,44 +530,44 @@
                                 Season packs
                             </h2>
                             <div
-                                    class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
+                                class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                                 {#if seasonPacks.forEach}
                                     {#each seasonPacks as seasonPack, i}
                                         <div
-                                                class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
+                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
                                             <img
-                                                    class="w-full h-full block "
-                                                    src="assets/ShopItems/{seasonPack.name}.jpg"
-                                                    alt={seasonPack.name} />
+                                                class="w-full h-full block "
+                                                src="assets/ShopItems/{seasonPack.name}.jpg"
+                                                alt={seasonPack.name} />
                                             <div
-                                                    class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                                                class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
                                                 <p
-                                                        class:hidden={seasonPack.isDescriptionToggled}
-                                                        class:-mb-1={!seasonPack.isDescriptionToggled}
-                                                        class="text-accent text-4xl lg:text-5xl md:mb-0 md:block">
+                                                    class:hidden={seasonPack.isDescriptionToggled}
+                                                    class:-mb-1={!seasonPack.isDescriptionToggled}
+                                                    class="text-accent text-4xl lg:text-5xl md:mb-0 md:block">
                                                     {seasonPack.name
                                                         .toLowerCase()
                                                         .replace(/\-/g, ' ')}
                                                 </p>
                                                 <p
-                                                        class:hidden={!seasonPack.isDescriptionToggled}
-                                                        class="block xl:mt-0">
+                                                    class:hidden={!seasonPack.isDescriptionToggled}
+                                                    class="block xl:mt-0">
                                                     {seasonPack.description}
                                                 </p>
 
                                                 <div
-                                                        class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                                    class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
                                                     <div class="-mb-2 md:mb-0">
                                                         <div>
                                                             <p
-                                                                    class="hidden lg:block mr-1 -mb-2">
+                                                                class="hidden lg:block mr-1 -mb-2">
                                                                 {seasonPack.description}
                                                             </p>
                                                             <button
-                                                                    class="focus:outline-none xl:hidden -mb-10"
-                                                                    on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                                class="focus:outline-none xl:hidden -mb-10"
+                                                                on:click={() => handleDescriptionToggle(seasonPack)}>
                                                                 <p
-                                                                        class=" text-light text-lg underline leading-none">
+                                                                    class=" text-light text-lg underline leading-none">
                                                                     {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
                                                                 </p>
                                                             </button>
@@ -560,13 +576,13 @@
                                                     <div on:mouseenter={() => seasonPack.tooltipOpen = true}
                                                          on:mouseleave={() => seasonPack.tooltipOpen = false}>
                                                         <button
-                                                                disabled={!!seasonPack.unBuyable}
-                                                                on:click={() => buyItem(seasonPack.id,seasonPack.name)}
-                                                                class="px-4 py-1 bg-primary rounded">
+                                                            disabled={!!seasonPack.unBuyable}
+                                                            on:click={() => buyItem(seasonPack.id,seasonPack.name)}
+                                                            class="px-4 py-1 bg-primary rounded">
                                                             <div class="flex  items-center  text-2xl">
                                                                 <b
-                                                                        class="mr-2 font-normal"
-                                                                        style="padding-top: 0.12rem">{seasonPack.cost.toLocaleString()}</b>
+                                                                    class="mr-2 font-normal"
+                                                                    style="padding-top: 0.12rem">{seasonPack.cost.toLocaleString()}</b>
                                                                 <div class="w-8 mt-1 text-font"
                                                                      style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                                     <CoinIcon />
@@ -575,11 +591,11 @@
                                                             {#if seasonPack.tooltipOpen && seasonPack.unBuyable}
 
                                                                 <span
-                                                                        class="tooltip text-center absolute bottom-15 right-1 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
-                                                                        class:tooltip={window.innerWidth < 1024}
-                                                                        class:tooltip-alt={window.innerWidth > 1024}
-                                                                        style="width:fit-content;"
-                                                                        transition:fade>
+                                                                    class="tooltip text-center absolute bottom-15 right-1 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
+                                                                    class:tooltip={window.innerWidth < 1024}
+                                                                    class:tooltip-alt={window.innerWidth > 1024}
+                                                                    style="width:fit-content;"
+                                                                    transition:fade>
                                                                     {seasonPack.unBuyable}
                                                                 </span>
                                                             {/if}
@@ -764,9 +780,10 @@
                         <p class="mt-7 text-font text-3xl" style="margin-bottom: 0.35rem;">Email</p>
                         <div>
                             <input
+                                on:change={onKeyPressEmail}
                                 on:keydown={onKeyPressEmail}
                                 type="email"
-                                placeholder="Your email goes here"
+                                placeholder="Your {isBuying.id === paypalItemId?'PayPal':''} email goes here"
                                 bind:value={isBuying.email}
                                 class:border-legendary={isBuying.valid === false}
                                 class="w-full text-background bg-font py-3 px-4 rounded focus:outline-none
@@ -788,6 +805,9 @@
                                 </div>
                             {:else if isBuying.valid === false}
                                 <p class="text-legendary info ">INVALID EMAIL</p>
+                            {/if}
+                            {#if isBuying.error}
+                                <p class="text-legendary mt-8" in:fade={{delay:100}}>{isBuying.error}</p>
                             {/if}
                         </div>
                     </div>
@@ -830,7 +850,13 @@
 
                         <p class="text-primary text-xl ml-4">
                             Your email will not be saved <br>
-                            Delay to receive: 1 week to 1 month
+                            Delay to receive:
+                            {#if isBuying.id === paypalItemId && currentAmount > 10}3 days to a week
+                            {:else if currentAmount < 10 && isBuying.id === paypalItemId }<span
+                                class="text-green text-xl">instant</span>
+                            {:else}1 week to 1
+                                month
+                            {/if}
                         </p>
                     </div>
                 </div>
@@ -900,3 +926,7 @@
         }
     </script>
 </div>-->
+{#if info}
+    <Infos message="Thanks for your purchase"
+           pushError="Check your mails, instructions should be emailed to you shortly!" />
+{/if}

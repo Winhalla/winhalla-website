@@ -5,8 +5,8 @@ Component that detects if the adblock popup needs to be shown and if it has been
     import { onMount } from "svelte";
     import AdblockAlertStyle from "./AdblockAlertStyle.svelte";
 
-    export let user = {};
-    export let quests = {};
+    /*export let user = {};
+    export let quests = {};*/
 
     let unique = {};
 
@@ -18,7 +18,7 @@ Component that detects if the adblock popup needs to be shown and if it has been
     }
 
     let adblocker = false;
-    onMount(() => {
+    /*onMount(() => {
         //Adblock detector
         setTimeout(()=>{
             if (quests.dailyQuests || quests.weeklyQuests || user.steamId) {
@@ -29,11 +29,11 @@ Component that detects if the adblock popup needs to be shown and if it has been
             }
         },5000)
 
-    });
+    });*/
 </script>
 
 <svelte:head>
-    <script src="/ad-blocker.js" type="text/javascript"></script>
+    <!--<script src="/ad-blocker.js" type="text/javascript"></script>-->
 </svelte:head>
 
 {#key unique}

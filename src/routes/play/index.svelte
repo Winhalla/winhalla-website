@@ -183,8 +183,9 @@
             </div>
         </div>
         <GuideCard page="play" />
-        <div class="mt-6">
+        <div class="mt-6 w-full flex justify-between flex-wrap">
             <script data-cfasync="false" type="text/javascript" src="https://www.linkonclick.com/a/display.php?r=4824847"></script>
+            <script data-cfasync="false" type="text/javascript" src="https://www.linkonclick.com/a/display.php?r=4825183"></script>
         </div>
     </div>
 {/if}

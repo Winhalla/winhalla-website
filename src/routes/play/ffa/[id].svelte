@@ -29,7 +29,7 @@
 
     let id;
 
-
+    let matchFinishedTooltip;
     let pages;
     let user;
     let match;
@@ -210,7 +210,8 @@
 
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
-    const handleRefresh = async () => {
+    const handleRefresh = async (isFromButton) => {
+        if((userPlayer.gamesPlayed===7 || userPlayer.joinDate+ 3600 * 3 * 1000 < Date.now()) && isFromButton === true) return 
         isRefreshingStats = true;
         let winNb = userPlayer.gamesPlayed;
 
@@ -321,10 +322,9 @@
     .tooltip::after {
         content: "";
         position: absolute;
-        top: 98%;
-        right: 20%;
-        margin-left: -6px;
-        border-width: 6px;
+        top: 100%;
+        right: 50%;
+        border-width: 10px;
         border-style: solid;
         border-color: #3d72e4 transparent transparent transparent;
     }
@@ -388,10 +388,23 @@
 
                                 <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
                                               bind:info={info} />
+
+                                <div on:click={() => handleRefresh(true)} on:mouseenter={() => matchFinishedTooltip = true}
+                                    on:mouseleave={() => matchFinishedTooltip = false}>
                                 <RefreshButton
-                                    on:click={() => handleRefresh()}
+                                    
                                     isRefreshing={isRefreshingStats}
-                                    refreshMessage={'Refresh data'} />
+                                    refreshMessage={"Refresh data"}
+                                    deactivated={userPlayer.gamesPlayed===7 || userPlayer.joinDate+ 3600 * 3 * 1000 < Date.now()} />
+                                    {#if matchFinishedTooltip}
+                                    <span
+                                        class="absolute right-5 left-5 lg:left-74/100 lg:right-30 lg:-top-6 top-60 lg:-top-6 px-6 py-2 tooltip bg-primary rounded flex items-center justify-center" style="z-index: 60"
+                                        transition:fade> You have already finished this match. Start another one!
+                                    </span>
+                                {/if}
+                                </div>
+                                
+                                
                                 {#if userPlayer.gamesPlayed == 0}
                                     <button
                                         class="button button-brand quit lg:ml-4 mt-3
@@ -403,7 +416,7 @@
                                         <ErrorAlert message="There was an error exiting the match"
                                                     pushError={pushError} />
                                     {/if}
-                                {:else if userPlayer.gamesPlayed !== 7}
+                                {:else if userPlayer.gamesPlayed !== 7 && userPlayer.joinDate+ 3600 * 3 * 1000 > Date.now()}
                                     <button
                                         class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"

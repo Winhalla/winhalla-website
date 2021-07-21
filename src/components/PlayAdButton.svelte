@@ -72,10 +72,8 @@
 
     button:disabled {
         @apply bg-disabled text-white;
-        padding-left: 1rem;
-        padding-right: 1rem;
         box-shadow: none;
-        cursor: auto;
+        cursor: not-allowed;
     }
 
     .FfaWatchAd {

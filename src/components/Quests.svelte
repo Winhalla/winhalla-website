@@ -510,10 +510,11 @@
     <div
         class="flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4
         ml-5 lg:ml-0">
+        <div on:click={() => handleRefresh()}>
         <RefreshButton
-            on:click={() => handleRefresh()}
             isRefreshing={isRefreshingQuests}
             refreshMessage={'Refresh quests data'} />
+        </div>
         <div class="flex lg:ml-8 items-center mt-4 lg:mt-0">
             <!--<div class="flex items-center ">
                 <div class="py-2 px-2 rounded-full bg-primary">

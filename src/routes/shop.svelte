@@ -478,51 +478,54 @@
                         </div>
                         <div class="pt-8 lg:pt-16">
                             <div class="flex items-center">
-                                <h2 class="text-6xl text-center lg:text-left">
+                                <h2 class="text-6xl text-center w-full lg:w-auto lg:text-left">
                                     Paypal Credit
                                 </h2>
-                                <img class="w-24 -ml-2 -mt-2" src="/assets/Paypal_Logo.png" alt="">
+                                <img class="hidden lg:block  w-24 -ml-2 -mt-2" src="/assets/Paypal_Logo.png" alt="">
                             </div>
 
 
-                            <div class="bg-variant max-w-max rounded-xl  p-8 relative  mt-10">
-                                <p class="absolute -top-3 left-8 text-primary  text-2xl">Coin TRADER</p>
-                                <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b> for <b
-                                    class="font-normal text-epic">real money</b></p>
-                                <p class="text-mid-light">Min amount: 1$</p>
-                                <p class="mt-3">You need to have a <a href="https://www.paypal.com/"
-                                                                      class="text-primary">Paypal account</a></p>
-                                <div class="flex items-center  mt-2">
+                            <div class="px-5 lg:px-0">
+                                <div class="bg-variant max-w-max rounded-xl  p-8 relative  mt-6 md:mt-10  mx-auto lg:mx-0">
+                                    <p class="absolute -top-3 left-8 text-primary  text-2xl">Coin TRADER</p>
+                                    <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b> for <b
+                                            class="font-normal text-epic">real money</b></p>
+                                    <p class="text-mid-light">Min amount: 1$</p>
+                                    <p class="mt-3">You need to have a <a href="https://www.paypal.com/"
+                                                                          class="text-primary">Paypal account</a></p>
+                                    <div class="flex items-center  mt-2">
 
-                                    <div class="flex">
-                                        <input bind:value={currentAmount} class="p-2 pl-4 text-background  rounded w-16"
-                                               type="number" min="1" step="any" placeholder="Amount in $" />
-                                        <p class="text-4xl ml-1 my-auto">$</p>
-                                    </div>
-                                    <svg class="mx-4 fill-current w-8" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="m24 12.16-5.76-5.76v4.24h-18.24v3.04h18.24v4.24z" />
-                                    </svg>
+                                        <div class="flex">
+                                            <input bind:value={currentAmount} class="p-2 pl-4 text-background  rounded w-16 w-18"
+                                                   type="number" min="1" step="any" placeholder="Amount in $" />
+                                            <p class="text-4xl ml-1 my-auto">$</p>
+                                        </div>
+                                        <svg class="mx-4 fill-current w-8" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m24 12.16-5.76-5.76v4.24h-18.24v3.04h18.24v4.24z" />
+                                        </svg>
 
 
-                                    <div>
-                                        <button
-                                            disabled={!amountToCoins.isBuyable}
-                                            on:click={() => buyItem(paypalItemId, "paypal credit")}
-                                            class="px-4 py-1 bg-primary rounded">
-                                            <div class="flex  items-center  text-2xl">
-                                                <b
-                                                    class="mr-2 font-normal"
-                                                    style="padding-top: 0.12rem">{amountToCoins.text}</b>
-                                                <div class="w-8 mt-1 text-font"
-                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                    <CoinIcon />
+                                        <div>
+                                            <button
+                                                    disabled={!amountToCoins.isBuyable}
+                                                    on:click={() => buyItem(paypalItemId, "paypal credit")}
+                                                    class="px-4 py-1 bg-primary rounded">
+                                                <div class="flex  items-center  text-2xl">
+                                                    <b
+                                                            class="mr-2 font-normal"
+                                                            style="padding-top: 0.12rem">{amountToCoins.text}</b>
+                                                    <div class="w-8 mt-1 text-font"
+                                                         style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                        <CoinIcon />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                         <div class="pt-8 lg:pt-14 lg:pb-6">
@@ -788,7 +791,7 @@
                                 class:border-legendary={isBuying.valid === false}
                                 class="w-full text-background bg-font py-3 px-4 rounded focus:outline-none
                             focus:border-primary placeholder-disabled email-input"
-                                style="font-family: 'Roboto', sans-serif;" />
+                                    style="font-family: 'Roboto', sans-serif;"/>
 
                             {#if isBuying.valid}
                                 <div class="flex items-center">

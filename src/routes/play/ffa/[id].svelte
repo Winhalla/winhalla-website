@@ -478,8 +478,9 @@
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12">
                                 <div class="mx-auto lg:mx-0 my-5 lg:my:0" style="flex-basis: 21%">
                                     <div style="max-width: 13rem; max-height: 28rem">
-                                        <script data-cfasync="false" type="text/javascript" src="https://www.linkonclick.com/a/display.php?r=4825327"></script>
-                                    </div>
+                                        <script
+                                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                                data-pa-tag async></script>                                    </div>
                                 </div>
                                 {#each players as player, i}
                                     <div style="flex-basis: 21%">
@@ -516,8 +517,9 @@
                                             Brawlhalla</p>
                                     {/if}
                                     <div class="hidden lg:block">
-                                        <script data-cfasync="false" type="text/javascript" src="https://www.linkonclick.com/a/display.php?r=4825331"></script>
-                                    </div>
+                                        <script
+                                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                                data-pa-tag async></script>                                    </div>
 
                                 </div>
                             </div>
@@ -561,8 +563,9 @@
                         </div>
                     {/if}
                     <div class="block lg:hidden mt-6">
-                        <script data-cfasync="false" type="text/javascript" src="https://www.linkonclick.com/a/display.php?r=4825331"></script>
-
+                        <script
+                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                data-pa-tag async></script>
                     </div>
                 </div>
 

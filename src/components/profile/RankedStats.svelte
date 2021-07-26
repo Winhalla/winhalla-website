@@ -16,21 +16,21 @@
 </script>
 
 <div class="md:flex items-start  /xl:mr-24">
-    <div class="relative bg-variant max-w-max rounded-xl  p-8 h-auto">
+    <div class="relative bg-variant  md:max-w-max rounded-xl  p-8 h-auto  w-full">
         <p class="absolute -top-3 text-xl text-mid-light">RANKED</p>
         <div class="flex">
             <div>
-                <img class="w-32" src="/assets/RankedBanners/{data.tier.replace(' ', '_')}.png" alt="">
+                <img class="w-26 md:w-32" src="/assets/RankedBanners/{data.tier.replace(' ', '_')}.png" alt="">
 
             </div>
             <div class="ml-6">
                 <div class="ml-2">
-                    <h3 class="font-bold text-xl" style="font-family: 'Roboto Condensed', sans-serif">Ranking
+                    <h3 class="font-bold  text-lg md:text-xl" style="font-family: 'Roboto Condensed', sans-serif">Ranking
                         Solo:</h3>
-                    <p class="text-primary text-3xl">{data.tier}</p>
+                    <p class="text-primary   text-2xl md:text-3xl">{data.tier}</p>
 
                 </div>
-                <div class="ml-2 mt-5  p-4 pl-6 bg-background rounded-xl">
+                <div class="hidden lg:block  ml-2 mt-5  p-4 pl-6 bg-background rounded-xl">
                     <p class="text-lg text-mid-light  ">Current elo: <b
                             class="font-normal text-primary text-xl">{data.rating}</b>
                     </p>
@@ -38,25 +38,27 @@
                             class="font-normal text-epic text-xl">{data.peak_rating}</b>
                     </p>
                 </div>
-                <!--<div class="ml-2 mt-4  p-4 pl-6 bg-background rounded-xl">
-                    <p class="text-lg text-mid-light">Games played: <b
-                            class="font-normal text-primary text-xl">491</b>
-                    </p>
-                    <p class="text-lg text-mid-light">Win rate: <b class="font-normal text-primary text-xl">54%</b> (<b
-                            class="font-normal text-green text-xl">251</b>/<b
-                            class="font-normal text-legendary text-xl">241</b>)</p></div>-->
-
-
             </div>
 
         </div>
+
+        <!--Mobile ranked stats-->
+        <div class="lg:hidden  mt-5  p-4 pl-6 bg-background rounded-xl">
+            <p class="text-lg text-mid-light  ">Current elo: <b
+                    class="font-normal text-primary text-xl">{data.rating}</b>
+            </p>
+            <p class="text-lg text-mid-light">Best elo: <b
+                    class="font-normal text-epic text-xl">{data.peak_rating}</b>
+            </p>
+        </div>
+
 
         <div class="mt-8">
             <h3 class="font-bold text-lg" style="font-family: 'Roboto Condensed', sans-serif">Games played: <b
                     class="text-primary text-xl">{data.games}</b></h3>
 
             <!--Win rate details-->
-            <div class="mr-18">
+            <div class="md:mr-18">
                 <div class="flex w-full  mt-4 ">
                     <div class="rounded-l h-1 bg-green" style="width: {data.winRate}%"></div>
                     <div class="rounded-r h-1 bg-legendary" style="width: {data.lossRate}%"></div>
@@ -75,16 +77,22 @@
 
             <div class="-mt-2">
                 {#each data["2v2"].sort((a, b) => b.rating - a.rating).slice(0, 3) as duo}
-                    <div class="team-container flex justify-between  my-6">
+                    <div class="team-container  lg:flex justify-between  my-6">
                         <div class="flex">
                             <img class="w-14" src="/assets/RankedBanners/{duo.tier.replace(' ', '_')}.png" alt="">
-                            <div class="ml-4 pr-6">
-                                <p class="text-primary text-2xl">{duo.tier}</p>
-                                <p class="text-mid-light text-xl">{duo.rating} Elo</p>
+                            <div>
+                                <div class="ml-4 pr-6  flex  lg:block">
+                                    <p class="text-primary text-2xl">{duo.tier}</p>
+                                    <p class="ml-4   lg:ml-0   text-mid-light text-xl">{duo.rating} Elo</p>
+                                </div>
+                                <p class="lg:hidden ml-4 mt-1  text-base text-mid-light">With: <b
+                                        class="font-normal text-font  text-lg lg:text-xl">{determineTeammateName(duo.teamname)}</b>
+                                </p>
                             </div>
+
                         </div>
                         <div>
-                            <p class="text-lg text-mid-light">With: <b
+                            <p class="hidden lg:block  text-lg text-mid-light">With: <b
                                     class="font-normal text-font text-xl">{determineTeammateName(duo.teamname)}</b>
                             </p>
                         </div>

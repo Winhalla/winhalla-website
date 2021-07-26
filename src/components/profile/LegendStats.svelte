@@ -24,11 +24,19 @@
     let displayNumber = 2;
 </script>
 
+<style>
+    @media (min-width: 480px) {
+        .container {
+            min-width: 21rem;
+        }
+    }
+</style>
 
-<div class="relative bg-variant min-w-md rounded-xl  p-8    h-auto" style="min-width: 22rem;">
+
+<div class="container   relative bg-variant min-w-md rounded-xl  p-8    h-auto">
     <p class="absolute -top-3 text-xl text-mid-light">LEGENDS</p>
 
-    <div class="ml-2 mt-1  bg-background p-6 pt-4  rounded-xl">
+    <div class="md:ml-2 mt-1  bg-background p-6 pt-4  rounded-xl">
         <div class="flex items-center">
             <img class="w-12 mr-3" src="/assets/LegendIcons/{selectedLegend.legend_name_key.replace(' ', '_')}.png"
                  alt="">
@@ -41,29 +49,29 @@
 
 
         </div>
-        <div class="mt-6 ml-2  text-xl  ">
-            <p class="text-mid-light mt-">Time played: <b
-                    class="  font-normal text-primary text-2xl">{formatTime(selectedLegend.matchtime)}</b>
+        <div class="mt-6 ml-2  text-lg md:text-xl  ">
+            <p class="text-mid-light ">Time played: <b
+                    class="  font-normal text-primary  text-xl md:text-2xl">{formatTime(selectedLegend.matchtime)}</b>
             </p>
             <p class="text-mid-light mt-">Level: <b
-                    class="  font-normal text-primary text-2xl">{selectedLegend.level}</b>
+                    class="  font-normal text-primary  text-xl md:text-2xl">{selectedLegend.level}</b>
             </p>
             <p class="text-mid-light mt-3">Games played: <b
-                    class="font-normal text-primary text-2xl">{selectedLegend.games}</b>
+                    class="font-normal text-primary  text-xl md:text-2xl">{selectedLegend.games}</b>
             </p>
-            <p class="text-mid-light mt-">Win rate: <b class="font-normal text-primary text-2xl">
+            <p class="text-mid-light mt-">Win rate: <b class="font-normal text-primary text-xl md:text-2xl">
                 {parseInt(selectedLegend.wins / selectedLegend.games * 100)}%</b>
             </p>
-            <p class="text-mid-light mt-3">KOs: <b class="font-normal text-primary text-2xl">{selectedLegend.kos}</b>
+            <p class="text-mid-light mt-3">KOs: <b class="font-normal text-primary  text-xl md:text-2xl">{selectedLegend.kos}</b>
             </p>
             <p class="text-mid-light mt-">Damage dealt: <b
-                    class="font-normal text-primary text-2xl">{selectedLegend.damagedealt}</b>
+                    class="font-normal text-primary  text-xl md:text-2xl">{selectedLegend.damagedealt}</b>
             </p>
         </div>
     </div>
 
 
-    <div class="mt-14 ml-2 w-full">
+    <div class="mt-14 md:ml-2 w-full">
 
         <div class="flex text-xl  -mt-2  pb-2">
             <div class="flex items-center  text-lg">
@@ -87,11 +95,11 @@
                 <button class="w-full flex items-center  relative"
                         on:click={handleOpenLegendTile(legend.legend_name_key)}>
                     <div>
-                        <img class="w-10" src="/assets/LegendIcons/{legend.legend_name_key.replace(' ', '_')}.png"
-                             alt="">
+                        <img class="-ml-1 md:ml-0 w-10" src="/assets/LegendIcons/{legend.legend_name_key.replace(' ', '_')}.png" alt="">
                     </div>
-                    <div class="mr-8  flex justify-between w-full">
-                        <p class="ml-3">{legend.legend_name_key}</p>
+
+                    <div class="mr-6 md:mr-8  flex justify-between w-full  text-lg md:text-default">
+                        <p class="ml-2 md:ml-3">{legend.legend_name_key}</p>
                         <p class="text-green">
                             {filterList[chosenFilter].display(legend)}
                         </p>
@@ -99,7 +107,7 @@
 
                     <div class:-top-1={openedList[legend.legend_name_key] === true}
                          class:right-1={openedList[legend.legend_name_key] === true}
-                         class="/-mt-2 text-3xl text-light absolute right-0" style="font-family: sans-serif">
+                         class="/-mt-2  text-2xl md:text-3xl  text-light absolute right-0" style="font-family: sans-serif">
                         {openedList[legend.legend_name_key] === true ? "-" : "+"}
                     </div>
                 </button>
@@ -108,7 +116,7 @@
                     <div class="mt-4">
                         {#each Object.entries(filterList) as [key, value]}
                             {#if key !== chosenFilter}
-                                <p class="text-lg text-mid-light mt-">{key.replace('_', ' ')}: <b
+                                <p class="text-lg  text-mid-light ">{key.replace('_', ' ')}: <b
                                         class="font-normal text-primary text-xl">{value.display(legend)}</b>
                                 </p>
                             {/if}

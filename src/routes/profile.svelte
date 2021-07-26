@@ -167,7 +167,7 @@
     let rankedData;
 
     const res = new Promise(async () => {
-        const playerId = await callApi("get", `${apiUrl}/stats/username/boomie`);
+        const playerId = await callApi("get", `${apiUrl}/stats/username/23felons23`);
 
         data = await callApi("get", `${apiUrl}/stats/${playerId}`);
         playerData = data.player;
@@ -184,7 +184,7 @@
             //faut voir si damagethrownitem c que pour les armes si oui faut add
             playerData.matchtime += l.matchtime;
             playerData.damageunarmed += parseInt(l.damageunarmed);
-            playerData.kosunarmed += l.damageunarmed;
+            playerData.kosunarmed += parseInt(l.kounarmed);
             playerData.kos += l.kos;
             playerData.damagedealt += parseInt(l.damagedealt);
 
@@ -208,8 +208,8 @@
 </script>
 
 {#if loaded}
-    <section class="h-64 bg-variant pl-23 pr-18   flex flex-col justify-between">
-        <div class="flex items-center justify-between   mt-21">
+    <section class="md:h-64 bg-variant  pl-7  md:pl-10 md:pr-10 lg:pl-23 lg:pr-18   flex flex-col justify-between">
+        <div class="md:flex items-center justify-between  mt-10 md:mt-21">
             <div>
                 <p class="text-3xl">
                     {playerData.name}
@@ -220,7 +220,7 @@
             </div>
 
 
-            <div class="text-ultra-light mt-2">
+            <div class="text-ultra-light mt-7 md:mt-2  text-xl md:text-default">
                 <p>Level: <b class="font-normal text-primary text-2xl">{playerData.level}</b></p>
                 <p class="mt-1">Time spent in online games: <b
                         class="font-normal text-primary text-2xl">
@@ -229,15 +229,15 @@
             </div>
         </div>
 
-        <div class="flex">
+        <div class="flex  mt-6 md:mt-0   text-xl md:text-default">
             <a class="text-primary  border-b-2 border-primary" href="/profile?d=brawlhalla">Bralhalla</a>
 
-            <a class="ml-11" href="/profile?d=winhalla">Winhalla</a>
+            <a class="ml-8  md:ml-11" href="/profile?d=winhalla">Winhalla</a>
         </div>
     </section>
 
 
-    <section class="px-18 pb-12 lg:flex justify-between flex-wrap items-start">
+    <section class="px-7 md:px-10 lg:px-18 pb-12 lg:flex justify-between flex-wrap items-start">
         <div class="mt-12  md:flex items-start">
             <RankedStats data="{rankedData}"/>
             <GlobalStats data="{playerData}"/>

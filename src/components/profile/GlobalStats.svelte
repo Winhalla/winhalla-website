@@ -8,11 +8,11 @@
 </script>
 
 
-<div class="relative bg-variant max-w-max rounded-xl  p-8 ml-18 xl:ml-10   h-auto">
+<div class="relative bg-variant md:max-w-max rounded-xl   p-8  mt-12 md:mt-0 md:ml-18 xl:ml-10   h-auto w-full md:w-auto">
     <p class="absolute -top-3 text-xl text-mid-light">GLOBAL</p>
     <div class="flex">
-        <div class="">
-            <div class="ml-2">
+        <div class="w-full">
+            <div class="md:ml-2">
                 <h3 class="font-bold text-xl" style="font-family: 'Roboto Condensed', sans-serif">Total games
                     played:</h3>
                 <p class="text-primary text-3xl">{data.games}</p>
@@ -33,47 +33,47 @@
 
             </div>
             <!--Stats-->
-            <div>
-                <p class="ml-2 mt-9  text-xl ">KOs: <b
+            <div class="md:ml-2">
+                <p class="mt-9  text-xl ">KOs: <b
                         class="font-normal text-epic text-2xl">{data.kos}</b>
-                <div class="ml-2 mt-1  p-4 pl-6 bg-background rounded-xl  flex">
-                    <div>
-                        <p class="text-lg text-mid-light mt-">Unarmed: <b
-                                class="font-normal text-primary text-xl">486</b>
+                <div class="mt-1  p-4 pl-6 bg-background rounded-xl  md:flex">
+                    <div class="text-lg">
+                        <p class="text-mid-light mt-">Unarmed: <b
+                                class="font-normal text-primary text-xl">{data.kosunarmed}</b>
                         </p>
-                        <p class="text-lg text-mid-light mt-">Bomb: <b
-                                class="font-normal text-primary text-xl">63</b></p>
-                        <p class="text-lg text-mid-light mt-">Mine: <b
-                                class="font-normal text-primary text-xl">14</b></p>
+                        <p class="text-mid-light mt-">Bomb: <b
+                                class="font-normal text-primary text-xl">{data.kobomb}</b></p>
+                        <p class="text-mid-light mt-">Mine: <b
+                                class="font-normal text-primary text-xl">{data.komine}</b></p>
 
                     </div>
-                    <div class="ml-8">
-                        <p class="text-lg text-mid-light mt-">Weapon throw: <b
+                    <div class="mt-4 md:mt-0 md:ml-8 text-lg">
+                        <p class="text-lg text-mid-light ">Weapon throw: <b
                                 class="font-normal text-primary text-xl">TBA</b></p>
-                        <p class="text-lg text-mid-light mt-">Spikeball: <b
+                        <p class="text-lg text-mid-light ">Spikeball: <b
                                 class="font-normal text-primary text-xl">27</b></p>
 
                     </div>
                 </div>
             </div>
-            <div>
-                <p class="ml-2 mt-7  text-xl ">Damage: <b
+            <div class="md:ml-2">
+                <p class=" mt-7  text-xl ">Damage: <b
                         class="font-normal text-epic text-2xl">{data.damagedealt}</b>
-                <div class="ml-2 mt-1  p-4 pl-6 bg-background rounded-xl  flex">
-                    <div>
-                        <p class="text-lg text-mid-light mt-">Unarmed: <b
+                <div class=" mt-1  p-4 pl-6 bg-background rounded-xl  md:flex">
+                    <div class="text-lg">
+                        <p class="text-mid-light ">Unarmed: <b
                                 class="font-normal text-primary text-xl">{data.damageunarmed}</b>
                         </p>
-                        <p class="text-lg text-mid-light mt-">Bomb: <b
+                        <p class="text-mid-light ">Bomb: <b
                                 class="font-normal text-primary text-xl">{data.damagebomb}</b></p>
-                        <p class="text-lg text-mid-light mt-">Mine: <b
+                        <p class="text-mid-light ">Mine: <b
                                 class="font-normal text-primary text-xl">{data.damagemine}</b></p>
-
                     </div>
-                    <div class="ml-8">
-                        <p class="text-lg text-mid-light mt-">Weapon throw: <b
+
+                    <div class="mt-4 md:mt-0 md:ml-8 text-lg">
+                        <p class="text-mid-light">Weapon throw: <b
                                 class="font-normal text-primary text-xl">TBA</b></p>
-                        <p class="text-lg text-mid-light mt-">Spikeball: <b
+                        <p class="text-mid-light">Spikeball: <b
                                 class="font-normal text-primary text-xl">{data.damagespikeball}</b></p>
 
                     </div>

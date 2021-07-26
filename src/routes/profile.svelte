@@ -1,11 +1,14 @@
 <script>
     import {apiUrl} from "../utils/config";
     import {callApi} from "../utils/api";
+    import formatTime from "../utils/formatTime";
+
     import GlobalStats from "../components/profile/GlobalStats.svelte";
     import RankedStats from "../components/profile/RankedStats.svelte";
     import LegendWeaponStats from "../components/profile/LegendStats.svelte";
     import LegendStats from "../components/profile/LegendStats.svelte";
     import WeaponStats from "../components/profile/WeaponStats.svelte";
+
 
     const legendObj = {
         bodvar: {weapon_one: 'Hammer', weapon_two: 'Sword'},
@@ -62,86 +65,99 @@
         magyar: {weapon_one: 'Hammer', weapon_two: 'Greatsword'},
         reno: {weapon_one: 'Pistol', weapon_two: 'Orb'}
     }
-    const weaponObj = {
-        "Hammer": {
-            time_held: 0,
-            games_played: 0,
+    const weaponList = [
+        {
+            name: "Hammer",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Sword": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Sword",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Pistol": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Pistol",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "RocketLance": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "RocketLance",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Spear": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Spear",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Katar": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Katar",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Axe": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Axe",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Fists": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Fists",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Bow": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Bow",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Cannon": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Cannon",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Orb": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Orb",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Scythe": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Scythe",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         },
-        "Greatsword": {
-            time_held: 0,
-            games_played: 0,
+        {
+            name: "Greatsword",
+            matchtime: 0,
+            games: 0,
             kos: 0,
-            damage: 0,
+            damagedealt: 0,
         }
-    }
+    ]
 
 
     let loaded;
@@ -151,7 +167,7 @@
     let rankedData;
 
     const res = new Promise(async () => {
-        const playerId = await callApi("get", `${apiUrl}/stats/username/philtrom`);
+        const playerId = await callApi("get", `${apiUrl}/stats/username/boomie`);
 
         data = await callApi("get", `${apiUrl}/stats/${playerId}`);
         playerData = data.player;
@@ -175,33 +191,20 @@
             const legendWeaponOne = legendObj[l.legend_name_key].weapon_one;
             const legendWeaponTwo = legendObj[l.legend_name_key].weapon_two;
 
-            weaponObj[legendWeaponOne].time_held += l.timeheldweaponone;
-            weaponObj[legendWeaponOne].games_played += l.games;
-            weaponObj[legendWeaponOne].kos += l.koweaponone;
-            weaponObj[legendWeaponOne].damage += parseInt(l.damageweaponone);
+            let weaponOneInList = weaponList.find(w => w.name === legendWeaponOne);
+            weaponOneInList.matchtime += l.timeheldweaponone;
+            weaponOneInList.games += l.games;
+            weaponOneInList.kos += l.koweaponone;
+            weaponOneInList.damagedealt += parseInt(l.damageweaponone);
 
-
-            weaponObj[legendWeaponTwo].time_held += l.timeheldweapontwo;
-            weaponObj[legendWeaponTwo].games_played += l.games;
-            weaponObj[legendWeaponTwo].kos += l.koweapontwo;
-            weaponObj[legendWeaponTwo].damage += parseInt(l.damageweapontwo);
+            let weaponTwoInList = weaponList.find(w => w.name === legendWeaponTwo);
+            weaponTwoInList.matchtime += l.timeheldweapontwo;
+            weaponTwoInList.games += l.games;
+            weaponTwoInList.kos += l.koweapontwo;
+            weaponTwoInList.damagedealt += parseInt(l.damageweapontwo);
         }
-        console.log(playerData.matchtime)
         loaded = true;
     });
-
-    function formatTime(seconds) {
-        return [
-                parseInt(seconds / 60 / 60),
-                parseInt(seconds / 60 % 60),
-                parseInt(seconds % 60)
-            ]
-                .join(":")
-                .replace(":", "h ")
-                .replace(":", "m ")
-                .replace(/\b(\d)\b/g, "0$1") //add a 0 in front of number if necessary
-            + "s"
-    }
 </script>
 
 {#if loaded}
@@ -220,7 +223,8 @@
             <div class="text-ultra-light mt-2">
                 <p>Level: <b class="font-normal text-primary text-2xl">{playerData.level}</b></p>
                 <p class="mt-1">Time spent in online games: <b
-                        class="font-normal text-primary text-2xl">{formatTime(playerData.matchtime)}</b>
+                        class="font-normal text-primary text-2xl">
+                    {formatTime(playerData.matchtime)}</b>
                 </p>
             </div>
         </div>
@@ -242,7 +246,7 @@
 
         <div class="pt-12 mt-6 xl:mt-0    md:flex items-start">
             <LegendStats data={playerData.legends}/>
-            <WeaponStats data={weaponObj}/>
+            <WeaponStats data={weaponList}/>
         </div>
     </section>
 {/if}

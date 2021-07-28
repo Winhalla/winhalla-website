@@ -345,5 +345,5 @@
         </section>
     </div>
 
-    <!-- Bidvertiser2058315 -->
+    Bidvertiser2058315
 </div>

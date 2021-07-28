@@ -1,20 +1,21 @@
 <script>
-    import { onDestroy, onMount } from "svelte";
-    import { clickOutside } from "../../utils/clickOutside";
+    import {onDestroy, onMount} from "svelte";
+    import {clickOutside} from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
     import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
-    import { fly } from "svelte/transition";
-    import { config } from "../storeAdmin";
-    import { apiUrl } from "../../utils/config";
-    import { callApi } from "../../utils/api";
-    import { goto, stores } from "@sapper/app";
-    import { counter } from "../store.js";
+    import {fly} from "svelte/transition";
+    import {config} from "../storeAdmin";
+    import {apiUrl} from "../../utils/config";
+    import {callApi} from "../../utils/api";
+    import {goto, stores} from "@sapper/app";
+    import {counter} from "../store.js";
     import CoinIcon from "../CoinIcon.svelte";
+    import Search from "../profile/Search.svelte";
 
-    const { page } = stores();
+    const {page} = stores();
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
@@ -84,16 +85,16 @@
             if (!adminData)
                 infos = await callApi("get", "/informations");
             else {
-                infos = { event: adminData };
+                infos = {event: adminData};
             }
 
             /*currEvent = information.filter(i => i.type === "event")[0];
             isEventBannerOpen = true;
             notificationsObj.event = currEvent;*/
             if (Date.now() <= infos.event.expiration) {
-                let { name, description, percentage } = infos.event;
+                let {name, description, percentage} = infos.event;
                 let descParts = description.split("%%");
-                currEvent = { name, descParts, percentage };
+                currEvent = {name, descParts, percentage};
                 isEventBannerOpen = true;
                 if (isAdmin) {
                     notificationsObj.event = {
@@ -385,6 +386,9 @@
                             <NavAlert data={infos} />
                         </div>
                     {/if}
+                    <div class="mr-4">
+                        <Search />
+                    </div>
                     {#if isUserLoggedIn}
                         <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.name && user.pictureMini}

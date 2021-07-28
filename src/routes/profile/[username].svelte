@@ -1,13 +1,16 @@
 <script>
-    import {apiUrl} from "../utils/config";
-    import {callApi} from "../utils/api";
-    import formatTime from "../utils/formatTime";
+    import {apiUrl} from "../../utils/config";
+    import {callApi} from "../../utils/api";
+    import formatTime from "../../utils/formatTime";
 
-    import GlobalStats from "../components/profile/GlobalStats.svelte";
-    import RankedStats from "../components/profile/RankedStats.svelte";
-    import LegendWeaponStats from "../components/profile/LegendStats.svelte";
-    import LegendStats from "../components/profile/LegendStats.svelte";
-    import WeaponStats from "../components/profile/WeaponStats.svelte";
+    import GlobalStats from "../../components/profile/GlobalStats.svelte";
+    import RankedStats from "../../components/profile/RankedStats.svelte";
+    import LegendWeaponStats from "../../components/profile/LegendStats.svelte";
+    import LegendStats from "../../components/profile/LegendStats.svelte";
+    import WeaponStats from "../../components/profile/WeaponStats.svelte";
+    import {onMount} from "svelte";
+    import {stores} from "@sapper/app";
+    const { page } = stores();
 
 
     const legendObj = {
@@ -159,6 +162,8 @@
         }
     ]
 
+    let pages;
+    let username;
 
     let loaded;
 
@@ -166,44 +171,50 @@
     let playerData;
     let rankedData;
 
-    const res = new Promise(async () => {
-        const playerId = await callApi("get", `${apiUrl}/stats/username/23felons23`);
+    onMount(() => {
+        pages = page.subscribe(async value => {
+            username = value.params.username;
 
-        data = await callApi("get", `${apiUrl}/stats/${playerId}`);
-        playerData = data.player;
+            const res = new Promise(async () => {
+                const playerId = await callApi("get", `${apiUrl}/stats/username/${username}`);
 
-        playerData.matchtime = 0;
-        playerData.damageunarmed = 0;
-        playerData.kosunarmed = 0;
-        playerData.kos = 0;
-        playerData.damagedealt = 0;
+                data = await callApi("get", `${apiUrl}/stats/${playerId}`);
+                playerData = data.player;
 
-        rankedData = data.ranked;
+                playerData.matchtime = 0;
+                playerData.damageunarmed = 0;
+                playerData.kosunarmed = 0;
+                playerData.kos = 0;
+                playerData.damagedealt = 0;
 
-        for (let l of playerData.legends) {
-            //faut voir si damagethrownitem c que pour les armes si oui faut add
-            playerData.matchtime += l.matchtime;
-            playerData.damageunarmed += parseInt(l.damageunarmed);
-            playerData.kosunarmed += parseInt(l.kounarmed);
-            playerData.kos += l.kos;
-            playerData.damagedealt += parseInt(l.damagedealt);
+                rankedData = data.ranked;
 
-            const legendWeaponOne = legendObj[l.legend_name_key].weapon_one;
-            const legendWeaponTwo = legendObj[l.legend_name_key].weapon_two;
+                for (let l of playerData.legends) {
+                    //faut voir si damagethrownitem c que pour les armes si oui faut add
+                    playerData.matchtime += l.matchtime;
+                    playerData.damageunarmed += parseInt(l.damageunarmed);
+                    playerData.kosunarmed += parseInt(l.kounarmed);
+                    playerData.kos += l.kos;
+                    playerData.damagedealt += parseInt(l.damagedealt);
 
-            let weaponOneInList = weaponList.find(w => w.name === legendWeaponOne);
-            weaponOneInList.matchtime += l.timeheldweaponone;
-            weaponOneInList.games += l.games;
-            weaponOneInList.kos += l.koweaponone;
-            weaponOneInList.damagedealt += parseInt(l.damageweaponone);
+                    const legendWeaponOne = legendObj[l.legend_name_key].weapon_one;
+                    const legendWeaponTwo = legendObj[l.legend_name_key].weapon_two;
 
-            let weaponTwoInList = weaponList.find(w => w.name === legendWeaponTwo);
-            weaponTwoInList.matchtime += l.timeheldweapontwo;
-            weaponTwoInList.games += l.games;
-            weaponTwoInList.kos += l.koweapontwo;
-            weaponTwoInList.damagedealt += parseInt(l.damageweapontwo);
-        }
-        loaded = true;
+                    let weaponOneInList = weaponList.find(w => w.name === legendWeaponOne);
+                    weaponOneInList.matchtime += l.timeheldweaponone;
+                    weaponOneInList.games += l.games;
+                    weaponOneInList.kos += l.koweaponone;
+                    weaponOneInList.damagedealt += parseInt(l.damageweaponone);
+
+                    let weaponTwoInList = weaponList.find(w => w.name === legendWeaponTwo);
+                    weaponTwoInList.matchtime += l.timeheldweapontwo;
+                    weaponTwoInList.games += l.games;
+                    weaponTwoInList.kos += l.koweapontwo;
+                    weaponTwoInList.damagedealt += parseInt(l.damageweapontwo);
+                }
+                loaded = true;
+            });
+        });
     });
 </script>
 

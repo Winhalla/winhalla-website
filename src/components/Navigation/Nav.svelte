@@ -255,7 +255,9 @@
                     {#if loaded && window.innerWidth < 1024}
                         <NavAlert data={infos} />
                     {/if}
-
+                    <div class="mr-4">
+                        <Search />
+                    </div>
                     <Notifications data={notificationsObj} />
                 </div>
                 <button
@@ -386,7 +388,7 @@
                             <NavAlert data={infos} />
                         </div>
                     {/if}
-                    <div class="mr-4">
+                    <div class="hidden lg:block mr-4">
                         <Search />
                     </div>
                     {#if isUserLoggedIn}

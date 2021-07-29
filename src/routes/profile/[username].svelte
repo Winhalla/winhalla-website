@@ -164,6 +164,7 @@
 
     let pages;
     let username;
+    let bid;
 
     let loaded;
 
@@ -173,12 +174,21 @@
 
     onMount(() => {
         pages = page.subscribe(async value => {
+            bid = value.query?.bid;
             username = value.params.username;
 
             const res = new Promise(async () => {
-                const playerId = await callApi("get", `${apiUrl}/stats/username/${username}`);
+                if (bid) {
+                    data = await callApi("get", `${apiUrl}/stats/${bid}`);
+                    if (data.name !== username) {
+                        const player = await callApi("get", `/stats/username/${username}`);
+                        data = await callApi("get", `${apiUrl}/stats/${player.find(p => p.name === username).brawlhalla_id}`);
+                    }
+                } else {
+                    const player = await callApi("get", `/stats/username/${username}`);
+                    data = await callApi("get", `${apiUrl}/stats/${player.find(p => p.name === username).brawlhalla_id}`);
+                }
 
-                data = await callApi("get", `${apiUrl}/stats/${playerId}`);
                 playerData = data.player;
 
                 playerData.matchtime = 0;

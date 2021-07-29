@@ -1,11 +1,39 @@
 <script>
     import {fade, fly} from "svelte/transition"
-    import {goto} from "@sapper/app";
+    import { clickOutside } from "../../utils/clickOutside";
+    import {callApi} from "../../utils/api";
 
     let isSearchOpen = true;
 
     function handleSearchPopup() {
+        username = "";
         isSearchOpen = !isSearchOpen;
+    }
+
+
+    let username;
+    $: if (username || username === "") {
+        if (username === "") {
+            data = false;
+            clearTimeout(interval);
+        } else {
+            handleInputChange()
+        }
+    }
+
+    let interval;
+    let data = false;
+
+    function handleInputChange() {
+        data = false;
+        clearTimeout(interval);
+
+        interval = setTimeout(searchUsername, 750)
+    }
+
+    async function searchUsername() {
+        data = await callApi("get", `/stats/username/${username}`)
+        console.log(data.length)
     }
 </script>
 
@@ -18,20 +46,57 @@
 {#if isSearchOpen === true}
     <div class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center "
          style="z-index: 100"
+
          in:fade={{duration: 200}}
          out:fade={{duration: 350}}>
 
         <div
-                class=" w-full max-w-xl    mx-5 my-1 md:mx-0  p-10    bg-variant   border-2 border-primary    rounded-xl    overflow-y-scroll md:overflow-y-auto"
+                class=" w-full max-w-xl    mx-5 my-1 md:mx-0  p-10    bg-variant   border-2 border-primary    rounded-xl    overflow-y-scroll md:overflow-y-auto  relative"
                 style="max-height: 95vh;"
-                transition:fly={{ y: 300, duration: 350 }}>
+                transition:fly={{ y: 300, duration: 350 }}
+                use:clickOutside
+                on:click_outside={handleSearchPopup}>
 
+            <button class="absolute top-0 right-0  p-4 text-mid-light hover:text-font"
+                    on:click={handleSearchPopup}>
+                <svg class="fill-current w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                            d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"/>
+                </svg>
+            </button>
             <div>
                 <h3 class="ml-1 mb-2 text-xl  text-mid-light">Search for a player</h3>
-                <form role="search">
-                <input class="w-full text-2xl text-font bg-background py-4 px-4 rounded-lg  focus:outline-none"
-                       placeholder="Type the exact username" type="text" on:submit={(e) => goto(`/profile/${e.data}`)}>
-                </form>
+                <div class="relative">
+                    <input class="w-full text-2xl text-font bg-background py-4 px-4 rounded-lg  focus:outline-none"
+                           placeholder="Type the exact username" type="text" bind:value={username}>
+                    {#if data || data.length < 1}
+                        <div class="w-full absolute top-15 border-t border-epic">
+                            {#if data.length < 1}
+                                <p class="bg-background py-4 text-center text-xl text-mid-light">No result</p>
+                            {:else}
+                                <div class="max-h-32 overflow-y-auto">
+                                    {#each data as player}
+                                        <a on:click={handleSearchPopup} class="flex justify-between pl-4 pr-8 py-4  bg-background  text-xl"  href="/profile/{player.name}?bid={player.brawlhalla_id}">
+                                            <div class="flex items-center">
+                                                <p class="text-primary text-default"
+                                                   style="margin-top: 0.15rem">{player.region}</p>
+                                                <p class="ml-4">{player.name}</p>
+                                            </div>
+                                            <p>
+                                                {player.tier}
+                                            </p>
+                                        </a>
+                                    {/each}
+                                </div>
+                            {/if}
+
+
+                        </div>
+                    {/if}
+
+                </div>
+
+
                 <div class="mt-8">
                     <p class="ml-1 mb-1  text-mid-light">Recent players:</p>
 
@@ -42,6 +107,7 @@
                         <a href="" class="ml-5 rounded-lg px-6 py-3 bg-background">
                             porobolo
                         </a>
+
                     </div>
 
                 </div>

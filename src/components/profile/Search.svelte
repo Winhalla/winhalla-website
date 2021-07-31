@@ -3,7 +3,7 @@
     import { clickOutside } from "../../utils/clickOutside";
     import {callApi} from "../../utils/api";
 
-    let isSearchOpen = true;
+    let isSearchOpen = false;
 
     function handleSearchPopup() {
         username = "";

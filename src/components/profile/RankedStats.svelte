@@ -1,6 +1,6 @@
 <script>
     export let data;
-    console.log(data)
+
     data.losses = data.games - data.wins;
     data.winRate = (data.wins / data.games) * 100;
     data.lossRate = 100 - data.winRate;

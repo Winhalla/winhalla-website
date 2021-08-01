@@ -246,8 +246,6 @@
                 });
 
             }
-
-
         });
     });
 </script>
@@ -291,8 +289,8 @@
     </section>
     {#if isDisplayingWinhalla}
         <section class="px-7 md:px-10 lg:px-18 pb-12  md:flex items-start" >
-            <CoinStats />
-            <CoinHistory />
+            <CoinStats user="{user}" data="{user.coinLogs.total}"/>
+            <CoinHistory data="{user.coinLogs.history}"/>
         </section>
     {:else}
         <section class="px-7 md:px-10 lg:px-18 pb-12 lg:flex justify-between flex-wrap items-start">

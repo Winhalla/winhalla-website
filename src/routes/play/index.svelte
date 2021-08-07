@@ -184,8 +184,7 @@
         </div>
         <GuideCard page="play" />
         <div class="mt-6">
-            <script src="//ap.lijit.com/www/delivery/fpi.js?z=938845&width=728&height=90"></script>
-        </div>
+            <script type="text/javascript" src="https://ap.lijit.com//www/delivery/fp?z=938845"></script>        </div>
     </div>
 {/if}
 {#if info}

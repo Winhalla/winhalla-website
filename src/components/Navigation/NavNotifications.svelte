@@ -12,10 +12,14 @@
     let isDropdownOpen = false;
     let matchesLength;
     let timerIds = [];
+    let dontGo = false;
 
-    function go(id,matchId) {
-        if(id === 0) goto("/play/ffa/"+matchId)
-        else if (id === 1) goto("/play")
+    function go(id, matchId) {
+        setTimeout(() => {
+            if(dontGo === true) return dontGo = false
+            if (id === 0) goto("/play/ffa/" + matchId);
+            else if (id === 1) goto("/play");
+        },5)
     }
 
     function handleClick() {
@@ -108,6 +112,7 @@
 
     function delNotif(id, index) {
         callApi("post", "/deleteNotification/" + id);
+        dontGo = true
         data.notifications.splice(index, 1);
         data = data;
     }
@@ -311,8 +316,8 @@
                                         </span>
                                         {/if}
                                         <button
-                                           on:click={() => delNotif(notification._id,i)}
-                                           class="-mt-2 -mr-2 lg:mt-0 lg:mr-0 absolute top-0 right-0 text-light
+                                            on:click={() => delNotif(notification._id,i)}
+                                            class="-mt-2 -mr-2 lg:mt-0 lg:mr-0 absolute top-0 right-0 text-light
                                     hover:text-font">
                                             <svg
                                                 class="m-3 lg:m-1 w-5 h-5 lg:w-4 lg:h-4 fill-current "

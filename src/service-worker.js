@@ -62,7 +62,7 @@ self.addEventListener("fetch", event => {
     }
 
     // This specify to ignore lobby pages (because they are too much dynamical)
-    if (url.pathname.includes("/play/ffa")) return
+    if (url.pathname.includes("/play/ffa") || url.pathname.includes("/getMatch")) return
 
     // This specify to ignore API responses that are dynamic
     if (url.host === "localhost:4000" && (url.pathname !== "/shop" && url.pathname !== "/account" && url.pathname !== "/informations" && url.pathname !== "/status")) return;

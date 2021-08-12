@@ -157,6 +157,7 @@ module.exports = {
 
             fontSize: {
                 "4.5xl":"2.5rem",
+                "6.5xl":"4.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",
                 "9xl": "7rem",

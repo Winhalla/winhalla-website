@@ -383,7 +383,7 @@
                                 class="absolute bottom-0 z-10 px-5 md:pr-10 pb-3 w-full">
                                 <div
                                     class="justify-between w-full md:items-center">
-                                    <p class="text-accent text-5xl lg:text-6xl" style="line-height:1"
+                                    <p class="text-accent text-5xl lg:text-6.5xl" style="line-height:1"
                                        class:hidden={featuredItem.isDescriptionToggled}>
                                         {featuredItem.name
                                             .toLowerCase()

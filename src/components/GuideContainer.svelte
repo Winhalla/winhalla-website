@@ -6,7 +6,7 @@
 </script>
 
 <div class="px-9 pt-8 pb-6 bg-background border-2 border-primary rounded-xl  max-w-max">
-    <h3 class="text-5xl">{title}</h3>
+    <h3 class="text-4xl md:text-5xl">{title}</h3>
     <div class="mt-5">
         <slot></slot>
 

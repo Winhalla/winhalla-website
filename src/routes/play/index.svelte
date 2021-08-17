@@ -177,13 +177,14 @@
                     </div>
 
                     {#if currentGuide === "game_modes"}
-                        <div class="absolute z-60  right-0  bottom-0         ">
+                        <div class="absolute z-60  bottom-76 -right-4 md:-bottom-12 lg:right-0  lg:bottom-0">
+
                             <GuideContainer title="Game modes" previous={false}>
                                 <div class="mt-1">
-                                    <p class="text-3xl">Here you can find <b class="font-normal text-primary">the list</b> of the <b class="font-normal text-epic">Winhalla <br>game modes</b>
+                                    <p class="text-2xl md:text-3xl">Here you can find <b class="font-normal text-primary">the list</b> of the <b class="font-normal text-epic">Winhalla <br class="hidden md:block">game modes</b>
                                         with their description</p>
-                                    <p class="mt-3 text-default text-mid-light italic">Note: these game modes are <b class="font-normal text-primary">unrelated</b> to
-                                        <br><b class="font-normal text-primary">Brawlhalla game modes</b></p>
+                                    <p class="mt-3  text-xl md:text-default text-mid-light italic">Note: these game modes are <b class="font-normal text-primary">unrelated</b> to
+                                        <br class="hidden md:block"><b class="font-normal text-primary">Brawlhalla game modes</b></p>
                                 </div>
                             </GuideContainer>
                         </div>

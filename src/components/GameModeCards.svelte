@@ -105,12 +105,13 @@
 
 </style>
 
-{#each gameModes as gameMode}
+{#each gameModes as gameMode,i}
     {#if gameMode.available === true}
         <a
             class="game-mode-card block relative shadow-card border
                         border-transparent hover:border-primary
                         hover:shadow-card-hover mb-10 md:mb-0 md:mr-15 relative"
+            class:lg:mr-8={i===0}
             href="/play/{gameMode.name}">
 
             <div class="h-full">
@@ -140,7 +141,8 @@
         </a>
     {:else}
         <div
-            class="game-mode-card block relative shadow-card border border-transparent mb-10 md:mb-0 md:mr-0 lg:mr-15 relative">
+            class="game-mode-card block relative shadow-card border border-transparent lg:mr-15 mb-10 md:mb-0 md:mr-0 relative"
+        >
 
             <div class="h-full locked-gradient">
                 <img
@@ -169,8 +171,7 @@
             </div>
             {#if gameMode.available === "maintenance"}
                 <div class="absolute lock">
-                    <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In-->
-                    <svg version="1.1" class="fill-current text-disabled w-12 mx-auto"
+                    <svg class="fill-current text-disabled w-12 mx-auto"
                          xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                          viewBox="0 0 479.554 479.554" style="enable-background:new 0 0 479.554 479.554;"

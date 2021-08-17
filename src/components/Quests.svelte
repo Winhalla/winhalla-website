@@ -296,7 +296,7 @@
         </div>
     {/if}
     {#if error}
-        <p class="text-legendary w-full">An error has been detected by our fellow erroR0B0T, quests might appear
+        <p class="text-legendary w-full">An error has been detected ,quests might appear
             weirdly. </p>
         <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
     {/if}
@@ -312,7 +312,7 @@
             </div>
             <div class="quests-container mt-1">
                 {#if data.finished && data.finished.daily}
-                    <div class="pb-1 ">
+                    <div class="pb-1 block">
                         {#each data.finished.daily as quest, i}
                             <button
                                 on:click={() => collect('daily', quest.id, true)}
@@ -416,7 +416,7 @@
             </div>
             <div class="quests-container mt-1">
                 {#if data.finished && data.finished.weekly}
-                    <div class="pb-1">
+                    <div class="pb-1 block">
                         {#each data.finished.weekly as quest, i}
                             <button
                                 on:click={() => collect('weekly', quest.id, true)}

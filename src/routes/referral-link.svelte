@@ -10,7 +10,7 @@
     import cookie from "cookie";
     import { callApi } from "../utils/api";
     import { goto } from "@sapper/app";
-    import { counter } from "../components/store";
+    import { counter } from "../components/stores";
     import Loading from "../components/Loading.svelte";
     import { apiUrl } from "../utils/config";
     import { fade } from "svelte/transition";

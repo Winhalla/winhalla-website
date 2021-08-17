@@ -1,5 +1,5 @@
 <script>
-    import { counter } from "./store";
+    import { counter } from "./stores";
 
     export let waitingAdAccept;
     export let socket;

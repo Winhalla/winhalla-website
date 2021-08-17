@@ -11,7 +11,7 @@
     import {apiUrl} from "../../utils/config";
     import {callApi} from "../../utils/api";
     import {goto, stores} from "@sapper/app";
-    import {counter} from "../store.js";
+    import {counter} from "../stores.js";
     import CoinIcon from "../CoinIcon.svelte";
     import Search from "../profile/Search.svelte";
 

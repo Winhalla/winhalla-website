@@ -15,7 +15,7 @@
 
     import { fade, fly } from "svelte/transition";
 
-    import { counter } from "../../../components/store";
+    import { counter } from "../../../components/stores";
     import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";

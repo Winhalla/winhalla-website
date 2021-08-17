@@ -1,6 +1,6 @@
 <script>
     import { fade, fly } from "svelte/transition";
-    import { counter } from "../components/store";
+    import { counter } from "../components/stores";
     import { callApi } from "../utils/api";
     import { onMount } from "svelte";
     import CoinIcon from "../components/CoinIcon.svelte";

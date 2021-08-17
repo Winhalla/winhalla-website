@@ -4,6 +4,9 @@ module.exports = {
     },
     theme: {
         extend: {
+            zIndex: {
+              60: "60"
+            },
             maxHeight: {
                 'screen-90': "90vh",
                 'screen-65': "65vh"

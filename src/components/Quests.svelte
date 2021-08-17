@@ -1,7 +1,7 @@
 <script>
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
-    import { counter } from "./store";
+    import { counter } from "./stores";
     import { io } from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import PlayAdButton from "./PlayAdButton.svelte";
@@ -10,6 +10,7 @@
     import { serialize } from "cookie";
     import { getCookie } from "../utils/getCookie";
     import Infos from "./Infos.svelte";
+    import GuideContainer from "./GuideContainer.svelte";
 
     let countDown = [{}, {}];
     export let data;
@@ -22,6 +23,8 @@
     let interval;
     let questsAlertAlreadyShown;
     let isAlertNoRefreshOpen;
+
+    export let currentGuideVisible;
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -262,6 +265,19 @@
 </svelte:head>
 
 <div>
+    {#if currentGuideVisible === "quests"}
+        <div class="absolute -bottom-12 right-32  z-30">
+            <GuideContainer title="Quests">
+                <div>
+                    <p class="text-3xl"><b>Complete</b> these quests to <b>earn coins</b>!</p>
+                    <p class="text-2xl mt-1">Quests have <b>3</b> rarity: <b>Normal</b>, <b style="color: #ee38ff">Epic</b>, and <b style="color: #fc1870">Legendary</b></p>
+                    <p class="mt-2 text-default text-mid-light italic">Tip: hover or click on a quest to view the reward ;)</p>
+                </div>
+            </GuideContainer>
+        </div>
+
+    {/if}
+
     {#if waitingAdAccept && socket }
         <div
             class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
@@ -297,6 +313,8 @@
         <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
     {/if}
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
+
+
         <div
             class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
             <div class="">
@@ -509,12 +527,25 @@
     </div>
     <div
         class="flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4
-        ml-5 lg:ml-0">
+        ml-5 lg:ml-0   {currentGuideVisible === 'quests_refresh' ? 'z-60  relative' : ''}">
         <div on:click={() => handleRefresh()}>
         <RefreshButton
             isRefreshing={isRefreshingQuests}
             refreshMessage={'Refresh quests data'} />
         </div>
+        {#if currentGuideVisible === "quests_refresh"}
+            <div class="absolute -bottom-44 right-38  z-30">
+                <GuideContainer title="Refresh button">
+                    <div>
+                        <p class="text-3xl"><b>Click</b> this button to <b>refresh the quests</b> data!</p>
+                        <p class="text-2xl mt-2">Due to the <b>Brawlhalla API latency</b>, quests may take <br> up to <b style="color: #fc1870">3-4 hours</b> <b>to refresh</b></p>
+                        <p class="mt-3 text-default text-mid-light italic">Info: we will <b style="color: #3de488;">automatically collect</b> the quests
+                            <br> you finished before they expire :D</p>
+                    </div>
+                </GuideContainer>
+            </div>
+
+        {/if}
         <div class="flex lg:ml-8 items-center mt-4 lg:mt-0">
             <!--<div class="flex items-center ">
                 <div class="py-2 px-2 rounded-full bg-primary">

@@ -8,8 +8,10 @@
     import AdblockAlert from "../../components/AdblockAlert.svelte";
     import { goto } from "@sapper/app";
     import { apiUrl } from "../../utils/config";
-    import { counter } from "../../components/store";
+    import { counter } from "../../components/stores";
     import Infos from "../../components/Infos.svelte";
+    import GuideContainer from "../../components/GuideContainer.svelte";
+    import {guideHandlerSetPage, guideHandlerStore} from "../../components/guideStore";
 
     let quests;
     let error;
@@ -17,6 +19,10 @@
     let gameModes;
     let errorDetailsOpen = false;
     let info;
+
+    //guides
+    let currentGuide;
+
     onMount(async () => {
         let params = new URLSearchParams(window.location.search);
         if (params.get("reloadNav"))
@@ -78,6 +84,14 @@
             } else {
                 quests = quests.solo;
             }
+
+
+            //guides
+            guideHandlerSetPage("play");
+            guideHandlerStore.subscribe(value => {
+                currentGuide = value.current;
+            });
+
         } catch
             (err) {
             console.log(err);
@@ -95,6 +109,7 @@
             error = `<p class="text-accent">Oops, a problem occurred when loading Quests data :(</p><p class="text-2xl mt-4">Note : Try to login or try to reload the page!</p> <p class="text-xl text-light mt-2">${err.toString()}</p>`;
 
         }
+
     });
 </script>
 
@@ -134,7 +149,7 @@
     <AdblockAlert quests={quests} />
     <div class="lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full">
         <div class="text-center lg:text-left">
-            <h1 class="text-6xl leading-snug lg:leading-normal">
+            <h1 class="text-6xl leading-snug lg:leading-normal  {currentGuide === 'game_modes' ? 'z-60  relative' : ''}">
                 Choose a game mode
             </h1>
         </div>
@@ -154,14 +169,34 @@
                     <h2 class="lg:text-3xl text-2xl text-center">{@html gameModesError}</h2>
                 </div>
             {:else if gameModes}
-                <div
-                    class="lg:mb-10 lg:mr- mt-10 text-center
+                <div class="{currentGuide === 'game_modes' ? 'z-60  relative' : ''}">
+                    <div
+                            class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
-                    <GameModeCards {gameModes} />
-                </div>
-            {/if}
-            <div class="pb-8 lg:pb-16 flex-grow lg:-ml-15">
+                        <GameModeCards {gameModes} />
+                    </div>
 
+                    {#if currentGuide === "game_modes"}
+                        <div class="absolute z-60  right-0  bottom-0         ">
+                            <GuideContainer title="Game modes" previous={false}>
+                                <div class="mt-1">
+                                    <p class="text-3xl">Here you can find <b class="font-normal text-primary">the list</b> of the <b class="font-normal text-epic">Winhalla <br>game modes</b>
+                                        with their description</p>
+                                    <p class="mt-3 text-default text-mid-light italic">Note: these game modes are <b class="font-normal text-primary">unrelated</b> to
+                                        <br><b class="font-normal text-primary">Brawlhalla game modes</b></p>
+                                </div>
+                            </GuideContainer>
+                        </div>
+
+                    {/if}
+
+                </div>
+
+            {/if}
+            <div class="pb-8 lg:pb-16 flex-grow lg:-ml-15     /bg-background   {currentGuide === 'quests' ? 'z-60  relative' : ''}">
+<!--
+                <div class="h-screen-90 w-full  -top-32 absolute  bg-background " style="z-index: -1"></div>
+-->
                 {#if error}
                     <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
@@ -175,7 +210,7 @@
                     {#if quests.lastDaily && quests.lastWeekly}
                         <div id="quests" class="relative bottom-10"></div>
                         <div class="lg:ml-15">
-                            <Quests data={quests} />
+                            <Quests data={quests} currentGuideVisible="{currentGuide}"/>
                         </div>
                     {/if}
 

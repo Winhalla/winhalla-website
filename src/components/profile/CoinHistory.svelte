@@ -35,10 +35,10 @@
     }
 </script>
 
-<div class="relative bg-variant  rounded-2xl   p-8  mt-12 md:ml-12 2xl:ml-20   max-h-screen-70  lg:w-7/12 xl:w-2/5 2xl:w-1/2">
+<div class="relative bg-variant  rounded-2xl   p-8  mt-12 md:ml-12 2xl:ml-20     lg:w-7/12 xl:w-2/5 2xl:w-1/2">
     <p class="absolute -top-3 text-xl text-mid-light">HISTORY</p>
 
-    <div class="-mt-1  w-full overflow-y-auto">
+    <div class="-mt-1  w-full h-full max-h-screen-70 rounded-lg overflow-y-auto scrollbar scrollbar-background">
         {#if data.length < 1}
             <div class="py-4 px-6 bg-background rounded-xl  text-xl  mt-3 text-center">
                 No history

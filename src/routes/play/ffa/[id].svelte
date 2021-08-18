@@ -381,7 +381,7 @@
         {#if currentGuide === "main"}
             <div class="absolute z-60  mx-4 mb-12 bottom-1/2 md:m-0  md:bottom-auto md:left-1/2 md:top-1/2  transform md:-translate-x-1/2 md:-translate-y-1/2">
 
-                <GuideContainer title="SOLO match" previous={false}>
+                <GuideContainer title="SOLO match" previous={false}  scroll={0}>
                     <div class="mt-1">
                         <p class="text-2xl md:text-3xl">Welcome to the <b class="b-primary">solo match</b> lobby!</p>
                         <p class="mt-2 text-default md:text-2xl"><b class="b-primary">Play</b> some <b class="b-epic">Brawlhalla ranked
@@ -417,7 +417,7 @@
                                 {#if currentGuide === "play_ad"}
                                     <div class="absolute z-60  mx-4 top-64 md:m-0 md:top-56 lg:right-64  lg:top-34">
 
-                                        <GuideContainer title="Multiply your rewards">
+                                        <GuideContainer title="Multiply your rewards" scroll={85}>
                                             <div class="mt-1">
                                                 <p class="text-2xl md:text-3xl"><b class="b-primary">Each ad</b> you
                                                     watch gives you a <b class="b-epic">x3 boost</b>
@@ -436,7 +436,7 @@
                                 {#if currentGuide === "refresh_data"}
                                     <div class="absolute z-60  mx-4 top-82  md:m-0 md:top-73  lg:right-32  lg:top-34">
 
-                                        <GuideContainer title="Refresh data">
+                                        <GuideContainer title="Refresh data"  scroll={250}>
                                             <div class="mt-1">
                                                 <p class="text-2xl md:text-3xl">Use this button to <b class="b-epic">refresh</b>
                                                     your <b class="b-primary">displayed data</b>!</p>

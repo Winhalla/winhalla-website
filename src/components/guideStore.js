@@ -6,6 +6,12 @@ let guidesList = {
         "game_modes",
         "quests",
         "quests_refresh"
+    ],
+    "solo": [
+        "main",
+        "play_ad",
+        "refresh_data",
+        //"quit_lobby", pas sûr que y'a besoin
     ]
 }
 let guidesOpenedList = {};

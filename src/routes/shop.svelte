@@ -427,21 +427,7 @@
 
                                     <div
                                         class="flex justify-between w-full items-end md:pr-5 pb-1">
-                                        <div class="-mb-2 md:mb-0">
-                                            <div>
-                                                <p
-                                                    class="hidden text-3xl lg:block mr-1 -mb-2">
-                                                    {featuredItem.description}
-                                                </p>
-                                                <button
-                                                    class="focus:outline-none xl:hidden -mb-10"
-                                                    on:click={() => handleDescriptionToggle(featuredItem,"featured")}>
-                                                    <p
-                                                        class=" text-light text-lg underline leading-none">
-                                                        {featuredItem.isDescriptionToggled ? 'Hide description' : 'Show description'}
-                                                    </p>
-                                                </button>
-                                            </div>
+                                        <div>
 
                                         </div>
                                         <div

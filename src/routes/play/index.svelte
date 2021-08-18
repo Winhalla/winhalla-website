@@ -179,7 +179,7 @@
                     {#if currentGuide === "game_modes"}
                         <div class="absolute z-60  bottom-76 -right-4 md:-bottom-12 lg:right-0  lg:bottom-0">
 
-                            <GuideContainer title="Game modes" previous={false}>
+                            <GuideContainer title="Game modes" previous={false} scroll={390} scrollMd={0}>
                                 <div class="mt-1">
                                     <p class="text-2xl md:text-3xl">Here you can find <b class="font-normal text-primary">the list</b> of the <b class="font-normal text-epic">Winhalla <br class="hidden md:block">game modes</b>
                                         with their description</p>

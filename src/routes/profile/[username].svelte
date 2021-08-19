@@ -1,6 +1,6 @@
 <script>
-    import {apiUrl} from "../../utils/config";
-    import {callApi, getUser} from "../../utils/api";
+    import { apiUrl } from "../../utils/config";
+    import { callApi, getUser } from "../../utils/api";
     import formatTime from "../../utils/formatTime";
 
     import GlobalStats from "../../components/profile/GlobalStats.svelte";
@@ -8,163 +8,163 @@
     import LegendWeaponStats from "../../components/profile/LegendStats.svelte";
     import LegendStats from "../../components/profile/LegendStats.svelte";
     import WeaponStats from "../../components/profile/WeaponStats.svelte";
-    import {onMount} from "svelte";
-    import {stores} from "@sapper/app";
+    import { onMount } from "svelte";
+    import { stores } from "@sapper/app";
     import CoinStats from "../../components/profile/CoinStats.svelte";
     import CoinHistory from "../../components/profile/CoinHistory.svelte";
     import Loading from "../../components/Loading.svelte";
 
-    const {page} = stores();
+    const { page } = stores();
 
 
     const legendObj = {
-        bodvar: {weapon_one: 'Hammer', weapon_two: 'Sword'},
-        cassidy: {weapon_one: 'Pistol', weapon_two: 'Hammer'},
-        orion: {weapon_one: 'RocketLance', weapon_two: 'Spear'},
-        'lord vraxx': {weapon_one: 'RocketLance', weapon_two: 'Pistol'},
-        gnash: {weapon_one: 'Hammer', weapon_two: 'Spear'},
-        'queen nai': {weapon_one: 'Spear', weapon_two: 'Katar'},
-        hattori: {weapon_one: 'Sword', weapon_two: 'Spear'},
-        'sir roland': {weapon_one: 'RocketLance', weapon_two: 'Sword'},
-        scarlet: {weapon_one: 'Hammer', weapon_two: 'RocketLance'},
-        thatch: {weapon_one: 'Sword', weapon_two: 'Pistol'},
-        ada: {weapon_one: 'Pistol', weapon_two: 'Spear'},
-        sentinel: {weapon_one: 'Hammer', weapon_two: 'Katar'},
-        lucien: {weapon_one: 'Katar', weapon_two: 'Pistol'},
-        teros: {weapon_one: 'Axe', weapon_two: 'Hammer'},
-        brynn: {weapon_one: 'Axe', weapon_two: 'Spear'},
-        asuri: {weapon_one: 'Katar', weapon_two: 'Sword'},
-        barraza: {weapon_one: 'Axe', weapon_two: 'Pistol'},
-        ember: {weapon_one: 'Bow', weapon_two: 'Katar'},
-        azoth: {weapon_one: 'Bow', weapon_two: 'Axe'},
-        koji: {weapon_one: 'Bow', weapon_two: 'Sword'},
-        ulgrim: {weapon_one: 'Axe', weapon_two: 'RocketLance'},
-        diana: {weapon_one: 'Bow', weapon_two: 'Pistol'},
-        jhala: {weapon_one: 'Axe', weapon_two: 'Sword'},
-        kor: {weapon_one: 'Fists', weapon_two: 'Hammer'},
-        'wu shang': {weapon_one: 'Fists', weapon_two: 'Spear'},
-        val: {weapon_one: 'Fists', weapon_two: 'Sword'},
-        ragnir: {weapon_one: 'Katar', weapon_two: 'Axe'},
-        cross: {weapon_one: 'Pistol', weapon_two: 'Fists'},
-        mirage: {weapon_one: 'Scythe', weapon_two: 'Spear'},
-        nix: {weapon_one: 'Scythe', weapon_two: 'Pistol'},
-        mordex: {weapon_one: 'Scythe', weapon_two: 'Fists'},
-        yumiko: {weapon_one: 'Bow', weapon_two: 'Hammer'},
-        artemis: {weapon_one: 'RocketLance', weapon_two: 'Scythe'},
-        caspian: {weapon_one: 'Fists', weapon_two: 'Katar'},
-        sidra: {weapon_one: 'Cannon', weapon_two: 'Sword'},
-        xull: {weapon_one: 'Cannon', weapon_two: 'Axe'},
-        kaya: {weapon_one: 'Spear', weapon_two: 'Bow'},
-        isaiah: {weapon_one: 'Cannon', weapon_two: 'Pistol'},
-        jiro: {weapon_one: 'Sword', weapon_two: 'Scythe'},
-        'lin fei': {weapon_one: 'Katar', weapon_two: 'Cannon'},
-        zariel: {weapon_one: 'Fists', weapon_two: 'Bow'},
-        rayman: {weapon_one: 'Fists', weapon_two: 'Axe'},
-        dusk: {weapon_one: 'Spear', weapon_two: 'Orb'},
-        fait: {weapon_one: 'Scythe', weapon_two: 'Orb'},
-        thor: {weapon_one: 'Hammer', weapon_two: 'Orb'},
-        petra: {weapon_one: 'Fists', weapon_two: 'Orb'},
-        vector: {weapon_one: 'RocketLance', weapon_two: 'Bow'},
-        volkov: {weapon_one: 'Axe', weapon_two: 'Scythe'},
-        onyx: {weapon_one: 'Fists', weapon_two: 'Cannon'},
-        jaeyun: {weapon_one: 'Sword', weapon_two: 'Greatsword'},
-        mako: {weapon_one: 'Katar', weapon_two: 'Greatsword'},
-        magyar: {weapon_one: 'Hammer', weapon_two: 'Greatsword'},
-        reno: {weapon_one: 'Pistol', weapon_two: 'Orb'}
-    }
+        bodvar: { weapon_one: "Hammer", weapon_two: "Sword" },
+        cassidy: { weapon_one: "Pistol", weapon_two: "Hammer" },
+        orion: { weapon_one: "RocketLance", weapon_two: "Spear" },
+        "lord vraxx": { weapon_one: "RocketLance", weapon_two: "Pistol" },
+        gnash: { weapon_one: "Hammer", weapon_two: "Spear" },
+        "queen nai": { weapon_one: "Spear", weapon_two: "Katar" },
+        hattori: { weapon_one: "Sword", weapon_two: "Spear" },
+        "sir roland": { weapon_one: "RocketLance", weapon_two: "Sword" },
+        scarlet: { weapon_one: "Hammer", weapon_two: "RocketLance" },
+        thatch: { weapon_one: "Sword", weapon_two: "Pistol" },
+        ada: { weapon_one: "Pistol", weapon_two: "Spear" },
+        sentinel: { weapon_one: "Hammer", weapon_two: "Katar" },
+        lucien: { weapon_one: "Katar", weapon_two: "Pistol" },
+        teros: { weapon_one: "Axe", weapon_two: "Hammer" },
+        brynn: { weapon_one: "Axe", weapon_two: "Spear" },
+        asuri: { weapon_one: "Katar", weapon_two: "Sword" },
+        barraza: { weapon_one: "Axe", weapon_two: "Pistol" },
+        ember: { weapon_one: "Bow", weapon_two: "Katar" },
+        azoth: { weapon_one: "Bow", weapon_two: "Axe" },
+        koji: { weapon_one: "Bow", weapon_two: "Sword" },
+        ulgrim: { weapon_one: "Axe", weapon_two: "RocketLance" },
+        diana: { weapon_one: "Bow", weapon_two: "Pistol" },
+        jhala: { weapon_one: "Axe", weapon_two: "Sword" },
+        kor: { weapon_one: "Fists", weapon_two: "Hammer" },
+        "wu shang": { weapon_one: "Fists", weapon_two: "Spear" },
+        val: { weapon_one: "Fists", weapon_two: "Sword" },
+        ragnir: { weapon_one: "Katar", weapon_two: "Axe" },
+        cross: { weapon_one: "Pistol", weapon_two: "Fists" },
+        mirage: { weapon_one: "Scythe", weapon_two: "Spear" },
+        nix: { weapon_one: "Scythe", weapon_two: "Pistol" },
+        mordex: { weapon_one: "Scythe", weapon_two: "Fists" },
+        yumiko: { weapon_one: "Bow", weapon_two: "Hammer" },
+        artemis: { weapon_one: "RocketLance", weapon_two: "Scythe" },
+        caspian: { weapon_one: "Fists", weapon_two: "Katar" },
+        sidra: { weapon_one: "Cannon", weapon_two: "Sword" },
+        xull: { weapon_one: "Cannon", weapon_two: "Axe" },
+        kaya: { weapon_one: "Spear", weapon_two: "Bow" },
+        isaiah: { weapon_one: "Cannon", weapon_two: "Pistol" },
+        jiro: { weapon_one: "Sword", weapon_two: "Scythe" },
+        "lin fei": { weapon_one: "Katar", weapon_two: "Cannon" },
+        zariel: { weapon_one: "Fists", weapon_two: "Bow" },
+        rayman: { weapon_one: "Fists", weapon_two: "Axe" },
+        dusk: { weapon_one: "Spear", weapon_two: "Orb" },
+        fait: { weapon_one: "Scythe", weapon_two: "Orb" },
+        thor: { weapon_one: "Hammer", weapon_two: "Orb" },
+        petra: { weapon_one: "Fists", weapon_two: "Orb" },
+        vector: { weapon_one: "RocketLance", weapon_two: "Bow" },
+        volkov: { weapon_one: "Axe", weapon_two: "Scythe" },
+        onyx: { weapon_one: "Fists", weapon_two: "Cannon" },
+        jaeyun: { weapon_one: "Sword", weapon_two: "Greatsword" },
+        mako: { weapon_one: "Katar", weapon_two: "Greatsword" },
+        magyar: { weapon_one: "Hammer", weapon_two: "Greatsword" },
+        reno: { weapon_one: "Pistol", weapon_two: "Orb" }
+    };
     const weaponList = [
         {
             name: "Hammer",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Sword",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Pistol",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "RocketLance",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Spear",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Katar",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Axe",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Fists",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Bow",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Cannon",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Orb",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Scythe",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         },
         {
             name: "Greatsword",
             matchtime: 0,
             games: 0,
             kos: 0,
-            damagedealt: 0,
+            damagedealt: 0
         }
-    ]
+    ];
 
     let pages;
     let username;
@@ -176,7 +176,7 @@
     //Reload UI on query parameter change
     let isDisplayingWinhalla;
     $: if (isDisplayingWinhalla) {
-        console.log("issou")
+        console.log("issou");
     }
 
 
@@ -184,9 +184,11 @@
     let user;
     let playerData;
     let rankedData;
-
+    let queries;
     onMount(() => {
         pages = page.subscribe(async value => {
+            console.log(value)
+            queries = value.query
             //Determines witch page to display: brawlhalla or winhalla
             isDisplayingWinhalla = value.query?.d === "winhalla";
             //brawlhalla id if there is one
@@ -197,9 +199,6 @@
 
             if (!loaded) {
                 const res = new Promise(async () => {
-                    user = await getUser();
-                    user = user.user
-
                     if (bid) {
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                         if (data.name !== username) {
@@ -208,8 +207,15 @@
                         }
                     } else {
                         const player = await callApi("get", `/stats/username/${username}`);
-                        data = await callApi("get", `${apiUrl}/stats/${player.find(p => p.name === username).brawlhalla_id}`);
+                        console.log(player)
+                        bid = player.find(p => p.name === username).brawlhalla_id
+                        data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
+                    console.log(bid)
+                    user = await callApi("get", "/auth/getUserData/" + bid);
+                    console.log(user+"test");
+                    user.user.friendsInvited = user.link;
+                    user = user.user;
 
                     playerData = data.player;
                     playerData.matchtime = 0;
@@ -265,45 +271,49 @@
                     {username}
                 </p>
 
-                <p class="mt-1 text-mid-light">
-                    {isDisplayingWinhalla ? "Winhalla clan" : "Brawlhalla clan"}:
-                    <b class="font-normal text-primary text-2xl">{isDisplayingWinhalla ? "" : playerData.clan.clan_name}</b>
-                </p>
+                {#if !isDisplayingWinhalla}
+                    <p class="mt-1 text-mid-light">
+                        {isDisplayingWinhalla ? "Winhalla clan" : "Brawlhalla clan"}:
+                        <b class="font-normal text-primary text-2xl">{isDisplayingWinhalla ? "" : playerData.clan.clan_name}</b>
+                    </p>
+                {/if}
             </div>
-            <div class="text-ultra-light mt-7 md:mt-2  text-xl md:text-default">
-                <p>Level: <b
+            {#if !isDisplayingWinhalla}
+                <div class="text-ultra-light mt-7 md:mt-2  text-xl md:text-default">
+                    <p>Level: <b
                         class="font-normal text-primary text-2xl">{isDisplayingWinhalla ? "" : playerData.level}</b></p>
-                <p class="mt-1">Time spent in online games: <b
+                    <p class="mt-1">Time spent in online games: <b
                         class="font-normal text-primary text-2xl">
-                    {isDisplayingWinhalla ? "" : formatTime(playerData.matchtime)}</b>
-                </p>
-            </div>
+                        {isDisplayingWinhalla ? "" : formatTime(playerData.matchtime)}</b>
+                    </p>
+                </div>
+            {/if}
         </div>
 
         <div class="flex  mt-6 md:mt-0   text-xl md:text-default">
             <a class="{!isDisplayingWinhalla ? 'active' : ''}"
-               href="{bid ? url + '&d=brawlhalla' : url + '?d=brawlhalla'}">Brawlhalla</a>
+               href="{queries.bid ? url + '&d=brawlhalla' : url + '?d=brawlhalla'}">Brawlhalla</a>
 
             <a class="ml-8  md:ml-11 {isDisplayingWinhalla ? 'active' : ''}"
-               href="{bid ? url + '&d=winhalla' : url + '?d=winhalla'}">Winhalla</a>
+               href="{queries.bid ? url + '&d=winhalla' : url + '?d=winhalla'}">Winhalla</a>
         </div>
     </section>
     {#if isDisplayingWinhalla}
-        <section class="px-7 md:px-10 lg:px-18 pb-12  md:flex items-start" >
-            <CoinStats user="{user}" data="{user.coinLogs.total}"/>
-            <CoinHistory data="{user.coinLogs.history}"/>
+        <section class="px-7 md:px-10 lg:px-18 pb-12  md:flex items-start">
+            <CoinStats user="{user}" data="{user.coinLogs.total}" />
+            <CoinHistory data="{user.coinLogs.history}" />
         </section>
     {:else}
         <section class="px-7 md:px-10 lg:px-18 pb-12 lg:flex justify-between flex-wrap items-start">
             <div class="mt-12  md:flex items-start">
-                <RankedStats data="{rankedData}"/>
-                <GlobalStats data="{playerData}"/>
+                <RankedStats data="{rankedData}" />
+                <GlobalStats data="{playerData}" />
             </div>
 
 
             <div class="pt-12 mt-6 xl:mt-0    md:flex items-start">
-                <LegendStats data={playerData.legends}/>
-                <WeaponStats data={weaponList}/>
+                <LegendStats data={playerData.legends} />
+                <WeaponStats data={weaponList} />
             </div>
         </section>
     {/if}

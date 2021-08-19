@@ -92,8 +92,8 @@
 
                         </div>
                         <div>
-                            <p class="hidden lg:block  text-lg text-mid-light">With: <b
-                                    class="font-normal text-font text-xl">{determineTeammateName(duo.teamname)}</b>
+                            <p class="hidden lg:block  text-lg text-mid-light">With: <a href="/profile/{determineTeammateName(duo.teamname)}"><b
+                                    class="font-normal text-font text-xl">{determineTeammateName(duo.teamname)}</b></a>
                             </p>
                         </div>
                     </div>

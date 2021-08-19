@@ -1,13 +1,47 @@
 <script>
     import {fade, fly} from "svelte/transition"
-    import { clickOutside } from "../../utils/clickOutside";
+    import {clickOutside} from "../../utils/clickOutside";
     import {callApi} from "../../utils/api";
+    import {getCookie} from "../../utils/getCookie";
+    import {onMount} from "svelte";
+    import cookie from "cookie";
 
     let isSearchOpen = false;
 
-    function handleSearchPopup() {
+    let searchHistory;
+    onMount(() => {
+        searchHistory = JSON.parse(decodeURI(getCookie("searchHistory")).replace(/%2C/g, ","));
+        if (!searchHistory) searchHistory = [];
+    });
+
+    function handleSearchPopup(resultUsername) {
+        if (typeof resultUsername === "string" && resultUsername.length >= 1) {
+            if (searchHistory.includes(resultUsername)) {
+                searchHistory.splice(searchHistory.indexOf(resultUsername), 1);
+                searchHistory.push(resultUsername);
+
+            } else {
+                if (searchHistory.length >= 4) {
+                    searchHistory.pop();
+                }
+                searchHistory.push(resultUsername);
+                document.cookie = cookie.serialize(
+                    "searchHistory",
+                    JSON.stringify(searchHistory),
+                    {
+                        maxAge: 15552000,
+                        sameSite: "lax",
+                        path: "/"
+                    }
+                );
+
+            }
+        }
+
         username = "";
         isSearchOpen = !isSearchOpen;
+
+
     }
 
 
@@ -37,6 +71,13 @@
     }
 </script>
 
+<style>
+    .search-history:first-child {
+        margin-left: 0;
+    }
+</style>
+
+
 <button class="block" on:click={handleSearchPopup}>
     <svg class="fill-current text-font w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="m22.241 24-7.414-7.414c-1.559 1.169-3.523 1.875-5.652 1.885h-.002c-.032 0-.07.001-.108.001-5.006 0-9.065-4.058-9.065-9.065 0-.038 0-.076.001-.114v.006c0-5.135 4.163-9.298 9.298-9.298s9.298 4.163 9.298 9.298c-.031 2.129-.733 4.088-1.904 5.682l.019-.027 7.414 7.414zm-12.942-21.487c-3.72.016-6.73 3.035-6.73 6.758 0 3.732 3.025 6.758 6.758 6.758s6.758-3.025 6.758-6.758c0-1.866-.756-3.555-1.979-4.778-1.223-1.223-2.912-1.979-4.778-1.979-.01 0-.02 0-.03 0h.002z"/>
@@ -55,10 +96,10 @@
                 style="max-height: 95vh;"
                 transition:fly={{ y: 300, duration: 350 }}
                 use:clickOutside
-                on:click_outside={handleSearchPopup}>
+                on:click_outside={() => handleSearchPopup()}>
 
             <button class="absolute top-0 right-0  p-4 text-mid-light hover:text-font"
-                    on:click={handleSearchPopup}>
+                    on:click={() => handleSearchPopup()}>
                 <svg class="fill-current w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path
                             d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z"/>
@@ -76,7 +117,9 @@
                             {:else}
                                 <div class="max-h-32 overflow-y-auto">
                                     {#each data as player}
-                                        <a on:click={handleSearchPopup} class="flex justify-between pl-4 pr-8 py-4  bg-background  text-xl"  href="/profile/{player.name}?bid={player.brawlhalla_id}">
+                                        <a on:click={() => handleSearchPopup(player.name)}
+                                           class="flex justify-between pl-4 pr-8 py-4  bg-background  text-xl"
+                                           href="/profile/{player.name}?bid={player.brawlhalla_id}">
                                             <div class="flex items-center">
                                                 <p class="text-primary text-default"
                                                    style="margin-top: 0.15rem">{player.region}</p>
@@ -101,12 +144,12 @@
                     <p class="ml-1 mb-1  text-mid-light">Recent players:</p>
 
                     <div class="flex flex-wrap">
-                        <a href="" class="  rounded-lg px-6 py-3 bg-background">
-                            23Felons23
-                        </a>
-                        <a href="" class="ml-5 rounded-lg px-6 py-3 bg-background">
-                            porobolo
-                        </a>
+                        {#each searchHistory.reverse() as username}
+                            <a on:click={() => handleSearchPopup(username)} href="/profile/{username}"
+                               class="search-history mr-5 mt-3 md:ml-5 md:mr-0  rounded-lg px-6 py-3 bg-background">
+                                {username}
+                            </a>
+                        {/each}
 
                     </div>
 

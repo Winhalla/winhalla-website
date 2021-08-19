@@ -12,6 +12,7 @@
     import {stores} from "@sapper/app";
     import CoinStats from "../../components/profile/CoinStats.svelte";
     import CoinHistory from "../../components/profile/CoinHistory.svelte";
+    import Loading from "../../components/Loading.svelte";
 
     const {page} = stores();
 
@@ -306,6 +307,7 @@
             </div>
         </section>
     {/if}
-
+{:else}
+    <Loading />
 {/if}
 

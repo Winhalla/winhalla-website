@@ -1,8 +1,8 @@
 <script>
 
-    import { onDestroy, onMount } from "svelte";
-    import { callApi } from "../../../utils/api";
-    import { goto, stores } from "@sapper/app";
+    import {onDestroy, onMount} from "svelte";
+    import {callApi} from "../../../utils/api";
+    import {goto, stores} from "@sapper/app";
 
     import RefreshButton from "../../../components/RefreshButton.svelte";
     import FfaEnd from "../../../components/FfaEnd.svelte";
@@ -13,19 +13,21 @@
     import GuideCard from "../../../components/GuideCard.svelte";
     import AdblockAlert from "../../../components/AdblockAlert.svelte";
 
-    import { fade, fly } from "svelte/transition";
+    import {fade, fly} from "svelte/transition";
 
-    import { counter } from "../../../components/stores";
-    import { io } from "socket.io-client";
-    import { apiUrl } from "../../../utils/config";
+    import {counter} from "../../../components/stores";
+    import {io} from "socket.io-client";
+    import {apiUrl} from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
     import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
-    import { getCookie } from "../../../utils/getCookie";
-    import { serialize } from "cookie";
+    import {getCookie} from "../../../utils/getCookie";
+    import {serialize} from "cookie";
+    import {guideHandlerSetPage, guideHandlerStore} from "../../../components/guideStore";
+    import GuideContainer from "../../../components/GuideContainer.svelte";
 
-    const { page } = stores();
+    const {page} = stores();
 
     let id;
 
@@ -69,6 +71,9 @@
     let gradientList;
     let isGamesAlertPopupOpen;
     let gameAlertAlreadyShown;
+
+    //guides
+    let currentGuide;
 
     onMount(() => {
         pages = page.subscribe(async value => {
@@ -122,7 +127,7 @@
                 }
 
 
-                counter.set({ "refresh": true });
+                counter.set({"refresh": true});
 
                 socket = io(apiUrl);
                 socket.on("connection", (status) => {
@@ -158,7 +163,11 @@
                 error = `<p class="text-accent">Wow, unexpected error occured, details for geeks below.</p> <p class="text-2xl">${err.toString()}</p>`;
             }
 
-
+            //guides
+            guideHandlerSetPage("solo");
+            guideHandlerStore.subscribe(value => {
+                currentGuide = value.current;
+            });
         });
     });
 
@@ -192,7 +201,7 @@
             minutes,
             seconds;
         if (timerId) clearInterval(timerId);
-        timerId = setInterval(function() {
+        timerId = setInterval(function () {
             seconds = Math.floor(timer % 60);
             minutes = Math.floor((timer / 60) % 60);
 
@@ -211,7 +220,7 @@
     //Function that handles the refresh button on click event
     let isRefreshingStats = false;
     const handleRefresh = async (isFromButton) => {
-        if((userPlayer.gamesPlayed===7 || userPlayer.joinDate+ 3600 * 3 * 1000 < Date.now()) && isFromButton === true) return 
+        if ((userPlayer.gamesPlayed === 7 || userPlayer.joinDate + 3600 * 3 * 1000 < Date.now()) && isFromButton === true) return
         isRefreshingStats = true;
         let winNb = userPlayer.gamesPlayed;
 
@@ -219,13 +228,13 @@
 
         filterUsers(false);
         if (userPlayer.gamesPlayed !== winNb) {
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
             clearInterval(timerId);
             if (userPlayer.gamesPlayed === 7) countDown = "<p class='text-2xl'>Waiting for others to finish <br>(you can start a new game from the play page)</p>";
 
         } else if (match.finished && isMatchEnded === false) {
             isMatchEnded = true;
-            counter.set({ "refresh": true });
+            counter.set({"refresh": true});
         }
 
         //0 games refreshed MODAL
@@ -271,11 +280,24 @@
         if (result instanceof Error) return;
         goto("/play?reloadNav=true&hasEndedMatch=true");
     }
+
 </script>
 
 <style>
     b {
         @apply text-variant font-normal;
+    }
+
+    .b-primary {
+        @apply text-primary font-normal;
+    }
+
+    .b-epic {
+        @apply text-epic font-normal;
+    }
+
+    .b-legendary {
+        @apply text-legendary font-normal;
     }
 
     .card {
@@ -303,7 +325,7 @@
     }
 
     .player-name {
-        text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 10px;
+        text-shadow: rgba(255, 255, 255, 0.4) 0 0 10px;
         @apply absolute z-10 top-16 left-0 right-0;
     }
 
@@ -333,15 +355,15 @@
 
 <svelte:head>
     <script
-        src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-        id="purpleads-client"></script>
+            src="https://cdn.purpleads.io/load.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+            id="purpleads-client"></script>
     <title>Winhalla | Solo match</title>
     <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 
 
 {#if isLoadingOpen && !error }
-    <Loading data={"Loading game data..."} duration={500} />
+    <Loading data={"Loading game data..."} duration={500}/>
 {/if}
 
 {#if error}
@@ -351,93 +373,151 @@
     </div>
 {:else}
     {#if info}
-        <Infos message="Thanks for watching a video" pushError={info} />
+        <Infos message="Thanks for watching a video" pushError={info}/>
     {/if}
-    <AdblockAlert user="{userPlayer}" />
+    <AdblockAlert user="{userPlayer}"/>
     <div class="h-full  ">
+
+        {#if currentGuide === "main"}
+            <div class="absolute z-60  mx-4 mb-12 bottom-1/2 md:m-0  md:bottom-auto md:left-1/2 md:top-1/2  transform md:-translate-x-1/2 md:-translate-y-1/2">
+
+                <GuideContainer title="SOLO match" previous={false}  scroll={0}>
+                    <div class="mt-1">
+                        <p class="text-2xl md:text-3xl">Welcome to the <b class="b-primary">solo match</b> lobby!</p>
+                        <p class="mt-2 text-default md:text-2xl"><b class="b-primary">Play</b> some <b class="b-epic">Brawlhalla ranked
+                            games</b> (1vs1 or 2vs2) <br class="hidden lg:block"> to qualify for rewards</p>
+                    </div>
+                </GuideContainer>
+            </div>
+        {/if}
 
         {#if match}
 
             {#if isMatchEnded}
-                <FfaEnd players={match.players} winners={match.winners} />
+                <FfaEnd players={match.players} winners={match.winners}/>
             {:else}
                 <div class="h-full flex items-center flex-col lg:block lg:ml-24 z-0"
                      class:hidden={isFfaWatchAdVisible || isQuestsPanelOpen}>
                     <div
-                        class="flex flex-col justify-center lg:flex-row
+                            class="flex flex-col justify-center lg:flex-row
                     lg:justify-between items-center lg:mt-12 mt-7">
                         <div
-                            class="flex justify-center lg:justify-start
+                                class="flex justify-center lg:justify-start
                         items-end ">
                             <h1 class="text-6xl leading-none">Solo</h1>
                             <p
-                                class="timer text-primary ml-5 text-3xl leading-none">
+                                    class="timer text-primary ml-5 text-3xl leading-none">
                                 {#if countDown}{@html countDown}{:else}Loading...{/if}
                             </p>
                         </div>
                         {#if !isSpectator}
                             <div
-                                class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
+                                    class="lg:mr-7 mt-4 lg:mt-0 flex flex-col lg:flex-row
                         items-center">
-                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0">You watched <strong
-                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                {#if currentGuide === "play_ad"}
+                                    <div class="absolute z-60  mx-4 top-64 md:m-0 md:top-56 lg:right-64  lg:top-34">
+
+                                        <GuideContainer title="Multiply your rewards" scroll={85}>
+                                            <div class="mt-1">
+                                                <p class="text-2xl md:text-3xl"><b class="b-primary">Each ad</b> you
+                                                    watch gives you a <b class="b-epic">x3 boost</b>
+                                                    <br class="hidden md:block"> on your <b class="b-primary">final reward</b></p>
+                                                <p class="mt-2  text-default md:text-2xl">You can watch up to <b class="b-primary">8
+                                                    ads</b> (<b class="b-epic">x24 boost</b>)</p>
+
+                                                <p class="mt-4  text-xl md:text-default text-mid-light italic">Note:
+                                                    having a 10 coin reward, and watching 8 ads,
+                                                    <br class="hidden md:block"> will give you 240 coins! (10 * 24 = 240)
+                                            </div>
+                                        </GuideContainer>
+                                    </div>
+                                {/if}
+
+                                {#if currentGuide === "refresh_data"}
+                                    <div class="absolute z-60  mx-4 top-82  md:m-0 md:top-73  lg:right-32  lg:top-34">
+
+                                        <GuideContainer title="Refresh data"  scroll={250}>
+                                            <div class="mt-1">
+                                                <p class="text-2xl md:text-3xl">Use this button to <b class="b-epic">refresh</b>
+                                                    your <b class="b-primary">displayed data</b>!</p>
+                                                <p class="mt-4 text-default md:text-2xl">Due to the <b class="b-primary">Brawlhalla API latency</b>, your
+                                                    data may <br class="hidden md:block"> take up to <b class="b-legendary">15-20 minutes</b> to refresh.</p>
+                                                <p class="mt-3 text-default md:text-2xl"> We usually observe that it <b class="b-epic">refreshes instantly</b>
+                                                    <br class="hidden md:block">after the <b class="b-primary">7th game</b> you play</p>
+                                                <p class="mt-6  text-xl md:text-default text-mid-light italic">Info:
+                                                    We will automatically refresh your data every 30 minutes
+                                            </div>
+                                        </GuideContainer>
+                                    </div>
+
+                                {/if}
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    You watched <strong
+                                        class="text-green font-normal text-3xl">{userPlayer.adsWatched}
                                     ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
                                     <strong
-                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                            class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
                                 </p>
 
-                                <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                                              bind:info={info} />
-
-                                <div on:click={() => handleRefresh(true)} on:mouseenter={() => matchFinishedTooltip = true}
-                                    on:mouseleave={() => matchFinishedTooltip = false}>
-                                <RefreshButton
-                                    
-                                    isRefreshing={isRefreshingStats}
-                                    refreshMessage={"Refresh data"}
-                                    deactivated={userPlayer.gamesPlayed===7 || userPlayer.joinDate+ 3600 * 3 * 1000 < Date.now()} />
-                                    {#if matchFinishedTooltip}
-                                    <span
-                                        class="absolute right-5 left-5 lg:left-74/100 lg:right-30 lg:-top-6 top-60 lg:-top-6 px-6 py-2 tooltip bg-primary rounded flex items-center justify-center" style="z-index: 60"
-                                        transition:fade> You have already finished this match. Start another one!
-                                    </span>
-                                {/if}
+                                <div class="{currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
+                                                  bind:adError={adError}
+                                                  bind:info={info}/>
                                 </div>
-                                
-                                
-                                {#if userPlayer.gamesPlayed == 0}
+
+
+                                <div class="{currentGuide === 'refresh_data' ? 'z-60  relative' : ''}"
+                                     on:click={() => handleRefresh(true)}
+                                     on:mouseenter={() => matchFinishedTooltip = true}
+                                     on:mouseleave={() => matchFinishedTooltip = false}>
+                                    <RefreshButton
+
+                                            isRefreshing={isRefreshingStats}
+                                            refreshMessage={"Refresh data"}
+                                            deactivated={userPlayer.gamesPlayed === 7 || userPlayer.joinDate+ 3600 * 3 * 1000 < Date.now()}/>
+                                    {#if matchFinishedTooltip && user.gamesPlayed >= 7}
+                                        <span
+                                                class="absolute right-5 left-5 lg:left-74/100 lg:right-30 lg:-top-6 top-60 lg:-top-6 px-6 py-2 tooltip bg-primary rounded flex items-center justify-center"
+                                                style="z-index: 60"
+                                                transition:fade> You have already finished this match. Start another one!
+                                        </span>
+                                    {/if}
+                                </div>
+
+
+                                {#if userPlayer.gamesPlayed === 0}
                                     <button
-                                        class="button button-brand quit lg:ml-4 mt-3
+                                            class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
-                                        on:click={() => handleQuit()}>
+                                            on:click={() => handleQuit()}>
                                         Quit lobby
                                     </button>
                                     {#if pushError}
                                         <ErrorAlert message="There was an error exiting the match"
-                                                    pushError={pushError} />
+                                                    pushError={pushError}/>
                                     {/if}
-                                {:else if userPlayer.gamesPlayed !== 7 && userPlayer.joinDate+ 3600 * 3 * 1000 > Date.now()}
+                                {:else if userPlayer.gamesPlayed !== 7 && userPlayer.joinDate + 3600 * 3 * 1000 > Date.now()}
                                     <button
-                                        class="button button-brand quit lg:ml-4 mt-3
+                                            class="button button-brand quit lg:ml-4 mt-3
                                 lg:mt-0" style="background-color: #fc1870; padding-left: 1.5rem; padding-right: 1.5rem;"
-                                        on:click={() => endMatch()}>
+                                            on:click={() => endMatch()}>
                                         <div class="flex">
                                             <p>End match</p>
                                             <div class="py-2 px-2 ml-2 rounded-full bg-primary mb-1"
                                                  on:mouseenter={() => tooltipOpen = true}
                                                  on:mouseleave={() => tooltipOpen = false}>
                                                 <svg
-                                                    class="w-3 h-3 fill-current my-auto"
-                                                    viewBox="0 0 17 24"
-                                                    xmlns="http://www.w3.org/2000/svg">
+                                                        class="w-3 h-3 fill-current my-auto"
+                                                        viewBox="0 0 17 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
                                                     <path
-                                                        d="m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z" />
+                                                            d="m11.403 18.751v4.499c-.01.41-.34.74-.748.75h-.001-4.495c-.41-.01-.739-.34-.749-.748v-.001-4.499c.01-.41.34-.739.749-.749h.001 4.499c.41.01.74.34.75.749v.001zm5.923-11.247c-.001 1.232-.353 2.382-.962 3.354l.015-.026c-.297.426-.637.793-1.021 1.108l-.01.008c-.321.282-.672.55-1.042.794l-.036.022q-.413.253-1.144.665c-.526.302-.957.713-1.275 1.204l-.009.014c-.272.348-.456.776-.515 1.243l-.001.012c-.004.233-.088.445-.226.611l.001-.002c-.115.171-.306.284-.524.29h-.001-4.499c-.217-.015-.399-.153-.479-.343l-.001-.004c-.121-.201-.194-.443-.197-.702v-.845c.025-1.142.485-2.172 1.219-2.935l-.001.001c.729-.849 1.622-1.535 2.633-2.013l.048-.02c.615-.25 1.139-.606 1.574-1.049l.001-.001c.293-.359.471-.822.471-1.327 0-.034-.001-.068-.002-.102v.005c-.035-.597-.374-1.108-.863-1.382l-.009-.004c-.546-.376-1.222-.6-1.95-.6-.023 0-.046 0-.068.001h.003c-.04-.002-.087-.003-.134-.003-.701 0-1.355.204-1.905.555l.014-.009c-.748.641-1.408 1.349-1.981 2.125l-.025.035c-.133.181-.343.297-.581.3-.175-.006-.337-.061-.472-.152l.003.002-3.074-2.343c-.151-.111-.257-.275-.29-.464l-.001-.004c-.007-.039-.011-.084-.011-.129 0-.147.043-.283.116-.398l-.002.003c1.657-2.999 4.799-4.996 8.409-4.996.103 0 .205.002.307.005h-.015c1.088.007 2.124.22 3.074.602l-.057-.02c1.047.402 1.952.926 2.757 1.571l-.02-.016c.809.653 1.474 1.447 1.966 2.349l.02.041c.483.857.768 1.881.769 2.971z"/>
                                                 </svg>
                                             </div>
                                             {#if tooltipOpen}
                                                 <span
-                                                    class="absolute right-24 w-50 top-4 px-6 py-2 bg-green text-background rounded text-left flex items-center justify-center z-40"
-                                                    transition:fade>Exit the match before it ends to start another one, useful if you want to start another match before this one ended
+                                                        class="absolute right-24 w-50 top-4 px-6 py-2 bg-green text-background rounded text-left flex items-center justify-center z-40"
+                                                        transition:fade>Exit the match before it ends to start another one, useful if you want to start another match before this one ended
                                                 </span>
                                             {/if}
                                         </div>
@@ -452,24 +532,24 @@
                     </div>
 
                     <div
-                        class="flex items-center flex-col lg:flex-row lg:items-start
+                            class="flex items-center flex-col lg:flex-row lg:items-start
                     h-full lg:mt-6 ">
                         <!--Main Player-->
                         {#if userPlayer}
                             <div class="mt-8 lg:mt-25 ffa-player card user " style="min-width: 14rem">
                                 <div class="max-w-full h-full bg-gradient-to-b {gradientList[0]} rounded-lg"></div>
                                 <div
-                                    class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
+                                        class="block w-28 h-28 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black ppMask"></div>
                                 <img
-                                    class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-                                    src="{userPlayer.avatarURL}" alt="">
+                                        class="block w-28 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                        src="{userPlayer.avatarURL}" alt="">
 
 
                                 <p class="player-name text-4xl">
                                     {userPlayer.username}
                                 </p>
                                 <div
-                                    class="stats text-2xl bottom-5 text-ultra-light">
+                                        class="stats text-2xl bottom-5 text-ultra-light">
                                     <p>
                                         Games played:
                                         <b>{userPlayer.gamesPlayed}</b>
@@ -487,13 +567,13 @@
                         <!--Other Players-->
                         {#if players}
                             <div
-                                class="flex flex-col justify-center lg:justify-start
+                                    class="flex flex-col justify-center lg:justify-start
                             lg:flex-row lg:flex-wrap lg:ml-33 mt-14 lg:mt-0 mb-12">
                                 <div class="mx-auto lg:mx-0 my-5 lg:my:0" style="flex-basis: 21%">
                                     <div style="max-width: 13rem; max-height: 28rem">
                                         <script
-                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                            data-pa-tag async></script>
+                                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                                data-pa-tag async></script>
                                     </div>
                                 </div>
                                 {#each players as player, i}
@@ -501,20 +581,20 @@
                                         <div class="ffa-player card lg:mr-12 mb-8 mx-auto lg:mx-0"
                                              style="max-width: 13rem">
                                             <div
-                                                class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
+                                                    class="max-w-full h-full bg-gradient-to-b {gradientList[i + 1]}  rounded-lg"
                                             ></div>
                                             <div
-                                                class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
+                                                    class="ppMask block w-24 h-24 z-50 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-black"></div>
                                             <img
-                                                class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-                                                src="{player.avatarURL}" alt="">
+                                                    class="block w-24 z-10 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                                                    src="{player.avatarURL}" alt="">
 
 
                                             <p class="player-name text-3xl">
                                                 {player.username}
                                             </p>
                                             <div
-                                                class="stats text-xl bottom-5
+                                                    class="stats text-xl bottom-5
                                         text-ultra-light">
                                                 <p>
                                                     Games played:
@@ -532,29 +612,29 @@
                                     {/if}
                                     <div class="hidden lg:block">
                                         <script
-                                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                                            data-pa-tag async></script>
+                                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                                data-pa-tag async></script>
                                     </div>
 
                                 </div>
                             </div>
                         {/if}
                     </div>
-                    <GuideCard page="ffa" />
+                    <GuideCard page="ffa"/>
 
                     {#if isGamesAlertPopupOpen}
                         <div
-                            class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
-                            style="z-index: 100"
-                            in:fade={{duration: 200}}
-                            out:fade={{duration: 350}}>
+                                class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
+                                style="z-index: 100"
+                                in:fade={{duration: 200}}
+                                out:fade={{duration: 350}}>
 
                             <div
-                                class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
-                                style="max-height: 95vh;"
-                                transition:fly={{ y: 300, duration: 350 }}>
+                                    class="max-w-xl    mx-5 my-1 md:mx-0  px-6 pt-7 pb-5 md:px-11 md:pt-10 md:pb-8    bg-variant    border-2 border-primary  rounded-lg    overflow-y-auto md:overflow-y-auto"
+                                    style="max-height: 95vh;"
+                                    transition:fly={{ y: 300, duration: 350 }}>
                                 <h2 class="text-4xl md:text-5xl">The number of games hasn't been <b
-                                    style="color: #fc1870">updated</b>
+                                        style="color: #fc1870">updated</b>
                                 </h2>
 
                                 <p class="mt-1 text-green    text-4xl">Why ?</p>
@@ -570,8 +650,8 @@
                                             on:click={() =>isGamesAlertPopupOpen = false}>Got it!
                                     </button>
                                     <button
-                                        class="button button-brand-alternative /hover:underline md:ml-4 w-full md:w-auto mt-4 md:mt-0"
-                                        on:click={deactivate0GamesAlert}>Don't show this again
+                                            class="button button-brand-alternative /hover:underline md:ml-4 w-full md:w-auto mt-4 md:mt-0"
+                                            on:click={deactivate0GamesAlert}>Don't show this again
                                     </button>
                                 </div>
                             </div>
@@ -579,8 +659,8 @@
                     {/if}
                     <div class="block lg:hidden mt-6">
                         <script
-                            src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                            data-pa-tag async></script>
+                                src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
+                                data-pa-tag async></script>
                     </div>
                 </div>
 
@@ -589,7 +669,7 @@
 
             {#if !isSpectator && !isMatchEnded}
                 <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
+                            bind:info={info} bind:visible={isFfaWatchAdVisible}/>
             {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}
@@ -599,31 +679,31 @@
                         <div class="hidden lg:block lg:w-1/2 2xl:w-full bg-background bg-opacity-70"
                              in:fly={{x: 1000, duration: 800}} out:fly={{x: 1800, duration: 1400}}></div>
                         <div
-                            class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full  z-10 lg:border-l-2 border-primary flex justify-center items-center"
-                            in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
+                                class="bg-background w-full h-full lg:w-auto  lg:min-w-max   h-full  z-10 lg:border-l-2 border-primary flex justify-center items-center"
+                                in:fly={{x: 500, duration: 600}} out:fly={{x: 900, duration: 700}}>
                             <div class="lg:-mt-32 lg:flex items-center h-full">
                                 <button
-                                    class="fixed lg:static z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"
-                                    on:click={() => handleQuestsPanel()}>
+                                        class="fixed lg:static z-40 top-24 right-4 lg:block focus:outline-none lg:h-full"
+                                        on:click={() => handleQuestsPanel()}>
                                     <svg class="hidden lg:block w-6 fill-current ml-8 text-font"
                                          viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z" />
+                                                d="m4.8 21.57 2.422 2.43 11.978-12-11.978-12-2.422 2.43 9.547 9.57z"/>
                                     </svg>
                                     <svg
-                                        class="lg:hidden w-8 h-8 fill-current text-mid-light"
-                                        viewBox="0 0 28 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                            class="lg:hidden w-8 h-8 fill-current text-mid-light"
+                                            viewBox="0 0 28 24"
+                                            xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="m24 2.4-2.4-2.4-9.6
+                                                d="m24 2.4-2.4-2.4-9.6
                                             9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
                                             2.4 2.4 9.6-9.6 9.6 9.6
-                                            2.4-2.4-9.6-9.6z" />
+                                            2.4-2.4-9.6-9.6z"/>
                                     </svg>
                                 </button>
                                 <div class="bg-background lg:pl-14 lg:pr-24">
-                                    <Quests data={quests} />
+                                    <Quests data={quests}/>
                                 </div>
                             </div>
 
@@ -635,8 +715,8 @@
                         <div class="relative">
                             {#if isToolTipVisible}
                                 <span
-                                    class="hidden lg:block tooltip absolute -left-16 bottom-14 px-6 py-2 bg-primary rounded text-left flex items-center justify-center z-40"
-                                    transition:fade>
+                                        class="hidden lg:block tooltip absolute -left-16 bottom-14 px-6 py-2 bg-primary rounded text-left flex items-center justify-center z-40"
+                                        transition:fade>
                                     Quests
                                 </span>
                             {/if}
@@ -647,7 +727,7 @@
                                 <svg class="w-8 fill-current text-mid-light" viewBox="0 0 27 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
-                                        d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z" />
+                                            d="m24 24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42 1.807-1.807 5.422 5.422 13.68-13.68 1.811 1.803-15.491 15.491z"/>
                                 </svg>
                             </button>
                         </div>
@@ -659,7 +739,7 @@
             {/if}
 
         {:else}
-            <Loading data={"Loading game data..."} />
+            <Loading data={"Loading game data..."}/>
         {/if}
 
 
@@ -669,7 +749,7 @@
 
 <div>
     {#if adError}
-        <ErrorAlert message="An error occurred while watching the ad" pushError={adError} />
+        <ErrorAlert message="An error occurred while watching the ad" pushError={adError}/>
     {/if}
 </div>
 <div hidden

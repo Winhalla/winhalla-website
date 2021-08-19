@@ -267,7 +267,7 @@
 <div>
     {#if currentGuideVisible === "quests"}
         <div class="absolute  mx-4 md:mx-0  bottom-56 md:right-8 md:bottom-4 lg:right-98 lg:top-18  2x:-bottom-12 2xl:right-32  z-30">
-            <GuideContainer title="Quests">
+            <GuideContainer title="Quests" scroll="{1500}" scrollMd={600}>
                 <div>
                     <p class="text-2xl md:text-3xl"><b>Complete</b> these quests to <b>earn coins</b>!</p>
                     <p class="text-2xl md:text-2xl mt-1">Quests have <b>3</b> rarity: <b>Normal</b>, <b style="color: #ee38ff">Epic</b>, and <b style="color: #fc1870">Legendary</b></p>
@@ -534,8 +534,8 @@
             refreshMessage={'Refresh quests data'} />
         </div>
         {#if currentGuideVisible === "quests_refresh"}
-            <div class="absolute   mr-4 md:mx-0  -bottom-48  md:-bottom-83 md:left-46 lg:-bottom-48 lg:left-54 2xl:-bottom-44 2xl:right-38  z-30">
-                <GuideContainer title="Refresh button">
+            <div class="absolute   mr-4 md:mx-0  -bottom-91  md:-bottom-83 md:left-46 lg:-bottom-48 lg:left-54 2xl:-bottom-44 2xl:right-38  z-30">
+                <GuideContainer title="Refresh button" scroll={2100} scrollMd={900}>
                     <div>
                         <p class="text-2xl  md:text-3xl"><b>Click</b> this button to <b>refresh the quests</b> data!</p>
                         <p class="leading-7 md:leading-normal   text-default md:text-2xl mt-2">Due to the <b>Brawlhalla API latency</b>, quests may take <br class="hidden md:block"> up to

@@ -176,7 +176,7 @@
     //Reload UI on query parameter change
     let isDisplayingWinhalla;
     $: if (isDisplayingWinhalla) {
-        console.log("issou");
+        console.log("Switched Display");
     }
 
 
@@ -187,10 +187,12 @@
     let queries;
     onMount(() => {
         pages = page.subscribe(async value => {
-            console.log(value)
-            queries = value.query
+            loaded = false;
+            queries = value.query;
+
             //Determines witch page to display: brawlhalla or winhalla
             isDisplayingWinhalla = value.query?.d === "winhalla";
+
             //brawlhalla id if there is one
             bid = value.query?.bid;
             username = value.params.username;
@@ -199,6 +201,7 @@
 
             if (!loaded) {
                 const res = new Promise(async () => {
+                    console.log("reload")
                     if (bid) {
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                         if (data.name !== username) {
@@ -211,9 +214,9 @@
                         bid = player.find(p => p.name === username).brawlhalla_id
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
-                    console.log(bid)
+
                     user = await callApi("get", "/auth/getUserData/" + bid);
-                    console.log(user+"test");
+
                     user.user.friendsInvited = user.link;
                     user = user.user;
 

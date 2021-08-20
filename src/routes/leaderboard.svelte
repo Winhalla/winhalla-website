@@ -1,3 +1,4 @@
+<!--
 <script>
     import CoinIcon from "../components/CoinIcon.svelte";
     import { onMount } from "svelte";
@@ -91,7 +92,7 @@
                             {:else if player.array === 0}
                                 <p class="text-legendary  /font-bold ml-1 mt-1">{player.index + 1}</p>
                             {:else}
-                                <p class="text-legendary  /font-bold ml-1 mt-1">--</p>
+                                <p class="text-legendary  /font-bold ml-1 mt-1">&#45;&#45;</p>
 
                             {/if}
                             <div class="ml-6  flex  w-38 md:w-auto">
@@ -111,7 +112,7 @@
                             {#if player.player.coinsEarned}
                                 <p class="">{Math.round(player.player.coinsEarned * 10) / 10}</p>
                             {:else }
-                                <p class="mr-2">--</p>
+                                <p class="mr-2">&#45;&#45;</p>
                             {/if}
                             <div class="ml-1 pb-1  w-8 ">
                                 <CoinIcon />
@@ -159,7 +160,7 @@
                             </div>
                         {/each}
                 {/each}
-                <!--<div class="py-4 px-6 bg-background  text-2xl  /mt-3    flex items-center  justify-between  relative">
+                &lt;!&ndash;<div class="py-4 px-6 bg-background  text-2xl  /mt-3    flex items-center  justify-between  relative">
                     <div class="flex items-center">
                         <p class="text-epic  /font-bold">2</p>
 
@@ -354,9 +355,10 @@
                             <CoinIcon/>
                         </div>
                     </div>
-                </div>-->
+                </div>&ndash;&gt;
             </div>
         </div>
 
     </div>
 {/if}
+-->

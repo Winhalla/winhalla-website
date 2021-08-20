@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.da24cd43.js"
+    "main": "client.f6781285.js"
   },
   "css": {
     "main": [
@@ -11,82 +11,82 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.de02c9da.js",
+      "index.a5be815e.js",
       "inject_styles.5607aec6.js",
       "index-a47d9b0e.css"
     ],
     "create-account.svelte": [
-      "create-account.6605661b.js",
+      "create-account.926ffd1c.js",
       "inject_styles.5607aec6.js",
       "create-account-b7607b99.css"
     ],
     "referral-link.svelte": [
-      "referral-link.f1314be3.js",
-      "Loading.f0ad783b.js",
+      "referral-link.6b5ccf7a.js",
+      "Loading.265e606b.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "referral-link-91f5e3e1.css"
     ],
     "leaderboard.svelte": [
-      "leaderboard.68d96eed.js",
+      "leaderboard.57c46a08.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin.svelte": [
-      "admin.58ded9b7.js",
-      "Infos.499a0797.js",
-      "Loading.f0ad783b.js",
-      "RefreshButton.e3c25881.js",
+      "admin.9af31eba.js",
+      "Infos.af6c7077.js",
+      "Loading.265e606b.js",
+      "RefreshButton.22328582.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
       "admin-5d73c295.css"
     ],
     "privacy.svelte": [
-      "privacy.6d6a8874.js",
-      "Infos.499a0797.js",
+      "privacy.06870faf.js",
+      "Infos.af6c7077.js",
       "inject_styles.5607aec6.js",
       "privacy-e22f729e.css"
     ],
     "profile/[username].svelte": [
-      "[username].a39e9bb0.js",
-      "Loading.f0ad783b.js",
+      "[username].3e5c0118.js",
+      "Loading.265e606b.js",
       "_commonjsHelpers.c2612801.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "[username]-d4791f6a.css"
     ],
     "status.svelte": [
-      "status.db23a1d1.js",
+      "status.970a8f5e.js",
       "inject_styles.5607aec6.js"
     ],
     "legal.svelte": [
-      "legal.0f09151b.js",
+      "legal.db731392.js",
       "inject_styles.5607aec6.js",
       "legal-32170f98.css"
     ],
     "login.svelte": [
-      "login.bd8a0afd.js",
+      "login.9cd138d2.js",
       "inject_styles.5607aec6.js",
       "login-b7607b99.css"
     ],
     "terms.svelte": [
-      "terms.fe9a2d6c.js",
+      "terms.6287f114.js",
       "inject_styles.5607aec6.js",
       "terms-35c65d7c.css"
     ],
     "link/[id].svelte": [
-      "[id].a8f39492.js",
-      "Loading.f0ad783b.js",
+      "[id].d819d767.js",
+      "Loading.265e606b.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/index.svelte": [
-      "index.6a524004.js",
-      "Infos.499a0797.js",
-      "Loading.f0ad783b.js",
-      "RefreshButton.e3c25881.js",
+      "index.20f8b1a2.js",
+      "Infos.af6c7077.js",
+      "Loading.265e606b.js",
+      "RefreshButton.22328582.js",
       "_commonjsHelpers.c2612801.js",
-      "AdblockAlert.91c7b9fd.js",
+      "AdblockAlert.7cf657f6.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
@@ -94,18 +94,18 @@
       "index-2f330f5e.css"
     ],
     "play/ffa/index.svelte": [
-      "index.ae4877db.js",
-      "Loading.f0ad783b.js",
+      "index.2d927895.js",
+      "Loading.265e606b.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].4df7153a.js",
-      "Infos.499a0797.js",
-      "Loading.f0ad783b.js",
-      "RefreshButton.e3c25881.js",
+      "[id].12af8e0b.js",
+      "Infos.af6c7077.js",
+      "Loading.265e606b.js",
+      "RefreshButton.22328582.js",
       "_commonjsHelpers.c2612801.js",
-      "AdblockAlert.91c7b9fd.js",
+      "AdblockAlert.7cf657f6.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
@@ -113,8 +113,8 @@
       "[id]-9209e05b.css"
     ],
     "shop.svelte": [
-      "shop.a370d3e7.js",
-      "Infos.499a0797.js",
+      "shop.32f4cf57.js",
+      "Infos.af6c7077.js",
       "inject_styles.5607aec6.js",
       "shop-a9d140e5.css"
     ]

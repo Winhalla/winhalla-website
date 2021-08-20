@@ -1,14 +1,16 @@
 <script>
     import { callApi } from "../utils/api";
     import RefreshButton from "./RefreshButton.svelte";
-    import { counter } from "./store";
+    import { counter } from "./stores";
     import { io } from "socket.io-client";
     import { apiUrl } from "../utils/config";
     import PlayAdButton from "./PlayAdButton.svelte";
     import CoinIcon from "./CoinIcon.svelte";
     import { fade, fly } from "svelte/transition";
     import { serialize } from "cookie";
-    import {getCookie} from "../utils/getCookie";
+    import { getCookie } from "../utils/getCookie";
+    import Infos from "./Infos.svelte";
+    import GuideContainer from "./GuideContainer.svelte";
 
     let countDown = [{}, {}];
     export let data;
@@ -21,6 +23,8 @@
     let interval;
     let questsAlertAlreadyShown;
     let isAlertNoRefreshOpen;
+
+    export let currentGuideVisible;
 
     const calculateRarity = (reward, daily) => {
         if (daily) {
@@ -168,18 +172,13 @@
 
     function denyAd() {
         collect(waitingAd.type, waitingAd.index, false);
-        waitingAd = undefined;
-        waitingAdAccept = false;
     }
 
     async function collect(type, id, possibleAd) {
         if (possibleAd) {
-            // if (!socket) socket = io(apiUrl);
-            // waitingAdAccept = true;
-            // waitingAd = { type, index: id };
-            //* to remove to reactivate ads
-            collect(type, id, false); //*
-            //*
+            if (!socket) socket = io(apiUrl);
+            waitingAdAccept = true;
+            waitingAd = { type, index: id };
         } else {
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;
@@ -266,6 +265,19 @@
 </svelte:head>
 
 <div>
+    {#if currentGuideVisible === "quests"}
+        <div class="absolute  mx-4 md:mx-0  bottom-56 md:right-8 md:bottom-4 lg:right-98 lg:top-18  2x:-bottom-12 2xl:right-32  z-30">
+            <GuideContainer title="Quests" scroll="{1500}" scrollMd={600}>
+                <div>
+                    <p class="text-2xl md:text-3xl"><b>Complete</b> these quests to <b>earn coins</b>!</p>
+                    <p class="text-2xl md:text-2xl mt-1">Quests have <b>3</b> rarity: <b>Normal</b>, <b style="color: #ee38ff">Epic</b>, and <b style="color: #fc1870">Legendary</b></p>
+                    <p class="mt-2 text-default text-mid-light italic">Tip: hover or click on a quest to view the reward ;)</p>
+                </div>
+            </GuideContainer>
+        </div>
+
+    {/if}
+
     {#if waitingAdAccept && socket }
         <div
             class="fixed top-0 bottom-0 left-0 right-0    bg-background bg-opacity-60    flex justify-center items-center"
@@ -301,12 +313,15 @@
         <p class="text-xl" style="color: #666666"><b class="font-normal" style="color: #aaaaaa">Details:</b> {error}</p>
     {/if}
     <div class="container md:flex mt-7 md:mt-20 lg:mt-7 w-auto">
+
+
         <div
             class="ml-5 mr-5 md:ml-10 md:mr-10 lg:ml-0 lg:mr-8">
             <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Daily Quests</h2>
                 <p
-                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[0].finished}>
+                    class="text-{countDown[0].speed} text-center lg:text-left text-3xl leading-none"
+                    class:text-xl={countDown[0].finished}>
                     {#if countDown[0].timer} {countDown[0].timer} {/if}
                 </p>
             </div>
@@ -410,7 +425,8 @@
             <div class="">
                 <h2 class="text-6xl text-center lg:text-left">Weekly Quests</h2>
                 <p
-                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none" class:text-xl={countDown[1].finished}>
+                    class="text-{countDown[1].speed} text-center lg:text-left text-3xl leading-none"
+                    class:text-xl={countDown[1].finished}>
                     {#if countDown[1].timer} {countDown[1].timer} {/if}
                 </p>
             </div>
@@ -511,11 +527,26 @@
     </div>
     <div
         class="flex flex-col items-center lg:flex-row lg:justify-start pb-3 pt-4
-        ml-5 lg:ml-0">
+        ml-5 lg:ml-0   {currentGuideVisible === 'quests_refresh' ? 'z-60  relative' : ''}">
+        <div on:click={() => handleRefresh()}>
         <RefreshButton
-            on:click={() => handleRefresh()}
             isRefreshing={isRefreshingQuests}
             refreshMessage={'Refresh quests data'} />
+        </div>
+        {#if currentGuideVisible === "quests_refresh"}
+            <div class="absolute   mr-4 md:mx-0  -bottom-91  md:-bottom-83 md:left-46 lg:-bottom-48 lg:left-54 2xl:-bottom-44 2xl:right-38  z-30">
+                <GuideContainer title="Refresh button" scroll={2100} scrollMd={900}>
+                    <div>
+                        <p class="text-2xl  md:text-3xl"><b>Click</b> this button to <b>refresh the quests</b> data!</p>
+                        <p class="leading-7 md:leading-normal   text-default md:text-2xl mt-2">Due to the <b>Brawlhalla API latency</b>, quests may take <br class="hidden md:block"> up to
+                            <br class="md:hidden"><b style="color: #fc1870">3-4 hours</b> <b>to refresh</b></p>
+                        <p class="mt-3 text-xl md:text-default text-mid-light italic">Info: we will <b style="color: #3de488;">automatically collect</b> the quests
+                            <br class="hidden md:block"> you finished before they expire :D</p>
+                    </div>
+                </GuideContainer>
+            </div>
+
+        {/if}
         <div class="flex lg:ml-8 items-center mt-4 lg:mt-0">
             <!--<div class="flex items-center ">
                 <div class="py-2 px-2 rounded-full bg-primary">
@@ -568,7 +599,8 @@
             <div class="ml-6 my-6 text-mid-light text-2xl">
                 <p>- The quests takes on average <u>3 hours</u> to update, but it can be <u>longer</u></p>
                 <p class="mt-3 font-normal">- Don't worry if they don't refresh, we <b style="color: #3d72e4">automatically
-                    collect them</b> just before the <b style="color: #3d72e4">timer expires</b>: Come tomorrow to collect them!</p>
+                    collect them</b> just before the <b style="color: #3d72e4">timer expires</b>: Come tomorrow to
+                    collect them!</p>
             </div>
             <div class="mt-8">
                 <button class="button button-brand w-full md:w-auto" on:click={() =>isAlertNoRefreshOpen = false}>Got
@@ -580,4 +612,7 @@
             </div>
         </div>
     </div>
+{/if}
+{#if info}
+    <Infos message="Thanks for watching a video" pushError={info} />
 {/if}

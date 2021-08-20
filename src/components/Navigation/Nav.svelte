@@ -1,20 +1,21 @@
 <script>
-    import { onDestroy, onMount } from "svelte";
-    import { clickOutside } from "../../utils/clickOutside";
+    import {onDestroy, onMount} from "svelte";
+    import {clickOutside} from "../../utils/clickOutside";
 
     import NavAccount from "./NavAccount.svelte";
     import Notifications from "./NavNotifications.svelte";
     import NavAlert from "./NavAlert.svelte";
     import Poll from "../Poll.svelte";
-    import { fly } from "svelte/transition";
-    import { config } from "../storeAdmin";
-    import { apiUrl } from "../../utils/config";
-    import { callApi } from "../../utils/api";
-    import { goto, stores } from "@sapper/app";
-    import { counter } from "../store.js";
+    import {fly} from "svelte/transition";
+    import {config} from "../storeAdmin";
+    import {apiUrl} from "../../utils/config";
+    import {callApi} from "../../utils/api";
+    import {goto, stores} from "@sapper/app";
+    import {counter} from "../stores.js";
     import CoinIcon from "../CoinIcon.svelte";
+    import Search from "../profile/Search.svelte";
 
-    const { page } = stores();
+    const {page} = stores();
     export let isScrolling;
     let isNavbarOpen;
     let isUserLoggedIn;
@@ -25,6 +26,7 @@
     let notificationsObj = {};
 
     let user;
+    let bhUser;
     let userCoins;
 
     let offline;
@@ -46,6 +48,7 @@
             notificationsObj.inGame = user1.user.inGame;
             currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
         }
+        bhUser = user1.user;
         user = user1.steam;
         if (user.id === "76561198417157310" || user.id === "76561198417157310") {
             isAdmin = true;
@@ -84,16 +87,16 @@
             if (!adminData)
                 infos = await callApi("get", "/informations");
             else {
-                infos = { event: adminData };
+                infos = {event: adminData};
             }
 
             /*currEvent = information.filter(i => i.type === "event")[0];
             isEventBannerOpen = true;
             notificationsObj.event = currEvent;*/
             if (Date.now() <= infos.event.expiration) {
-                let { name, description, percentage } = infos.event;
+                let {name, description, percentage} = infos.event;
                 let descParts = description.split("%%");
-                currEvent = { name, descParts, percentage };
+                currEvent = {name, descParts, percentage};
                 isEventBannerOpen = true;
                 if (isAdmin) {
                     notificationsObj.event = {
@@ -181,14 +184,14 @@
             </p>
             <button class="p-1 absolute right-0" on:click={handlePopupClose}>
                 <svg
-                    class="w-8 h-8 md:w-6 md:h-6 fill-current "
-                    viewBox="0 0 28 24"
-                    xmlns="http://www.w3.org/2000/svg">
+                        class="w-8 h-8 md:w-6 md:h-6 fill-current "
+                        viewBox="0 0 28 24"
+                        xmlns="http://www.w3.org/2000/svg">
                     <path
-                        d="m24 2.4-2.4-2.4-9.6
+                            d="m24 2.4-2.4-2.4-9.6
                                             9.6-9.6-9.6-2.4 2.4 9.6 9.6-9.6 9.6
                                             2.4 2.4 9.6-9.6 9.6 9.6
-                                            2.4-2.4-9.6-9.6z" />
+                                            2.4-2.4-9.6-9.6z"/>
                 </svg>
             </button>
 
@@ -216,12 +219,12 @@
         </div>
     {/if}-->
     <nav
-        class:border-primary={isScrolling}
-        class:border-b-2={isScrolling}
-        class="shadow-link-hover bg-background lg:flex items-center text-font
+            class:border-primary={isScrolling}
+            class:border-b-2={isScrolling}
+            class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div
-            class="w-full lg:w-auto flex justify-between items-center py-4
+                class="w-full lg:w-auto flex justify-between items-center py-4
             relative">
             <div class="pl-7 lg:pl-24 lg:pr-34">
                 <!--LOGO-->
@@ -231,16 +234,16 @@
                             <g id="Calque_2" data-name="Calque 2">
                                 <g id="Calque_1-2" data-name="Calque 1">
                                     <polygon
-                                        points="70.17 0 70.17 98.57 60.28 0 38.29 0 28.76 98.57 19.42 0 0 0 13.01 128.25 39.76 128.25 48.92 41.77 58.44 128.25 87.04 128.25 87.04 13.56 162.74 13.56 162.74 24.1 162.74 86.44 146.52 24.1 125.99 24.1 125.99 128.25 140.57 128.25 140.57 52.22 160.5 128.25 177.31 128.25 177.31 24.1 177.31 13.56 177.31 0 87.04 0 70.17 0" />
-                                    <rect x="97.54" y="24" width="16.38" height="104.25" />
+                                            points="70.17 0 70.17 98.57 60.28 0 38.29 0 28.76 98.57 19.42 0 0 0 13.01 128.25 39.76 128.25 48.92 41.77 58.44 128.25 87.04 128.25 87.04 13.56 162.74 13.56 162.74 24.1 162.74 86.44 146.52 24.1 125.99 24.1 125.99 128.25 140.57 128.25 140.57 52.22 160.5 128.25 177.31 128.25 177.31 24.1 177.31 13.56 177.31 0 87.04 0 70.17 0"/>
+                                    <rect x="97.54" y="24" width="16.38" height="104.25"/>
                                     <path
-                                        d="M265.84,107.87l18.6-.32,3,20.7h16.36l-17-104.15H264.64L247.7,128.25h15.18Zm9.37-66.45,7.3,51.48H267.79Z" />
+                                            d="M265.84,107.87l18.6-.32,3,20.7h16.36l-17-104.15H264.64L247.7,128.25h15.18Zm9.37-66.45,7.3,51.48H267.79Z"/>
                                     <path
-                                        d="M448.13,24.1H426L409,128.25H424.2l3-20.38,18.6-.32,3,20.7v10.31H204.88V81.38h17.55v46.87H238.8V24.1H222.43V66.5H204.88V24.1H188.51V128.25h0v23.86H465.1V128.25Zm-19,68.8,7.42-51.48,7.31,51.48Z" />
+                                            d="M448.13,24.1H426L409,128.25H424.2l3-20.38,18.6-.32,3,20.7v10.31H204.88V81.38h17.55v46.87H238.8V24.1H222.43V66.5H204.88V24.1H188.51V128.25h0v23.86H465.1V128.25Zm-19,68.8,7.42-51.48,7.31,51.48Z"/>
                                     <polygon
-                                        points="354.39 113.37 327.46 113.37 327.46 24.1 311.1 24.1 311.1 128.25 354.39 128.25 354.39 113.37" />
+                                            points="354.39 113.37 327.46 113.37 327.46 24.1 311.1 24.1 311.1 128.25 354.39 128.25 354.39 113.37"/>
                                     <polygon
-                                        points="405.78 113.37 378.85 113.37 378.85 24.1 362.49 24.1 362.49 128.25 405.78 128.25 405.78 113.37" />
+                                            points="405.78 113.37 378.85 113.37 378.85 24.1 362.49 24.1 362.49 128.25 405.78 128.25 405.78 113.37"/>
                                 </g>
                             </g>
                         </svg>
@@ -252,40 +255,42 @@
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
                     {#if loaded && window.innerWidth < 1024}
-                        <NavAlert data={infos} />
+                        <NavAlert data={infos}/>
                     {/if}
-
-                    <Notifications data={notificationsObj} />
+                    <div class="mr-4">
+                        <Search/>
+                    </div>
+                    <Notifications data={notificationsObj}/>
                 </div>
                 <button
-                    class="focus:outline-none"
-                    use:clickOutside
-                    on:click_outside={() => (isNavbarOpen = false)}
-                    on:click={() => {
+                        class="focus:outline-none"
+                        use:clickOutside
+                        on:click_outside={() => (isNavbarOpen = false)}
+                        on:click={() => {
                         isNavbarOpen = !isNavbarOpen;
                     }}>
                     <svg
-                        class="w-7 h-7 fill-current nav-icon"
-                        viewBox="0 0 28 24"
-                        xmlns="http://www.w3.org/2000/svg">
+                            class="w-7 h-7 fill-current nav-icon"
+                            viewBox="0 0 28 24"
+                            xmlns="http://www.w3.org/2000/svg">
                         {#if !isNavbarOpen}
                             <path
-                                d="m2.61 0h22.431c1.441 0 2.61 1.168 2.61
+                                    d="m2.61 0h22.431c1.441 0 2.61 1.168 2.61
                                 2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441
-                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z" />
+                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"/>
                             <path
-                                d="m2.61 9.39h22.431c1.441 0 2.61 1.168 2.61
+                                    d="m2.61 9.39h22.431c1.441 0 2.61 1.168 2.61
                                 2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441
-                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z" />
+                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"/>
                             <path
-                                d="m2.61 18.781h22.431c1.441 0 2.61 1.168 2.61
+                                    d="m2.61 18.781h22.431c1.441 0 2.61 1.168 2.61
                                 2.61s-1.168 2.61-2.61 2.61h-22.431c-1.441
-                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z" />
+                                0-2.61-1.168-2.61-2.61s1.168-2.61 2.61-2.61z"/>
                         {:else}
                             <path
-                                d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6
+                                    d="m24 2.4-2.4-2.4-9.6 9.6-9.6-9.6-2.4 2.4 9.6
                                 9.6-9.6 9.6 2.4 2.4 9.6-9.6 9.6 9.6
-                                2.4-2.4-9.6-9.6z" />
+                                2.4-2.4-9.6-9.6z"/>
                         {/if}
                     </svg>
                 </button>
@@ -293,7 +298,7 @@
         </div>
         <div class:hidden={!isNavbarOpen} class="lg:block w-full">
             <div
-                class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
+                    class="pb-3 lg:p-0 sm:flex items-center w-full justify-between">
                 <div class="ml-7 links text-xl lg:flex">
                     <!--<a
                             class="nav-link-container my-3 lg:hover:text-shadow-link-hover
@@ -309,34 +314,34 @@
                         PROFILE
                     </a>-->
                     <a
-                        class="nav-link-container my-3
+                            class="nav-link-container my-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
-                        href="/play">
+                            href="/play">
                         <svg
-                            class="fill-current play"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
+                                class="fill-current play"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="m.001 1.165v21.669c.052.661.601 1.177 1.271
+                                    d="m.001 1.165v21.669c.052.661.601 1.177 1.271
                                 1.177.225 0 .436-.058.62-.16l-.006.003
                                 21.442-10.8c.4-.192.671-.593.671-1.058s-.271-.867-.664-1.055l-.007-.003-21.442-10.8c-.177-.099-.388-.157-.613-.157-.672
-                                0-1.223.521-1.27 1.181v.004z" />
+                                0-1.223.521-1.27 1.181v.004z"/>
                         </svg>
                         PLAY
                     </a>
                     <a
-                        class="nav-link-container my-3 mb-6 lg:mb-3
+                            class="nav-link-container my-3
                         lg:hover:text-shadow-link-hover border-l border-primary
                         lg:border-none pl-3"
-                        href="/shop"
-                        rel="prefetch">
+                            href="/shop"
+                            rel="prefetch">
                         <svg
-                            class="fill-current play"
-                            viewBox="0 0 22 24"
-                            xmlns="http://www.w3.org/2000/svg">
+                                class="fill-current play"
+                                viewBox="0 0 22 24"
+                                xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="m14.416 24v-11.098h5.68c.181 0
+                                    d="m14.416 24v-11.098h5.68c.181 0
                                 .328.147.328.328v10.114c0
                                 .362-.294.656-.656.656zm-12.096 0c-.362
                                 0-.656-.294-.656-.656v-10.114c0-.181.147-.328.328-.328h5.621v11.098zm-1.992-12.08c-.181
@@ -363,10 +368,25 @@
                                 2.596-.871-2.955-2.053-4.342-2.65-4.342-.329.056-.609.229-.804.473zm5.315
                                 3.791c1.692-.501 3.698-1.389
                                 4.043-2.406.048-.142.194-.572-.422-1.291-.183-.271-.469-.461-.801-.513l-.007-.001c-.946
-                                0-2.103 2.226-2.813 4.21z" />
+                                0-2.103 2.226-2.813 4.21z"/>
                         </svg>
                         SHOP
                     </a>
+
+                    {#if user}
+
+                        <a
+                                class="nav-link-container my-3 mb-6 lg:mb-3
+                            lg:hover:text-shadow-link-hover border-l border-primary
+                            lg:border-none pl-3"
+                                href="/profile/{user.name}?bid={bhUser.brawlhallaId}"
+                                rel="prefetch">
+                            <svg class="fill-current play" style="margin-bottom: -.04rem" viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m18.845 17.295c-1.008-1.345-2.437-2.327-4.089-2.754l-.051-.011-1.179 1.99c-.002.552-.448.998-1 1-.55 0-1-.45-1.525-1.774 0-.009 0-.021 0-.032 0-.691-.56-1.25-1.25-1.25s-1.25.56-1.25 1.25v.033-.002c-.56 1.325-1.014 1.774-1.563 1.774-.552-.002-.998-.448-1-1l-1.142-1.994c-1.702.44-3.13 1.421-4.126 2.746l-.014.019c-.388.629-.628 1.386-.655 2.197v.007c.005.15 0 .325 0 .5v2c0 1.105.895 2 2 2h15.5c1.105 0 2-.895 2-2v-2c0-.174-.005-.35 0-.5-.028-.817-.268-1.573-.666-2.221l.011.02zm-14.345-12.005c0 2.92 1.82 7.21 5.25 7.21 3.37 0 5.25-4.29 5.25-7.21 0-.019 0-.042 0-.065 0-2.9-2.351-5.25-5.25-5.25s-5.25 2.351-5.25 5.25v.068z"/>
+                            </svg>
+                            PROFILE
+                        </a>
+                    {/if}
 
                     {#if currentMatch && $page.path !== `/play/ffa/${currentMatch}`}
                         <a class="lg:hidden py-1 px-3 text-xl bg-primary rounded  mt-4 lg:mb-0 lg:mr-8 w-auto"
@@ -382,26 +402,29 @@
                     {/if}
                     {#if infos && window.innerWidth >= 1024}
                         <div class="hidden lg:flex items-center">
-                            <NavAlert data={infos} />
+                            <NavAlert data={infos}/>
                         </div>
                     {/if}
+                    <div class="hidden lg:block mr-4">
+                        <Search/>
+                    </div>
                     {#if isUserLoggedIn}
                         <div class="lg:flex lg:items-center //mt-5 md:mt-0">
                             {#if user.name && user.pictureMini}
                                 <NavAccount
-                                    username={user.name}
-                                    avatar={user.pictureMini} />
+                                        username={user.name}
+                                        avatar={user.pictureMini}/>
                             {/if}
                             {#if notificationsObj}
                                 <div class="hidden lg:flex items-center">
-                                    <Notifications data={notificationsObj} page="{$page.path}" />
+                                    <Notifications data={notificationsObj} page="{$page.path}"/>
                                 </div>
                             {/if}
 
                             <a class="lg:mt-0 lg:ml-9 text-2xl text-primary  flex items-center  pt-1" href="/shop">
                                 <b class="font-normal ">{userCoins}</b>
                                 <div class="w-7" style="margin-bottom: 0.18rem; margin-left: 0.40rem">
-                                    <CoinIcon />
+                                    <CoinIcon/>
                                 </div>
                             </a>
                         </div>
@@ -409,8 +432,8 @@
                         <p class="text-legendary text-xl">An error occured processing the account data</p>
                     {:else}
                         <a
-                            class="button-brand button mr-3"
-                            href="/login">
+                                class="button-brand button mr-3"
+                                href="/login">
                             Login
                         </a>
                     {/if}
@@ -422,9 +445,9 @@
     </nav>
     {#if loaded}
         <div
-            class="fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
-            transition:fly={{ y:-200, duration: 500 }}>
-            <Poll poll={poll} />
+                class="fixed z-10 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
+                transition:fly={{ y:-200, duration: 500 }}>
+            <Poll poll={poll}/>
         </div>
     {/if}
 </div>

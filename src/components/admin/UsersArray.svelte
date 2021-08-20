@@ -4,6 +4,7 @@
     import { fade } from "svelte/transition";
     import { onMount } from "svelte";
     import { config } from "./storeAdmin";
+    import Infos from "../Infos.svelte";
 
     export let users;
     export let color;
@@ -11,7 +12,10 @@
     export let banned = false;
     export let type = "full";
     export let otp;
+    export let paypal;
     let isDoingAction;
+    let error;
+    let infos;
     let scrollY;
     let player;
     let action;
@@ -27,8 +31,8 @@
 
     async function unsuspicious(id, state) {
         setTimeout(() => {
-            users[users.findIndex(e=>e.steamId === id)].isDetailsOpen = false
-        },1)
+            users[users.findIndex(e => e.steamId === id)].isDetailsOpen = false;
+        }, 1);
         if (state === 0) {
             isDoingAction = true;
             player = id;
@@ -45,19 +49,41 @@
     async function ban(id, state, ban) {
 
         setTimeout(() => {
-            users[users.findIndex(e=>e.steamId === id)].isDetailsOpen = false
-        },1)
+            users[users.findIndex(e => e.steamId === id)].isDetailsOpen = false;
+        }, 1);
         if (state === 0) {
             isDoingAction = true;
             player = id;
             action = ban === true ? "ban" : "unban";
         }
         if (state === 1) {
-            await callApi("post", `/feltrom/ban?otp=${otp}&pwd=${pwd}`, { ban: ban === "ban", id : id, reason });
+            await callApi("post", `/feltrom/ban?otp=${otp}&pwd=${pwd}`, { ban: ban === "ban", id: id, reason });
             config.set({ users: true });
             isDoingAction = false;
             player = undefined;
         }
+    }
+
+    async function approvePaypalPayment(id) {
+        const status = await callApi("post", `/feltrom/approvePaypalCommand/${id}?otp=${otp}&pwd=${pwd}`);
+        if (status instanceof Error) {
+            if (status.response.data.details) {
+                console.log(status.response.data.details);
+                status.response.data.details.forEach(e => {
+                    status.response.data.detailsStr += Object.values(e).reduce((a, b) => a + ". " + b);
+                });
+                delete status.response.data.details;
+                status.response.data.detailsStr = status.response.data.detailsStr.replace("undefined", "");
+                return error = status.response.data;
+            }
+            return error = status.response.data;
+        }
+        infos = true
+        setTimeout(()=>{
+            infos = false
+        },3000)
+        users.splice(users.findIndex(e => e._id === id), 1);
+        users = users;
     }
 </script>
 
@@ -112,6 +138,14 @@
             <td class="px-4 py-3">
                 Email
             </td>
+            {#if paypal}
+                <td class="px-4 py-3">
+                    Amount
+                </td>
+                <td class="px-4 py-3">
+                    Action
+                </td>
+            {/if}
 
         {/if}
     </tr>
@@ -128,7 +162,8 @@
                 <div class="flex items-center my-auto  overflow-x-auto" style="width: 13rem">
                     <img class="w-10 h-10 rounded-full" src={user.avatarURL}
                          alt="PP">
-                    <p class="pl-2" class:text-lg={user.brawlhallaName?.length>=17 && user.brawlhallaName?.length<26}>
+                    <p class="pl-2"
+                       class:text-lg={user.brawlhallaName?.length>=17 && user.brawlhallaName?.length<26}>
                         {user.brawlhallaName}
                     </p>
                 </div>
@@ -206,7 +241,8 @@
                     {user.product}
                 </td>
                 <p hidden>{user.time = (Date.now() - user.date) / 1000}{user.days = Math.floor(user.time / 86400)}{user.hours = Math.floor(user.time / 3600 - user.days * 24)}</p>
-                <td class="px-4 py-3 text-green" class:text-legendary={user.days>14} class:text-accent={user.days>7}>
+                <td class="px-4 py-3 text-green" class:text-legendary={user.days>14}
+                    class:text-accent={user.days>7}>
                     {user.days} days, {user.hours} hours
                 </td>
                 <td class="px-4 py-3 text-xl cursor-pointer text-gray-400 hover:text-white"
@@ -214,6 +250,17 @@
                     {user.steamId}
                 </td>
                 <td class="px-4 py-3">{user.email}</td>
+                {#if paypal}
+                    <td class="px-4 py-3">
+                        ${user.number}
+                    </td>
+                    <td class="px-4 py-3">
+                        <button class="button button-brand text-background"
+                                style="background-color:#3de488; padding: 0.5rem 2rem"
+                                on:click={()=>approvePaypalPayment(user._id)}>Approve
+                        </button>
+                    </td>
+                {/if}
             {/if}
         </tr>
         {#if user.isDetailsOpen}
@@ -226,7 +273,9 @@
                             {#each user.solo?.logs as quest, ii}
                                 {#if ii < 5}
                                     <div class="p-2 pl-4">
-                                        <p>Total earned via quests:<span class="text-primary">{user.solo.logs.reduce((a,b)=>a+b.reward)}</span></p>
+                                        <p>Total earned via quests:<span
+                                            class="text-primary">{user.solo.logs.reduce((a, b) => a + b.reward)}</span>
+                                        </p>
                                         <h3 class="text-3xl text-primary">Quest {ii + 1}:</h3>
                                         <p class="text-xl">Type : {quest.type}</p>
                                         <p class="text-xl">Goal : {quest.name}</p>
@@ -292,7 +341,8 @@
         class="fixed content-center block -pl-4 z-50 bg-background left-1/3 top-1/4 rounded-lg border border-primary mx-auto px-14 py-8"
         transition:fade|local={{duration:200}}>
         <h2 class="text-4xl mt-10 text-primary">Verify steamId</h2>
-        <input type="text" class="text-black px-3 py-1" placeholder="Enter steamID" on:keydown={isSteamIdValid}
+        <input type="text" class="text-black px-3 py-1" placeholder="Enter steamID"
+               on:keydown={isSteamIdValid}
                bind:value={isVerifyingSteamId.tempSteamId}>
         <button class="button button-brand mt-8 ml-5" style="background-color: #fc1870"
                 on:click={()=>isVerifyingSteamId = {isDoing: false,steamId: null}}>
@@ -303,11 +353,13 @@
     </div>
 {/if}
 {#if isDoingAction}
-    <div class="absolute w-screenw-99 h-screen bg-black opacity-90 z-50 left-0" style="top: {scrollY}px;"
+    <div class="absolute w-screenw-99 h-screen bg-black opacity-90 z-50 left-0"
+         style="top: {scrollY}px;"
          transition:fade|local={{duration:200}}></div>
-    <div class="absolute block -pl-4 z-50 bg-background rounded-lg border border-primary mx-auto px-14 py-8"
-         style="top: {scrollY + 100}px;" class:lg:left-screenw-38={action === "unban"}
-         transition:fade|local={{duration:200}}>
+    <div
+        class="absolute block -pl-4 z-50 bg-background rounded-lg border border-primary mx-auto px-14 py-8"
+        style="top: {scrollY + 100}px;" class:lg:left-screenw-38={action === "unban"}
+        transition:fade|local={{duration:200}}>
         <h2 class="text-4xl mt-10 text-primary">
             Confirm {action}:
         </h2>
@@ -327,10 +379,26 @@
                     on:click={()=>{if(action === "Mark as unsuspicious"){unsuspicious(player,1)}else{ban(player,1,action)}}}>
                 Confirm {action}
             </button>
-            <button class="button button-brand mt-8 border border-legendary ml-5" style="background-color: #17171a;"
+            <button class="button button-brand mt-8 border border-legendary ml-5"
+                    style="background-color: #17171a;"
                     on:click={()=>{isDoingAction = false;player = undefined;}}>
                 Cancel
             </button>
         </div>
     </div>
+{/if}
+{#if error}
+    <div class="fixed w-screenw-99 h-screen bg-black opacity-90 z-50 top-0 left-0"
+         transition:fade|local={{duration:200}}></div>
+    <div
+        class="fixed block -pl-4 z-50 bg-background rounded-lg border lg:top-50 top-10 lg:left-50 left-10 right-10 lg:right-50 border-legendary mx-auto px-14 py-8"
+        transition:fade|local={{duration:200}}>
+        <p class="text-3xl">{typeof error === "string" ? error : Object.values(error).reduce((a, b) => a + ". " + b)}</p>
+        <div class="flex justify-center">
+            <button class="button button-brand mt-15" on:click={()=>error = ""}>Close</button>
+        </div>
+    </div>
+{/if}
+{#if infos}
+    <Infos message="Approved successfully" pushError="Payment approved successfully"/>
 {/if}

@@ -30,6 +30,7 @@
     let isSavingConfig;
     let infoDates = [];
     let totalCoins = 0;
+    let paypalCommands = [];
 
     async function loadUsers() {
         loadingUsers = true;
@@ -67,11 +68,13 @@
 
     async function loadCommands() {
         commands = await callApi("get", `/feltrom/commands?otp=${otp}&pwd=${pwd}`);
+        paypalCommands = commands.filter(e => e.type === "paypal");
+        commands = commands.filter(e => e.type !== "paypal");
         commands.sort((a, b) => a.date - b.date);
     }
 
     async function login(refresh) {
-        if (!pwd) return
+        if (!pwd) return;
         goldEvent = ["", "", "", ""];
         isLoggedIn = true;
         configs = await callApi("get", `/feltrom/config?otp=${otp}&pwd=${pwd}`);
@@ -248,7 +251,7 @@
                         on:click={()=>{activePanel = "users";if(!users)loadUsers()}}>USERS</strong>,
                 <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "commands"}
                         class:text-4xl={activePanel === "commands"}
-                        on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>
+                        on:click={()=>{activePanel = "commands";if(!commands)loadCommands()}}>COMMANDS</strong>,
                 <strong class="text-3xl cursor-pointer font-normal" class:text-primary={activePanel === "stats"}
                         class:text-4xl={activePanel === "stats"}
                         on:click={()=>{activePanel = "stats";if(!commands)loadCommands()}}>STATS</strong>
@@ -269,7 +272,22 @@
                         <RefreshButton isRefreshing refreshMessage="{'Loading...'}" />
                     {:else}
                         <div class="content-center">
-                            <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}" otp={otp} />
+                            {#if paypalCommands.length > 0}
+                                <div class="mb-10">
+                                    <UsersArray color="blue" bind:users="{paypalCommands}" paypal={true} type="simple"
+                                                pwd="{pwd}" otp={otp} />
+                                </div>
+                            {:else}
+                                <p class="text-3xl text-green"> No paypal orders waiting</p>
+                            {/if}
+                            {#if commands.length > 0}
+                                <div>
+
+                                    <UsersArray color="blue" users="{commands}" type="simple" pwd="{pwd}" otp={otp} />
+                                </div>
+                                {:else}
+                                <p class="text-3xl text-green"> No commands waiting</p>
+                            {/if}
                         </div>
                     {/if}
                 {:else if activePanel === "stats"}

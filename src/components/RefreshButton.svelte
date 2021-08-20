@@ -1,7 +1,10 @@
 <script>
+
+
     export let isRefreshing;
     export let refreshMessage;
     export let onRefreshMessage = "Refreshing"
+    export let deactivated = false
 </script>
 
 <style>
@@ -15,9 +18,13 @@
     .refresh-button svg {
         @apply fill-current text-font w-5 animate-spin left-4;
     }
+    .refresh-button:disabled{
+        @apply bg-disabled;
+        cursor: not-allowed
+    }
 </style>
 
-<button class="button button-brand refresh-button focus:outline-none" on:click>
+<button class="button button-brand refresh-button focus:outline-none"  disabled={deactivated}>
     <div class:hidden={!isRefreshing} class="block">
         <svg viewBox="0 0 21 24" xmlns="http://www.w3.org/2000/svg">
             <path

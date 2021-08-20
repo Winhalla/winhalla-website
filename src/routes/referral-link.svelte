@@ -10,7 +10,7 @@
     import cookie from "cookie";
     import { callApi } from "../utils/api";
     import { goto } from "@sapper/app";
-    import { counter } from "../components/store";
+    import { counter } from "../components/stores";
     import Loading from "../components/Loading.svelte";
     import { apiUrl } from "../utils/config";
     import { fade } from "svelte/transition";
@@ -288,7 +288,7 @@
         </div>
     {/if}
 {:else if waitingTermsAcceptations && waitingBID}
-    <div class="flex items-center justify-center md:h-screen-7">
+    <div class="flex items-center justify-center md:h-screen-7  relative">
         <div class="flex flex-col justify-center px-5 md:p-0">
             <div class="text-center md:text-left mt-7 md:mt-12">
                 <h1
@@ -320,7 +320,11 @@
             </button>
             <p class="mt-8 italic font-xl" style="max-width: 17rem; font-size: 1.25rem; font-family: 'Roboto Condensed', sans-serif">This is your Brawlhalla user id. You will find it by clicking on the box under your username (in Brawlhalla):
                 and then in the top right corner!</p>
+
+            <img class="my-8  md:hidden" src="assets/bid.jpg" style="max-width: 18rem" alt="BID example">
         </div>
+        <img class="-bottom-70  absolute hidden md:block" src="assets/bidCut.jpg" style="max-width: 36rem" alt="BID example">
+
     </div>
 {:else if waitingTermsAcceptations && !waitingBID}
     <div class="flex items-center justify-center mt-30 flex-col">

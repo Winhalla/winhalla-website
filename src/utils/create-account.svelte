@@ -6,7 +6,7 @@
 </script>
 
 <script>
-    import { counter } from "../components/store";
+    import { counter } from "../components/stores";
     import Error from "../components/ErrorAlert.svelte";
 
     export let firstLink;

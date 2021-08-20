@@ -3,7 +3,7 @@
     import { callApi } from "../../utils/api.js";
     import { onMount } from "svelte";
     import cookie from "cookie";
-    import { counter } from "../store";
+    import { counter } from "../stores";
     import { goto } from "@sapper/app";
 
     export let page;

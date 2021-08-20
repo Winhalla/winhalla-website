@@ -189,11 +189,13 @@
     let user;
     let playerData;
     let rankedData;
-    let queries;
+    let urlData;
+    let alreadyLoaded = false;
     onMount(() => {
         pages = page.subscribe(async value => {
-            loaded = false;
-            queries = value.query;
+            console.log(value);
+            if (urlData?.host !== value?.host || urlData?.path !== value?.path || alreadyLoaded === false) loaded = false;
+            urlData = value;
             //Determines witch page to display: brawlhalla or winhalla
             isDisplayingWinhalla = value.query?.d === "winhalla";
 
@@ -220,13 +222,13 @@
                         const player = await callApi("get", `/stats/username/${username}`);
                         if (!player) return isDisplaying404 = true;
 
-                        bid = player.find(p => p.name === username).brawlhalla_id
+                        bid = player.find(p => p.name === username).brawlhalla_id;
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
 
                     user = await callApi("get", "/auth/getUserData/" + bid);
 
-                    if(user){
+                    if (user) {
                         user.user.friendsInvited = user.link;
                         user = user.user;
                     }
@@ -267,6 +269,7 @@
                 });
 
             }
+            alreadyLoaded = true;
         });
     });
 
@@ -278,7 +281,7 @@
     }
 </style>
 <svelte:head>
-    <title>{username?username+"'s":""} Profile Page - Winhalla</title>
+    <title>{username ? username + "'s" : ""} Profile Page - Winhalla</title>
 </svelte:head>
 
 {#if loaded}
@@ -310,10 +313,10 @@
 
         <div class="flex  mt-6 md:mt-0   text-xl md:text-default">
             <a class="{!isDisplayingWinhalla ? 'active' : ''}"
-               href="{queries.bid ? url + '&d=brawlhalla' : url + '?d=brawlhalla'}">Brawlhalla</a>
+               href="{urlData.query.bid ? url + '&d=brawlhalla' : url + '?d=brawlhalla'}">Brawlhalla</a>
 
             <a class="ml-8  md:ml-11 {isDisplayingWinhalla ? 'active' : ''}"
-               href="{queries.bid ? url + '&d=winhalla' : url + '?d=winhalla'}">Winhalla</a>
+               href="{urlData.query.bid ? url + '&d=winhalla' : url + '?d=winhalla'}">Winhalla</a>
         </div>
     </section>
     {#if isDisplayingWinhalla}

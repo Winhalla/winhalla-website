@@ -1,4 +1,6 @@
 import {writable} from "svelte/store";
+import {callApi, getUser} from "../utils/api";
+import {counter} from "./stores";
 
 
 let guidesList = {
@@ -14,8 +16,13 @@ let guidesList = {
         //"quit_lobby", pas sûr que y'a besoin
     ]
 }
-let guidesOpenedList = {};
-//TODO: mettre call pour pull du user
+let guidesOpenedList;
+counter.subscribe(async (value) => {
+    if (value.refresh === true) return;
+    let user = await value.content;
+    guidesOpenedList = user.user.guidesOpenedList ? user.user.guidesOpenedList : {};
+});
+
 
 function determineCurrentGuide(page) {
     return guidesOpenedList.hasOwnProperty(page) || guidesOpenedList[page]?.length > 1 //if the corresponding page array doesn't exist or has no items
@@ -31,7 +38,6 @@ let guideHandlerStore = writable({
     page: "",
     list: guidesOpenedList,
     current: false,
-    goToNext: false
 });
 
 function guideHandlerSetPage(page) {
@@ -42,7 +48,7 @@ function guideHandlerSetPage(page) {
     guideHandlerStore.set({page: page, list: list, current: determineCurrentGuide(page)});
 }
 
-function goToNextGuide() {
+async function goToNextGuide() {
     let data;
     guideHandlerStore.subscribe(value => {
         data = value
@@ -52,17 +58,18 @@ function goToNextGuide() {
         guidesOpenedList[data.page] = [];
     }
 
+    guidesOpenedList[data.page].push(data.current)
     guideHandlerStore.set(
         {
             page: data.page,
-            list: guidesOpenedList[data.page].push(data.current),
+            list: guidesOpenedList,
             current: guidesList[data.page][guidesList[data.page].indexOf(data.current) + 1],
         }
     );
-    //TODO: set sur db aussi
+    await callApi("patch", "/updateGuidesOpenedList", guidesOpenedList);
 }
 
-function goToPreviousGuide() {
+async function goToPreviousGuide() {
     let data;
     guideHandlerStore.subscribe(value => {
         data = value
@@ -76,7 +83,7 @@ function goToPreviousGuide() {
             current: guidesList[data.page][guidesList[data.page].indexOf(data.current) - 1], //set to previous
         }
     );
-    //TODO: set sur db aussi
+    await callApi("patch", "/updateGuidesOpenedList", guidesOpenedList);
 
 }
 

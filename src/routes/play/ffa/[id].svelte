@@ -167,6 +167,7 @@
             guideHandlerSetPage("solo");
             guideHandlerStore.subscribe(value => {
                 currentGuide = value.current;
+                console.log(value.list)
             });
         });
     });

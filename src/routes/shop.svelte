@@ -35,11 +35,8 @@
             player = await value.content;
             if (!player?.user) player = { user: { coins: 0 } };
             let playerPlatform = /([a-zA-Z]+)(.+)/gm.exec(player.steam.id)[1];
-            console.log(player.steam.id);
-            console.log(playerPlatform);
             items.forEach((item, i) => {
                 if (item.type === "paypal") {
-                    items.splice(i, 1);
                     paypalItemId = item.id;
                     coinsPerDollar = item.cost;
                     return;
@@ -281,7 +278,7 @@
         }
         amountToCoins = {
             text: currentAmount * coinsPerDollar,
-            isBuyable: player.coins > currentAmount * coinsPerDollar
+            isBuyable: player.coins >= currentAmount * coinsPerDollar
         };
 
     }
@@ -407,7 +404,9 @@
                             class="card xl:w-70/100 2xl:w-60/100 xl:h-85/100 2xl:h-80/100 mt-2 mx-5 mb-7 lg:ml-0 lg:mb-0 shop-item">
                             <img
                                 class="w-full h-full block object-cover"
-                                src="assets/ShopItems/{featuredItem.name}.jpg"
+                                src="assets/ShopItems/{featuredItem.name
+                                            .toLowerCase()
+                                            .replace(/\s/g, '-')}.jpg"
                                 alt={featuredItem.name} />
                             <div
                                 class="absolute bottom-0 z-10 px-5 md:pr-10 pb-3 w-full">
@@ -422,7 +421,7 @@
                                     <p
                                         class:hidden={!featuredItem.isDescriptionToggled}
                                         class="block xl:mt-0">
-                                        {featuredItem.description}a
+                                        {featuredItem.description}
                                     </p>
 
                                     <div
@@ -472,9 +471,11 @@
 
 
                             <div class="px-5 lg:px-0">
-                                <div class="bg-variant max-w-max rounded-xl  p-8 relative  mt-6 md:mt-10  mx-auto lg:mx-0">
+                                <div
+                                    class="bg-variant max-w-max rounded-xl  p-8 relative  mt-6 md:mt-10  mx-auto lg:mx-0">
                                     <p class="absolute -top-3 left-8 text-primary  text-2xl">Coin TRADER</p>
-                                    <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b> for <b
+                                    <p class="text-3xl mt-4">Exchange your <b class="font-normal text-epic">coins</b>
+                                        for <b
                                             class="font-normal text-epic">real money</b></p>
                                     <p class="text-mid-light">Min amount: 1$</p>
                                     <p class="mt-3">You need to have a <a href="https://www.paypal.com/"
@@ -482,7 +483,8 @@
                                     <div class="flex items-center  mt-2">
 
                                         <div class="flex">
-                                            <input bind:value={currentAmount} class="p-2 pl-4 text-background  rounded w-16 w-18"
+                                            <input bind:value={currentAmount}
+                                                   class="p-2 pl-4 text-background  rounded w-16 w-18"
                                                    type="number" min="1" step="any" placeholder="Amount in $" />
                                             <p class="text-4xl ml-1 my-auto">$</p>
                                         </div>
@@ -494,13 +496,13 @@
 
                                         <div>
                                             <button
-                                                    disabled={!amountToCoins.isBuyable}
-                                                    on:click={() => buyItem(paypalItemId, "paypal credit")}
-                                                    class="px-4 py-1 bg-primary rounded">
+                                                disabled={!amountToCoins.isBuyable}
+                                                on:click={() => buyItem(paypalItemId, "paypal credit")}
+                                                class="px-4 py-1 bg-primary rounded">
                                                 <div class="flex  items-center  text-2xl">
                                                     <b
-                                                            class="mr-2 font-normal"
-                                                            style="padding-top: 0.12rem">{amountToCoins.text}</b>
+                                                        class="mr-2 font-normal"
+                                                        style="padding-top: 0.12rem">{amountToCoins.text}</b>
                                                     <div class="w-8 mt-1 text-font"
                                                          style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                         <CoinIcon />
@@ -522,62 +524,63 @@
                                 class="mt-2 flex flex-col items-center lg:flex-row lg:items-start">
                                 {#if seasonPacks.forEach}
                                     {#each seasonPacks as seasonPack, i}
-                                        <div
-                                            class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
-                                            <img
-                                                class="w-full h-full block "
-                                                src="assets/ShopItems/{seasonPack.name}.jpg"
-                                                alt={seasonPack.name} />
+                                        {#if seasonPack.type !== "paypal"}
                                             <div
-                                                class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
-                                                <p
-                                                    class:hidden={seasonPack.isDescriptionToggled}
-                                                    class:-mb-1={!seasonPack.isDescriptionToggled}
-                                                    class="text-accent text-4xl lg:text-5xl md:mb-0 md:block">
-                                                    {seasonPack.name
-                                                        .toLowerCase()
-                                                        .replace(/\-/g, ' ')}
-                                                </p>
-                                                <p
-                                                    class:hidden={!seasonPack.isDescriptionToggled}
-                                                    class="block xl:mt-0">
-                                                    {seasonPack.description}
-                                                </p>
-
+                                                class="mx-5 mb-7 lg:ml-0 lg:mb-0 lg:mr-12 test shop-item xl:w-shopItemLarge 2xl:w-shopItem">
+                                                <img
+                                                    class="w-full h-full block "
+                                                    src="assets/ShopItems/{seasonPack.name}.jpg"
+                                                    alt={seasonPack.name} />
                                                 <div
-                                                    class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
-                                                    <div class="-mb-2 md:mb-0">
-                                                        <div>
-                                                            <p
-                                                                class="hidden lg:block mr-1 -mb-2">
-                                                                {seasonPack.description}
-                                                            </p>
-                                                            <button
-                                                                class="focus:outline-none xl:hidden -mb-10"
-                                                                on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                    class="absolute bottom-0 z-10 pl-5 pb-3 w-full">
+                                                    <p
+                                                        class:hidden={seasonPack.isDescriptionToggled}
+                                                        class:-mb-1={!seasonPack.isDescriptionToggled}
+                                                        class="text-accent text-4xl lg:text-5xl md:mb-0 md:block">
+                                                        {seasonPack.name
+                                                            .toLowerCase()
+                                                            .replace(/\-/g, ' ')}
+                                                    </p>
+                                                    <p
+                                                        class:hidden={!seasonPack.isDescriptionToggled}
+                                                        class="block xl:mt-0">
+                                                        {seasonPack.description}
+                                                    </p>
+
+                                                    <div
+                                                        class="flex justify-between w-full items-end pr-4 md:pr-5 pb-1">
+                                                        <div class="-mb-2 md:mb-0">
+                                                            <div>
                                                                 <p
-                                                                    class=" text-light text-lg underline leading-none">
-                                                                    {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                                    class="hidden lg:block mr-1 -mb-2">
+                                                                    {seasonPack.description}
                                                                 </p>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div on:mouseenter={() => seasonPack.tooltipOpen = true}
-                                                         on:mouseleave={() => seasonPack.tooltipOpen = false}>
-                                                        <button
-                                                            disabled={!!seasonPack.unBuyable}
-                                                            on:click={() => buyItem(seasonPack.id,seasonPack.name)}
-                                                            class="px-4 py-1 bg-primary rounded">
-                                                            <div class="flex  items-center  text-2xl">
-                                                                <b
-                                                                    class="mr-2 font-normal"
-                                                                    style="padding-top: 0.12rem">{seasonPack.cost.toLocaleString()}</b>
-                                                                <div class="w-8 mt-1 text-font"
-                                                                     style="margin-top: 0.25rem; margin-bottom: 0.35rem">
-                                                                    <CoinIcon />
-                                                                </div>
+                                                                <button
+                                                                    class="focus:outline-none xl:hidden -mb-10"
+                                                                    on:click={() => handleDescriptionToggle(seasonPack)}>
+                                                                    <p
+                                                                        class=" text-light text-lg underline leading-none">
+                                                                        {seasonPack.isDescriptionToggled ? 'Hide description' : 'Show description'}
+                                                                    </p>
+                                                                </button>
                                                             </div>
-                                                            {#if seasonPack.tooltipOpen && seasonPack.unBuyable}
+                                                        </div>
+                                                        <div on:mouseenter={() => seasonPack.tooltipOpen = true}
+                                                             on:mouseleave={() => seasonPack.tooltipOpen = false}>
+                                                            <button
+                                                                disabled={!!seasonPack.unBuyable}
+                                                                on:click={() => buyItem(seasonPack.id,seasonPack.name)}
+                                                                class="px-4 py-1 bg-primary rounded">
+                                                                <div class="flex  items-center  text-2xl">
+                                                                    <b
+                                                                        class="mr-2 font-normal"
+                                                                        style="padding-top: 0.12rem">{seasonPack.cost.toLocaleString()}</b>
+                                                                    <div class="w-8 mt-1 text-font"
+                                                                         style="margin-top: 0.25rem; margin-bottom: 0.35rem">
+                                                                        <CoinIcon />
+                                                                    </div>
+                                                                </div>
+                                                                {#if seasonPack.tooltipOpen && seasonPack.unBuyable}
 
                                                                 <span
                                                                     class="tooltip text-center absolute bottom-15 right-1 px-3 py-2 bg-legendary text-background rounded text-left flex items-center justify-center z-40"
@@ -587,12 +590,13 @@
                                                                     transition:fade>
                                                                     {seasonPack.unBuyable}
                                                                 </span>
-                                                            {/if}
-                                                        </button>
+                                                                {/if}
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {/if}
                                     {/each}
                                 {/if}
                             </div>
@@ -777,7 +781,7 @@
                                 class:border-legendary={isBuying.valid === false}
                                 class="w-full text-background bg-font py-3 px-4 rounded focus:outline-none
                             focus:border-primary placeholder-disabled email-input"
-                                    style="font-family: 'Roboto', sans-serif;"/>
+                                style="font-family: 'Roboto', sans-serif;" />
 
                             {#if isBuying.valid}
                                 <div class="flex items-center">

@@ -13,6 +13,7 @@
     import CoinStats from "../../components/profile/CoinStats.svelte";
     import CoinHistory from "../../components/profile/CoinHistory.svelte";
     import Loading from "../../components/Loading.svelte";
+    import Search from "../../components/profile/Search.svelte";
 
     const { page } = stores();
 
@@ -171,6 +172,10 @@
     let bid;
     let url;
 
+    //404 display
+    let isDisplaying404;
+    let isSearchOpen;
+
     let loaded;
 
     //Reload UI on query parameter change
@@ -201,16 +206,21 @@
 
             if (!loaded) {
                 const res = new Promise(async () => {
-                    console.log("reload")
                     if (bid) {
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
+
                         if (data.name !== username) {
                             const player = await callApi("get", `/stats/username/${username}`);
-                            data = await callApi("get", `${apiUrl}/stats/${player.find(p => p.name === username).brawlhalla_id}`);
+                            bid = player.find(p => p.name === username)?.brawlhalla_id;
+                            if (!bid) return isDisplaying404 = true;
+
+                            data = await callApi("get", `${apiUrl}/stats/${bid}`);
                         }
+
                     } else {
                         const player = await callApi("get", `/stats/username/${username}`);
-                        console.log(player)
+                        if (!player) return isDisplaying404 = true;
+
                         bid = player.find(p => p.name === username).brawlhalla_id
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
@@ -258,6 +268,7 @@
             }
         });
     });
+
 </script>
 
 <style>
@@ -320,6 +331,14 @@
             </div>
         </section>
     {/if}
+
+{:else if isDisplaying404}
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <h2 class="text-9xl  mt-48">404</h2>
+        <p class="text-3xl  text-mid-light  -mt-4">Player not found</p>
+
+        <a class="text-primary italic mt-1" href="/">Return to home page</a>
+    </div>
 {:else}
     <Loading />
 {/if}

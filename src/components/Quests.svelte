@@ -168,25 +168,25 @@
         } catch (e) {
             isRefreshingQuests = false;
         }
-    };
+    }
 
     function denyAd() {
         collect(waitingAd.type, waitingAd.index, false);
     }
 
     async function collect(type, id, possibleAd) {
-        if (possibleAd) {
+        /*if (possibleAd) {
             if (!socket) socket = io(apiUrl);
             waitingAdAccept = true;
             waitingAd = { type, index: id };
-        } else {
+        } else {*/
             await callApi("post", `solo/collect?type=${type}&id=${id}`);
             waitingAd = undefined;
             waitingAdAccept = undefined;
             counter.set({ "refresh": true });
             data.collected[type].push(...data.finished[type].splice(data.finished[type].findIndex(e => e.id === id), 1));
             data = data;
-        }
+        //}
     }
 
     function deactivateAlert() {
@@ -260,7 +260,7 @@
 <svelte:head>
     <!--Video ads-->
     {#if waitingAd}
-        <script async src="https://cdn.stat-rock.com/player.js"></script>
+        <script async src="https://serving.stat-rock.com/player.js"></script>
     {/if}
 </svelte:head>
 

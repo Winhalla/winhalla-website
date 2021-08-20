@@ -13,6 +13,7 @@
     import CoinStats from "../../components/profile/CoinStats.svelte";
     import CoinHistory from "../../components/profile/CoinHistory.svelte";
     import Loading from "../../components/Loading.svelte";
+    import Search from "../../components/profile/Search.svelte";
 
     const { page } = stores();
 
@@ -171,12 +172,16 @@
     let bid;
     let url;
 
+    //404 display
+    let isDisplaying404;
+    let isSearchOpen;
+
     let loaded;
 
     //Reload UI on query parameter change
     let isDisplayingWinhalla;
     $: if (isDisplayingWinhalla) {
-        console.log("issou");
+        console.log("Switched Display");
     }
 
 
@@ -187,10 +192,11 @@
     let queries;
     onMount(() => {
         pages = page.subscribe(async value => {
-            console.log(value);
+            loaded = false;
             queries = value.query;
             //Determines witch page to display: brawlhalla or winhalla
             isDisplayingWinhalla = value.query?.d === "winhalla";
+
             //brawlhalla id if there is one
             bid = value.query?.bid;
             username = value.params.username;
@@ -201,17 +207,25 @@
                 const res = new Promise(async () => {
                     if (bid) {
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
+
                         if (data.name !== username) {
                             const player = await callApi("get", `/stats/username/${username}`);
-                            data = await callApi("get", `${apiUrl}/stats/${player.find(p => p.name === username).brawlhalla_id}`);
+                            bid = player.find(p => p.name === username)?.brawlhalla_id;
+                            if (!bid) return isDisplaying404 = true;
+
+                            data = await callApi("get", `${apiUrl}/stats/${bid}`);
                         }
+
                     } else {
                         const player = await callApi("get", `/stats/username/${username}`);
-                        console.log(player);
-                        bid = player.find(p => p.name === username).brawlhalla_id;
+                        if (!player) return isDisplaying404 = true;
+
+                        bid = player.find(p => p.name === username).brawlhalla_id
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
+
                     user = await callApi("get", "/auth/getUserData/" + bid);
+
                     if(user){
                         user.user.friendsInvited = user.link;
                         user = user.user;
@@ -255,6 +269,7 @@
             }
         });
     });
+
 </script>
 
 <style>
@@ -322,6 +337,14 @@
             </div>
         </section>
     {/if}
+
+{:else if isDisplaying404}
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <h2 class="text-9xl  mt-48">404</h2>
+        <p class="text-3xl  text-mid-light  -mt-4">Player not found</p>
+
+        <a class="text-primary italic mt-1" href="/">Return to home page</a>
+    </div>
 {:else}
     <Loading />
 {/if}

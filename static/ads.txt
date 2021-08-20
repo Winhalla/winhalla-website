@@ -50,17 +50,17 @@ engagebdr.com, 10304, RESELLER
 synacor.com, 82291, RESELLER, e108f11b2cdf7d5b
 indexexchange.com, 192143, RESELLER
 
-
-
-# SOVRN
-sovrn.com, 367974, DIRECT, fafdf38b16bf6b2b
-lijit.com, 367974, DIRECT, fafdf38b16bf6b2b
-lijit.com, 367974-eb, DIRECT, fafdf38b16bf6b2b
-appnexus.com, 1360, RESELLER, f5ab79cb980f11d1
-gumgum.com, 11645, RESELLER, ffdef49475d318a9
-openx.com, 538959099, RESELLER, 6a698e2ec38604c6
-openx.com, 539924617, RESELLER, 6a698e2ec38604c6
-pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
-pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
-pubmatic.com, 156700, RESELLER, 5d62403b186f2ace
-rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
+#Adplayer.pro
+AdPlayer.Pro, 1, DIRECT
+Adsolut.in, 44516, DIRECT #Playstream
+google.com, pub-7002491002409919, DIRECT, f08c47fec0942fa0
+google.com, pub-9378724246417115, RESELLER, f08c47fec0942fa0
+google.com, pub-2506150943914125, RESELLER, f08c47fec0942fa0
+google.com, pub-3452022011371122, RESELLER, f08c47fec0942fa0
+google.com, pub-6968738577620513, RESELLER, f08c47fec0942fa0
+Rubiconproject.com, 17146, RESELLER, 0bfd66d529a55807
+google.com, pub-6070398767421094, RESELLER, f08c47fec0942fa0
+google.com, pub-7002491002409919, RESELLER, f08c47fec0942fa0
+google.com, pub-9378724246417115, DIRECT, f08c47fec0942fa0
+google.com, pub-9035087792692775, DIRECT, f08c47fec0942fa0
+google.com, pub-9035087792692775, RESELLER, f08c47fec0942fa0

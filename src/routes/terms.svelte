@@ -77,6 +77,7 @@
         special or consequential damages that result from the access to, use of, or the inability to use, the materials
         in this website, even if winhalla.app or a winhalla.app authorised representative has been advised of the
         possibility of such damages.</p>
+    <p>Winhalla works with ad revenue. If our advertisers fails to pay us, we won't be able to send any rewards to players.</p>
     <h2>Governing Law</h2>
 
     <p>These Terms shall be governed and construed in accordance with the laws of France, without regard to its conflict

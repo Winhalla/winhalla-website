@@ -4,6 +4,9 @@ module.exports = {
     },
     theme: {
         extend: {
+            zIndex: {
+              60: "60"
+            },
             maxHeight: {
                 'screen-90': "90vh",
                 'screen-65': "65vh"
@@ -135,6 +138,7 @@ module.exports = {
                 "99%": "99%",
                 "60/100":"60%",
                 "70/100":"70%",
+                "74/100": "74%",
                 "80/100":"80%",
                 "85/100":"85%",
                 "shopItemLarge": "calc(35% - 1.5rem)",
@@ -157,6 +161,7 @@ module.exports = {
 
             fontSize: {
                 "4.5xl":"2.5rem",
+                "6.5xl":"4.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",
                 "9xl": "7rem",

@@ -7,9 +7,11 @@
     import { onMount } from "svelte";
     import CookiePopup from "../components/CookiePopup.svelte";
     import { getCookie } from "../utils/getCookie";
+    import {guideHandlerStore} from "../components/guideStore";
 
     //Show error to the user if there is one from an api request
     let error;
+    let isShowingGuide
     onMount(() => {
         eventEmitter.subscribe(async e => {
             e = e.error;
@@ -30,6 +32,10 @@
         } else if (getCookie("hideCookiePopup")) {
             window.yett.unblock(JSON.parse(decodeURI(acceptedCookieList).replace(/%2C/g, ",").replace(/%2F/g, "/")));
         }
+
+        guideHandlerStore.subscribe(value => {
+            isShowingGuide = !!value.current;
+        });
     });
 
     let scrollY = 0;
@@ -103,6 +109,10 @@
 
 <svelte:window bind:scrollY={scrollY} />
 <div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
+    {#if isShowingGuide}
+        <div class="fixed top-0 bottom-0 left-0 right-0   bg-background /bg-black bg-opacity-80 " style="z-index: 55"></div>
+    {/if}
+
     <CookiePopup />
     <Nav isScrolling={scrollY > 0} />
     {#if error}

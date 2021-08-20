@@ -3,7 +3,7 @@
     import { callApi } from "../../utils/api.js";
     import { onMount } from "svelte";
     import cookie from "cookie";
-    import { counter } from "../store";
+    import { counter } from "../stores";
     import { goto } from "@sapper/app";
 
     export let page;
@@ -244,7 +244,7 @@
         <div
             class="pt-2 py-1 lg:py-2 px-2 lg:px-3 rounded-lg bg-background absolute
         shadow-card dropdown -right-10 md:right-0 z-50 w-86 lg:w-92 border
-        border-primary overflow-y-auto max-h-screen-60 scrollbar"
+        border-primary overflow-y-scroll max-h-screen-60 scrollbar"
             use:clickOutside
             on:click_outside={toggleDropDown}>
             <div>

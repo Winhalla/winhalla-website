@@ -4,7 +4,7 @@
     import { fade, fly } from "svelte/transition";
     import { callApi } from "../../utils/api";
     import { config } from "./storeAdmin";
-    import { counter } from "../store";
+    import { counter } from "../stores";
 
     export let popup;
     export let configs;

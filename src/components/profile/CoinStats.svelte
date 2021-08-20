@@ -12,63 +12,63 @@
                 earned:</h3>
             <p class="text-primary text-3xl">{Math.floor(user.coins * 10) / 10}</p>
         </div>
+        {#if data}
+            <div class="xl:flex  mt-6">
+                <div class="">
+                    <div class="flex items-center  xl:block">
+                        <h3 class="text-xl">SOLO coins:</h3>
+                        <p class="text-xl   text-epic   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
+                                                                              style="margin-right: 0.15rem">{Math.round(data.solo * 10) / 10}</strong>
+                            ({Math.round(data.solo / user.coins * 1000) / 10} %)</p>
+                    </div>
 
-        <div class="xl:flex  mt-6">
-            <div class="">
-                <div class="flex items-center  xl:block">
-                    <h3 class="text-xl">SOLO coins:</h3>
-                    <p class="text-xl   text-epic   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
-                                                                          style="margin-right: 0.15rem">{Math.round(data.solo*10)/10}</strong>
-                        ({Math.round(data.solo / user.coins * 1000)/10} %)</p>
-                </div>
 
-
-                <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
-                    <p class="text-mid-light mt-">Games played: <b
+                    <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
+                        <p class="text-mid-light mt-">Games played: <b
                             class="font-normal text-primary text-xl">{user.stats.ffa.gamesPlayed}</b>
-                    </p>
-                    <p class="text-mid-light mt-">Games won: <b
+                        </p>
+                        <p class="text-mid-light mt-">Games won: <b
                             class="font-normal text-primary text-xl">{user.stats.ffa.wins}</b>
-                    </p>
-                </div>
-            </div>
-
-
-            <div class="mt-8 xl:mt-0  xl:ml-12 2xl:ml-17">
-                <div class="flex items-center  xl:block">
-                    <h3 class="text-xl">Quests coins:</h3>
-                    <p class="text-xl   text-legendary   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
-                                                                               style="margin-right: 0.15rem">{Math.round(data.dailyQuests + data.weeklyQuests*10)/10}</strong>
-                        ({Math.round((data.dailyQuests + data.weeklyQuests) / user.coins * 1000)/10}%)</p>
+                        </p>
+                    </div>
                 </div>
 
 
-                <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
-                    <p class="text-mid-light mt-">From dailies: <b
-                            class="font-normal text-primary text-xl">{Math.round(data.dailyQuests*10)/10}</b>
-                    </p>
-                    <p class="text-mid-light mt-">From weeklies: <b
-                            class="font-normal text-primary text-xl">{Math.round(data.weeklyQuests*10)/10}</b>
-                    </p>
+                <div class="mt-8 xl:mt-0  xl:ml-12 2xl:ml-17">
+                    <div class="flex items-center  xl:block">
+                        <h3 class="text-xl">Quests coins:</h3>
+                        <p class="text-xl   text-legendary   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
+                                                                                   style="margin-right: 0.15rem">{Math.round(data.dailyQuests + data.weeklyQuests * 10) / 10}</strong>
+                            ({Math.round((data.dailyQuests + data.weeklyQuests) / user.coins * 1000) / 10}%)</p>
+                    </div>
+
+
+                    <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
+                        <p class="text-mid-light mt-">From dailies: <b
+                            class="font-normal text-primary text-xl">{Math.round(data.dailyQuests * 10) / 10}</b>
+                        </p>
+                        <p class="text-mid-light mt-">From weeklies: <b
+                            class="font-normal text-primary text-xl">{Math.round(data.weeklyQuests * 10) / 10}</b>
+                        </p>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="mt-8 xl:mt-0  xl:ml-12 2xl:ml-17">
-                <div class="flex items-center  xl:block">
-                    <h3 class="text-xl">Referral link coins:</h3>
-                    <p class="text-xl   text-green   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
-                                                             style="margin-right: 0.15rem">{Math.round(data.link*10)/10}</strong>
-                        ({Math.round(data.link / user.coins * 1000)/10}%)</p>
-                </div>
+                <div class="mt-8 xl:mt-0  xl:ml-12 2xl:ml-17">
+                    <div class="flex items-center  xl:block">
+                        <h3 class="text-xl">Referral link coins:</h3>
+                        <p class="text-xl   text-green   ml-2 xl:ml-0"><strong class="font-normal  text-2xl"
+                                                                               style="margin-right: 0.15rem">{Math.round(data.link * 10) / 10}</strong>
+                            ({Math.round(data.link / user.coins * 1000) / 10}%)</p>
+                    </div>
 
-                <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
-                    <p class="text-mid-light mt-">Friends invited: <b
+                    <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
+                        <p class="text-mid-light mt-">Friends invited: <b
                             class="font-normal text-primary text-xl">{user.friendsInvited}</b>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        {/if}
     </div>
 </div>

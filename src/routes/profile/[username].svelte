@@ -187,8 +187,8 @@
     let queries;
     onMount(() => {
         pages = page.subscribe(async value => {
-            console.log(value)
-            queries = value.query
+            console.log(value);
+            queries = value.query;
             //Determines witch page to display: brawlhalla or winhalla
             isDisplayingWinhalla = value.query?.d === "winhalla";
             //brawlhalla id if there is one
@@ -207,15 +207,15 @@
                         }
                     } else {
                         const player = await callApi("get", `/stats/username/${username}`);
-                        console.log(player)
-                        bid = player.find(p => p.name === username).brawlhalla_id
+                        console.log(player);
+                        bid = player.find(p => p.name === username).brawlhalla_id;
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
                     }
-                    console.log(bid)
                     user = await callApi("get", "/auth/getUserData/" + bid);
-                    console.log(user+"test");
-                    user.user.friendsInvited = user.link;
-                    user = user.user;
+                    if(user){
+                        user.user.friendsInvited = user.link;
+                        user = user.user;
+                    }
 
                     playerData = data.player;
                     playerData.matchtime = 0;
@@ -262,6 +262,9 @@
         @apply text-primary  border-b-2 border-primary;
     }
 </style>
+<svelte:head>
+    <title>{username?username+"'s":""} Profile Page - Winhalla</title>
+</svelte:head>
 
 {#if loaded}
     <section class="md:h-64 bg-variant  pl-7  md:pl-10 md:pr-10 lg:pl-23 lg:pr-18   flex flex-col justify-between">
@@ -299,10 +302,12 @@
         </div>
     </section>
     {#if isDisplayingWinhalla}
-        <section class="px-7 md:px-10 lg:px-18 pb-12  md:flex items-start">
-            <CoinStats user="{user}" data="{user.coinLogs.total}" />
-            <CoinHistory data="{user.coinLogs.history}" />
-        </section>
+        {#if user}
+            <section class="px-7 md:px-10 lg:px-18 pb-12  md:flex items-start">
+                <CoinStats user="{user}" data="{user?.coinLogs?.total}" />
+                <CoinHistory data="{user.coinLogs.history}" />
+            </section>
+        {/if}
     {:else}
         <section class="px-7 md:px-10 lg:px-18 pb-12 lg:flex justify-between flex-wrap items-start">
             <div class="mt-12  md:flex items-start">

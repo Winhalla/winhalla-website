@@ -17,7 +17,7 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-    if (event.request.method !== "GET" || event.request.headers.has("range")) return;
+    if (event.request.method !== "GET" || event.request.headers.has("range") || event.request.host !== "localhost:3000") return;
 
     const url = new URL(event.request.url);
 

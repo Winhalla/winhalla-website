@@ -20,7 +20,7 @@ let guidesOpenedList;
 counter.subscribe(async (value) => {
     if (value.refresh === true) return;
     let user = await value.content;
-    if(!user) return
+    if(!user.user) return
     guidesOpenedList = user.user.guidesOpenedList ? user.user.guidesOpenedList : {};
 });
 

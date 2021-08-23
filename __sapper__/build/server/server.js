@@ -4913,7 +4913,7 @@ const Test = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         });
     };
     </script></div>
-<button onclick="${"init()"}" class="${"mt-10 button button-brand"}">Play ad
+<button onclick="${"playAd()"}" class="${"mt-10 button button-brand"}">Play ad
 </button>`;
 });
 

@@ -21,7 +21,7 @@
         }
     </script>
 
-    <script data-playerPro="current">(function() {
+    <script data-playerPro="current">function playAd() {
         var s = document.querySelector("script[data-playerPro=\"current\"]");
         s.removeAttribute("data-playerPro");
         (playerPro = window.playerPro || []).push({
@@ -29,9 +29,9 @@
             after: s,
             init: init
         });
-    })();
+    };
     </script>
 </div>
-<button onclick="init()" class="button button-brand">
+<button onclick="init()" class="mt-10 button button-brand">
     Play ad
 </button>

@@ -449,7 +449,7 @@
                                     </div>
 
                                 {/if}
-                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                <!--<p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
                                     You watched <strong
                                         class="text-green font-normal text-3xl">{userPlayer.adsWatched}
                                     ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied by
@@ -461,10 +461,10 @@
                                     <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
                                                   bind:adError={adError}
                                                   bind:info={info}/>
-                                </div>
+                                </div>-->
 
 
-                                <div class="{currentGuide === 'refresh_data' ? 'z-60  relative' : ''}"
+                                <div class="{currentGuide === 'refresh_data' ? 'z-60 relative' : ''}"
                                      on:click={() => handleRefresh(true)}
                                      on:mouseenter={() => matchFinishedTooltip = true}
                                      on:mouseleave={() => matchFinishedTooltip = false}>

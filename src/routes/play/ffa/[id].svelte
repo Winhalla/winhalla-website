@@ -458,7 +458,7 @@
                                     </div>
 
                                 {/if}
-                                {#if userPlayer.username === "Philtrom" || userPlayer.username === "23Felons23"}
+                                {#if userPlayer.steamId === "steam76561198417157310"}
                                     <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
                                         You watched <strong
                                         class="text-green font-normal text-3xl">{userPlayer.adsWatched}

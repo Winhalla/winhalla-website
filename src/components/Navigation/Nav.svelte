@@ -43,17 +43,18 @@
             if (user1.response) if (user1.response.status === 503 || user1.response.status === 502) goto("/status");
             return isUserLoggedIn = "network";
         }
+
         if (user1.user) {
             notificationsObj.notifications = user1.user.notifications;
             notificationsObj.inGame = user1.user.inGame;
             currentMatch = notificationsObj.inGame?.filter(g => g.isFinished === false)[0]?.id;
+            userCoins = Math.floor(user1.user.coins * 10) / 10;
         }
         bhUser = user1.user;
         user = user1.steam;
         if (user.id === "76561198417157310" || user.id === "76561198417157310") {
             isAdmin = true;
         }
-        userCoins = Math.floor(user1.user.coins * 10) / 10;
 
         isUserLoggedIn = !!user1.user;
     }
@@ -373,7 +374,7 @@
                         SHOP
                     </a>
 
-                    {#if user}
+                    {#if user && bhUser}
 
                         <a
                                 class="nav-link-container my-3 mb-6 lg:mb-3

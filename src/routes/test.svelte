@@ -6,10 +6,13 @@
         function init(api) {
             if (api) {
                 api.on("AdStarted", function() {
-                        console.log("AdStarted");
-                    }
-                );
+                    console.log("AdStarted");
+                });
 
+                api.on("AdError", (message, error) => {
+                    console.log(message);
+                    console.log(error);
+                });
 
                 api.on("AdVideoComplete", function() {
                         console.log("AdVideoComplete");

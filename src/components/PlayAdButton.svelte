@@ -25,11 +25,10 @@
     let started;
     let videoSeen;
     $: if (videoSeen > 0) {
-        console.log("nn");
         console.log(id);
         try {
-            socket.emit("advideo", videoSeen === "1" ? {
-                state: 1,
+            socket.emit("advideo", videoSeen === "started" ? {
+                state: "started",
                 steamId: userPlayer.steamId,
                 room: id,
                 goal
@@ -106,35 +105,26 @@
         function playAd() {
             const init = (api) => {
                 if (api) {
-
                     api.on("AdVideoStart", function() {
-                        document.getElementById("transfer").value = 1;
+                        document.getElementById("transfer").value = "started";
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                         if (document.location.hostname === "winhalla.app") api.setAdVolume(1);
-                        document.body.onblur = function() {
-                            //api.pauseAd();
-                        };
-                        document.body.onfocus = function() {
-                            //api.resumeAd();
-                        };
-                    });
-                    api.on("AdVideoFirstQuartile", () => {
-                        document.getElementById("transfer").value = 2;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                    });
-                    api.on("AdVideoMidpoint", () => {
-                        document.getElementById("transfer").value = 3;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                    });
-                    api.on("AdVideoThirdQuartile", () => {
-                        document.getElementById("transfer").value = 4;
-                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                     api.on("AdVideoComplete", function() {
-                        document.getElementById("transfer").value = 5;
+                        document.getElementById("transfer").value = "finished";
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-                        document.body.onblur = null;
-                        document.body.onfocus = null;
+                    });
+                    api.on("AdSkipped", function() {
+                        document.getElementById("transfer").value = "finished";
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                    });
+                    api.on("AdError", function(message,error) {
+                        if(message?.g?.errorCode === 1009) {
+                            document.getElementById("transfer").value = "noAd";
+                            return document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
+                        }
+                        document.getElementById("transfer").value = "error";
+                        document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                 } else {
                     console.log("blank");

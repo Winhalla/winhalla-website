@@ -844,9 +844,7 @@
                         <p class="text-primary text-xl ml-4">
                             Your email will not be saved <br>
                             Delay to receive:
-                            {#if isBuying.id === paypalItemId && currentAmount > 10}3 days to a week
-                            {:else if currentAmount < 10 && isBuying.id === paypalItemId }<span
-                                class="text-green text-xl">instant</span>
+                            {#if isBuying.id === paypalItemId}3 days to a week
                             {:else}1 week to 1
                                 month
                             {/if}

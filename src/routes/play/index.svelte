@@ -11,7 +11,7 @@
     import { counter } from "../../components/stores";
     import Infos from "../../components/Infos.svelte";
     import GuideContainer from "../../components/GuideContainer.svelte";
-    import {guideHandlerSetPage, guideHandlerStore} from "../../components/guideStore";
+    import { guideHandlerSetPage, guideHandlerStore } from "../../components/guideStore";
 
     let quests;
     let error;
@@ -119,7 +119,7 @@
         name="description"
         content="Play Brawlhalla. Earn rewards. | Legit & Free In-Game objects!
         | Choose your gamemode here | Winhalla Play page" />
-    <script async src="https://serving.stat-rock.com/player.js "></script>
+    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 {#if (!quests || (!quests.lastDaily || !quests.lastWeekly)) && (!gameModesError && !error)}
     <div>
@@ -169,7 +169,7 @@
             {:else if gameModes}
                 <div class="{currentGuide === 'game_modes' ? 'z-60  relative' : ''}">
                     <div
-                            class="lg:mb-10 lg:mr- mt-10 text-center
+                        class="lg:mb-10 lg:mr- mt-10 text-center
             flex flex-col items-center md:flex-row lg:items-start">
                         <GameModeCards {gameModes} />
                     </div>
@@ -179,10 +179,15 @@
 
                             <GuideContainer title="Game modes" previous={false} scroll={390} scrollMd={0}>
                                 <div class="mt-1">
-                                    <p class="text-2xl md:text-3xl">Here you can find <b class="font-normal text-primary">the list</b> of the <b class="font-normal text-epic">Winhalla <br class="hidden md:block">game modes</b>
+                                    <p class="text-2xl md:text-3xl">Here you can find <b
+                                        class="font-normal text-primary">the list</b> of the <b
+                                        class="font-normal text-epic">Winhalla <br class="hidden md:block">game
+                                        modes</b>
                                         with their description</p>
-                                    <p class="mt-3  text-xl md:text-default text-mid-light italic">Note: these game modes are <b class="font-normal text-primary">unrelated</b> to
-                                        <br class="hidden md:block"><b class="font-normal text-primary">Brawlhalla game modes</b></p>
+                                    <p class="mt-3  text-xl md:text-default text-mid-light italic">Note: these game
+                                        modes are <b class="font-normal text-primary">unrelated</b> to
+                                        <br class="hidden md:block"><b class="font-normal text-primary">Brawlhalla game
+                                            modes</b></p>
                                 </div>
                             </GuideContainer>
                         </div>
@@ -192,10 +197,11 @@
                 </div>
 
             {/if}
-            <div class="pb-8 lg:pb-16 flex-grow lg:-ml-15     /bg-background   {currentGuide === 'quests' ? 'z-60  relative' : ''}">
-<!--
-                <div class="h-screen-90 w-full  -top-32 absolute  bg-background " style="z-index: -1"></div>
--->
+            <div
+                class="pb-8 lg:pb-16 flex-grow lg:-ml-15     /bg-background   {currentGuide === 'quests' ? 'z-60  relative' : ''}">
+                <!--
+                                <div class="h-screen-90 w-full  -top-32 absolute  bg-background " style="z-index: -1"></div>
+                -->
                 {#if error}
                     <div class="px-5 w-full content-center md:mt-15  lg:px-0  w-full">
                         <h2 class="lg:text-3xl text-2xl text-center">{@html error}</h2>
@@ -209,7 +215,15 @@
                     {#if quests.lastDaily && quests.lastWeekly}
                         <div id="quests" class="relative bottom-10"></div>
                         <div class="lg:ml-15">
-                            <Quests data={quests} currentGuideVisible="{currentGuide}"/>
+                            <Quests data={quests} currentGuideVisible="{currentGuide}" />
+                            <div class="mt-10">
+                                <script data-playerPro="current">(function() {
+                                    var s = document.querySelector("script[data-playerPro=\"current\"]");
+                                    s.removeAttribute("data-playerPro");
+                                    (playerPro = window.playerPro || []).push({ id: "7rYaA2Kc71uu", after: s });
+                                })();
+                                </script>
+                            </div>
                         </div>
                     {/if}
 
@@ -217,12 +231,7 @@
             </div>
         </div>
         <GuideCard page="play" />
-        <div class="mt-6">
-            <script
-                    src="https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"
-                    data-pa-tag async></script>        </div>
     </div>
-<!--    <script data-playerPro="current">(function(){var s=document.querySelector('script[data-playerPro="current"]');s.removeAttribute("data-playerPro");(playerPro=window.playerPro||[]).push({id:"7rYaA2Kc71uu",after:s});})();</script>-->
 {/if}
 {#if info}
     <Infos {...info} />

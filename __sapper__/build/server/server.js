@@ -4010,11 +4010,11 @@ ${gameModesError && error
                                     s.removeAttribute("data-playerPro");
                                     (playerPro = window.playerPro || []).push({ id: "7rYaA2Kc71uu", after: s });
                                 })();
-                                </script>
-                                <script src="${"https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"}" data-pa-tag async></script></div></div>`
+                                </script></div></div>`
 				: ``}`
 			: ``}`}</div></div>
-        ${validate_component(GuideCard, "GuideCard").$$render($$result, { page: "play" }, {}, {})}</div>`}
+        ${validate_component(GuideCard, "GuideCard").$$render($$result, { page: "play" }, {}, {})}
+        <div class="${"mt-6"}"><script src="${"https://cdn.purpleads.io/agent.js?publisherId=4c614b49b1ea091717ee7674965ed444:36f81c29df2903d19389e0b048959ef43687b22b120b65ad7a71fd5759a14acce6123150f93d3b2d50d912d07d871d9b1680703a9e1af6238c5424fe2004de2b"}" data-pa-tag async></script></div></div>`}
 ${info
 	? `${validate_component(Infos, "Infos").$$render($$result, Object_1.assign(info), {}, {})}`
 	: ``}`;

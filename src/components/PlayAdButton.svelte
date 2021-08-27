@@ -116,10 +116,10 @@
     </button>
 {/if}
 
-{#if true}
+{#if noAd}
     <span
         class="tooltip absolute top-30 lg:top-1 lg:right-48 lg:left-auto right-4 left-4 px-6 py-2 bg-legendary text-background rounded text-left flex items-center justify-center" style="z-index: 60"
-        transition:fade>No ad is available for now, please try again later.
+        transition:fade>{noAd}
     </span>
 {/if}
 <input hidden bind:value={videoSeen} id={started ? 'transfer' : Math.random() * 1000} />

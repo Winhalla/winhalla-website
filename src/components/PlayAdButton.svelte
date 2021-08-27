@@ -133,7 +133,7 @@
             var s = document.querySelector("script[data-playerPro=\"current\"]");
             //s.removeAttribute("data-playerPro");
             (playerPro = window.playerPro || []).push({
-                id: "oOMhJ7zhhrjUgiJx4ZxVYPvrXaDjI3VFmkVHIzxJ2nYvXX8krkzp",
+                id: "CIUTML6hCY6U",
                 after: s,
                 init: init
             });

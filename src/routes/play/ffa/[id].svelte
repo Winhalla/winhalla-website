@@ -458,21 +458,19 @@
                                     </div>
 
                                 {/if}
-                                {#if userPlayer.steamId === "steam76561198417157310"}
-                                    <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
-                                        You watched <strong
-                                        class="text-green font-normal text-3xl">{userPlayer.adsWatched}
-                                        ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied
-                                        by
-                                        <strong
-                                            class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
-                                    </p>
-                                    <div class="{currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
-                                        <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
-                                                      bind:adError={adError}
-                                                      bind:info={info} />
-                                    </div>
-                                {/if}
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    You watched <strong
+                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                    ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied
+                                    by
+                                    <strong
+                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                </p>
+                                <div class="{currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
+                                                  bind:adError={adError}
+                                                  bind:info={info} />
+                                </div>
 
 
                                 <div class="{currentGuide === 'refresh_data' ? 'z-60 relative' : ''}"

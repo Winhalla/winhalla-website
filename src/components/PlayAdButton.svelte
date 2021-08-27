@@ -72,6 +72,7 @@
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
     .button-green {
         background-color: #3de488;
@@ -88,6 +89,7 @@
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
     }
+
     .tooltip::after {
         content: "";
         position: absolute;
@@ -118,7 +120,9 @@
 
 {#if noAd}
     <span
-        class="tooltip absolute top-30 lg:top-1 lg:right-48 lg:left-auto right-4 left-4 px-6 py-2 bg-legendary text-background rounded text-left flex items-center justify-center" style="z-index: 60"
+        class="tooltip absolute text-lg top-30 lg:top-3 lg:right-46 lg:left-auto right-4 left-4 px-6 py-2 bg-legendary text-background rounded text-left flex items-center justify-center"
+        style="font-family: 'Roboto', sans-serif;z-index: 60"
+
         transition:fade>{noAd}
     </span>
 {/if}
@@ -144,11 +148,11 @@
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
                     });
                     api.on("AdError", function(message, error) {
-                        console.log(message);
+                        console.log(message, message?.g, message?.g?.errorCode);
                         if (message?.g?.errorCode === 1009) {
                             document.getElementById("transfer").value = "noAd";
                             document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));
-
+                            return;
                         }
                         document.getElementById("transfer").value = "error";
                         document.getElementById("transfer").dispatchEvent(new CustomEvent("input"));

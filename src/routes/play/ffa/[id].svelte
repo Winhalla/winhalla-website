@@ -19,7 +19,6 @@
     import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
-    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
     import { getCookie } from "../../../utils/getCookie";
@@ -36,6 +35,7 @@
     let user;
     let match;
     let quests;
+    let noAd
     let isMatchEnded;
     let countDown;
     let tooltipOpen = false;
@@ -670,12 +670,6 @@
                     </div>
                 </div>
 
-            {/if}
-
-
-            {#if !isSpectator && !isMatchEnded}
-                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
             {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}

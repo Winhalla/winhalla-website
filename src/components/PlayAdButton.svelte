@@ -56,7 +56,7 @@
         } else if (e.code === "success" && goal === "earnMoreFFA") {
             setTimeout(() => info = e.message, 1000);
             userPlayer.adsWatched++;
-            userPlayer.multiplier += userPlayer.adsWatched === 1 ? 200 : 300;
+            userPlayer.multiplier += userPlayer.adsWatched === 1 ? 100 : 200;
             finished = true;
             started = false;
         } else if (e.code === "success" && goal === "earnMoreQuests") {

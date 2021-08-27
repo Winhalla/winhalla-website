@@ -19,7 +19,6 @@
     import { io } from "socket.io-client";
     import { apiUrl } from "../../../utils/config";
     import PlayAdButton from "../../../components/PlayAdButton.svelte";
-    import FfaWatchAd from "../../../components/FfaWatchAd.svelte";
     import Quests from "../../../components/Quests.svelte";
     import gradientGenerator from "../../../utils/gradientGenerator";
     import { getCookie } from "../../../utils/getCookie";
@@ -36,6 +35,7 @@
     let user;
     let match;
     let quests;
+    let noAd
     let isMatchEnded;
     let countDown;
     let tooltipOpen = false;
@@ -458,22 +458,20 @@
                                     </div>
 
                                 {/if}
-                                {#if userPlayer.username === "Philtrom" || userPlayer.username === "23Felons23"}
-                                    <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
-                                        You watched <strong
-                                        class="text-green font-normal text-3xl">{userPlayer.adsWatched}
-                                        ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied
-                                        by
-                                        <strong
-                                            class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
-                                    </p>
+                                <p class="text-center lg:text-left mx-4 mt-1 lg:mt-0   {currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    You watched <strong
+                                    class="text-green font-normal text-3xl">{userPlayer.adsWatched}
+                                    ad{userPlayer.adsWatched > 1 ? "s" : ""}</strong>, earnings will be multiplied
+                                    by
+                                    <strong
+                                        class="text-green text-3xl font-normal">{userPlayer.multiplier / 100}</strong>!
+                                </p>
 
-                                    <div class="{currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
-                                        <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
-                                                      bind:adError={adError}
-                                                      bind:info={info} />
-                                    </div>
-                                {/if}
+                                <div class="{currentGuide === 'play_ad' ? 'z-60  relative' : ''}">
+                                    <PlayAdButton socket={socket} id={id} bind:userPlayer={userPlayer}
+                                                  bind:adError={adError}
+                                                  bind:info={info} />
+                                </div>
 
 
                                 <div class="{currentGuide === 'refresh_data' ? 'z-60  relative' : ''}"
@@ -674,12 +672,6 @@
                     </div>
                 </div>
 
-            {/if}
-
-
-            {#if !isSpectator && !isMatchEnded}
-                <FfaWatchAd socket={socket} id={id} bind:userPlayer={userPlayer} bind:adError={adError}
-                            bind:info={info} bind:visible={isFfaWatchAdVisible} />
             {/if}
             {#if quests}
                 {#if isQuestsPanelOpen}

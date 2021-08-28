@@ -420,7 +420,7 @@
                                         <GuideContainer title="Multiply your rewards" scroll={85}>
                                             <div class="mt-1">
                                                 <p class="text-2xl md:text-3xl"><b class="b-primary">Each ad</b> you
-                                                    watch gives you a <b class="b-epic">x3 boost</b>
+                                                    watch gives you a <b class="b-epic">x1 boost</b> <!-- adboost -->
                                                     <br class="hidden md:block"> on your <b class="b-primary">final
                                                         reward</b></p>
                                                 <p class="mt-2  text-default md:text-2xl">You can watch up to <b

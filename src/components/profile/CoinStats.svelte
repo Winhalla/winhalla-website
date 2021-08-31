@@ -7,13 +7,23 @@
     <p class="absolute -top-3 text-xl text-mid-light">COINS</p>
 
     <div class="md:ml-2">
-        <div class="">
-            <h3 class="font-bold text-default" style="font-family: 'Roboto Condensed', sans-serif">Total coins
-                earned:</h3>
-            <p class="text-primary text-3xl">{Math.floor(user.coins * 10) / 10}</p>
+        <div class="xl:flex  justify-between items-center   w-full">
+            <div class="">
+                <h3 class="font-bold text-default" style="font-family: 'Roboto Condensed', sans-serif">Total coins
+                    earned:</h3>
+                <p class="text-primary text-3xl">{data.beta ? Math.floor((user.coins + data.beta) * 10) / 10 : Math.floor(user.coins * 10) / 10}</p>
+            </div>
+            {#if data.beta}
+                <div class="mt-6 xl:mt-0">
+                    <h3 class="font-bold text-xl" style="font-family: 'Roboto Condensed', sans-serif">Coins from beta:</h3>
+                    <p class="text-accent text-2xl">{Math.floor(data.beta * 10) / 10}</p>
+                </div>
+            {/if}
+
         </div>
+
         {#if data}
-            <div class="xl:flex  mt-6">
+            <div class="xl:flex  {data.beta ? 'mt-10' : 'mt-6'}">
                 <div class="">
                     <div class="flex items-center  xl:block">
                         <h3 class="text-xl">SOLO coins:</h3>

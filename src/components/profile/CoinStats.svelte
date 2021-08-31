@@ -11,7 +11,7 @@
             <div class="">
                 <h3 class="font-bold text-default" style="font-family: 'Roboto Condensed', sans-serif">Total coins
                     earned:</h3>
-                <p class="text-primary text-3xl">{Math.floor(user.coins * 10) / 10}</p>
+                <p class="text-primary text-3xl">{data.beta ? Math.floor((user.coins + data.beta) * 10) / 10 : Math.floor(user.coins * 10) / 10}</p>
             </div>
             {#if data.beta}
                 <div class="mt-6 xl:mt-0">

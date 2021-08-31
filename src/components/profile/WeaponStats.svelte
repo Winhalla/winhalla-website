@@ -55,7 +55,7 @@
 
     <div class="md:ml-2 mt-1  bg-background p-6 pt-4  rounded-xl">
         <div class="flex items-center">
-            <img class="w-10 mr-4" src="/assets/WeaponIcons/{selectedWeapon.name.replace(' ', '_')}.png" alt="">
+            <img class="w-10 mr-4" src="/assets/WeaponIcons/{selectedWeapon.name.replace(' ', '_').toLowerCase()}.png" alt="">
             <div class="w-full bg-background p-3 pl-4  rounded-xl flex justify-between border-4 border-variant     focus:outline-none"
                  on:click={() =>handleDropDown(false)}>
                 {selectedWeapon.name}

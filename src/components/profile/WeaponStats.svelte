@@ -72,7 +72,7 @@
                     use:clickOutside on:click_outside={()=>handleDropDown(true)}>
                     {#each sortedData as weapon,i}
                         <li on:click={() => changeWeapon(i)} class="flex my-2 px-6 hover:bg-light cursor-pointer ">
-                            <img class="w-10 mr-4" src="/assets/WeaponIcons/{weapon.name.replace(' ', '_')}.png" alt="">
+                            <img class="w-10 mr-4" src="/assets/WeaponIcons/{weapon.name.replace(' ', '_').toLowerCase()}.png" alt="">
                             {weapon.name}
                         </li>
                     {/each}
@@ -124,7 +124,7 @@
                 <button class="w-full flex items-center  relative"
                         on:click={handleOpenWeaponTile(weapon.name)}>
                     <div>
-                        <img class="-ml-1 md:ml-0 w-8" src="/assets/WeaponIcons/{weapon.name.replace('_', ' ')}.png"
+                        <img class="-ml-1 md:ml-0 w-8" src="/assets/WeaponIcons/{weapon.name.replace('_', ' ').toLowerCase()}.png"
                              alt="">
                     </div>
 

@@ -246,7 +246,7 @@
                                         <ul>
 
                                             <li><b>BASE REWARD:</b>  {winner.baseMultiplier} </li>
-                                            <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier + 1}</li>
+                                            <li><b style="color: #fc1870">ADS:</b> X{winner.adMultiplier/100 !== 0?winner.adMultiplier/100:1}</li>
 
                                             <li class:line-through={!winner.linkMultiplier}><b style="color: #3de488">Invited by a friend:</b> +{winner.linkMultiplier}
                                                 %</li>

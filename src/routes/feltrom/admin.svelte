@@ -42,7 +42,7 @@
         for (let i = 0; i < users.length * 2; i++) {
             if (!users[i - suspiciousUsersFound]) continue;
             totalCoins += users[i - suspiciousUsersFound].coins;
-            users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats.ffa.wins / users[i - suspiciousUsersFound].stats.ffa.gamesPlayed) * 100);
+            users[i - suspiciousUsersFound].winrate = Math.round((users[i - suspiciousUsersFound].stats?.solo.wins / users[i - suspiciousUsersFound].stats.solo.gamesPlayed) * 100);
             if (isNaN(users[i - suspiciousUsersFound].winrate)) users[i - suspiciousUsersFound].winrate = 0;
             if (users[i - suspiciousUsersFound].isSucpicious.ffa === true || users[i - suspiciousUsersFound].isSucpicious.solo === true) {
                 suspiciousBitches.push(...users.splice(i - suspiciousUsersFound, 1));
@@ -54,7 +54,7 @@
         bannedOnes = configs.find(e => e.name === "IDs BANNED").value;
         bannedOnes.forEach((ban, i) => {
             let user = users.splice(users.findIndex(e => e.steamId === ban.id), 1)[0];
-            let winrate = Math.round((user.stats.ffa.wins / user.stats.ffa.gamesPlayed) * 100);
+            let winrate = Math.round((user.stats?.solo?.wins / user.stats?.solo?.gamesPlayed) * 100);
             if (isNaN(winrate)) winrate = 0;
             bannedOnes[i] = user;
             bannedOnes[i].reason = ban.reason;

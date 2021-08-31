@@ -170,7 +170,7 @@
             </td>
             {#if type !== "simple"}
                 <td class="px-2 py-2">
-                    {user.stats.ffa.gamesPlayed}
+                    {user?.stats?.solo?.gamesPlayed}
                 </td>
                 <td class:text-green={user.winrate<14}
                     class:text-accent={user.winrate<25 && user.winrate>=14}

@@ -25,10 +25,10 @@
 
                     <div class="mt-2  p-4 pl-6 bg-background rounded-xl  text-lg">
                         <p class="text-mid-light mt-">Games played: <b
-                            class="font-normal text-primary text-xl">{user.stats.ffa.gamesPlayed}</b>
+                            class="font-normal text-primary text-xl">{user.stats.solo.gamesPlayed}</b>
                         </p>
                         <p class="text-mid-light mt-">Games won: <b
-                            class="font-normal text-primary text-xl">{user.stats.ffa.wins}</b>
+                            class="font-normal text-primary text-xl">{user.stats.solo.wins}</b>
                         </p>
                     </div>
                 </div>

@@ -14,7 +14,7 @@
     function sort(by, stats) {
         if (stats) {
             sortArrays((a, b) => {
-                return b.stats.ffa[by] - a.stats.ffa[by];
+                return b.stats.solo[by] - a.stats.solo[by];
             });
 
         } else if (by === "alphabetic") {

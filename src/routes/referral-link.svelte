@@ -14,6 +14,7 @@
     import Loading from "../components/Loading.svelte";
     import { apiUrl } from "../utils/config";
     import { fade } from "svelte/transition";
+    import { gtagEvent } from "../utils/gtagEvent";
 
     export let isVisible;
     let waitingTermsAcceptations;
@@ -52,6 +53,20 @@
     async function createAccount() {
         waitingTermsAcceptations = false;
         let { source, affiliateLinkId } = cookie.parse(document.cookie);
+        if (source === "youtube") {
+            function gtag_report_conversion(url) {
+                var callback = function() {
+                    if (typeof (url) != "undefined") {
+                        window.location = url;
+                    }
+                };
+                gtagEvent("event", "conversion", {
+                    "send_to": "AW-344543876/SNoCCNfa5NgCEISlpaQB",
+                    "event_callback": callback
+                });
+                return false;
+            }
+        }
         generatedLink = await callApi("post", `/auth/createAccount?linkId=${affiliateLinkId}&source=${source}&BID=${brawlhallaID}`);
         if (generatedLink instanceof Error) return { error, isVisible } = { error: true, isVisible: true };
         document.cookie = cookie.serialize("affiliateLinkId", 0, { maxAge: 1 });
@@ -79,9 +94,9 @@
     }
 
     async function testBrawlhallaID() {
-        if(isNaN(parseInt(brawlhallaID))) {
-            brawlhallaIDError = "The brawlhalla id is a number (not your brawlhalla username)"
-            isValidBrawlhallaID = false
+        if (isNaN(parseInt(brawlhallaID))) {
+            brawlhallaIDError = "The brawlhalla id is a number (not your brawlhalla username)";
+            isValidBrawlhallaID = false;
             return;
         }
         const { isValid, reason } = await callApi("get", `/auth/isBIDvalid/${brawlhallaID}`);
@@ -146,7 +161,7 @@
                         <p class="text-6xl mt-6">You</p>
                         <p class="leading-7 mt-13 text-2xl">
                             will get
-                            <b>{linkConfig.boost/2}%</b>
+                            <b>{linkConfig.boost / 2}%</b>
                             of the coins that
                             <b>each people</b>
                             who
@@ -318,12 +333,15 @@
                 class="button button-brand mt-3">
                 Continue
             </button>
-            <p class="mt-8 italic font-xl" style="max-width: 17rem; font-size: 1.25rem; font-family: 'Roboto Condensed', sans-serif">This is your Brawlhalla user id. You will find it by clicking on the box under your username (in Brawlhalla):
+            <p class="mt-8 italic font-xl"
+               style="max-width: 17rem; font-size: 1.25rem; font-family: 'Roboto Condensed', sans-serif">This is your
+                Brawlhalla user id. You will find it by clicking on the box under your username (in Brawlhalla):
                 and then in the top right corner!</p>
 
             <img class="my-8  md:hidden" src="assets/bid.jpg" style="max-width: 18rem" alt="BID example">
         </div>
-        <img class="-bottom-70  absolute hidden md:block" src="assets/bidCut.jpg" style="max-width: 36rem" alt="BID example">
+        <img class="-bottom-70  absolute hidden md:block" src="assets/bidCut.jpg" style="max-width: 36rem"
+             alt="BID example">
 
     </div>
 {:else if waitingTermsAcceptations && !waitingBID}

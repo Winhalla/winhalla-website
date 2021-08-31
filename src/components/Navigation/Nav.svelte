@@ -248,7 +248,7 @@
                                 </g>
                             </g>
                         </svg>
-                        <span class="absolute -top-1 -right-6  text-legendary">Beta</span>
+                        <!--<span class="absolute -top-1 -right-6  text-legendary">Beta</span>-->
                     </div>
 
                 </a>
@@ -256,9 +256,11 @@
             <div class="pr-6 lg:hidden flex -mt-2">
                 <div class="flex lg:hidden items-center">
                     {#if loaded && window.innerWidth < 1024}
-                        <NavAlert data={infos}/>
+                        <div class="-mb-1 md:mb-0">
+                            <NavAlert data={infos}/>
+                        </div>
                     {/if}
-                    <div class="mr-4">
+                    <div class="mr-4  -mb-1  md:mb-0">
                         <Search/>
                     </div>
                     <Notifications data={notificationsObj}/>

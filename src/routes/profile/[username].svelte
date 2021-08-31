@@ -325,6 +325,14 @@
                 <CoinStats user="{user}" data="{user?.coinLogs?.total}" />
                 <CoinHistory data="{user.coinLogs.history}" />
             </section>
+        {:else}
+            <section class="w-full px-4 md:px-0">
+                <div class=" md:mx-auto  mt-28  bg-variant  md:max-w-max rounded-xl  p-8 h-auto  w-full">
+                    <p class="text-2xl  md:text-3xl">
+                        <b class="text-3xl md:text-4xl -mb-1 font-normal  text-primary mr-1">{username}</b> has no Winhalla account!
+                    </p>
+                </div>
+            </section>
         {/if}
     {:else}
         <section class="px-7 md:px-10 lg:px-18 pb-12 lg:flex justify-between flex-wrap items-start">

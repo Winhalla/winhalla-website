@@ -295,7 +295,7 @@
                 {#if !isDisplayingWinhalla}
                     <p class="mt-1 text-mid-light">
                         {isDisplayingWinhalla ? "Winhalla clan" : "Brawlhalla clan"}:
-                        <b class="font-normal text-primary text-2xl">{isDisplayingWinhalla ? "" : playerData.clan.clan_name}</b>
+                        <b class="font-normal text-primary text-2xl">{isDisplayingWinhalla ? "" : playerData?.clan?.clan_name}</b>
                     </p>
                 {/if}
             </div>

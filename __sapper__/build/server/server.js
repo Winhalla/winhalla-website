@@ -2251,7 +2251,7 @@ const CoinStats = create_ssr_component(($$result, $$props, $$bindings, slots) =>
 
     <div class="${"md:ml-2"}"><div class="${"xl:flex  justify-between items-center   w-full"}"><div class="${""}"><h3 class="${"font-bold text-default"}" style="${"font-family: 'Roboto Condensed', sans-serif"}">Total coins
                     earned:</h3>
-                <p class="${"text-primary text-3xl"}">${escape(Math.floor((data.beta + data.link + data.solo + data.dailyQuests + data.weeklyQuests) * 10) / 10)}</p></div>
+                <p class="${"text-primary text-3xl"}">${escape(Math.round((data.beta + data.link + data.solo + data.dailyQuests + data.weeklyQuests) * 10) / 10)}</p></div>
             ${data.beta
 	? `<div class="${"mt-6 xl:mt-0"}"><h3 class="${"font-bold text-xl"}" style="${"font-family: 'Roboto Condensed', sans-serif"}">Coins from beta:</h3>
                     <p class="${"text-accent text-2xl"}">${escape(Math.floor(data.beta * 10) / 10)}</p></div>`

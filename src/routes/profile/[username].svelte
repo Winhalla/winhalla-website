@@ -14,6 +14,10 @@
     import CoinHistory from "../../components/profile/CoinHistory.svelte";
     import Loading from "../../components/Loading.svelte";
     import Search from "../../components/profile/Search.svelte";
+    import share from "../../utils/share";
+    import copyText from "../../utils/copyText";
+    import { fade } from 'svelte/transition'
+    import {counter} from "../../components/stores";
 
     const { page } = stores();
 
@@ -191,9 +195,15 @@
     let rankedData;
     let urlData;
     let alreadyLoaded = false;
+
+    let link;
+    let hasShareFunction;
+    let toolTipOpen;
+    let currUser;
     onMount(() => {
         pages = page.subscribe(async value => {
-            console.log(value);
+            hasShareFunction = !!window.navigator.share;
+
             if (urlData?.host !== value?.host || urlData?.path !== value?.path || alreadyLoaded === false) loaded = false;
             urlData = value;
             //Determines witch page to display: brawlhalla or winhalla
@@ -231,6 +241,15 @@
                     if (user) {
                         user.user.friendsInvited = user.link;
                         user = user.user;
+                    } else {
+                        await counter.subscribe(async (value) => {
+                            if (value.refresh === true) return;
+                            currUser = await value.content;
+                            if(!currUser.user) return;
+                            currUser = currUser.user;
+                        });
+
+                        link = currUser.linkId ? `http://localhost:3000/${currUser.linkId}` : undefined;
                     }
 
                     playerData = data.player;
@@ -325,12 +344,103 @@
                 <CoinStats user="{user}" data="{user?.coinLogs?.total}" />
                 <CoinHistory data="{user.coinLogs.history}" />
             </section>
-        {:else}
+        {:else if link}
             <section class="w-full px-4 md:px-0">
                 <div class=" md:mx-auto  mt-28  bg-variant  md:max-w-max rounded-xl  p-8 h-auto  w-full">
                     <p class="text-2xl  md:text-3xl">
                         <b class="text-3xl md:text-4xl -mb-1 font-normal  text-primary mr-1">{username}</b> has no Winhalla account!
                     </p>
+                    <p class="mt-6 text-2xl"><b class="font-normal  text-green">Help us grow</b> Winhalla <b class="font-normal  text-green">by sharing</b>
+                        <br> your referral link!</p>
+
+
+                    <div
+                            class="text-background  bg-font py-4 px-3 mt-6 flex items-center rounded-md">
+                        <div id="link"
+                             class="flex justify-between  w-full   leading-none focus:outline-none text-lg lg:text-default focus:border-none"
+                             style="font-family:'Roboto Condensed', sans-serif">
+
+                            <p class="md:ml-1">{link}</p>
+
+                            <div class="ml-2 h-5  flex"
+                                 class:w-5={!hasShareFunction} class:w-12={hasShareFunction}>
+                                {#if hasShareFunction}
+                                    <div class="w-5 h-5 hover:text-gray-500 cursor-pointer  md:mr-1">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" on:click={() => share(link)}
+                                             class="w-5 h-5"
+                                             class:mr-1={hasShareFunction}
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                    d="m20.237 15.638c-.001 0-.002 0-.003 0-1.192 0-2.263.515-3.004 1.334l-.003.004-8.948-4.348c0-.167.084-.418.084-.669.002-.029.003-.062.003-.096 0-.176-.032-.344-.09-.499l.003.01 8.948-4.348c.744.823 1.815 1.338 3.007 1.338h.004c2.309 0 4.181-1.872 4.181-4.181s-1.872-4.181-4.181-4.181-4.181 1.872-4.181 4.181c-.002.029-.003.062-.003.096 0 .176.032.344.09.499l-.003-.01-8.948 4.348c-.744-.823-1.815-1.338-3.007-1.338-.001 0-.002 0-.004 0-2.309 0-4.181 1.872-4.181 4.181s1.872 4.181 4.181 4.181h.003c1.192 0 2.263-.515 3.004-1.334l.003-.004 8.948 4.348c0 .167-.084.418-.084.669 0 2.309 1.872 4.181 4.181 4.181s4.181-1.872 4.181-4.181c.001-.027.001-.06.001-.092 0-2.259-1.831-4.09-4.09-4.09-.032 0-.065 0-.097.001z" />
+                                        </svg>
+                                    </div>
+                                {/if}
+                                <div class="w-5 h-5 hover:text-gray-500 cursor-pointer">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"
+                                         class:ml-1={hasShareFunction}
+                                         on:click={() => copyText(link, function () {toolTipOpen = true;
+                                                setTimeout(() => {
+                                                    toolTipOpen = false;
+                                                }, 3000);
+                                             })}
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                                d="m12.922 16.587-3.671 3.671c-.693.645-1.626 1.041-2.651 1.041-2.152 0-3.896-1.744-3.896-3.896 0-1.025.396-1.958 1.043-2.654l-.002.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-3.671 3.671c-1.108 1.162-1.789 2.74-1.789 4.476 0 3.586 2.907 6.494 6.494 6.494 1.738 0 3.316-.683 4.482-1.795l-.003.002 3.671-3.671c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001z" />
+                                        <path
+                                                d="m24.007 6.489c-.002-3.585-2.908-6.491-6.494-6.491-1.793 0-3.417.727-4.592 1.902l-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c.693-.645 1.626-1.041 2.651-1.041 2.152 0 3.896 1.744 3.896 3.896 0 1.025-.396 1.958-1.043 2.654l.002-.002-3.671 3.671c-.259.238-.421.579-.421.958 0 .717.582 1.299 1.299 1.299.379 0 .719-.162.957-.42l.001-.001 3.671-3.671c1.178-1.169 1.908-2.789 1.908-4.58 0-.003 0-.006 0-.009z" />
+                                        <path
+                                                d="m7.412 16.592c.235.235.559.38.918.38s.683-.145.918-.38l7.342-7.342c.212-.23.341-.539.341-.878 0-.717-.582-1.299-1.299-1.299-.339 0-.647.13-.879.342l.001-.001-7.342 7.342c-.235.235-.38.559-.38.918s.145.683.38.918z" />
+                                    </svg>
+                                </div>
+
+                            </div>
+                        </div>
+                        {#if toolTipOpen}
+                            <div class="relative">
+                                    <span
+                                            class="tooltip absolute px-6 py-2 bg-primary hidden md:block rounded text-font  text-left -left-20 bottom-5 flex items-center justify-center z-40"
+                                            transition:fade>
+                                            Copied!
+                                    </span>
+                            </div>
+                        {/if}
+
+                    </div>                        <p class="mt-5 text-xl"><b class="font-normal text-accent">You</b> and <b class="font-normal text-accent">your friend</b> will get a
+                    <a href="/referral-link"><u class="text-mid-light">reward boost</u></a></p>
+
+                </div>
+            </section>
+        {:else}
+            <section class="w-full px-4 md:px-0">
+                <div class=" md:mx-auto  mt-28  bg-variant  md:max-w-max rounded-xl  p-8 pb-4 h-auto">
+                    <p class="text-2xl  md:text-3xl">
+                        <b class="text-3xl md:text-4xl -mb-1 font-normal  text-primary mr-1">{username}</b> has no Winhalla account!
+                    </p>
+
+                    <div class="mt-6  p-6 bg-background rounded-xl w-full   flex flex-col  items-center">
+                        <svg class="mx-auto text-primary  fill-current w-26" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
+                            <g id="Calque_2" data-name="Calque 2">
+                                <g id="Calque_1-2" data-name="Calque 1">
+                                    <polygon
+                                            points="70.17 0 70.17 98.57 60.28 0 38.29 0 28.76 98.57 19.42 0 0 0 13.01 128.25 39.76 128.25 48.92 41.77 58.44 128.25 87.04 128.25 87.04 13.56 162.74 13.56 162.74 24.1 162.74 86.44 146.52 24.1 125.99 24.1 125.99 128.25 140.57 128.25 140.57 52.22 160.5 128.25 177.31 128.25 177.31 24.1 177.31 13.56 177.31 0 87.04 0 70.17 0"/>
+                                    <rect x="97.54" y="24" width="16.38" height="104.25"/>
+                                    <path
+                                            d="M265.84,107.87l18.6-.32,3,20.7h16.36l-17-104.15H264.64L247.7,128.25h15.18Zm9.37-66.45,7.3,51.48H267.79Z"/>
+                                    <path
+                                            d="M448.13,24.1H426L409,128.25H424.2l3-20.38,18.6-.32,3,20.7v10.31H204.88V81.38h17.55v46.87H238.8V24.1H222.43V66.5H204.88V24.1H188.51V128.25h0v23.86H465.1V128.25Zm-19,68.8,7.42-51.48,7.31,51.48Z"/>
+                                    <polygon
+                                            points="354.39 113.37 327.46 113.37 327.46 24.1 311.1 24.1 311.1 128.25 354.39 128.25 354.39 113.37"/>
+                                    <polygon
+                                            points="405.78 113.37 378.85 113.37 378.85 24.1 362.49 24.1 362.49 128.25 405.78 128.25 405.78 113.37"/>
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="text-center mt-5 text-2xl"><b class="font-normal text-green">Play</b> Brawlhalla, <b class="font-normal  text-legendary">Earn</b> rewards</p>
+                        <!---->
+                        <a class="mt-6 text-center w-full  button button-brand" style="display: block"  href="/login">Login now</a>
+                    </div>
+                    <p class="mt-3 text-xl  text-center">Start <b class="font-normal text-legendary">earning</b> now! It's <b class="font-normal  text-accent">free</b>!</p>
+
                 </div>
             </section>
         {/if}

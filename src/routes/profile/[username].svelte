@@ -249,7 +249,7 @@
                             currUser = currUser.user;
                         });
 
-                        link = currUser.linkId ? `http://localhost:3000/${currUser.linkId}` : undefined;
+                        link = currUser.linkId ? `https://winhalla.app/${currUser.linkId}` : undefined;
                     }
 
                     playerData = data.player;

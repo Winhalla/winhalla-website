@@ -1,0 +1,1 @@
+function e(e){window.navigator.share({url:e})}function o(e,o){let t=document.createElement("textarea");t.value=e,document.body.appendChild(t),t.select(),document.execCommand("copy"),document.body.removeChild(t),o()}export{o as c,e as s};

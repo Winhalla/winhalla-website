@@ -97,7 +97,7 @@
             console.log(err);
             if (err.response) {
                 if (err.response.status === 400 && err.response.data.includes("Play at least one ranked")) {
-                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter)";
+                    error = "You have to play a ranked game before using the site (1v1 or 2v2 doesn't matter). The data may take up to 30m to refresh.";
                     return;
 
                 } else if (err.response.status === 400 && err.response.data.includes("Play at least one")) {

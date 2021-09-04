@@ -220,7 +220,11 @@
                     if (bid) {
                         data = await callApi("get", `${apiUrl}/stats/${bid}`);
 
-                        if (data.name !== username) {
+                        if (value.query?.prefer_bid === "true") {
+                            username = data.player.name;
+                            console.log(data)
+                        } else if (data.player.name !== username) {
+                            console.log("mmmm")
                             const player = await callApi("get", `/stats/username/${username}`);
                             bid = player.find(p => p.name === username)?.brawlhalla_id;
                             if (!bid) return isDisplaying404 = true;

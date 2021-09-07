@@ -269,11 +269,11 @@
     $: if (currentAmount) {
         handlePaypalConversion();
     }
+
     let amountToCoins = { text: 0, isBuyable: false };
 
     function handlePaypalConversion() {
         if (currentAmount < 1) {
-            console.log(currentAmount);
             return amountToCoins = { text: "Min 1 $", isBuyable: false };
         }
         amountToCoins = {
@@ -477,7 +477,7 @@
                                                 <div class="flex  items-center  text-2xl">
                                                     <b
                                                         class="mr-2 font-normal"
-                                                        style="padding-top: 0.12rem">{parseInt(amountToCoins.text)}</b>
+                                                        style="padding-top: 0.12rem">{amountToCoins.text}</b>
                                                     <div class="w-8 mt-1 text-font"
                                                          style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                         <CoinIcon />

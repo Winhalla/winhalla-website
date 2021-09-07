@@ -357,32 +357,7 @@
     <link rel="canonical" href="https://winhalla.app/shop" />
     <!--    <script async src="https://cdn.stat-rock.com/player.js"></script>-->
 </svelte:head>
-<!--
-{#if bottomItems}
-    <div class="lg:pl-24 lg:pt-6">
-        <div class="flex">
-            <div class="card featured">
-                <img class="w-full h-full block object-cover" src="assets/ShopItems/{featuredItem.name}.jpg" alt="{featuredItem.name}">
-            </div>
-            <div class="lg:pl-12">
-                {#each [0 , 1] as i}
-                    <div class="pb-12 right">
-                        <img class="w-full h-full block object-cover" src="assets/ShopItems/{rightItems[i].name}.jpg" alt="{rightItems[i].name}">
-                    </div>
-                {/each}
 
-            </div>
-        </div>
-        <div class="flex">
-            {#each [0 , 1] as i}
-                <div class="pb-8 right mr-12">
-                    <img class="w-full h-full block object-cover" src="assets/ShopItems/{bottomItems[i].name}.jpg" alt="{bottomItems[i].name}">
-                </div>
-            {/each}
-        </div>
-    </div>
-{/if}
--->
 {#if error}
     <div class="w-full content-center lg:mt-60 mt-25 ">
         <h2 class="lg:text-5xl text-3xl text-center">{@html error}</h2>
@@ -502,7 +477,7 @@
                                                 <div class="flex  items-center  text-2xl">
                                                     <b
                                                         class="mr-2 font-normal"
-                                                        style="padding-top: 0.12rem">{amountToCoins.text}</b>
+                                                        style="padding-top: 0.12rem">{parseInt(amountToCoins.text)}</b>
                                                     <div class="w-8 mt-1 text-font"
                                                          style="margin-top: 0.25rem; margin-bottom: 0.35rem">
                                                         <CoinIcon />
@@ -695,7 +670,7 @@
                     <p class="text-4xl text-primary ml-2 leading-none">Receive</p>
                     <p
                         class="receive -mb-14 mt-8 sm:mt-0 sm:mb-0  text-light leading-tight ml-2 xl:-mb-14 xl:mt-8 2xl:mt-0 2xl:-mb-7">
-                        Recieved what you buyed (it may take an average time of a week depending of the item)
+                        Receive what you buyed (it may take an average time of a week depending of the item)
                     </p>
                 </div>
                 <!--<div class="mt-30">

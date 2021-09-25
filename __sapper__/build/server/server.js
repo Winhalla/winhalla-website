@@ -9998,7 +9998,6 @@ let app = express__default['default'](); // You can also use Express
 		sirv__default['default']('static', { dev }),
 		middleware()
 	);
-app.listen(80);
 require('https').createServer({
 	key: fs__default['default'].readFileSync('/etc/letsencrypt/live/www.winhalla.app/privkey.pem'),
 	cert: fs__default['default'].readFileSync('/etc/letsencrypt/live/www.winhalla.app/fullchain.pem')

@@ -103,13 +103,13 @@
     }
 </style>
 {#if goal === "earnMoreFFA"}
-    <button disabled={userPlayer.adsWatched >= 8} class="button button-brand lg:mr-8 mt-2
+    <button disabled class="button button-brand lg:mr-8 mt-2
                             lg:mt-0 mb-5
                             lg:mb-0  text-background" class:button-green={color==="green"}
             class:FfaWatchAd={page === "FfaWatchAd"}
             style=""
             onclick="playAd()"
-            on:click={() => started = true}>{userPlayer.adsWatched < 8 ? "Play ad" : "Maximum ads reached"}
+            on:click={() => started = true}>Ads are disabled for now
     </button>
 {:else}
     <button class="button button-brand w-38" class:button-green={color==="green"}

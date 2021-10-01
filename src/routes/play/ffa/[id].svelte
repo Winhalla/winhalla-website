@@ -356,7 +356,6 @@
 
 <svelte:head>
     <title>Winhalla | Solo match</title>
-    <script async src="https://cdn.stat-rock.com/player.js"></script>
 </svelte:head>
 
 

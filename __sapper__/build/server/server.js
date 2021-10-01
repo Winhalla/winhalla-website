@@ -4003,7 +4003,8 @@ ${gameModesError && error
         </div>
         <p class="${["text-light",  "hidden" ].join(" ").trim()}">${error} <br><br> ${gameModesError}</p></div>`
 	: `${validate_component(AdblockAlert, "AdblockAlert").$$render($$result, { quests }, {}, {})}
-    <div class="${"lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full"}"><div class="${"text-center lg:text-left"}"><h1 class="${"text-6xl leading-snug lg:leading-normal  " + escape(currentGuide === "game_modes" ? "z-60  relative" : "")}">Choose a game mode
+    <div class="${"lg:block lg:pl-24 mt-7 lg:mt-12 h-full w-full"}"><div class="${"my-6"}"><script src="${"https://cdn.purpleads.io/agent.js?publisherId=314da1819089ebe69cd42311ab4f004b:215d0a33f49770770015c765d6674dffe97cbf852e57e24456e6344c5e3632799738f136478d248e0c423a643b6ab46123a2e3a7f85b668dc4c1bd10f144d9fa"}" data-pa-tag async></script></div>
+        <div class="${"text-center lg:text-left"}"><h1 class="${"text-6xl leading-snug lg:leading-normal  " + escape(currentGuide === "game_modes" ? "z-60  relative" : "")}">Choose a game mode
             </h1></div>
         ${quests
 		? `${window.innerWidth < 1024

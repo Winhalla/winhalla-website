@@ -216,6 +216,12 @@
                             <Loading type="inline" />
                         </div>
                     {/if}-->
+                    {#if quests.lastDaily && quests.lastWeekly}
+                        <div id="quests" class="relative bottom-10"></div>
+                        <div class="lg:ml-15">
+                            <Quests data={quests} currentGuideVisible="{currentGuide}" />
+                        </div>
+                    {/if}
 
                 {/if}
             </div>

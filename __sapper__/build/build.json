@@ -2,57 +2,55 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.43ac90b7.js"
+    "main": "client.ea38e905.js"
   },
   "css": {
     "main": [
-      "client-c3f77115.css"
+      "client-55b77b67.css"
     ]
   },
   "dependencies": {
     "index.svelte": [
-      "index.97718f55.js",
+      "index.c3147d29.js",
       "inject_styles.5607aec6.js",
       "index-a47d9b0e.css"
     ],
     "create-account.svelte": [
-      "create-account.4e5e78b5.js",
+      "create-account.386306eb.js",
       "inject_styles.5607aec6.js",
       "create-account-b7607b99.css"
     ],
     "referral-link.svelte": [
-      "referral-link.1c7ff71d.js",
-      "Loading.aa235660.js",
+      "referral-link.d066227b.js",
+      "Loading.42373425.js",
       "copyText.efda0c97.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "referral-link-91f5e3e1.css"
     ],
     "leaderboard.svelte": [
-      "leaderboard.5ea464b4.js",
+      "leaderboard.a210b8f6.js",
       "inject_styles.5607aec6.js"
     ],
     "feltrom/admin.svelte": [
-      "admin.0741cdfd.js",
-      "Infos.3444518f.js",
-      "Loading.aa235660.js",
-      "RefreshButton.f056091e.js",
-      "RefreshButton.f1cba00d.js",
+      "admin.23b2f05b.js",
+      "Infos.1fbcbe5c.js",
+      "Loading.42373425.js",
+      "RefreshButton.920ced5a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
-      "RefreshButton-55ce5827.css",
-      "admin-26eb1e01.css"
+      "admin-5d73c295.css"
     ],
     "privacy.svelte": [
-      "privacy.8a54ae55.js",
-      "Infos.3444518f.js",
+      "privacy.482ab168.js",
+      "Infos.1fbcbe5c.js",
       "inject_styles.5607aec6.js",
       "privacy-e22f729e.css"
     ],
     "profile/[username].svelte": [
-      "[username].06944b53.js",
-      "Loading.aa235660.js",
+      "[username].b9a26471.js",
+      "Loading.42373425.js",
       "copyText.efda0c97.js",
       "_commonjsHelpers.c2612801.js",
       "inject_styles.5607aec6.js",
@@ -60,41 +58,41 @@
       "[username]-d4791f6a.css"
     ],
     "status.svelte": [
-      "status.567307b6.js",
+      "status.43b48f34.js",
       "inject_styles.5607aec6.js"
     ],
     "legal.svelte": [
-      "legal.6de38d31.js",
+      "legal.3233a661.js",
       "inject_styles.5607aec6.js",
       "legal-32170f98.css"
     ],
     "login.svelte": [
-      "login.904731bf.js",
+      "login.6f4961a4.js",
       "inject_styles.5607aec6.js",
       "login-b7607b99.css"
     ],
     "terms.svelte": [
-      "terms.74cd4bc0.js",
+      "terms.825beec7.js",
       "inject_styles.5607aec6.js",
       "terms-35c65d7c.css"
     ],
     "test2.svelte": [
-      "test2.8426ff96.js",
+      "test2.79f0312b.js",
       "inject_styles.5607aec6.js"
     ],
     "link/[id].svelte": [
-      "[id].dc509fef.js",
-      "Loading.aa235660.js",
+      "[id].b0d3f8c8.js",
+      "Loading.42373425.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/index.svelte": [
-      "index.299f67f9.js",
-      "Infos.3444518f.js",
-      "Loading.aa235660.js",
-      "RefreshButton.f056091e.js",
+      "index.30c113b3.js",
+      "Infos.1fbcbe5c.js",
+      "Loading.42373425.js",
+      "RefreshButton.920ced5a.js",
       "_commonjsHelpers.c2612801.js",
-      "AdblockAlert.eb912dad.js",
+      "AdblockAlert.4dabd7cc.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
@@ -102,34 +100,32 @@
       "index-ac23d5c9.css"
     ],
     "play/ffa/index.svelte": [
-      "index.cdff0483.js",
-      "Loading.aa235660.js",
+      "index.d1e70e0c.js",
+      "Loading.42373425.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "play/ffa/[id].svelte": [
-      "[id].aab6205a.js",
-      "Infos.3444518f.js",
-      "Loading.aa235660.js",
-      "RefreshButton.f056091e.js",
-      "RefreshButton.f1cba00d.js",
+      "[id].e660490e.js",
+      "Infos.1fbcbe5c.js",
+      "Loading.42373425.js",
+      "RefreshButton.920ced5a.js",
       "_commonjsHelpers.c2612801.js",
-      "AdblockAlert.eb912dad.js",
+      "AdblockAlert.4dabd7cc.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "RefreshButton-11d9dcf3.css",
-      "RefreshButton-55ce5827.css",
       "AdblockAlert-5ce970f0.css",
       "[id]-022d5232.css"
     ],
     "shop.svelte": [
-      "shop.01b207ed.js",
-      "Infos.3444518f.js",
+      "shop.11c94702.js",
+      "Infos.1fbcbe5c.js",
       "inject_styles.5607aec6.js",
       "shop-a9d140e5.css"
     ],
     "test.svelte": [
-      "test.454fc6f0.js",
+      "test.13c6b162.js",
       "inject_styles.5607aec6.js"
     ]
   }

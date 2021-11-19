@@ -160,7 +160,9 @@ module.exports = {
             },
 
             fontSize: {
+                "3.5xl":"1.9rem",
                 "4.5xl":"2.5rem",
+                "5.5xl":"3.4rem",
                 "6.5xl":"4.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",

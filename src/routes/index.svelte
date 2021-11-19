@@ -60,22 +60,6 @@
 </script>
 
 <style>
-    .video-container::after {
-        position: absolute;
-        content: "";
-        height: 100%;
-        width: 100%;
-        top: 0;
-        left: 0;
-        background: linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.3) 0%,
-                rgba(23, 23, 26, 0.4),
-                rgba(23, 23, 26, 0.6) 75%,
-                rgba(23, 23, 26, 1) 100%
-        );
-    }
-
     @keyframes arrow {
         0% {
             transform: translateY(0rem);
@@ -116,12 +100,33 @@
 
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
-<div class="pb-8 " out:fly={{ y: -450, duration: 400 }}>
-    <div class="relative">
-        <div class="h-screen">
-
+<div class="pb-8 mt-10 px-4 lg:px-0">
+    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="flex justify-center">
+        <div style="color: rgba(253,253,252,0.85)" class="mt-24 lg:mt-48">
+            <div>
+                <p class="text-5xl lg:text-6.5xl">
+                    Play <span class="text-primary">Brawlhalla</span>,
+                </p>
+                <p class="text-5xl lg:text-6.5xl mt-4">
+                    Earn <span class="text-primary">Rewards</span>.
+                </p>
+                <p class="text-4xl lg:text-5.5xl mt-6 lg:mt-14">
+                    As simple as it sounds.
+                </p>
+            </div>
+            <div class="flex mt-10 lg:mt-20">
+                <a href="">
+                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-60 mr-8">
+                </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
+                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-60 mr-8">
+                </a>
+            </div>
         </div>
+        <img src="/assets/screens/screen1.png" alt="screenshot" class="mt-10">
 
+    </div>
+    <!--<div class="relative">
         <div id="pre-register"
 
              class="tip absolute left-0 right-0 bottom-20 text-center hidden
@@ -237,5 +242,5 @@
             </div>
 
         </section>
-    </div>
+    </div>-->
 </div>

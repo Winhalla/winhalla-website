@@ -65,13 +65,13 @@
             class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div
-                class="w-full lg:w-auto flex justify-between items-center py-4
+                class="w-full lg:w-screen flex justify-between items-center py-4
             relative">
             <div class="pl-7 lg:pl-24 lg:pr-34">
                 <!--LOGO-->
                 <a class="" href="/">
                     <div class="relative">
-                        <svg class="fill-current w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
+                        <svg class="fill-current w-34" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
                             <g id="Calque_2" data-name="Calque 2">
                                 <g id="Calque_1-2" data-name="Calque 1">
                                     <polygon
@@ -93,6 +93,9 @@
 
                 </a>
             </div>
+            <a class="button button-brand mr-15" href="https://docs.google.com/forms/d/1gsfIjaL9n8isvjnofTskY4xCT8bD7FLfSE9bXuFIVOw/prefill">
+                Get the app
+            </a>
         </div>
     </nav>
 </div>

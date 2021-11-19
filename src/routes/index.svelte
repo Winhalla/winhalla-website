@@ -118,29 +118,8 @@
 </svelte:head>
 <div class="pb-8 " out:fly={{ y: -450, duration: 400 }}>
     <div class="relative">
-        <div class="absolute top-7 left-7 lg:left-24 lg:top-10 z-10">
-            <h1 class="text-6xl lg:text-8xl text-shadow-base">
-                PLAY
-                <b class="text-accent">BRAWLHALLA</b>
-                <br />
-                EARN
-                <b class="text-accent">REWARDS</b>
-            </h1>
-        </div>
-        <div
-            class="video-container relative z-0 overflow-hidden w-full
-            h-screen-60 lg:h-screen">
-            <video
-                class="w-full h-full object-cover"
-                preload="true"
-                loop
-                playsinline
-                autoplay
-                muted>
-                <source
-                    src="/assets/video/brawlhalla-gameplay.mp4"
-                    type="video/mp4" />
-            </video>
+        <div class="h-screen">
+
         </div>
 
         <div id="pre-register"
@@ -220,66 +199,10 @@
                 </div>
             </div>
         </section>
-        <section class="ml-8 lg:mx-0 mt-20 lg:mt-28  lg:w-full  flex flex-col items-center">
-            <div class="md:flex items-end">
-                <h3 class="text-4/5xl md:text-5xl"><b class="text-legendary font-normal">No download</b> required:</h3>
-                <p class="mt-1 md:mt-0 ml-0 md:ml-3 text-3xl md:text-4xl">
-                    <b class="text-accent font-normal">Use winhalla</b> directly <b class="text-primary font-normal">in
-                    your browser</b>
-                </p>
-            </div>
-            <ul class="mt-7 lg:ml-108 text-2xl pr-2">
-                <li class="flex items-center">
-                    <svg
-                        class="fill-current w-7 mr-2
-                                            text-green"
-                        viewBox="0 0 27 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="m24
-                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
-                                                1.807-1.807 5.422 5.422
-                                                13.68-13.68 1.811 1.803-15.491
-                                                15.491z" />
-                    </svg>
-                    <p><b class="text-primary font-normal">Saves</b> your <u> computer's resources</u></p></li>
-
-                <li class="flex items-center mt-3 lg:mt-2">
-                    <svg
-                        class="fill-current w-7 mr-2
-                                            text-green"
-                        viewBox="0 0 27 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="m24
-                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
-                                                1.807-1.807 5.422 5.422
-                                                13.68-13.68 1.811 1.803-15.491
-                                                15.491z" />
-                    </svg>
-                    <p><b class="text-primary font-normal">Access</b> the website <u>on your phone</u></p></li>
-
-                <li class="flex items-center mt-3 lg:mt-2">
-                    <svg
-                        class="fill-current w-9 md:w-7 mr-2
-                                            text-green"
-                        viewBox="0 0 27 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="m24
-                                                24h-24v-24h18.4v2.4h-16v19.2h20v-8.8h2.4v11.2zm-19.52-12.42
-                                                1.807-1.807 5.422 5.422
-                                                13.68-13.68 1.811 1.803-15.491
-                                                15.491z" />
-                    </svg>
-                    <p><b class="text-primary font-normal">Available</b> for <u>computer</u>, <u>console</u> and <u>mobile</u>
-                        players</p></li>
-            </ul>
-        </section>
         <section id="mob-pre-register" class="join-us w-full text-center mt-22 lg:mt-28 pb-10">
-            <h2 class="text-5xl md:text-6xl lg:text-7xl">Ready? Create an account now (no email required)</h2>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl">Ready? Get the app now</h2>
             <button class="button button-brand mt-8">
-                Login NOW
+                Get the app
             </button>
 
         </section>

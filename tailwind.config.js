@@ -173,7 +173,7 @@ module.exports = {
                 background: "#17171a",
                 variant: "#1b1b27",
 
-                primary: "#3d72e4",
+                primary: "#7172e3",
                 accent: "#ff8f0f",
                 green: "#3de488",
                 epic: "#ee38ff",

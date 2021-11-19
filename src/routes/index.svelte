@@ -101,8 +101,8 @@
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
 <div class="pb-8 mt-10 px-4 lg:px-0">
-    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="flex justify-center">
-        <div style="color: rgba(253,253,252,0.85)" class="mt-24 lg:mt-48">
+    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center">
+        <div style="color: rgba(253,253,252,0.85)" class="mt-35 lg:mt-48">
             <div>
                 <p class="text-5xl lg:text-6.5xl">
                     Play <span class="text-primary">Brawlhalla</span>,
@@ -123,7 +123,7 @@
                 </a>
             </div>
         </div>
-        <img src="/assets/screens/screen1.png" alt="screenshot" class="mt-10">
+        <img src="/assets/screens/screen1.png" alt="screenshot" class="mt-15 lg:mt-10">
 
     </div>
     <!--<div class="relative">

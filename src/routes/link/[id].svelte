@@ -16,7 +16,7 @@
     onMount(async () => {
         document.cookie = cookie.serialize("affiliateLinkId", link, { maxAge: 15552000, sameSite: "lax", path: "/" });
         await callApi("post", "/linkCheckpoint/"+link)
-        goto("/test");
+        goto("/");
     });
 
 

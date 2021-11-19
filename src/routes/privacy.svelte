@@ -1,15 +1,12 @@
 <script>
-    import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
     import { fade } from "svelte/transition";
-    import { apiUrl } from "../utils/config";
 
-    let isEditingConsent = false;
     let confirmationPopupOpen;
     let pushError;
     let message;
 
-    function makePopup(whatFor) {
+    /*function makePopup(whatFor) {
         confirmationPopupOpen = whatFor;
     }
 
@@ -40,7 +37,7 @@
             pushError = undefined;
             message = undefined;
         }, 10000);
-    }
+    }*/
 </script>
 <svelte:head>
     <title>Privacy policy | Winhalla</title>
@@ -149,7 +146,7 @@
     <p>For more general information on cookies, please read <a
         href="https://www.privacypolicyonline.com/what-are-cookies/" class="underline">"What Are Cookies"</a>.</p>
 
-    <h2 id="edit_consent">V. Edit your consent and claim your rights</h2>
+    <!--<h2 id="edit_consent">V. Edit your consent and claim your rights</h2>
     <div class="">
         <button class="btn px-2 py-1 mx-6"
                 on:click={()=>actionDone("cookieConsentReset")}>Edit cookie
@@ -163,7 +160,7 @@
         will make your account unusable but we still keep your data)
     </div>
     <h3 class="text-2xl">Other GDPR-related user rights can be claimed via email <a href="mailto:contact@winhalla.app">here</a>
-    </h3>
+    </h3>-->
 
     <h2>VI. Changes to This Privacy Policy</h2>
     <p>We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any

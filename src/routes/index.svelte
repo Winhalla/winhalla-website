@@ -1,14 +1,31 @@
 <script>
-    import { fly } from "svelte/transition";
     import { onMount } from "svelte";
     import cookie from "cookie";
 
 
     let isRegisterPopupOpen = false;
-    let email;
-    let valid = null; 
     let info;
+    let isTransitioningImg;
+    let isTransitioningText;
+    let items = [
+        {
+            file:"screen1.png",
+            text:"<p class=\"text-5xl lg:text-6.5xl\"> Play <span class=\"text-primary\">Brawlhalla</span>, </p> <p class=\"text-5xl lg:text-6.5xl mt-4\"> Earn <span class=\"text-primary\">Rewards</span>. </p> <p class=\"text-4xl lg:text-5.5xl mt-6 lg:mt-14\"> As simple as it sounds. </p>"
+        },{
+            file:"screen2.png",
+            text:"<p class=\"text-5xl lg:text-6.5xl\"> Earn <span class=\"text-primary\">Coins</span>, </p> <p class=\"text-5xl lg:text-6.5xl mt-4\"> Just by <span class=\"text-primary\">Playing</span>. </p> <p class=\"text-4xl lg:text-5.5xl mt-6 text-background lg:mt-14\">.</p>"
+        },{
+            file:"screen3.png",
+            text:"<p class=\"text-5xl lg:text-6.5xl\"> Compete against, </p> <p class=\"text-5xl lg:text-6.5xl mt-4\"> Other <span class=\"text-primary\">Players</span>. </p> <p class=\"text-4xl lg:text-5.5xl mt-6 lg:mt-14\">And earn more coins</p>"
+        },{
+            file:"screen4.png",
+            text:"<p class=\"text-5xl lg:text-6.5xl\"> Redeem your <span class=\"text-primary\">coins</span>, </p> <p class=\"text-5xl lg:text-6.5xl mt-4\"> In the <span class=\"text-primary\">shop</span>. </p> <p class=\"text-4xl lg:text-5.5xl mt-6 lg:mt-14\"> Battle pass, season packs, gift cards... </p>"
+        },
+    ]
+    let FlexSlider
+    let isDocumentLoaded = false
     onMount(async () => {
+        isDocumentLoaded = true
         const urlParams = new URLSearchParams(location.search);
         if (urlParams.get("src")) {
             document.cookie = cookie.serialize("source", urlParams.get("src"), {
@@ -23,40 +40,35 @@
                 path: "/"
             });
         }
+
+        FlexSlider = {
+            changeOrder: function() {
+                // sliderIndex = sliderIndex === items.length - 1 ? 0 : sliderIndex + 1
+                let item = items.shift();
+                items.push(item);
+                items = items
+                isTransitioningText = false
+                setTimeout(()=>{
+                    isTransitioningImg = false
+                },1)
+            },
+
+            gotoNext: function() {
+                isTransitioningImg = true
+                setTimeout(()=>{
+                    isTransitioningText = true
+                },250)
+            }
+        };
+        /*setInterval(()=>{
+            FlexSlider.gotoNext();
+        },10000)*/
     });
 
     function toggleRegisterPopup() {
         isRegisterPopupOpen = !isRegisterPopupOpen;
     }
 
-    function toggleFAQ(entryId) {
-        faq[entryId].opened = !faq[entryId].opened;
-        // if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
-    }
-
-    const faq = [
-        {
-            question: "How can you give us some <u>paid items</u> for <u>free</u>?",
-            answer: "In life, nothing is free. We use <u>ads revenues</u> to buy the items.",
-            opened: false
-        },
-
-        {
-            question: "How do you get my <u>Brawlhalla stats</u>?",
-            answer: "We use the official <u>Brawlhalla API</u> to get your stats.",
-            opened: false
-        },
-        {
-            question: "<u>How long</u> does it take to get a Brawlhalla Battle Pass? (10$)",
-            answer: "It will take approximately <u>4 to 8 weeks</u> if used regularly. This value might change depending on the time spent on Brawlhalla and Winhalla.",
-            opened: false
-        },
-        {
-            question: "Why data refreshing takes so long?",
-            answer: "The Brawlhalla API has a <u>long refreshing rate</u>. Don't worry, come back later and it will be up to date!",
-            opened: false
-        }
-    ];
 </script>
 
 <style>
@@ -89,6 +101,24 @@
         font-size: 1.25rem;
         background-color: #3d72e4;
     }
+    @keyframes slide1 {
+        0% {
+            transform: translateY(0%);
+        }
+        100% {
+            transform: translateY(-25%);
+        }
+    }
+
+    .slider-container-transition {
+        animation: slide1 0.8s ease-in-out;
+        animation-fill-mode:forwards;
+    }
+
+    .slider-item {
+        width: 100%;
+        flex-shrink: 0;
+    }
 </style>
 
 <svelte:head>
@@ -101,31 +131,39 @@
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
 <div class="pb-8 mt-10 px-4 lg:px-0">
-    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center">
-        <div style="color: rgba(253,253,252,0.85)" class="mt-35 lg:mt-48">
-            <div>
-                <p class="text-5xl lg:text-6.5xl">
-                    Play <span class="text-primary">Brawlhalla</span>,
-                </p>
-                <p class="text-5xl lg:text-6.5xl mt-4">
-                    Earn <span class="text-primary">Rewards</span>.
-                </p>
-                <p class="text-4xl lg:text-5.5xl mt-6 lg:mt-14">
-                    As simple as it sounds.
-                </p>
+        <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700;" class="lg:flex lg:justify-center" >
+            <div style="color: rgba(253,253,252,0.85);" class="mt-35 lg:mt-48">
+                <div class="overflow-hidden" style=" height:{!isDocumentLoaded?'40%':`${document.getElementById('firstChildText').clientHeight+20}px`}">
+                    <div class:slider-container-transition={isTransitioningText} on:animationend={FlexSlider.changeOrder}  class="flex flex-nowrap flex-col">
+                        {#each items as item,i}
+                            <div id="{i===0?'firstChildText':''}" class="slider-item pt-10">
+                                {@html item.text}
+                            </div>
+                        {/each}
+                    </div>
+                </div>
+                <div class="flex mt-10 lg:mt-20">
+                    <a href="">
+                        <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-60 mr-8">
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
+                        <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-60 mr-8">
+                    </a>
+                </div>
             </div>
-            <div class="flex mt-10 lg:mt-20">
-                <a href="">
-                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-60 mr-8">
-                </a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
-                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-60 mr-8">
-                </a>
+            <div class="overflow-hidden ml-30"  style="height:{!isDocumentLoaded?'90%':`${document.getElementById('firstChildImg').clientHeight+20}px`}">
+                <div class:slider-container-transition={isTransitioningImg} class="flex flex-nowrap flex-col">
+                    {#each items as item,i}
+                        <div class="slider-item" id="{i===0?'firstChildImg':''}">
+                            <img src="/assets/screens/{item.file}" alt="screenshot" class="mt-15 lg:mt-10">
+                        </div>
+                    {/each}
+                </div>
             </div>
         </div>
-        <img src="/assets/screens/screen1.png" alt="screenshot" class="mt-15 lg:mt-10">
-
-    </div>
+    <button class="button button-brand" on:click={FlexSlider.gotoNext}>
+        Move
+    </button>
     <!--<div class="relative">
         <div id="pre-register"
 

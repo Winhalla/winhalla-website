@@ -102,17 +102,18 @@
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />
-<div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
+<div class="font w-full bg-background min-h-screen h-full flex flex-col relative" style="z-index: 0">
     {#if isShowingGuide}
         <div class="fixed top-0 bottom-0 left-0 right-0   bg-background /bg-black bg-opacity-80 " style="z-index: 55"></div>
     {/if}
+
 
     <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <main class="text-font text-default min-h-screen h-full relative">
+    <main class="text-font text-default min-h-screen h-full relative z-1">
         <!--Main-->
 
 

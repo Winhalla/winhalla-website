@@ -94,7 +94,7 @@
                 </a>
             </div>
             <div class="lg:flex mx-7 lg:mr-14 lg:ml-0">
-                <a href="">
+                <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">

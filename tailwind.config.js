@@ -162,7 +162,9 @@ module.exports = {
             fontSize: {
                 "3.5xl":"1.9rem",
                 "4.5xl":"2.5rem",
-                "5.5xl":"3.4rem",
+                "5.25xl":"3.35rem",
+                "5.5xl":"3.5rem",
+                "6.25xl":"4.35rem",
                 "6.5xl":"4.5rem",
                 "7xl": "5rem",
                 "8xl": "6rem",
@@ -172,9 +174,10 @@ module.exports = {
 
             },
             colors: {
-                background: "#17171a",
+                background: "#131317",
                 variant: "#1b1b27",
 
+                gray: "#BEBEC2",
                 primary: "#7172e3",
                 accent: "#ff8f0f",
                 green: "#3de488",

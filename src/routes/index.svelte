@@ -100,30 +100,31 @@
 
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
-<div class="pb-8 mt-10 px-4 lg:px-0">
-    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center">
-        <div style="color: rgba(253,253,252,0.85)" class="mt-35 lg:mt-48">
+<div class="pb-8 mt-9 px-4 lg:px-0">
+    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center  relative">
+        <div style="color: rgba(253,253,253,0.80)" class="mt-26 lg:mt-48    ">
             <div>
-                <p class="text-5xl lg:text-6.5xl">
+                <p class="text-5xl lg:text-6.25xl">
                     Play <span class="text-primary">Brawlhalla</span>,
                 </p>
-                <p class="text-5xl lg:text-6.5xl mt-4">
+                <p class="text-5xl lg:text-6.25xl" style="margin-top: 0.925rem">
                     Earn <span class="text-primary">Rewards</span>.
                 </p>
-                <p class="text-4xl lg:text-5.5xl mt-6 lg:mt-14">
+                <p class="text-4xl lg:text-5xl mt-6 lg:mt-10  text-gray">
                     As simple as it sounds.
                 </p>
             </div>
             <div class="flex mt-10 lg:mt-20">
                 <a href="">
-                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-60 mr-8">
+                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                 </a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
-                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-60 mr-8">
+                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                 </a>
             </div>
         </div>
-        <img src="/assets/screens/screen1.png" alt="screenshot" class="mt-15 lg:mt-10">
+        <div class="w-1/3"></div>
+        <img src="/assets/screens/screen1.png" alt="screenshot" class="absolute left-1/2 mt-0  lg:-ml-20 lg:mt-0 max-w-96" style="max-height: 94%">
 
     </div>
     <!--<div class="relative">

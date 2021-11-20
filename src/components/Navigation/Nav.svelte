@@ -65,13 +65,13 @@
             class="shadow-link-hover bg-background lg:flex items-center text-font
         w-full transition duration-200 border-b border-transparent">
         <div
-                class="w-full lg:w-screen flex justify-between items-center py-4 lg:py-6
+                class="w-full lg:w-screen flex justify-between items-center py-4 lg:pt-7 lg:pb-4
             relative">
-            <div class="pl-7 lg:pl-24 lg:pr-34">
+            <div class="pl-7 lg:pl-14 lg:pr-34">
                 <!--LOGO-->
                 <a class="" href="/">
                     <div class="relative">
-                        <svg class="fill-current w-34 lg:w-49" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
+                        <svg class="fill-current w-34 lg:w-42" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
                             <g id="Calque_2" data-name="Calque 2">
                                 <g id="Calque_1-2" data-name="Calque 1">
                                     <polygon
@@ -93,7 +93,7 @@
 
                 </a>
             </div>
-            <div class="lg:flex mx-7 lg:mr-15 lg:ml-0">
+            <div class="lg:flex mx-7 lg:mr-14 lg:ml-0">
                 <a href="">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>

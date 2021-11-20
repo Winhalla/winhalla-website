@@ -130,32 +130,34 @@
 
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
-<div class="pb-8 mt-10 px-4 lg:px-0">
-        <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700;" class="lg:flex lg:justify-center" >
-            <div style="color: rgba(253,253,252,0.85);" class="mt-35 lg:mt-48">
-                <div class="overflow-hidden" style=" height:{!isDocumentLoaded?'40%':`${document.getElementById('firstChildText').clientHeight+20}px`}">
-                    <div class:slider-container-transition={isTransitioningText} on:animationend={FlexSlider.changeOrder}  class="flex flex-nowrap flex-col">
-                        {#each items as item,i}
-                            <div id="{i===0?'firstChildText':''}" class="slider-item pt-10">
-                                {@html item.text}
-                            </div>
-                        {/each}
-                    </div>
-                </div>
-                <div class="flex mt-10 lg:mt-20">
-                    <a href="">
-                        <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-60 mr-8">
-                    </a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
-                        <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-60 mr-8">
-                    </a>
+<div class="pb-8 mt-9 px-4 lg:px-0">
+    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center  relative">
+        <div style="color: rgba(253,253,253,0.80)" class="mt-26 lg:mt-48    ">
+            <div class="overflow-hidden" style=" height:{!isDocumentLoaded?'40%':`${document.getElementById('firstChildText').clientHeight+20}px`}">
+                <div class:slider-container-transition={isTransitioningText} on:animationend={FlexSlider.changeOrder}  class="flex flex-nowrap flex-col">
+                    {#each items as item,i}
+                        <div id="{i===0?'firstChildText':''}" class="slider-item pt-10">
+                            {@html item.text}
+                        </div>
+                    {/each}
                 </div>
             </div>
-            <div class="overflow-hidden ml-30"  style="height:{!isDocumentLoaded?'90%':`${document.getElementById('firstChildImg').clientHeight+20}px`}">
+            <div class="flex mt-10 lg:mt-20">
+                <a href="">
+                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
+                </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXxOb6XI5xKh4NDeicsSUWbj1W4mA5YWFk70_39ssNxbAIUQ/viewform?usp=pp_url&entry.879447017=">
+                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
+                </a>
+            </div>
+        </div>
+        <div class="w-1/3"></div>
+        </div>
+            <div class="overflow-hidden"  style="height:{!isDocumentLoaded?'90%':`${document.getElementById('firstChildImg').clientHeight+20}px`}">
                 <div class:slider-container-transition={isTransitioningImg} class="flex flex-nowrap flex-col">
                     {#each items as item,i}
                         <div class="slider-item" id="{i===0?'firstChildImg':''}">
-                            <img src="/assets/screens/{item.file}" alt="screenshot" class="mt-15 lg:mt-10">
+                            <img src="/assets/screens/{item.file}" alt="screenshot" class="absolute left-1/2 mt-0  lg:-ml-20 lg:mt-0 max-w-96" style="max-height: 94%">
                         </div>
                     {/each}
                 </div>

@@ -178,7 +178,7 @@ module.exports = {
                 background: "#131317",
                 variant: "#1b1b27",
 
-                gray: "#BEBEC2",
+                gray: "#c4c4c9",
                 primary: "#7172e3",
                 accent: "#ff8f0f",
                 green: "#3de488",

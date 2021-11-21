@@ -69,7 +69,7 @@
             relative">
             <div class="pl-7 lg:pl-14 lg:pr-34">
                 <!--LOGO-->
-                <a class="" href="/">
+                <a href="/">
                     <div class="relative">
                         <svg class="fill-current w-34 lg:w-42" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465.1 152.11">
                             <g id="Calque_2" data-name="Calque 2">
@@ -90,10 +90,15 @@
                         </svg>
                         <!--<span class="absolute -top-1 -right-6  text-legendary">Beta</span>-->
                     </div>
-
+                    <a href="/login" class="mt-3 lg:mt-0 text-center lg:hidden hover:underline hover:text-font text-gray text-xl mr-20">
+                        Get your account transfer ID
+                    </a>
                 </a>
             </div>
-            <div class="lg:flex mx-7 lg:mr-14 lg:ml-0">
+            <div class="lg:flex mx-7 lg:mr-14 lg:ml-0 items-center">
+                <a href="/login" rel="prefetch" class="hidden lg:block text-center hover:underline hover:text-font text-gray text-xl mr-20">
+                    Get your account transfer ID
+                </a>
                 <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>

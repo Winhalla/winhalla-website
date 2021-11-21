@@ -90,15 +90,15 @@
                         </svg>
                         <!--<span class="absolute -top-1 -right-6  text-legendary">Beta</span>-->
                     </div>
-                    <a href="/login" class="mt-3 lg:mt-0 text-center lg:hidden hover:underline hover:text-font text-gray text-xl mr-20">
+                    <!--<a href="/login" class="mt-3 lg:mt-0 text-center lg:hidden hover:underline hover:text-font text-gray text-xl mr-20">
                         Get your account transfer ID
-                    </a>
+                    </a>-->
                 </a>
             </div>
             <div class="lg:flex mx-7 lg:mr-14 lg:ml-0 items-center">
-                <a href="/login" rel="prefetch" class="hidden lg:block text-center hover:underline hover:text-font text-gray text-xl mr-20">
+                <!--<a href="/login" rel="prefetch" class="hidden lg:block text-center hover:underline hover:text-font text-gray text-xl mr-20">
                     Get your account transfer ID
-                </a>
+                </a>-->
                 <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>

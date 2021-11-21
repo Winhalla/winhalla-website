@@ -306,11 +306,13 @@
                             </svg>
                         </div>
 
-
                         <p class="text-primary text-xl ml-4">
-                            We will email you as soon as the beta is released
+                            We will email you a link to download the app in the next few days
                         </p>
                     </div>
+                    <p class="text-legendary text-xl" style="font-family: 'Roboto condensed', sans-serif; font-weight:700">
+                        Please enter here your GOOGLE ACCOUNT's email address, otherwise we won't be able to give you access to the closed beta
+                    </p>
                 </div>
                 <div class="justify-center w-full flex mt-8 py-3">
                     <button class="px-8 md:px-10 button2 button-brand-alternative"

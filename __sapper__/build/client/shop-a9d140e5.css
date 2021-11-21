@@ -1,7 +1,0 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');.shop-item.svelte-4jvq3l{position:relative}.shop-item.svelte-4jvq3l::after{position:absolute;content:"";height:100%;width:100%;top:0;left:0;background:linear-gradient(
-                to bottom,
-                rgba(23, 23, 26, 0.6) 0%,
-                rgba(23, 23, 26, 0.75),
-                rgba(23, 23, 26, 0.83) 75%,
-                rgba(23, 23, 26, 0.92) 100%
-        )}button.svelte-4jvq3l:disabled{--tw-bg-opacity:1;background-color:rgba(121, 121, 127, var(--tw-bg-opacity));cursor:not-allowed}.info.svelte-4jvq3l{margin-top:0.25rem;font-size:1.125rem;line-height:1.75rem}button.svelte-4jvq3l:disabled{--tw-bg-opacity:1;background-color:rgba(121, 121, 127, var(--tw-bg-opacity));cursor:not-allowed}.email-input.svelte-4jvq3l::placeholder{font-family:"Bebas Neue", sans-serif}.tooltip.svelte-4jvq3l::after{content:"";position:absolute;top:100%;right:25%;border-width:10px;border-style:solid;border-color:#fc1870 transparent transparent transparent}

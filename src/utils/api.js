@@ -4,7 +4,7 @@ let eventEmitter = writable({ error:undefined });
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "https://api.winhalla.app"
+    baseURL: "http://localhost:4000"
 });
 
 const callApi = async (method, url, data) => {
@@ -15,8 +15,9 @@ const callApi = async (method, url, data) => {
             data: data
         });
         return res.data;
-    }catch (e) {
+    } catch (e) {
         console.log(e)
+
         if(!url?.includes("changeEmail")&&!url?.includes("exitMatch")&&!url?.includes("feltrom/login")) {
             eventEmitter.set({error: e})
         }

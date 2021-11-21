@@ -59,7 +59,6 @@ self.addEventListener('fetch', event => {
     // don't try to handle e.g. data: URIs
     const isHttp = url.protocol.startsWith('http');
     const isDevServerRequest = url.hostname === self.location.hostname && url.port !== self.location.port;
-    console.log(url.pathname, staticAssets)
     const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
     const skipBecauseUncached = event.request.cache === 'only-if-cached' && !isStaticAsset;
 

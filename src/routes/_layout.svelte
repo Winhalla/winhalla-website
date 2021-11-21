@@ -24,12 +24,12 @@
             }
         });
 
-        const acceptedCookieList = getCookie("acceptedCookieList");
+        /*const acceptedCookieList = getCookie("acceptedCookieList");
         if (acceptedCookieList === "true") {
             window.yett.unblock();
         } else if (getCookie("hideCookiePopup")) {
             window.yett.unblock(JSON.parse(decodeURI(acceptedCookieList).replace(/%2C/g, ",").replace(/%2F/g, "/")));
-        }
+        }*/
     });
 
     let scrollY = 0;

@@ -4,7 +4,7 @@ let eventEmitter = writable({ error:undefined });
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:4000"
+    baseURL: "https://api.winhalla.app"
 });
 
 const callApi = async (method, url, data) => {

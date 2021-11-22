@@ -204,10 +204,10 @@
     <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center  relative">
         <div style="color: rgba(253,253,253,0.80)" class="mt-30 lg:mt-64    px-8 lg:px-0">
             <div>
-                <p class="text-5xl lg:text-6.25xl">
+                <p class="text-5xl lg:text-6-25xl">
                     Play <span class="text-primary">Brawlhalla</span>,
                 </p>
-                <p class="text-5xl lg:text-6.25xl mt-2 lg:mt-4">
+                <p class="text-5xl lg:text-6-25xl mt-2 lg:mt-4">
                     Earn <span class="text-primary">Rewards</span>.
                 </p>
                 <p class="text-4xl lg:text-5xl mt-6 lg:mt-10  text-gray">

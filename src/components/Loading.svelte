@@ -34,7 +34,7 @@
     import { fade } from "svelte/transition";
 </script>
 <div out:fade={{duration}}
-     class="fixed z-50 bg-background absolute top-10 bg-fixed z-40 bg-no-repeat flex items-center justify-center h-screen-90">
+     class="fixed z-50 bg-background absolute top-25 bg-fixed z-40 bg-no-repeat flex items-center justify-center h-screen-90">
     <div class="pb-20 bg-background w-screenw-99 h-screen-99">
         <div class="mx-auto">
             <div class="loader mt-15/100 mx-auto"></div>

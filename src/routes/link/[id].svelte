@@ -10,11 +10,13 @@
     import cookie from "cookie";
     import { apiUrl } from "../../utils/config";
     import Loading from "../../components/Loading.svelte";
+    import { callApi } from "../../utils/api";
 
     export let link;
-    onMount(() => {
+    onMount(async () => {
         document.cookie = cookie.serialize("affiliateLinkId", link, { maxAge: 15552000, sameSite: "lax", path: "/" });
-        goto("/login");
+        await callApi("post", "/linkCheckpoint/"+link)
+        goto("/");
     });
 
 

@@ -15,8 +15,9 @@ const callApi = async (method, url, data) => {
             data: data
         });
         return res.data;
-    }catch (e) {
+    } catch (e) {
         console.log(e)
+
         if(!url?.includes("changeEmail")&&!url?.includes("exitMatch")&&!url?.includes("feltrom/login")) {
             eventEmitter.set({error: e})
         }

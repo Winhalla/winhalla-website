@@ -1,6 +1,4 @@
 <script>
-    import NavAlert from "../Navigation/NavAlert.svelte";
-    import Poll from "../Poll.svelte";
     import { fade, fly } from "svelte/transition";
     import { callApi } from "../../utils/api";
     import { config } from "./storeAdmin";
@@ -193,17 +191,8 @@
             </div>
         </div>
         {#if popup.isPreviewing || popup.thing === "event"}
-            {#if popup.thing === "poll"}
-                <div
-                    class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
-                    transition:fly={{ y:-200, duration: 500 }}>
-                    <Poll poll="{{
-                            name: popup.fields[0].value,
-                            isMCQ: popup.fields[1].value === 'true',
-                            options: popup.fields[1].special
-                        }}" isPreviewing />
-                </div>
-            {:else if popup.thing === "info"}
+
+            {#if popup.thing === "info"}
                 <div
                     class="fixed z-50 left-1/2 w-full md:left-auto md:right-8 top-19 text-font text-default max-w-sm transform -translate-x-1/2 md:translate-x-0 px-5 md:px-0"
                     transition:fly={{ y:-200, duration: 500 }}>

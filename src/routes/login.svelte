@@ -1,35 +1,28 @@
 <script>
     import { apiUrl } from "../utils/config";
-    import { callApi } from "../utils/api";
+    import {callApi, getUser} from "../utils/api";
     import { goto } from "@sapper/app";
+    import {onMount} from "svelte";
 
     let isLoggingIn;
     let usernameSent;
     let username;
     let password;
-    let action = "login";
     let status;
-    let accountCreated = false;
 
     function startLogin() {
         isLoggingIn = true;
     }
 
-    async function switchToCreateAccount() {
-        action = action === "login" ? "createAccount" : "login";
-    }
+    onMount(async ()=>{
+        const user = await getUser();
+        if(user?.user?._id) goto("/account-transfer-id");
+    })
 
     async function createAccount() {
-        if (action === "createAccount") {
-            const result = await callApi("post", `/auth/createEmailPassword?username=${username}&password=${password}`);
-            if (result instanceof Error) return status = result.response.data;
-            action = "login";
-            accountCreated = true;
-        } else {
-            const result = await callApi("post", `/auth/login/local?username=${username}&password=${password}`);
-            if (result instanceof Error) return status = result.response.data;
-            goto("/referral-link?needBrawlhallaID=true");
-        }
+        const result = await callApi("post", `/auth/login/local?username=${username}&password=${password}`);
+        if (result instanceof Error) return status = result.response.data;
+        goto("/account-transfer-id");
     }
 </script>
 <style>
@@ -45,8 +38,8 @@
                 PC players:
             </p>
             <a
-                class="button-brand button" style="display: flex !important;"
-                href="{apiUrl}/auth/login/steam">
+                    class="button-brand button" style="display: flex !important;"
+                    href="{apiUrl}/auth/login/steam">
                 <svg class="-ml-4 mr-3 w-6" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="steam"
                      role="img"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -61,8 +54,8 @@
                 Console/mobile players:
             </p>
             <a
-                class="button-brand-alternative button mb-6" style="display: flex !important;"
-                href="{apiUrl}/auth/login/google">
+                    class="button-brand-alternative button mb-6" style="display: flex !important;"
+                    href="{apiUrl}/auth/login/google">
                 <svg class="-ml-4 mr-3 w-5" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
                      role="img"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
@@ -74,8 +67,8 @@
             </a>
 
             <button
-                class="button-brand-alternative button" style="display: flex !important;"
-                on:click={startLogin}>
+                    class="button-brand-alternative button" style="display: flex !important;"
+                    on:click={startLogin}>
                 <svg class="-ml-4 mr-3 w-6" aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope"
                      role="img"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -91,28 +84,29 @@
             <div class="flex flex-col justify-center px-5 md:p-0" style="min-width: 20rem">
                 <div class="text-center mt-7 md:mt-12">
                     <h1
-                        class="text-6xl mb-6 md:mb-8 leading-snug
-                        ">
-                        {action === "login" ? "Login" : "Create account"}
+                            class="text-6xl mb-6 md:mb-8 leading-snug
+                        ">Login
                     </h1>
                 </div>
                 <div class="">
                     <div>
                         <input
-                            type="email"
-                            placeholder="Enter your username"
-                            bind:value={username}
-                            class="input-style focus:outline-none
+                                type="email"
+                                placeholder="Enter your username"
+                                bind:value={username}
+                                style="font-family: 'Roboto condensed', sans-serif; font-weight:700"
+                                class="input-style focus:outline-none
                             focus:border-primary placeholder-disabled" />
                     </div>
                 </div>
                 <div class="mt-6">
                     <div>
                         <input
-                            type="email"
-                            placeholder="Enter your password"
-                            bind:value={password}
-                            class="input-style focus:outline-none
+                                type="email"
+                                placeholder="Enter your password"
+                                style="font-family: 'Roboto condensed', sans-serif; font-weight:700"
+                                bind:value={password}
+                                class="input-style focus:outline-none
                             focus:border-primary placeholder-disabled" />
 
                         {#if status}
@@ -121,23 +115,10 @@
                     </div>
                 </div>
                 <button
-                    on:click={createAccount}
-                    class="button button-brand mt-10">
-                    Continue
+                        on:click={createAccount}
+                        class="button button-brand mt-10">
+                    Get account transfer ID
                 </button>
-
-                <div class="mt-4">
-                    {#if action === "login"}
-                        <p>Don't have an account?
-                            <button class="text-primary underline" on:click={switchToCreateAccount}>create an account</button>
-                        </p>
-                    {:else}
-                        <p>Already have an account ?
-                            <button class="text-primary underline" on:click={switchToCreateAccount}>login</button>
-                        </p>
-                    {/if}
-                </div>
-
             </div>
         </div>
         <!--<div>

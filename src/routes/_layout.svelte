@@ -5,9 +5,7 @@
     import ErrorAlert from "../components/ErrorAlert.svelte";
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
-    import CookiePopup from "../components/CookiePopup.svelte";
     import { getCookie } from "../utils/getCookie";
-    import {guideHandlerStore} from "../components/guideStore";
 
     //Show error to the user if there is one from an api request
     let error;
@@ -26,16 +24,12 @@
             }
         });
 
-        const acceptedCookieList = getCookie("acceptedCookieList");
+        /*const acceptedCookieList = getCookie("acceptedCookieList");
         if (acceptedCookieList === "true") {
             window.yett.unblock();
         } else if (getCookie("hideCookiePopup")) {
             window.yett.unblock(JSON.parse(decodeURI(acceptedCookieList).replace(/%2C/g, ",").replace(/%2F/g, "/")));
-        }
-
-        guideHandlerStore.subscribe(value => {
-            isShowingGuide = !!value.current;
-        });
+        }*/
     });
 
     let scrollY = 0;
@@ -108,18 +102,18 @@
 </svelte:head>
 
 <svelte:window bind:scrollY={scrollY} />
-<div class="font w-full bg-background min-h-screen h-full flex flex-col relative">
+<div class="font w-full bg-background min-h-screen h-full flex flex-col relative" style="z-index: 0">
     {#if isShowingGuide}
         <div class="fixed top-0 bottom-0 left-0 right-0   bg-background /bg-black bg-opacity-80 " style="z-index: 55"></div>
     {/if}
 
-    <CookiePopup />
+
     <Nav isScrolling={scrollY > 0} />
     {#if error}
         <ErrorAlert message="We had some trouble getting to Winhalla" pushError={error} />
     {/if}
 
-    <main class="text-font text-default min-h-screen h-full relative">
+    <main class="text-font text-default min-h-screen h-full relative z-1">
         <!--Main-->
 
 

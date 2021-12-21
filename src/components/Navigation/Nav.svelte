@@ -102,7 +102,7 @@
                 <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>
-                <a href="#showRegisterPopup">
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
                     <img src="/assets/google-play.png" alt="google play link" class="w-45 mt-2 lg:mt-0">
                 </a>
             </div>

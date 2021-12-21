@@ -218,9 +218,9 @@
                 <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                 </a>
-                <button on:click={toggleRegisterPopup}>
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
                     <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
-                </button>
+                </a>
             </div>
         </div>
         <div class="h-11 lg:h-0 lg:w-1/3"></div>

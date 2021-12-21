@@ -215,10 +215,10 @@
                 </p>
             </div>
             <div class="hidden lg:flex mt-10 lg:mt-20">
-                <!--<a href="/ios">
+                <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                 </a>-->
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                 </a>
             </div>

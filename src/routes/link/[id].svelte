@@ -4,9 +4,6 @@
         return { link: params.id };
     }
 </script>
-<svelte:head>
-    <meta name="robots" content="noindex">
-</svelte:head>
 <script>
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
@@ -26,5 +23,6 @@
 </script>
 <svelte:head>
     <title>Redirecting...</title>
+    <meta name="robots" content="noindex">
 </svelte:head>
 <Loading data="Redirecting..." />

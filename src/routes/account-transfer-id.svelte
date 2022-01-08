@@ -7,6 +7,9 @@
 
     let toolTipOpen = false
 </script>
+<svelte:head>
+    <meta name="robots" content="noindex">
+</svelte:head>
 <div class="text-4xl flex justify-center items-center flex-col mt-50 pl-12 pr-10">
     {#await getUser()}
         <Loading />

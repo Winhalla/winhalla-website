@@ -20,7 +20,9 @@
         }
     });
 </script>
-
+<svelte:head>
+    <meta name="robots" content="noindex">
+</svelte:head>
 
 {#if isApiDown}
     <div class="flex items-center justify-center h-screen-60 px-4 w-full lg:mt-10 mt-8 lg:mx-0">

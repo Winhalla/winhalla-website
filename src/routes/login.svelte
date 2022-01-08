@@ -25,6 +25,9 @@
         goto("/account-transfer-id");
     }
 </script>
+<svelte:head>
+    <meta name="robots" content="noindex">
+</svelte:head>
 <style>
     input {
         @apply w-full text-background bg-font py-3 px-4 rounded;

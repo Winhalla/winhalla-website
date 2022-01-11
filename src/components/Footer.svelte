@@ -70,6 +70,7 @@
                         </g>
                     </svg>
                 </a>
+                <p class="ml-5 pt-2 text-sm" style="margin-bottom: -0.19rem">© Winhalla SAS 2021</p>
             </div>
 
 

@@ -178,12 +178,12 @@ module.exports = {
                 background: "#131317",
                 variant: "#1b1b27",
 
-                gray: "#c4c4c9",
+                gray: "#BEBEC2",
                 primary: "#7172e3",
-                accent: "#ff8f0f",
+                accent: "#FFA946",
                 green: "#3de488",
-                epic: "#ee38ff",
-                legendary: "#fc1870",
+                epic: "#DE54EB",
+                legendary: "#FC1859",
 
                 font: "#fdfdfd",
                 footer: "#a8a8a8",

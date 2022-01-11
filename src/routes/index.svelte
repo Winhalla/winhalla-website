@@ -4,6 +4,9 @@
     import cookie from "cookie";
     import { callApi } from "../utils/api";
     import Infos from "../components/Infos.svelte";
+    import QuestsSection from "../components/QuestsSection.svelte";
+    import MatchSection from "../components/MatchSection.svelte";
+    import ShopSection from "../components/ShopSection.svelte";
     let isRegisterPopupOpen = false;
     let email;
     let valid = null;
@@ -189,6 +192,7 @@
         animation: active-transition 0.8s ease-in-out;
     }
 
+
 </style>
 
 <svelte:head>
@@ -201,31 +205,34 @@
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
 <div class="pb-8 mt-0 lg:px-0">
-    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="lg:flex lg:justify-center  relative">
-        <div style="color: rgba(253,253,253,0.80)" class="mt-30 lg:mt-64    px-8 lg:px-0">
+    <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="md:flex md:justify-center  relative">
+        <div style="color: rgba(253,253,253,0.80)" class="mt-30 md:mt-64    px-8 md:pr-0 md:-mr-14 lg:px-0">
             <div>
-                <p class="text-5xl lg:text-6-25xl">
+                <p class="text-4.5xl lg:text-6xl">
                     Play <span class="text-primary">Brawlhalla</span>,
                 </p>
-                <p class="text-5xl lg:text-6-25xl mt-2 lg:mt-4">
+                <p class="text-4.5xl lg:text-6xl -mt-2 lg:mt-4">
                     Earn <span class="text-primary">Rewards</span>.
                 </p>
-                <p class="text-4xl lg:text-5xl mt-6 lg:mt-10  text-gray">
+                <p class="text-3xl lg:text-4.5xl mt-6 lg:mt-11  text-gray">
                     As simple as it sounds.
                 </p>
             </div>
             <div class="hidden lg:flex mt-10 lg:mt-20">
                 <a href="/ios">
-                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
+                    <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-52 mr-8">
                 </a>
                 <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
-                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
+                    <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-52 mr-8">
                 </a>
             </div>
         </div>
         <div class="h-11 lg:h-0 lg:w-1/3"></div>
-        <div class="lg:hidden">
+        <div class="md:hidden">
             <img src="/assets/screens/screen1.png" alt="screen 1" class="w-full -ml-9" style="width: 150%">
+        </div>
+        <div class="hidden md:block lg:hidden mt-28">
+            <img src="/assets/screens/screen1.png" alt="screen 1" class="-ml-9" style="width: 30rem">
         </div>
         <div class="max-h-full overflow-hidden hidden lg:block" style="z-index: -1">
             {#if screens}
@@ -244,6 +251,34 @@
         </div>
 
     </div>
+    <div class="mt-15 lg:mt-0  w-full flex justify-center bg-background md:-mt-64 lg:mt-0">
+        <QuestsSection/>
+    </div>
+    <div class="w-full flex justify-center bg-background  pt-24 lg:pt-30 xl:pt-37">
+        <MatchSection/>
+    </div>
+    <div class="w-full flex justify-center bg-background pt-24 lg:pt-30 xl:pt-37">
+        <ShopSection/>
+    </div>
+
+
+    <div class="mt-14 md:mt-20 lg:mt-24 xl:mt-38 mb-8">
+        <div class="w-full  flex justify-center">
+            <div class="flex-col items-center">
+                <p class=" text-4.5xl md:text-5xl lg:text-6xl  text-extra-light  text-center">Ready? Go!</p>
+                <div class="lg:flex mt-4 md:mt-7 lg:mt-10">
+                    <a href="/ios">
+                        <img src="/assets/app-store.png" alt="app store link" class="w-40 md:w-46 lg:w-54 lg:mr-8">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
+                        <img src="/assets/google-play.png" alt="google play link" class="w-40 md:w-46 lg:w-54  mt-3 lg:mt-0">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 </div>
 {#if isRegisterPopupOpen}

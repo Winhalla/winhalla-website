@@ -251,7 +251,7 @@
         </div>
 
     </div>
-    <div class="mt-15 lg:mt-0  w-full flex justify-center bg-background md:-mt-64 lg:mt-0">
+    <div class="mt-15 lg:mt-0  w-full flex justify-center bg-background -mt-20 md:-mt-64 lg:mt-0">
         <QuestsSection/>
     </div>
     <div class="w-full flex justify-center bg-background  pt-24 lg:pt-30 xl:pt-37">

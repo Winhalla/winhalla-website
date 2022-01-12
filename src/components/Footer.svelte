@@ -30,13 +30,17 @@
                         <a
                                 href="/terms"
                                 class="block hover:text-shadow-link-hover">Terms of use</a>
+                        <a
+                                href="/contact"
+                                class="block hover:text-shadow-link-hover">Support</a>
                     </div>
                 </div>
                 <div class="mt-8 lg:mt-0 lg:ml-8">
                     <h3 class="text-primary">Company</h3>
                     <a
-                            href="mailto:contact@winhalla.app"
+                            href="/contact"
                             class="block hover:text-shadow-link-hover">Contact us</a>
+
                 </div>
             </div>
         </div>
@@ -70,6 +74,7 @@
                         </g>
                     </svg>
                 </a>
+                <p class="ml-5 pt-2 text-sm" style="margin-bottom: -0.19rem">© Winhalla SAS 2021</p>
             </div>
 
 

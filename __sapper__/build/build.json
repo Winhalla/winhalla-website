@@ -2,70 +2,75 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.f36ae7fd.js"
+    "main": "client.ee537f47.js"
   },
   "css": {
     "main": [
-      "client-891df71d.css"
+      "client-e6612695.css"
     ]
   },
   "dependencies": {
     "index.svelte": [
-      "index.a7dae50f.js",
+      "index.5e7a8354.js",
       "index.f2cf2075.js",
-      "Infos.12b4196d.js",
+      "Infos.807ace53.js",
       "inject_styles.5607aec6.js",
-      "index-7318f9d0.css"
+      "index-64d45810.css"
     ],
     "account-transfer-id.svelte": [
-      "account-transfer-id.c625d4e4.js",
-      "Loading.bb765063.js",
+      "account-transfer-id.b7266a7c.js",
+      "Loading.2daffe1a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
       "account-transfer-id-8f6cb082.css"
     ],
+    "contact.svelte": [
+      "contact.8936b99d.js",
+      "inject_styles.5607aec6.js",
+      "contact-001f37a7.css"
+    ],
     "feltrom/admin.svelte": [
-      "admin.760f518c.js",
-      "Infos.12b4196d.js",
-      "Loading.bb765063.js",
+      "admin.cd3f0d82.js",
+      "Infos.807ace53.js",
+      "Loading.2daffe1a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css",
-      "admin-94570b43.css"
+      "admin-22c75436.css"
     ],
     "privacy.svelte": [
-      "privacy.478e871f.js",
-      "Infos.12b4196d.js",
+      "privacy.b55b8e03.js",
+      "Infos.807ace53.js",
       "inject_styles.5607aec6.js",
       "privacy-c7a34412.css"
     ],
     "status.svelte": [
-      "status.46c19cb3.js",
+      "status.33f7d6df.js",
       "inject_styles.5607aec6.js"
     ],
     "legal.svelte": [
-      "legal.c109dad1.js",
+      "legal.a226f72b.js",
       "inject_styles.5607aec6.js",
       "legal-32170f98.css"
     ],
     "login.svelte": [
-      "login.4234b2a2.js",
+      "login.f35e424a.js",
       "inject_styles.5607aec6.js",
       "login-f56ef111.css"
     ],
     "terms.svelte": [
-      "terms.ad9c7794.js",
+      "terms.25763a17.js",
       "inject_styles.5607aec6.js",
       "terms-35c65d7c.css"
     ],
     "link/[id].svelte": [
-      "[id].91c467d0.js",
+      "[id].2a0c199d.js",
       "index.f2cf2075.js",
-      "Loading.bb765063.js",
+      "Loading.2daffe1a.js",
       "inject_styles.5607aec6.js",
       "Loading-6d3e7c1c.css"
     ],
     "ios.svelte": [
-      "ios.6b66056f.js",
+      "ios.0e7b9703.js",
       "inject_styles.5607aec6.js"
     ]
   }

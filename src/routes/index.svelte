@@ -267,11 +267,11 @@
             <div class="flex-col items-center">
                 <p class=" text-4.5xl md:text-5xl lg:text-6xl  text-extra-light  text-center">Ready? Go!</p>
                 <div class="lg:flex mt-4 md:mt-7 lg:mt-10">
-                    <a href="/ios">
-                        <img src="/assets/app-store.png" alt="app store link" class="w-40 md:w-46 lg:w-54 lg:mr-8">
-                    </a>
-                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app">
-                        <img src="/assets/google-play.png" alt="google play link" class="w-40 md:w-46 lg:w-54  mt-3 lg:mt-0">
+                    <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
+                        <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
+                    </a>-->
+                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app" target="_blank" rel="noopener noreferrer">
+                        <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                     </a>
                 </div>
             </div>

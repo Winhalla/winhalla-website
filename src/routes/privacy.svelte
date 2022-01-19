@@ -73,79 +73,50 @@
 <div class="h-full div lg:px-100 px-5 lg:pt-30 pb-30 pt-8 "
      style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
     <h1 class="text-5xl underline mb-4">Privacy Policy</h1>
-    <p>Winhalla operates the https://winhalla.app website ("Site"), which provides the SERVICE.</p>
+    <p>Winhalla SAS operates the Winhalla app ("App"), which provides the SERVICE.</p>
 
-    <p>This page is used to inform the Site visitors regarding our policies with the collection, use, and disclosure of
-        Personal Information if anyone decided to use our Service, the Site. </p>
+    <p>This page is used to inform the Site visitors and App users regarding our policies with the collection, use, and disclosure of
+        Personal Information if anyone decided to use our Service, the App. </p>
     <p>We therefore only use your personal data within the scope of legal regulations, in particular the General Data
         Protection Regulation ("GDPR")</p>
     <p>If you choose to use our Service, then you agree to the collection and use of information in relation with this
         policy. The Personal Information that we collect are used for providing and improving the Service. We will not
         use or share your information with anyone except as described in this Privacy Policy.</p>
+    
+    <h2>Premamble.</h2>
+    <p>This website (https://winhalla.app) is only for presentation purposes of the App, only analytical anonymised data is collected. 
+        Cookies may be deposited in order to provide this analytical data.
+        This analytical data is collected by Google Analytics, but only accessible to Winhalla.</p>
 
     <h2>I. Account data</h2>
-    <p>To access certain functionalities in the Site, you may have to login with a Steam Account. By logging in with
-        your Steam Account and clicking on "Accept Terms And Conditions", we automatically create an account containing
-        : </p>
-    <ul>
-        <li>Your SteamID64</li>
-        <li>Your profile picture URL</li>
-        <li>Your username</li>
-        <li>And other data (including but not limited to : your coins number, your quest in progress...) This
-            information is internal to the Site, is used only by us and in no case disclosed
-        </li>
-    </ul>
-    <p>Your STEAMID64 may be sent to Brawlhalla's API (<a
-        href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) to track your progress in the game and give
-        you coins according to your performance</p>
-    <p>Other account data will not be sent, sold, rented, or traded to any third-party.</p>
-    <p id="analytical">All your account data is kept until you <a href="https://winhalla.app/deleteAccount">delete your
-        account</a> and
-        may be processed by our servers to provide the Service in its entirety</p>
-    <p>If you choose to login with Google, you accept that we will store your Email in the top of the data mentioned
-        above (excluding SteamID)</p>
-    <p>If you choose to login with another provider than Steam, you will be prompted to enter your Brawlhalla ID. By
-        submitting the Brawlhalla ID, you certify that you own the account with the Brawlhalla ID you mentioned.
+    <p>NO DATA REGARDING YOUR ACCOUNT IS SOLD, RENT, OR SHARED WITH ANY THIRD-PARTY</p>
+    <p>To use the App, you have the option between login with Apple ID and login with a Google Account. Only email, name and, if applicable, profile picture, are collected</p>
+    <p>Next, you are prompted to enter a Brawlhalla ID, which may be shared with Brawlhalla's API (<a
+        href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) to provide the Service</p>
+    <p>If you choose another platform than Steam, you will be prompted to enter your Brawlhalla ID. By
+        submitting the Brawlhalla ID, you certify that you own the Brawlhalla account with the Brawlhalla ID you mentioned.
         Otherwise your account and access to the Service may be terminated</p>
+    <p>If you choose Steam as a platform when logging in, your SteamID may be collected and stored in order to ensure your account is a real one</p>
+    <p id="analytical">All your account data is kept until you delete your account and may be processed by our servers to provide the Service in its entirety</p>
 
     <h2>II. Analytical software</h2>
-    <p>We are using - like any other website - an analytical software. This software helps us to understand our traffic
+    <p>We are using - like any other app - an analytical software. This software helps us to understand our traffic
         and its fluctuations</p>
-    <p>Upon your first visit on the Site, we will ask for your consent regarding (among others) analytical software. You
-        can edit your consent following <a href="/privacy#edit_consent">this</a> instructions</p>
-    <p id="advertising">This analytical software can deposits cookies and collect data ; this data is kept strictly
-        anonymous. However
-        this data is sent to Google Analytics which will process the data (and may process it outside the EEE) in order
+    <p id="advertising">This analytical software collects data and links it to your account. The data is linked to your account for the sole purpose of understanding automatic crash reports better, or providing better help if you have problems regarding the app.
+        However this data is sent to Google Analytics which will process the data (and may process it outside the European Economic Area (EEA)) in order
         to allow us to use this data </p>
 
     <h2>III. Advertising</h2>
-    <p>We are using ads, because a website doesn't update and hosts itself! Our ads are provided by third-party services
+    <p>We are using ads, because a app doesn't update and hosts itself! Our ads are provided by third-party services
         (To read our policy about thrd-party services, <a href="/terms#3rdParty">click here</a>)</p>
 
-    <p>We use prupleads as our banner ad provider</p>
-    <p>You can read their privacy policy here : <a href="https://adplayer.pro/privacy">https://purpleads.io/privacy/</a>
+    <p>We use Google AdMob as our ad provider. They might access your IDFA (Advertising ID) in order to serve personalized ads. Refer to your device's specific method to mask and deactivate IDFA.</p>
+    <p>You can read AdMob's privacy policy here : <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>
     </p>
 
-    <p>We also use adplayer.pro as rewarded ads provider.</p>
-    <p>You can read their privacy policy here : <a href="https://adplayer.pro/privacy">https://adplayer.pro/privacy</a>
-    </p>
-
-    <h2>IV. Cookies</h2>
-    <p>We are using - like any other website - cookies. Cookies are files with small amount of data that is commonly
-        used an anonymous unique identifier. They are stored in your computer's hard drive</p>
-    <p>We use cookies for : </p>
-    <ul>
-        <li>Authenticating : required, else you cannot use most of the Site's functionalities</li>
-        <li>Functionalities : used - among others - to determine if new notifications/alerts has arrived, these are
-            required, since they will have a major impact on your experience
-        </li>
-        <li>Analytical : as said <a href="/privacy#analytical">here</a>, these cookies are not required an can be
-            disabled
-        </li>
-    </ul>
-    <p>For more general information on cookies, please read <a
-        href="https://www.privacypolicyonline.com/what-are-cookies/" class="underline">"What Are Cookies"</a>.</p>
-
+    <h2>IV. Crash reports</h2>
+    <p>If an error occurs in the App's code, an error report is automatically sent to Firebase Crashlytics, which allows us to analyse these crash reports</p>
+    <p>Crash reports are linked to your account, in order to help us resolve potential bugs faster.</p>
     <!--<h2 id="edit_consent">V. Edit your consent and claim your rights</h2>
     <div class="">
         <button class="btn px-2 py-1 mx-6"
@@ -165,7 +136,7 @@
     <h2>VI. Changes to This Privacy Policy</h2>
     <p>We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any
         changes. We will notify you of any changes by posting the new Privacy Policy on this page and notifying of these
-        change in the Site. These changes are effective immediately, after they are posted on this page.</p>
+        change in the App. These changes are effective immediately, after they are posted on this page.</p>
 
     <h2>VII. Contact Us</h2>
 

@@ -24,7 +24,7 @@
             popup.fields = [{ name: "Name", value: null }, {
                 name: "Duration (in hours)",
                 value: null
-            }, { name: "description", value: null }];
+            }, { name: "description", value: null }, {name:"severity",value: null}];            
         } else if (reason.text === "info" || reason.text === "event" || reason.text === "poll" && reason.goal === "delete") {
             popup.options = options;
             popup.fields = [];

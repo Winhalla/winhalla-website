@@ -92,13 +92,14 @@
             let { duration, description, name } = {
                 name: popup.fields[0].value,
                 duration: popup.fields[1].value,
-                description: popup.fields[2].value
+                description: popup.fields[2].value,
             };
             await callApi("post", `/feltrom/createInformation?otp=${otp}&pwd=${pwd}`, {
                 type: "info",
                 expiration: parseFloat(duration) * 3600 * 1000,
                 name,
-                description
+                description,
+                severity : popup.fields[3].value
             });
         } else if (thing === "poll") {
             let { name, isMCQ, options } = {
@@ -141,7 +142,7 @@
                                         <div class="my-4">
                                             <h3 class="text-3xl">Option {ii + 1}</h3>
 
-                                            <input class="text-black" bind:value={option} type="text" />
+                                            <input class="text-black" style="font-family: 'Roboto Condensed'; font-weight: bold" bind:value={option} type="text" />
                                             <p></p>
                                         </div>
                                     {/each}
@@ -153,7 +154,7 @@
                                 {/if}
                             {:else}
                                 <h3 class="text-3xl mt-8">{field.name}</h3>
-                                <input type="text" class="text-black rounded" on:keydown={handleKeyDown}
+                                <input type="text" style="font-family: 'Roboto Condensed'" class="text-black rounded" on:keydown={handleKeyDown}
                                        size="{window.innerWidth > 1024 ?40:20}"
                                        placeholder="{field.name}" bind:value={field.value} />
 

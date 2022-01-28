@@ -21,8 +21,7 @@
 </style>
 <div class="h-full lg:px-100 px-5 lg:pt-30 pb-30 pt-8 "
      style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; width:calc(99vw + 2px);">
-    <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the https://winhalla.app
-        website (the "Service") operated by winhalla.app ("us", "we", or "our").
+    <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Winhalla app (the "Service") operated by Winhalla SAS ("us", "we", or "our").
 
         Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.
         These Terms apply to all visitors, users and others who access or use the Service.</p>
@@ -31,10 +30,10 @@
     <h2 id="3rdParty">Links To Other Websites</h2>
 
     <p>Our Service may contain links to third-party websites or services that are not owned or controlled by
-        winhalla.app.</p>
+        Winhalla SAS.</p>
 
-    <p>winhalla.app has no control over, and assumes no responsibility for, the content, privacy policies, or practices
-        of any third party websites or services. You further acknowledge and agree that winhalla.app shall not be
+    <p>Winhalla SAS has no control over, and assumes no responsibility for, the content, privacy policies, or practices
+        of any third party websites or services. You further acknowledge and agree that Winhalla SAS shall not be
         responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in
         connection with use of or reliance on any such content, goods or services available on or through any such
         websites or services.</p>
@@ -45,7 +44,7 @@
 
     <p>Automated queries (including screen and database scraping, spiders, robots, crawlers and any other automated
         activity with the purpose of obtaining information from the Service) are strictly prohibited on the Service,
-        unless you have received express written permission from winhalla.app's owner. As a limited exception, publicly
+        unless you have received express written permission from Winhalla SAS's owner. As a limited exception, publicly
         available search engines and similar Internet navigation tools ("Search Engines") may query the Services and
         provide an index with links to the Service's Web pages, only to the extent such unlicensed "fair use" is allowed
         by applicable copyright law. Search Engines are not permitted to query or search information protected by a
@@ -60,7 +59,7 @@
         you in the Service ends immediately. Unless otherwise expressly authorized by us
         in a signed written contract, you may not sell, copy, exchange, loan, reverse engineer, decompile, derive source
         code from, translate, lease, grant a security interest in, transfer, publish, assign or otherwise distribute any
-        of the Service or any of winhalla.app's intellectual property, including any of our computer code </p>
+        of the Service or any of Winhalla SAS's intellectual property, including any of our computer code </p>
 
     <h2>Termination</h2>
 
@@ -72,10 +71,10 @@
         liability.</p>
     <h2>Limitation of Liability</h2>
 
-    <p>Subject to applicable law, under no circumstances, including negligence, will winhalla.app, its directors,
+    <p>Subject to applicable law, under no circumstances, including negligence, will Winhalla SAS, its directors,
         employees or agents be liable for any loss of profits, direct or indirect losses including punitive, exemplary,
         special or consequential damages that result from the access to, use of, or the inability to use, the materials
-        in this website, even if winhalla.app or a winhalla.app authorised representative has been advised of the
+        in this app, even if Winhalla SAS or a Winhalla SAS authorised representative has been advised of the
         possibility of such damages.</p>
     <p>Winhalla works with ad revenue. If our advertisers fails to pay us, we won't be able to send any rewards to players.</p>
     <h2>Governing Law</h2>
@@ -86,32 +85,30 @@
     <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If
         any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of
         these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service,
-        and supersede and replace any prior agreements we might have between us regarding the Service.
-        Changes
+        and supersede and replace any prior agreements we might have between us regarding the Service.</p>
+    
+    <h2>Changes</h2>
 
-    <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is
-        material we will try to provide at least 15 days notice prior to any new terms taking effect. What constitutes a
-        material change will be determined at our sole discretion.</p>
+    <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time.</p>
 
     <p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the
         revised terms. If you do not agree to the new terms, please stop using the Service.</p>
+
     <h2>Account</h2>
-    <p>In order to use the website, you will have to login with an already existing Steam account. By logging in with
-        your
-        Steam account, you agree that we will create your Account in the website, using the data Steam transmitted to
-        the
-        website by logging in (STEAMID64 and profile picture URI).</p>
-    <p></p>
-    <p>We may transmit this data to the Brawlhalla API (<a
+    <p>In order to use the App, you have to provide a Brawlhalla ID, or get it automatically via a Steam login </p>
+    <p>We may transmit this Brawlhalla ID to the Brawlhalla API (<a
         href="https://api.brawlhalla.com">https://api.brawlhalla.com</a>) in order to process your Brawlhalla
         statistics.</p>
+    <p>If you choose another platform than Steam, you will be prompted to enter your Brawlhalla ID. By
+        submitting the Brawlhalla ID, you certify that you own the Brawlhalla account with the Brawlhalla ID you mentioned.
+        Otherwise your account and access to the Service may be terminated without prior notice</p>
 
     <h2>Coins and rewards</h2>
-    <p><strong>Coins. </strong> Coins in this website are fictional money, they can only be exchanged in our <a
-        href="/shop" class="underline">Shop</a>. This is a currency only limited to this website and selling this
+    <p><strong>Coins. </strong> Coins in this app are fictional money, they can only be exchanged in our in-app Shop.
+        This is a currency only limited to this app and selling this
         currency and/or Accounts for real money is forbidden.</p>
-    <p>If we suspect you of cheating, abusing bugs or abnormal earning of Coins, we may terminate your Account and
-        your right to access the website, causing you to loose all data associated with your account, including but not
+    <p>If we suspect you of cheating, abusing bugs or exploits or abnormal earning of Coins, we may terminate your Account and
+        your right to access the app, causing you to loose all data associated with your account, including but not
         limited to Coins.</p>
     <p><strong>Rewards. </strong> Rewards are given only if you have enough Coins AND if you have earned them without
         cheating or abuse of any kind. After buying an item in our Store, you will receive an email in the e-mail
@@ -121,6 +118,6 @@
 
     <h2>Contact Us</h2>
 
-    <p>If you have any questions about these Terms or about the website, please <a href="mailto:contact@winhalla.app">contact
+    <p>If you have any questions about these Terms or about the app, please <a href="mailto:contact@winhalla.app">contact
         us</a>.</p>
 </div>

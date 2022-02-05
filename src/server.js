@@ -37,6 +37,6 @@ let app = express() // You can also use Express
 		sapper.middleware()
 	)
 require('https').createServer({
-	key: fs.readFileSync('/etc/letsencrypt/live/www.winhalla.app/privkey.pem'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/www.winhalla.app/fullchain.pem')
+	key: fs.readFileSync('/etc/letsencrypt/live/api.winhalla.app/privkey.pem'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/api.winhalla.app/fullchain.pem')
 },app).listen(443)

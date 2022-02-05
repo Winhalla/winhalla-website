@@ -7,11 +7,6 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 let throttler = []
 let app = express() // You can also use Express
-	app.use((req,res,next)=>{
-		if (req.subdomains[0] === "www") return res.redirect('https://winhalla.app'+req.path)
-		if(req.protocol === "http") return res.redirect("https://winhalla.app"+req.path)
-		next()
-	})
 	app.use((req, res, next) => {
 
 		if (req.path.includes("assets")) return next()

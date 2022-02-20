@@ -208,13 +208,13 @@
     <div style="height:94vh;font-family: 'Roboto condensed', sans-serif; font-weight:700" class="md:flex md:justify-center  relative">
         <div style="color: rgba(253,253,253,0.80)" class="mt-30 md:mt-64    px-8 md:pr-0 md:-mr-14 lg:px-0">
             <div>
-                <p class="text-4.5xl lg:text-6xl">
+                <p class="text-4-5xl lg:text-6xl">
                     Play <span class="text-primary">Brawlhalla</span>,
                 </p>
-                <p class="text-4.5xl lg:text-6xl -mt-2 lg:mt-4">
+                <p class="text-4-5xl lg:text-6xl -mt-2 lg:mt-4">
                     Earn <span class="text-primary">Rewards</span>.
                 </p>
-                <p class="text-3xl lg:text-4.5xl mt-6 lg:mt-11  text-gray">
+                <p class="text-3xl lg:text-4-5xl mt-6 lg:mt-11  text-gray">
                     As simple as it sounds.
                 </p>
             </div>
@@ -265,7 +265,7 @@
     <div class="mt-14 md:mt-20 lg:mt-24 xl:mt-38 mb-8">
         <div class="w-full  flex justify-center">
             <div class="flex-col items-center">
-                <p class=" text-4.5xl md:text-5xl lg:text-6xl  text-extra-light  text-center">Ready? Go!</p>
+                <p class=" text-4-5xl md:text-5xl lg:text-6xl  text-extra-light  text-center">Ready? Go!</p>
                 <div class="lg:flex mt-4 md:mt-7 lg:mt-10">
                     <a href="/ios">
                         <img src="/assets/app-store.png" alt="app store link" class="w-40 md:w-46 lg:w-54 lg:mr-8">

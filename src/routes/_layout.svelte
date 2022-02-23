@@ -6,6 +6,7 @@
     import { eventEmitter } from "../utils/api";
     import { onMount } from "svelte";
     import { getCookie } from "../utils/getCookie";
+    import CookiePopup from "../components/CookiePopup.svelte";
 
     //Show error to the user if there is one from an api request
     let error;
@@ -114,6 +115,7 @@
     {/if}
 
     <main class="text-font text-default min-h-screen h-full relative z-1">
+        <CookiePopup/>
         <!--Main-->
 
 

@@ -61,8 +61,8 @@ self.addEventListener('fetch', event => {
     const isDevServerRequest = url.hostname === self.location.hostname && url.port !== self.location.port;
     const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
     const skipBecauseUncached = event.request.cache === 'only-if-cached' && !isStaticAsset;
-
-    if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
+    const isAnalytics = url.hostname === "www.googletagmanager.com"
+    if (isHttp && !isDevServerRequest && !skipBecauseUncached && !isAnalytics) {
         event.respondWith(
             (async () => {
                 // always serve static files and bundler-generated assets from cache.

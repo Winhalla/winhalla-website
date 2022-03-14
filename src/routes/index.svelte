@@ -222,7 +222,7 @@
                 <a href="/ios">
                     <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-52 mr-8">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&utm_source=winhalla_app&utm_medium=first_button">
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dfirst_button">
                     <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-52 mr-8">
                 </a>
             </div>
@@ -270,7 +270,7 @@
                     <a href="/ios">
                         <img src="/assets/app-store.png" alt="app store link" class="w-40 md:w-46 lg:w-54 lg:mr-8">
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&utm_source=winhalla_app&utm_medium=second_button">
+                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dsecond_button">
                         <img src="/assets/google-play.png" alt="google play link" class="w-40 md:w-46 lg:w-54  mt-3 lg:mt-0">
                     </a>
                 </div>

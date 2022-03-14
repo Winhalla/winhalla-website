@@ -99,10 +99,10 @@
                 <!--<a href="/login" rel="prefetch" class="hidden lg:block text-center hover:underline hover:text-font text-gray text-xl mr-20">
                     Get your account transfer ID
                 </a>-->
-                <a href="/ios">
+                <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dnav_button">
+                </a>-->
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dnav_button" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-45 mt-2 lg:mt-0">
                 </a>
             </div>

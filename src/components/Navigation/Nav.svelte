@@ -102,7 +102,7 @@
                 <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>-->
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&utm_source=winhalla_app&utm_medium=nav_button" target="_blank" rel="noopener noreferrer">
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dnav_button" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-45 mt-2 lg:mt-0">
                 </a>
             </div>

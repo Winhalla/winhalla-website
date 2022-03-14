@@ -222,7 +222,7 @@
                 <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                 </a>-->
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dfirst_button" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer">
+                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dfirst_button" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                 </a>
             </div>
@@ -270,7 +270,7 @@
                     <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                     </a>-->
-                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dsecond_button" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer">
+                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dsecond_button" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                     </a>
                 </div>

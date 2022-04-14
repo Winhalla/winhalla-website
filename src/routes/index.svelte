@@ -11,8 +11,31 @@
     let email;
     let valid = null;
     let info;
-    onMount(async () => {
+
+    let utms = {
+        utm_source: "winhalla.app",
+        utm_medium: "first_button"
+    }
+    let url1 = "https://play.google.com/store/apps/details?id=com.winhalla.app&referrer="
+    let url2 = ""
+    let isFirstAddToUrl = true
+    onMount(()=>{
         const urlParams = new URLSearchParams(location.search);
+        for(const [key, value] of urlParams){
+            if(key.startsWith("utm_")){             
+                utms[key] = value + (key === "utm_source" ? "_website" : "") + (key === "utm_medium" ? "_first_button" : "")
+            }
+        }
+        for (const key of Object.keys(utms)){
+            if(isFirstAddToUrl){
+                url1 += key + "%3D" + utms[key]
+                isFirstAddToUrl = false
+            } else {
+                url1 += "%26" + key + "%3D" + utms[key]
+            }
+        }
+        url2 = url1.replace('first_button', "second_button")
+        /*
         if (urlParams.get("src")) {
             document.cookie = cookie.serialize("source", urlParams.get("src"), {
                 maxAge: 15552000,
@@ -36,10 +59,11 @@
                 toggleRegisterPopup()
                 // do your thing..
             }
-        }, 250);
-    });
+        }, 250);*/
+    })
+        
 
-    async function register() {
+    /*async function register() {
         toggleRegisterPopup();
         let { source } = cookie.parse(document.cookie);
         if ((await callApi("post", `/preRegistration?email=${email}&source=${source}`)) instanceof Error) return;
@@ -65,7 +89,7 @@
     };
     function toggleRegisterPopup() {
         isRegisterPopupOpen = !isRegisterPopupOpen;
-    }
+    }*/
     /* function toggleFAQ(entryId) {
          faq[entryId].opened = !faq[entryId].opened;
          // if(faq[entryId].opened === true) gtagEvent("FAQopened",{question:faq[entryId].question})
@@ -93,6 +117,7 @@
          }
      ];*/
 
+    
     const screens = [
         {
             file: "/assets/screens/screen1.png",
@@ -200,7 +225,7 @@
     <meta
             name="description"
             content="Play Brawlhalla. Earn rewards | Legit & Free Battle Pass,
-        Mammoth Coins, Season Packs and more! | Winhalla home page" />
+        Mammoth Coins, Season Packs and more!" />
 
     <link rel="canonical" href="https://winhalla.app" />
 </svelte:head>
@@ -222,7 +247,7 @@
                 <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                 </a>-->
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dfirst_button" target="_blank" rel="noopener noreferrer">
+                <a href="{url1}" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                 </a>
             </div>
@@ -270,7 +295,7 @@
                     <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/app-store.png" alt="app store link" class="w-40 lg:w-55 mr-8">
                     </a>-->
-                    <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dsecond_button" target="_blank" rel="noopener noreferrer">
+                    <a href="{url2}" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/google-play.png" alt="google play link" class="w-40 lg:w-55 mr-8">
                     </a>
                 </div>

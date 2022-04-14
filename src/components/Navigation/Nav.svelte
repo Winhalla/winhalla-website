@@ -1,5 +1,29 @@
 <script>
     export let isScrolling
+    import { onMount } from "svelte";
+
+    let utms = {
+        utm_source: "winhalla.app",
+        utm_medium: "nav_button"
+    }
+    let url1 = `https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=`
+    let isFirstAddToUrl = true
+    onMount(()=>{
+        const urlParams = new URLSearchParams(location.search);
+        for(const [key, value] of urlParams){
+            if(key.startsWith("utm_")){                
+                utms[key] = value + (key === "utm_source" ? "_website" : "") + (key === "utm_medium" ? "_nav_button" : "")
+            }
+        }
+        for (const key of Object.keys(utms)){
+            if(isFirstAddToUrl){
+                url1 += key + "%3D" + utms[key]
+                isFirstAddToUrl = false
+            } else {
+                url1 += "%26" + key + "%3D" + utms[key]
+            }
+        }
+    })
 </script>
 <style>
     svg {
@@ -102,7 +126,7 @@
                 <!--<a href="/ios" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/app-store.png" alt="app store link" class="w-45 mr-8">
                 </a>-->
-                <a href="https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=utm_source%3Dwinhalla.app%26utm_medium%3Dnav_button" target="_blank" rel="noopener noreferrer">
+                <a href="{url1}" target="_blank" rel="noopener noreferrer">
                     <img src="/assets/google-play.png" alt="google play link" class="w-45 mt-2 lg:mt-0">
                 </a>
             </div>

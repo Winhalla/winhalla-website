@@ -1,0 +1,13 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.winhalla.app",
+      "sha256_cert_fingerprints":
+      [
+          "B1:D1:18:BA:8A:14:5E:19:B2:91:4A:BB:EB:B4:F4:4B:CE:75:3C:FA:E5:D0:68:8F:A6:5B:79:24:71:68:09:5E",
+          "7F:D7:8B:9C:7C:09:81:8F:B2:81:C4:3F:1D:8E:6E:E4:75:02:A6:DB:1A:89:00:92:F1:27:C4:81:B0:04:FE:8B",
+          "73:C8:86:A3:53:67:17:03:60:35:59:47:5B:6A:1E:2C:8F:DB:07:32:8F:C8:E8:F5:00:A9:CC:99:C4:75:DD:15"
+        ]
+    }
+  }]

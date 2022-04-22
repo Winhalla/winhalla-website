@@ -1,28 +1,32 @@
 <script>
     export let isScrolling
     import { onMount } from "svelte";
-
+    import { counter } from "../stores";
     let utms = {
         utm_source: "winhalla.app",
         utm_medium: "nav_button"
     }
-    let url1 = `https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=`
-    let isFirstAddToUrl = true
+    let url1
     onMount(()=>{
-        const urlParams = new URLSearchParams(location.search);
-        for(const [key, value] of urlParams){
-            if(key.startsWith("utm_")){                
-                utms[key] = value + (key === "utm_source" ? "_website" : "") + (key === "utm_medium" ? "_nav_button" : "")
+        counter.subscribe(()=>{            
+            url1 = `https://play.google.com/store/apps/details?id=com.winhalla.app&referrer=`
+            let isFirstAddToUrl = true
+            const urlParams = new URLSearchParams(location.search);
+            for(const [key, value] of urlParams){
+                if(key.startsWith("utm_")){                
+                    utms[key] = value + (key === "utm_source" ? "_website" : "") + (key === "utm_medium" ? "_nav_button" : "")
+                }
             }
-        }
-        for (const key of Object.keys(utms)){
-            if(isFirstAddToUrl){
-                url1 += key + "%3D" + utms[key]
-                isFirstAddToUrl = false
-            } else {
-                url1 += "%26" + key + "%3D" + utms[key]
+            for (const key of Object.keys(utms)){
+                if(isFirstAddToUrl){
+                    url1 += key + "%3D" + utms[key]
+                    isFirstAddToUrl = false
+                } else {
+                    url1 += "%26" + key + "%3D" + utms[key]
+                }
             }
-        }
+        })
+        
     })
 </script>
 <style>

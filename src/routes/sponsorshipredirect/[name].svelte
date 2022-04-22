@@ -11,7 +11,7 @@
 
     export let link;
     onMount(async () => {
-        goto(`https://link.winhalla.app/${link}redirect`);            
+        goto("/" + "?utm_source=sponsorship&utm_medium=" + link + "&utm_campaign=" + link);
     });
 
 

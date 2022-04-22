@@ -7,6 +7,7 @@
     import QuestsSection from "../components/QuestsSection.svelte";
     import MatchSection from "../components/MatchSection.svelte";
     import ShopSection from "../components/ShopSection.svelte";
+    import { counter } from "../components/stores";
     let isRegisterPopupOpen = false;
     let email;
     let valid = null;
@@ -35,6 +36,7 @@
             }
         }
         url2 = url1.replace('first_button', "second_button")
+        counter.set(url1)
         /*
         if (urlParams.get("src")) {
             document.cookie = cookie.serialize("source", urlParams.get("src"), {

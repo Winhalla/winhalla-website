@@ -1,18 +1,21 @@
+
+This repo is the source code for [Winhalla](https://winhalla.app) as of 04/04/2023
+---------
+
+This is my first more-than-100-line project ever, that has been updated and refactored an embarassing amount of times.   
+As it's only a static front-end, and has been refactored entirely a year ago, this repo is relatively clean compared to [the API](https://github.com/Winhalla/winhalla-api)
+This project learned me the basics of UI and responsiveness, and let's just say it's not always fun.
+
 ---
-page_type: sample
-languages:
-- nodejs
-- javascript
-products:
-- azure
-- azure-app-service
-description: "This sample demonstrates a tiny Hello World Node.js app for Azure App Service."
----
+### Branch overview
+app-presentation : dev branch.  
 
-# Node.js Hello World
+deployement : when changes can be deployed, the pipline was push=>merge into deployement=>pull from server. This was useful so that we didn't have to change ports or ip etc. Looking back it would've been better to set env variables that were different on the server.  
 
-This sample demonstrates a tiny Hello World node.js app for [App Service Web App](https://docs.microsoft.com/azure/app-service-web).
+master: when the app was a website, this was the code.
 
-## Contributing
+### Final thoughts
+Some routes are unreachable or just not working, as some of them were temporary.  
+This repo should be run easily with npm i & npm run dev (but i didn't check)  
+Commits messages are often weird and rarely useful, but as i was alone coding this, i didn't really care back then  
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

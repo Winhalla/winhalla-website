@@ -3,9 +3,18 @@ This repo is the source code for [Winhalla](https://winhalla.app) as of 04/04/20
 ---------
 
 This is my first more-than-100-line project ever, that has been updated and refactored an embarassing amount of times.   
-As it's only a static front-end, and has been refactored entirely a year ago, this repo is relatively clean compared to [the API](https://github.com/Winhalla/winhalla-api)
+As it's (almost) only a static front-end, and has been refactored entirely a year ago, this repo is relatively clean compared to [the API](https://github.com/Winhalla/winhalla-api)
 This project learned me the basics of UI and responsiveness, and let's just say it's not always fun.
-
+## Technical data
+Made with SvelteJS and Sapper for routing (good ol' times)  
+Tech details :
+* Socket.io for realtime
+* 3rd party auth from Google, Apple and Steam
+* Axios for HTTP requests
+* TailwindCSS 
+* Sessions with cookies (classic)
+* Referral link and affiliated link handling from Firebase dynamic links
+* Google Analytics
 ---
 ### Branch overview
 app-presentation : dev branch.  

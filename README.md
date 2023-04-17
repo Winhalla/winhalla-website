@@ -6,7 +6,7 @@ This is my first more-than-100-line project ever, that has been updated and refa
 As it's (almost) only a static front-end, and has been refactored entirely a year ago, this repo is relatively clean compared to [the API](https://github.com/Winhalla/winhalla-api)
 This project learned me the basics of UI and responsiveness, and let's just say it's not always fun.
 ## Technical data
-Made with SvelteJS and Sapper for routing (good ol' times)  
+Made with SvelteJS and Sapper for routing  
 Tech details :
 * Socket.io for realtime
 * 3rd party auth from Google, Apple and Steam
